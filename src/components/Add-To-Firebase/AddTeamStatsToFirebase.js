@@ -11,17 +11,29 @@ import { doc, setDoc } from "firebase/firestore";
 import db from "@/src/firebase/config.js";
 
 // Team Statistics
-import macStatistics from "./Team-Statistics-Objects-2023/mac.js";
-import mountainWestStatistics from "./Team-Statistics-Objects-2023/mountainWest.js";
-import secStatistics from "./Team-Statistics-Objects-2023/sec.js";
-import swacStatistics from "./Team-Statistics-Objects-2023/swac.js";
-import wacStatistics from "./Team-Statistics-Objects-2023/wac.js";
+import americaEastStatistics from "./Team-Statistics-Objects/americaEast.js";
+import asunStatistics from "./Team-Statistics-Objects/asun.js";
+import big12Statistics from "./Team-Statistics-Objects/big12.js";
+import macStatistics from "./Team-Statistics-Objects/mac.js";
+import mountainWestStatistics from "./Team-Statistics-Objects/mountainWest.js";
+import pac12tStatistics from "./Team-Statistics-Objects/pac12.js";
+import patriotStatistics from "./Team-Statistics-Objects/patriot.js";
+import secStatistics from "./Team-Statistics-Objects/sec.js";
+import sunBeltStatistics from "./Team-Statistics-Objects/sunBelt.js";
+import swacStatistics from "./Team-Statistics-Objects/swac.js";
+import wacStatistics from "./Team-Statistics-Objects/wac.js";
 
 /// Create Team Statistics Objects ///
 const TEAM_STATISTICS_OBJECT = {
+  "americanEast": americaEastStatistics, 
+  "asun": asunStatistics, 
+  "big12": big12Statistics, 
   "mac": macStatistics, 
-  "mountain-west": mountainWestStatistics, 
+  "mountainWest": mountainWestStatistics, 
+  "pac12": pac12tStatistics, 
+  "patriot": patriotStatistics, 
   "sec": secStatistics, 
+  "sunBelt": sunBeltStatistics, 
   "swac": swacStatistics, 
   "wac": wacStatistics,
 };

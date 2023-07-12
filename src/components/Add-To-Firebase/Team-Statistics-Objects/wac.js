@@ -8,14 +8,14 @@ const wacStatistics = {
         'schedule-strength': 174,
         'secondary-color': "#FFFFFF",
         'stats-defense': {
-            'cause-turnover-percentage': 0.208,
-            'commit-foul-percentage': 0.241,
+            'cause-turnover-percentage': 0.264,
+            'commit-foul-percentage': 0.208,
             'defensive-rebound-percentage': 0.728,
             'opp-three-point-percentage': 0.381,
             'opp-two-point-percentage': 0.562,
         },
         'stats-offense': {
-            'draw-foul-percentage': 0.264,
+            'draw-foul-percentage': 0.241,
             'free-throw-percentage': 0.729,
             'offensive-rebound-percentage': 0.232,
             'three-point-percentage': 0.343,
@@ -23,7 +23,7 @@ const wacStatistics = {
             'two-point-attempt-percentage': 0.666,
             'two-point-percentage': 0.481,
         }
-    }
+    },
 }
 
 export default wacStatistics;

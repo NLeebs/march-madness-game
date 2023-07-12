@@ -1,6 +1,6 @@
 const mountainWestStatistics = {
     "air-force": {
-        logo: "team-logos/mountain-west/AirForceLogo.png",
+        logo: "team-logos/mountainWest/AirForceLogo.png",
         mascot: "Falcons",
         name: "Air Force",
         possessions: 65.5,
@@ -9,13 +9,13 @@ const mountainWestStatistics = {
         'secondary-color': "#8F8F8C",
         'stats-defense': {
             'cause-turnover-percentage': 0.11,
-            'commit-foul-percentage': 0.239,
+            'commit-foul-percentage': 0.231,
             'defensive-rebound-percentage': 0.73,
             'opp-three-point-percentage': 0.293,
             'opp-two-point-percentage': 0.519,
         },
         'stats-offense': {
-            'draw-foul-percentage': 0.231,
+            'draw-foul-percentage': 0.239,
             'free-throw-percentage': 0.722,
             'offensive-rebound-percentage': 0.201,
             'three-point-percentage': 0.356,
@@ -23,7 +23,7 @@ const mountainWestStatistics = {
             'two-point-attempt-percentage': 0.551,
             'two-point-percentage': 0.548,
         }
-    }
+    },
 }
 
 export default mountainWestStatistics;
