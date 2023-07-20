@@ -32,8 +32,6 @@ export default function Home() {
       setTeamStatistics(teamStatisticsArr);
     });
   }, []);
-
-  console.log(teamStatistics);
   
   return (
     <React.Fragment>
