@@ -10,14 +10,14 @@ const big12StatURLs = {
         "team-logo-URL": "team-logos\\big12\\BYULogo.png",
     },
     "Cincinnati": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\big12\\Logo.png",
+        "team-colors-URL": "https://usteamcolors.com/university-of-cincinnati-colors/",
+        "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/cincinnati-bearcats/stats",
+        "team-logo-URL": "team-logos\\big12\\CincinnatiLogo.png",
     },
     "Houston": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\big12\\Logo.png",
+        "team-colors-URL": "https://usteamcolors.com/university-of-houston-colors/",
+        "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/houston-cougars/stats",
+        "team-logo-URL": "team-logos\\big12\\HoustonLogo.png",
     },
     "Iowa State": {
         "team-colors-URL": "https://usteamcolors.com/iowa-state-university-colors/",
@@ -63,9 +63,9 @@ const big12StatURLs = {
         "team-logo-URL": "team-logos\\big12\\TexasTechLogo.png",
     },
     "UCF": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\big12\\Logo.png",
+        "team-colors-URL": "https://usteamcolors.com/university-of-central-florida-colors/",
+        "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/central-florida-knights/stats",
+        "team-logo-URL": "team-logos\\big12\\CentralFloridaLogo.png",
     },
     "West Virginia": {
         "team-colors-URL": "https://usteamcolors.com/west-virginia-university-colors/",

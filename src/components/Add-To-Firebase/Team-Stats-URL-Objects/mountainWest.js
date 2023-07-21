@@ -1,29 +1,69 @@
-const mountainWestStatistics = {
-    "air-force": {
-        logo: "team-logos/mountainWest/AirForceLogo.png",
-        mascot: "Falcons",
-        name: "Air Force",
-        possessions: 65.5,
-        'primary-color': "#0033A0",
-        'schedule-strength': 117,
-        'secondary-color': "#8F8F8C",
-        'stats-defense': {
-            'cause-turnover-percentage': 0.11,
-            'commit-foul-percentage': 0.231,
-            'defensive-rebound-percentage': 0.73,
-            'opp-three-point-percentage': 0.293,
-            'opp-two-point-percentage': 0.519,
-        },
-        'stats-offense': {
-            'draw-foul-percentage': 0.239,
-            'free-throw-percentage': 0.722,
-            'offensive-rebound-percentage': 0.201,
-            'three-point-percentage': 0.356,
-            'turnover-percentage': 0.172,
-            'two-point-attempt-percentage': 0.551,
-            'two-point-percentage': 0.548,
-        }
+const mountainWestStatURLs = {
+    "Air Force": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+    },
+    "Boise State": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+        "mascot-name": "Broncos",
+    },
+    "Colorado State": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+        "list-name": "Colorado St",
+        "mascot-name": "Rams",
+    },
+    "Fresno State": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+        "list-name": "Fresno St",
+        "mascot-name": "Bulldogs",
+    },
+    "Nevada": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+    },
+    "New Mexico": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+    },
+    "San Diego State": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+        "list-name": "San Diego St",
+        "mascot-name": "Aztecs",
+    },
+    "San Jose State": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+        "list-name": "San Jose St",
+        "mascot-name": "Spartans",
+    },
+    "UNLV": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+    },
+    "Utah State": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
+        "mascot-name": "Aggies",
+    },
+    "Wyoming": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\mountainWest\\Logo.png",
     },
 }
 
-export default mountainWestStatistics;
+export default mountainWestStatURLs;

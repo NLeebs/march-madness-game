@@ -1,68 +1,52 @@
-const wacStatURLs = {
-    "Abilene Christian": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "Abl Christian"
-    },
-    "California Baptist": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "Cal Baptist"
-    },
-    "Grand Canyon": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "Grd Canyon"
-    },
-    "Seattle": {
+const wccStatURLs = {
+    "Gonzaga": {
         "team-colors-URL": "",
         "team-stats-URL": "",
         "team-logo-URL": "team-logos\\wac\\Logo.png",
     },
-    "Southern Utah": {
+    "Loyola Marymount": {
         "team-colors-URL": "",
         "team-stats-URL": "",
         "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "S Utah"
+        "list-name": "Loyola Mymt",
     },
-    "Stephen F. Austin": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "Ste F Austin",
-        "mascot-name": "Lumberjacks",
-    },
-    "Tarleton State": {
+    "Pacific": {
         "team-colors-URL": "",
         "team-stats-URL": "",
         "team-logo-URL": "team-logos\\wac\\Logo.png",
     },
-    "Texas Rio Grande": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "TX-Pan Am"
-    },
-    "Texas-Arlington": {
-        "team-colors-URL": "",
-        "team-stats-URL": "",
-        "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "TX-Arlington"
-    },
-    "Utah Tech": {
+    "Pepperdine": {
         "team-colors-URL": "",
         "team-stats-URL": "",
         "team-logo-URL": "team-logos\\wac\\Logo.png",
     },
-    "Utah Valley": {
+    "Portland": {
         "team-colors-URL": "",
         "team-stats-URL": "",
         "team-logo-URL": "team-logos\\wac\\Logo.png",
-        "list-name": "Utah Val St"
+    },
+    "Saint Mary's": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\wac\\Logo.png",
+        "list-name": "St Marys",
+        "mascot-name": "Gaels",
+    },
+    "San Diego": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\wac\\Logo.png",
+    },
+    "San Francisco": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\wac\\Logo.png",
+    },
+    "Santa Clara": {
+        "team-colors-URL": "",
+        "team-stats-URL": "",
+        "team-logo-URL": "team-logos\\wac\\Logo.png",
     },
 }
 
-export default wacStatURLs;
+export default wccStatURLs;
