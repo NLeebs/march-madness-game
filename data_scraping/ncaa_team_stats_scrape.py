@@ -1,6 +1,7 @@
 import requests
 import time
 import random
+import re
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from bs4 import BeautifulSoup
@@ -33,10 +34,10 @@ def ncaa_stats():
     # Use Team Stats URL to construct dictionary
     conference_team_stats = []
     for count, i in enumerate(JS_URL_data.keys()):
-        # Wait to bypass API
-        if (count%3 == 0 and count!= 0):
-            randInt = random.randint(5,10)
-            time.sleep(randInt)
+        # # Wait to bypass API
+        # if (count%3 == 0 and count!= 0):
+        #     randInt = random.randint(5,10)
+        #     time.sleep(randInt)
 
         # get team strenght of schedule
         if JS_URL_data.get(i, {}).get("list-name"):
@@ -52,12 +53,26 @@ def ncaa_stats():
         team_colors_URL = JS_URL_data.get(i, {}).get("team-colors-URL")
         team_colors_page = requests.get(team_colors_URL, headers=headers)
         team_colors_soup = BeautifulSoup(team_colors_page.content,"html.parser")
-        hexcode_el_list = team_colors_soup.find_all("td", string="Hex color:")
-        team_primary_color = hexcode_el_list[0].find_next("td").contents[0]
-        if len(hexcode_el_list) > 1:
-            team_secondary_color = hexcode_el_list[1].find_next("td").contents[0]
-        else: 
-            team_secondary_color = "#FFFFFF"
+        color_block_el = team_colors_soup.find_all("div", attrs={"class": "colorblock"})
+        primary_attr_content= color_block_el[0]['style']
+        team_primary_color = re.search(r'#[0-9a-fA-F]{6}', primary_attr_content).group(0)
+
+        if len(color_block_el[1]['class']) > 1:
+            if color_block_el[1]['class'][1] == 'white':
+                team_secondary_color = "#FFFFFF"
+            elif color_block_el[1]['class'][1] == 'black':
+                team_secondary_color = "#000000"
+        else:
+            secondary_attr_content = color_block_el[1]['style']
+            team_secondary_color = re.search(r'#[0-9a-fA-F]{6}', secondary_attr_content).group(0)
+            
+        ###### Archive team colors ######
+        # hexcode_el_list = team_colors_soup.find_all("td", string="Hex color:")
+        # team_primary_color = hexcode_el_list[0].find_next("td").contents[0]
+        # if len(hexcode_el_list) > 1:
+        #     team_secondary_color = hexcode_el_list[1].find_next("td").contents[0]
+        # else: 
+        #     team_secondary_color = "#FFFFFF"
 
 
         # get team stats
@@ -107,6 +122,46 @@ def ncaa_stats():
     # return data
     return_data = jsonify(conference_team_stats)
     return return_data
+
+
+###### Create the TEST reciever API POST endpoint ######
+@app.route("/test", methods=["POST"])
+def test():
+
+    # Convert JSON to Python
+    JS_URL_data = request.get_json()
+
+    # Set headers for Soup calls
+    headers = requests.utils.default_headers()
+    headers.update({
+        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0',
+    })
+
+    # get team colors
+    for count, i in enumerate(JS_URL_data.keys()):
+        team_colors_URL = JS_URL_data.get(i, {}).get("team-colors-URL")
+        team_colors_page = requests.get(team_colors_URL, headers=headers)
+        team_colors_soup = BeautifulSoup(team_colors_page.content,"html.parser")
+        color_block_el = team_colors_soup.find_all("div", attrs={"class": "colorblock"})
+        primary_attr_content= color_block_el[0]['style']
+        print(re.search(r'#[0-9a-fA-F]{6}', primary_attr_content).group(0))
+        if len(color_block_el[1]['class']) > 1:
+            if color_block_el[1]['class'][1] == 'white':
+                print(color_block_el[1]['class'][1])
+            elif color_block_el[1]['class'][1] == 'black':
+                print(color_block_el[1]['class'][1])
+        else:
+            secondary_attr_content = color_block_el[1]['style']
+            print(re.search(r'#[0-9a-fA-F]{6}', secondary_attr_content).group(0))
+
+        # print(re.match(r'black', color_block_el[1]['class']))
+        # print(re.search(r'#[0-9a-fA-F]{6}', attr_content).group(0))
+        
+        
+
+     # return data
+    
+    return 'test done'
 
 
 if __name__ == "__main__":
