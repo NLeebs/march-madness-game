@@ -48,21 +48,25 @@ def ncaa_stats():
         team_possessions = team_possessions_soup.find("td", attrs={"data-sort": list_name}).findNext("td").contents[0]
 
         # get team colors
-        team_colors_URL = JS_URL_data.get(i, {}).get("team-colors-URL")
-        team_colors_page = requests.get(team_colors_URL, headers=headers)
-        team_colors_soup = BeautifulSoup(team_colors_page.content,"html.parser")
-        color_block_el = team_colors_soup.find_all("div", attrs={"class": "colorblock"})
-        primary_attr_content= color_block_el[0]['style']
-        team_primary_color = re.search(r'#[0-9a-fA-F]{6}', primary_attr_content).group(0)
-
-        if len(color_block_el[1]['class']) > 1:
-            if color_block_el[1]['class'][1] == 'white':
-                team_secondary_color = "#FFFFFF"
-            elif color_block_el[1]['class'][1] == 'black':
-                team_secondary_color = "#000000"
+        if JS_URL_data.get(i, {}).get("primary-color"):
+            team_primary_color = JS_URL_data.get(i, {}).get("primary-color")
+            team_secondary_color = JS_URL_data.get(i, {}).get("secondary-color")
         else:
-            secondary_attr_content = color_block_el[1]['style']
-            team_secondary_color = re.search(r'#[0-9a-fA-F]{3,6}', secondary_attr_content).group(0)
+            team_colors_URL = JS_URL_data.get(i, {}).get("team-colors-URL")
+            team_colors_page = requests.get(team_colors_URL, headers=headers)
+            team_colors_soup = BeautifulSoup(team_colors_page.content,"html.parser")
+            color_block_el = team_colors_soup.find_all("div", attrs={"class": "colorblock"})
+            primary_attr_content= color_block_el[0]['style']
+            team_primary_color = re.search(r'#[0-9a-fA-F]{6}', primary_attr_content).group(0)
+
+            if len(color_block_el[1]['class']) > 1:
+                if color_block_el[1]['class'][1] == 'white':
+                    team_secondary_color = "#FFFFFF"
+                elif color_block_el[1]['class'][1] == 'black':
+                    team_secondary_color = "#000000"
+            else:
+                secondary_attr_content = color_block_el[1]['style']
+                team_secondary_color = re.search(r'#[0-9a-fA-F]{3,6}', secondary_attr_content).group(0)
             
         ###### Archive team colors ######
         # hexcode_el_list = team_colors_soup.find_all("td", string="Hex color:")
