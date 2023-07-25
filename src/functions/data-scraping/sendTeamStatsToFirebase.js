@@ -9,6 +9,7 @@ import asunStatURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Object
 import atlantic10StatURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/atlantic10";
 import accStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/acc";
 import big12StatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/big12";
+import bigEastStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigEast";
 import bigTenStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigTen";
 
 ////// Team Stats and Color handler //////
@@ -18,7 +19,7 @@ const pythonDataScrapeHandler = async (e) => {
     // Conference and Ref URLs Config Array
     const confURLsArr = [
         ['acc', accStatsURLs], ['americanAthletic', americaAthleticStatURLs], ['americanEast', americaEastStatURLs], ['asun', asunStatURLs], 
-        ['atlantic10', atlantic10StatURLs], ['big12', big12StatsURLs], ['bigTen', bigTenStatsURLs]
+        ['atlantic10', atlantic10StatURLs], ['big12', big12StatsURLs], ['bigEast', bigEastStatsURLs], ['bigTen', bigTenStatsURLs]
     ];
 
     // Create team stats return object
