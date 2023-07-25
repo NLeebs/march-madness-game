@@ -6,6 +6,7 @@ import db from "@/src/firebase/config.js";
 import americaAthleticStatURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/americanAthletic";
 import americaEastStatURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/americaEast";
 import asunStatURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/asun";
+import atlantic10StatURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/atlantic10";
 import accStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/acc";
 import big12StatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/big12";
 import bigTenStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigTen";
@@ -15,8 +16,10 @@ const pythonDataScrapeHandler = async (e) => {
     e.preventDefault();
 
     // Conference and Ref URLs Config Array
-    const confURLsArr = [['acc', accStatsURLs], ['americanAthletic', americaAthleticStatURLs], ['americanEast', americaEastStatURLs], 
-        ['asun', asunStatURLs], ['big12', big12StatsURLs], ['bigTen', bigTenStatsURLs]];
+    const confURLsArr = [
+        ['acc', accStatsURLs], ['americanAthletic', americaAthleticStatURLs], ['americanEast', americaEastStatURLs], ['asun', asunStatURLs], 
+        ['atlantic10', atlantic10StatURLs], ['big12', big12StatsURLs], ['bigTen', bigTenStatsURLs]
+    ];
 
     // Create team stats return object
     const teamStatsObj = {};
