@@ -1,6 +1,4 @@
 import requests
-import time
-import random
 import re
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -64,7 +62,7 @@ def ncaa_stats():
                 team_secondary_color = "#000000"
         else:
             secondary_attr_content = color_block_el[1]['style']
-            team_secondary_color = re.search(r'#[0-9a-fA-F]{6}', secondary_attr_content).group(0)
+            team_secondary_color = re.search(r'#[0-9a-fA-F]{3,6}', secondary_attr_content).group(0)
             
         ###### Archive team colors ######
         # hexcode_el_list = team_colors_soup.find_all("td", string="Hex color:")
