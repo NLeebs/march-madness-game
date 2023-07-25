@@ -3,6 +3,7 @@ const accStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/boston-college-eagles-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/boston-college-eagles/stats",
         "team-logo-URL": "team-logos\\acc\\BostonCollegeLogo.png",
+        "list-name": "Boston Col"
     },
     "Clemson": {
         "team-colors-URL": "https://teamcolorcodes.com/clemson-tigers-colors/",
@@ -19,6 +20,7 @@ const accStatURLs = {
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/florida-state-seminoles/stats",
         "team-logo-URL": "team-logos\\acc\\FloridaStateLogo.png",
         "list-name": "Florida St",
+        "mascot-name": "Seminoles",
     },
     "Georgia Tech": {
         "team-colors-URL": "https://teamcolorcodes.com/georgia-tech-yellow-jackets-color-codes/",
@@ -59,6 +61,7 @@ const accStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/pittsburgh-panthers-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/pittsburgh-panthers/stats",
         "team-logo-URL": "team-logos\\acc\\PittsburghLogo.png",
+        "mascot-name": "Panthers",
     },
     "Syracuse": {
         "team-colors-URL": "https://teamcolorcodes.com/syracuse-orange-color-codes/",
