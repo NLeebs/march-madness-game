@@ -11,7 +11,9 @@ import accStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Object
 import big12StatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/big12";
 import bigEastStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigEast";
 import bigSkyStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigSky";
+import bigSouthStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigSouth";
 import bigTenStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigTen";
+import bigWestStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/bigWest";
 
 ////// Team Stats and Color handler //////
 const pythonDataScrapeHandler = async (e) => {
@@ -20,17 +22,20 @@ const pythonDataScrapeHandler = async (e) => {
     // Conference and Ref URLs Config Array
     const confURLsArr = [
         ['acc', accStatsURLs], ['americanAthletic', americaAthleticStatURLs], ['americanEast', americaEastStatURLs], ['asun', asunStatURLs], 
-        ['atlantic10', atlantic10StatURLs], ['big12', big12StatsURLs], ['bigEast', bigEastStatsURLs], ['bigSky', bigSkyStatsURLs], ['bigTen', bigTenStatsURLs]
+        ['atlantic10', atlantic10StatURLs], ['big12', big12StatsURLs], ['bigEast', bigEastStatsURLs], ['bigSky', bigSkyStatsURLs], ['bigSouth', bigSouthStatsURLs], 
+        ['bigTen', bigTenStatsURLs], ['bigWest', bigWestStatsURLs],
     ];
+
+    const testURLArr=[['bigWest', bigWestStatsURLs]];
 
     // Create team stats return object
     const teamStatsObj = {};
-    confURLsArr.forEach(teamArr => {
+    testURLArr.forEach(teamArr => {
         teamStatsObj[teamArr[0]] = {};
     });
 
     // Call Python Script for each Conference and populate team stats object
-    await Promise.all(confURLsArr.map( async confData => {
+    await Promise.all(testURLArr.map( async confData => {
         const confRes = await fetch("http://127.0.0.1:5000/ncaa-stats", {
             method: "POST",
             headers: {
@@ -45,7 +50,7 @@ const pythonDataScrapeHandler = async (e) => {
                 teamStatsObj[confData[0]][Object.keys(obj)[0]] = obj[Object.keys(obj)[0]]
             });
         } else {
-            alert(confRes.statusText);
+            console.log(`${confData[0]} has errored out`);
         }
     }));
 
