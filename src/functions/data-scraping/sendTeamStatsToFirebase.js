@@ -18,6 +18,13 @@ import caaStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Object
 import cusaStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/cusa";
 import horizonStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/horizon";
 import ivyStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/ivy";
+import maacStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/maac";
+import macStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/mac";
+import meacStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/meac";
+import missouriValleyStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/missouriValley";
+import mountainWestStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/mountainWest";
+import necStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/nec";
+import ohioValleyStatsURLs from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects/ohioValley";
 
 ////// Team Stats and Color handler //////
 const pythonDataScrapeHandler = async (e) => {
@@ -28,10 +35,11 @@ const pythonDataScrapeHandler = async (e) => {
         ['acc', accStatsURLs], ['americanAthletic', americaAthleticStatURLs], ['americanEast', americaEastStatURLs], ['asun', asunStatURLs], 
         ['atlantic10', atlantic10StatURLs], ['big12', big12StatsURLs], ['bigEast', bigEastStatsURLs], ['bigSky', bigSkyStatsURLs], ['bigSouth', bigSouthStatsURLs], 
         ['bigTen', bigTenStatsURLs], ['bigWest', bigWestStatsURLs], ['caa', caaStatsURLs], ['cusa', cusaStatsURLs], ['horizon', horizonStatsURLs], 
-        ['ivy', ivyStatsURLs],
+        ['ivy', ivyStatsURLs], ['maac', maacStatsURLs], ['mac', macStatsURLs],  ['meac', meacStatsURLs], ['missouriValley', missouriValleyStatsURLs],
+        ['mountainWest', mountainWestStatsURLs], ['nec', necStatsURLs], ['ohioValley', ohioValleyStatsURLs],
     ];
 
-    const testURLArr=[['ivy', ivyStatsURLs]];
+    const testURLArr=[['ohioValley', ohioValleyStatsURLs]];
 
     // Create team stats return object
     const teamStatsObj = {};
