@@ -1,8 +1,6 @@
 "use client"
-
 // Libraries
 import React from "react";
-
 // Functions
 import pythonDataScrapeHandler from "@/src/functions/data-scraping/sendTeamStatsToFirebase";
 
@@ -51,7 +49,6 @@ const colorTestData = {
       "team-colors-URL": "https://teamcolorcodes.com/wisconsin-badgers-colors/",
   },
 }
-
 
 // Test Handler for new color website
 const testHandler = async (e) => {

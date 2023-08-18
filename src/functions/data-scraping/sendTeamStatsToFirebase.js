@@ -62,21 +62,23 @@ const pythonDataScrapeHandler = async (e) => {
 
     // Call Python Script for each Conference and populate team stats object
     await Promise.all(confURLsArr.map( async confData => {
-        const confRes = await fetch("http://127.0.0.1:5000/ncaa-stats", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(confData[1])
-        });
-        if (confRes.ok) {
-            const postData = await confRes.json();
-            postData.forEach(obj => {
-                teamStatsObj[confData[0]][Object.keys(obj)[0]] = obj[Object.keys(obj)[0]]
+        try {
+            const confRes = await fetch("http://127.0.0.1:5000/ncaa-stats", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(confData[1])
             });
-        } else {
-            console.log(`${confData[0]} has errored out`);
+            if (confRes.ok) {
+                const postData = await confRes.json();
+                postData.forEach(obj => {
+                    teamStatsObj[confData[0]][Object.keys(obj)[0]] = obj[Object.keys(obj)[0]]
+                });
+            }
+        } catch (err) {
+            throw new Error(`${confData[0]} has errored out!`)
         }
     }));
 
