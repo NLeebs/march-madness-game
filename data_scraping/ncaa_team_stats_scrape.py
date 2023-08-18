@@ -29,13 +29,13 @@ def ncaa_stats():
     team_possessions_page = requests.get(team_possessions_URL, headers=headers)
     team_possessions_soup = BeautifulSoup(team_possessions_page.content,"html.parser")
 
+    team_RPI_URL = "https://www.teamrankings.com/ncb/rpi/"
+    team_RPI_page = requests.get(team_RPI_URL, headers=headers)
+    team_RPI_soup = BeautifulSoup(team_RPI_page.content, "html.parser")
+
     # Use Team Stats URL to construct dictionary
     conference_team_stats = []
     for count, i in enumerate(JS_URL_data.keys()):
-        # # Wait to bypass API
-        # if (count%3 == 0 and count!= 0):
-        #     randInt = random.randint(5,10)
-        #     time.sleep(randInt)
 
         # get team strenght of schedule
         if JS_URL_data.get(i, {}).get("list-name"):
@@ -46,6 +46,9 @@ def ncaa_stats():
     
         # get team possessions
         team_possessions = team_possessions_soup.find("td", attrs={"data-sort": list_name}).findNext("td").contents[0]
+
+        # get team RPI Ranking
+        team_RPI = team_RPI_soup.find("td", attrs={"data-sort": list_name}).findPrevious("td").contents[0]
 
         # get team colors
         if JS_URL_data.get(i, {}).get("primary-color"):
@@ -99,6 +102,7 @@ def ncaa_stats():
                "logo": JS_URL_data.get(i, {}).get("team-logo-URL"),
                "schedule-strength": strenght_of_schedule,
                "possessions": team_possessions,
+               "rpi": team_RPI,
                "primary-color": team_primary_color,
                "secondary-color": team_secondary_color,
                "stats-defense": {
