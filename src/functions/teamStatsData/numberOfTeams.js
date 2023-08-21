@@ -1,8 +1,8 @@
-const numberOfTeams = function(teamStatsState) {
+const numberOfTeams = function(teamStatsObj) {
+    // Arugment should be object of conferences
     let numberOfTeams = 0;
-    
-    Object.keys(teamStatsState.teamStats).forEach((conf) => {
-        numberOfTeams += Object.keys(conf).length;
+    Object.keys(teamStatsObj).forEach((conf) => {
+        numberOfTeams += Object.keys(teamStatsObj[conf]).length;
     });
 
     return numberOfTeams;
