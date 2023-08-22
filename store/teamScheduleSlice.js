@@ -20,12 +20,15 @@ const teamScheduleSlice = createSlice({
 
             // Make Team Schedule Object
             state.teamSchedules = {};
-            conferences.forEach((conf) => {
-                Object.keys(action.payload[conf]).forEach((team) => {
-                    state.teamSchedules[team] = [];
-                });
-            });
+            for (let i = 1; i <= 20; i++) {
+               const key = `week${i}`;
+                state.teamSchedules[key] = [];
+            }
         },
+        addGameToTeamSchedule(state, action) {
+            // payload should be object like {week: weekNumber, matchups: [team1, team2]}
+            state.teamSchedules[action.payload.weekNumber].push(action.payload.matchup);
+        }
     },
 });
 
