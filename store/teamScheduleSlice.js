@@ -1,4 +1,8 @@
+// Redux
 import { createSlice } from "@reduxjs/toolkit";
+// Constants
+import { AMOUNT_SEASON_GAMES } from "@/constants/CONSTANTS";
+
 
 const initalState = {
     teamArray: [],
@@ -20,7 +24,7 @@ const teamScheduleSlice = createSlice({
 
             // Make Team Schedule Object
             state.teamSchedules = {};
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= AMOUNT_SEASON_GAMES; i++) {
                const key = `week${i}`;
                 state.teamSchedules[key] = [];
             }
