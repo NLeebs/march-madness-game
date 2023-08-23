@@ -13,19 +13,21 @@ import getTeamStatData from "@/src/functions/teamStatsData/getTeamStatData";
 import AddTeamStatsToFirebase from "@/src/components/Add-To-Firebase/AddTeamStatsToFirebase.js";
 import StartButton from "@/src/components/UI/StartButton.js";
 import SeasonSchedule from "./RegularSeason/SeasonSchedule";
+import RegularSeason from "./RegularSeason/RegularSeason";
 
 function App() {
   const dispatch = useDispatch();
+  const appState = useSelector((state) => state.appState)
   const teamStatsObject = useSelector((state) => state.teamStats);
   const teamArray = useSelector((state) => state.teamSchedule.teamArray);
+  // const teamSchedules = useSelector((state) => state.teamSchedule.teamSchedules);
+  // console.log(appState);
 
   // Add Team Stats to State and Config Schedules State
   useEffect(() => {
     getTeamStatData().then((teamStatsData) => {
       dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
       dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData))
-      dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData))
-   
     });
   }, [dispatch]);
   
@@ -35,6 +37,7 @@ function App() {
       {/* <AddTeamStatsToFirebase /> */}
       {teamArray && <SeasonSchedule teamStats={teamStatsObject.teamStats} teamArray={teamArray} />}      
       <StartButton />
+      {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
     </Fragment>
    
   );
