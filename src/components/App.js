@@ -20,8 +20,7 @@ function App() {
   const appState = useSelector((state) => state.appState)
   const teamStatsObject = useSelector((state) => state.teamStats);
   const teamArray = useSelector((state) => state.teamSchedule.teamArray);
-  // const teamSchedules = useSelector((state) => state.teamSchedule.teamSchedules);
-  // console.log(appState);
+  // console.log(teamArray);
 
   // Add Team Stats to State and Config Schedules State
   useEffect(() => {

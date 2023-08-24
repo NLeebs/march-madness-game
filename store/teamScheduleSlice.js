@@ -19,7 +19,14 @@ const teamScheduleSlice = createSlice({
             state.teamArray = [];
             const conferences = Object.keys(action.payload);
             conferences.forEach((conf) => {
-                state.teamArray = state.teamArray.concat(Object.keys(action.payload[conf]));
+                const teams = Object.keys(action.payload[conf]);
+                teams.forEach((team) => {
+                    state.teamArray.push(
+                        {
+                            team: team,
+                            conference: conf,
+                        });
+                    });
             });
 
             // Make Team Schedule Object
