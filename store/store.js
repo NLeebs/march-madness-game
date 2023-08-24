@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import teamStatsSlice from "./teamStatsSlice";
 import teamScheduleSlice from "./teamScheduleSlice";
 import appStateSlice from "./appStateSlice";
+import regularSeasonRecordSlice from "./regularSeasonRecordSlice";
 
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
         appState: appStateSlice.reducer,
         teamStats: teamStatsSlice.reducer,
         teamSchedule: teamScheduleSlice.reducer,
+        regularSeasonRecords: regularSeasonRecordSlice.reducer,
     }
 });
 

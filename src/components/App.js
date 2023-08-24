@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 // State
 import { teamStatsActions } from "@/store/teamStatsSlice";
 import { teamScheduleActions } from "@/store/teamScheduleSlice";
+import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 //Functions
 import getTeamStatData from "@/src/functions/teamStatsData/getTeamStatData";
 // Components
@@ -17,7 +18,7 @@ import RegularSeason from "./RegularSeason/RegularSeason";
 
 function App() {
   const dispatch = useDispatch();
-  const appState = useSelector((state) => state.appState)
+  const appState = useSelector((state) => state.appState);
   const teamStatsObject = useSelector((state) => state.teamStats);
   const teamArray = useSelector((state) => state.teamSchedule.teamArray);
   // console.log(teamArray);
@@ -25,8 +26,9 @@ function App() {
   // Add Team Stats to State and Config Schedules State
   useEffect(() => {
     getTeamStatData().then((teamStatsData) => {
-      dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
-      dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData))
+      dispatch(teamStatsActions.addToStateFromDB(teamStatsData));;
+      dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
+      dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)); //
     });
   }, [dispatch]);
   

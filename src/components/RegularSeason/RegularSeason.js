@@ -10,7 +10,7 @@ import ConferenceGroups from "./ConferenceGroups";
 
 function RegularSeason(props) {
     const teamSchedules = useSelector((state) => state.teamSchedule.teamSchedules);
-    console.log(teamSchedules);
+    const regularSeasonRecords = useSelector((state) => state.regularSeasonRecords.records);
 
     // Split conferences for visualization
     const powerConferences = ["acc", "bigTen", "big12", "sec", "bigEast", "pac12", "americanAthletic", "atlantic10", "wcc"];
