@@ -1,10 +1,7 @@
-import { NUMBER_OF_TEAMS } from "@/constants/CONSTANTS";
+import { NUMBER_OF_TEAMS, PERCENT_FOULS_THAT_SHOOT_FT } from "@/constants/CONSTANTS";
 
 export default function playGame(team1Stats, team2Stats) {
     
-    console.log(team1Stats);
-    console.log(team2Stats);
-
     // Functions
     const determineBiasedStat = (favoredStat, underdogStat, isBetter, round) => {
         let statAdvantage = (Math.abs(favoredStat - underdogStat) / 2) * scheduleStrengthAdvantage;
@@ -12,15 +9,27 @@ export default function playGame(team1Stats, team2Stats) {
             statAdvantage *= -1;
         } 
 
-        if (round) return  Math.round((favoredStat + underdogStat) / 2 + statAdvantage);
-        return  (favoredStat + underdogStat) / 2 + statAdvantage;
+        const biasStat = (favoredStat + underdogStat) / 2 + statAdvantage;
+
+        if (round) return  Math.round(biasStat);
+        return  biasStat;
+    }
+
+    const determineBiasedReboundStats = (defenseRebound, offenseRebound, isDefenseFavorded) => {
+        if (defenseRebound + offenseRebound < 1) return defenseRebound;
+        
+        const reboundOverlapMid = Math.abs(defenseRebound + offenseRebound - 1) / 2;
+        let reboundAdvantage = reboundOverlapMid * scheduleStrengthAdvantage;
+        if (!isDefenseFavorded) reboundAdvantage *= -1;
+
+        return defenseRebound - reboundOverlapMid + reboundAdvantage;
     }
     
     //// FAVORED TEAM ////
      // Determine which team has the advantage
      let teamFavored = team1Stats;
      let teamUnderdog = team2Stats;
-     if (+team1Stats.rpi > +team1Stats.rpi) {
+     if (+team1Stats.rpi > +team2Stats.rpi) {
          teamFavored = team2Stats;
          teamUnderdog = team1Stats;
      }
@@ -38,8 +47,8 @@ export default function playGame(team1Stats, team2Stats) {
     const teamFavoredPossessions = +teamFavored.possessions;
     const teamUnderdogPossessions = +teamUnderdog.possessions;
 
-    const possessions = determineBiasedStat(teamFavoredPossessions, teamUnderdogPossessions, "sync", "round");
-    console.log(possessions);
+    const halftime = determineBiasedStat(teamFavoredPossessions, teamUnderdogPossessions, "sync", "round");
+    const possessions = halftime * 2;
     
     //// TURNOVER PERCENTAGES ////
     const teamFavoredTurnoverRate = +teamUnderdog["stats-defense"]["cause-turnover-percentage"];
@@ -67,24 +76,261 @@ export default function playGame(team1Stats, team2Stats) {
     const teamUnderdogFreeThrowPercentage = teamUnderdog["stats-offensive"]["free-throw-percentage"];
    
     //// REBOUNDS ////
+    const teamFavoredReboundPercentage = determineBiasedReboundStats(teamFavored["stats-defense"]["defensive-rebound-percentage"], teamUnderdog["stats-offensive"]["offensive-rebound-percentage"], true);
+    const teamUnderdogReboundPercentage = determineBiasedReboundStats(teamUnderdog["stats-defense"]["defensive-rebound-percentage"], teamFavored["stats-offensive"]["offensive-rebound-percentage"], false);
+   
+    //// GAME TIME ////
+    let favoredScore = 0;
+    let underdogScore = 0;
+    let favoredFouls = 0;
+    let underdogFouls = 0;
+    let potentialPoints = 0;
     
+    // Game functions
+    const changePossession = () => {favoredHasPossession = !favoredHasPossession;}
+    const favoredShootFT = (numberOfShots) => {
+        let missedLastFT;
+        for (let FT = 1; FT <= numberOfShots; FT++) {
+            if (teamFavoredFreeThrowPercentage >= Math.random()) {
+                favoredScore++;
+                missedLastFT = false;
+            } else missedLastFT = true;
+        }
+        return missedLastFT;
+    }
+    const underdogShootFT = (numberOfShots) => {
+        let missedLastFT;
+        for (let FT = 1; FT <= numberOfShots; FT++) {
+            if (teamUnderdogFreeThrowPercentage >= Math.random()) {
+                underdogScore++;
+                missedLastFT = false;
+            } else missedLastFT = true;
+        }
+        return missedLastFT;
+    }
 
-    // Chance of turnover
-    // Chance of foul
-        // offensive cause foul vs defensive commit foul
-        // after 7 shoot free throws
+    // The Tipoff
+    const tip = Math.random();
+    let favoredHasPossession;
+    if (tip < .5) favoredHasPossession = true;
+    else favoredHasPossession = false; 
+
+    //?? The Game
+    for (let poss = 1; poss <= possessions; poss++) {
+
+        // Halftime Logic
+        if (poss === halftime) {
+            favoredFouls = 0;
+            underdogFouls = 0;
+        }
+
+        // FAVORED TEAM POSSESSION
+        if (favoredHasPossession) {
+            // Chance of turnover
+            if (teamFavoredTurnoverRate >= Math.random()) {
+                changePossession();
+                poss -= .5;
+                continue;
+            }
+
+            // Was 2 or 3
+            if (teamFavoredTwoPointAttemptRatio >= Math.random()) potentialPoints = 2;
+            else potentialPoints = 3;
+
+            // Check if a foul on defense and free throws awarded
+            if (teamFavoredCauseFoulPercentage >= Math.random()) {
+                underdogFouls++;
+                // Shooting Foul
+                if (PERCENT_FOULS_THAT_SHOOT_FT >= Math.random()) {
+                    let missedLastFT = favoredShootFT(potentialPoints);
+
+                    if (missedLastFT) {
+                        if (teamUnderdogReboundPercentage >= Math.random()) {
+                            changePossession();
+                            continue;
+                        } else continue;
+                    } else {
+                        changePossession();
+                        continue;
+                    }
+                } 
+                // Check for Bonus
+                else if (underdogFouls >= 7 && underdogFouls < 10) {
+                    if (teamFavoredFreeThrowPercentage >= Math.random()) {
+                        favoredScore++;
+                        if (teamFavoredFreeThrowPercentage >= Math.random()) {
+                            favoredScore++;
+                            changePossession();
+                            continue;
+                        }
+                        else {
+                            if (teamUnderdogReboundPercentage >= Math.random()) {
+                                changePossession();
+                                continue;
+                            } else continue;
+                        }
+                    } else {
+                        if (teamUnderdogReboundPercentage >= Math.random()) {
+                            changePossession();
+                            continue;
+                        } else continue;
+                    }
+                }
+                // Check for double bonus
+                else if (underdogFouls >= 10) {
+                    let missedLastFT = favoredShootFT(2);
+                    if (missedLastFT) {
+                        if (teamUnderdogReboundPercentage >= Math.random()) {
+                            changePossession();
+                            continue;
+                        } else continue;
+                    } else {
+                        changePossession();
+                        continue;
+                    }
+                }
+            }
+
+            // Chance of Scoring
+            if (potentialPoints === 2) {
+                if (teamFavoredTwoPointPercentage >= Math.random()) {
+                    favoredScore += potentialPoints;
+                    changePossession();
+                    continue;
+                } else {
+                    if (teamUnderdogReboundPercentage >= Math.random()) {
+                        changePossession();
+                        continue;
+                    } else continue;
+                }
+            } else if (potentialPoints === 3) {
+                if (teamFavoredThreePointPercentage >= Math.random()) {
+                    favoredScore += potentialPoints;
+                        changePossession();
+                        continue;
+                } else {
+                    if (teamUnderdogReboundPercentage >= Math.random()) {
+                        changePossession();
+                        continue;
+                    } else continue;
+                }
+            }
+            
+        // UNDERDOG TEAM POSSESSION
+        } else {
+            if (teamUnderdogTurnoverRate >= Math.random()) {
+                changePossession();
+                poss -= .5;
+                continue;
+            }
+            
+            // Was 2 or 3
+            if (teamUnderdogTwoPointAttemptRatio >= Math.random()) potentialPoints = 2;
+            else potentialPoints = 3;
+
+            // Check if a foul on defense and free throws awarded
+            if (teamUnderdogCauseFoulPercentage >= Math.random()) {
+                favoredFouls++;
+                // Shooting Foul
+                if (PERCENT_FOULS_THAT_SHOOT_FT >= Math.random()) {
+                    let missedLastFT = underdogShootFT(potentialPoints);
+
+                    if (missedLastFT) {
+                        if (teamFavoredReboundPercentage >= Math.random()) {
+                            changePossession();
+                            continue;
+                        } else continue;
+                    } else {
+                        changePossession();
+                        continue;
+                    }
+                } 
+                // Check for Bonus
+                else if (favoredFouls >= 7 && favoredFouls < 10) {
+                    if (teamUnderdogFreeThrowPercentage >= Math.random()) {
+                        underdogScore++;
+                        if (teamUnderdogFreeThrowPercentage >= Math.random()) {
+                            underdogScore++;
+                            changePossession();
+                            continue;
+                        }
+                        else {
+                            if (teamFavoredReboundPercentage >= Math.random()) {
+                                changePossession();
+                                continue;
+                            } else continue;
+                        }
+                    } else {
+                        if (teamFavoredReboundPercentage >= Math.random()) {
+                            changePossession();
+                            continue;
+                        } else continue;
+                    }
+                }
+                // Check for double bonus
+                else if (favoredFouls >= 10) {
+                    let missedLastFT = underdogShootFT(2);
+                    if (missedLastFT) {
+                        if (teamFavoredReboundPercentage >= Math.random()) {
+                            changePossession();
+                            continue;
+                        } else continue;
+                    } else {
+                        changePossession();
+                        continue;
+                    }
+                }
+            }
+
+            // Chance of Scoring
+            if (potentialPoints === 2) {
+                if (teamUnderdogTwoPointPercentage >= Math.random()) {
+                    underdogScore += potentialPoints;
+                    changePossession();
+                    continue;
+                } else {
+                    if (teamFavoredReboundPercentage >= Math.random()) {
+                        changePossession();
+                        continue;
+                    } else continue;
+                }
+            } else if (potentialPoints === 3) {
+                if (teamUnderdogThreePointPercentage >= Math.random()) {
+                    underdogScore += potentialPoints;
+                        changePossession();
+                        continue;
+                } else {
+                    if (teamFavoredReboundPercentage >= Math.random()) {
+                        changePossession();
+                        continue;
+                    } else continue;
+                }
+            }
+        }
+
+    }
     
-    // Was 2 or 3
-    // Offense percentage of shots
-    
-    // Chance of Scoring
-    // Offensive type Shooting Percentage vs defense percentage
-    
-    // Chance of rebound
-    // Offense rebound vs defensive rebound
-    // Set start of next possession
-    
-    // loop through all possessions
-    
-    // returns object of winner, loser, and both scores
+    // Buzzer Beater!
+    while (favoredScore === underdogScore) {
+        // Favored Chance to win
+        if (favoredHasPossession) {
+            if (teamFavoredThreePointPercentage >= Math.random()) {
+                favoredScore += 1;
+                    changePossession();
+                }
+            } else {
+                if (teamUnderdogThreePointPercentage >= Math.random()) {
+                    underdogScore += 1;
+                    changePossession();
+            }
+        }
+    }
+
+    // Return game result object
+    return {
+        favoredTeam: teamFavored.name,
+        favoredScore,
+        underdogTeam: teamUnderdog.name,
+        underdogScore,
+    }
 }

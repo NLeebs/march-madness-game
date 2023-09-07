@@ -16,7 +16,8 @@ function PlayRegularSeasonGames(props) {
     const dispatch = useDispatch();
 
     const playRegularSeasonGames = useCallback(() => {
-        playGame(teamStats[teamSchedules.week1[0][0].conference][teamSchedules.week1[0][0].team], teamStats[teamSchedules.week1[0][1].conference][teamSchedules.week1[0][1].team])
+        const gameResults = playGame(teamStats[teamSchedules.week1[0][0].conference][teamSchedules.week1[0][0].team], teamStats[teamSchedules.week1[0][1].conference][teamSchedules.week1[0][1].team]);
+        console.log(gameResults);
     }, [teamStats, teamSchedules]);
 
     useEffect(() => {
