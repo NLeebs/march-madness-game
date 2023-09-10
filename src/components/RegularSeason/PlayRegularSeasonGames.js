@@ -16,9 +16,13 @@ function PlayRegularSeasonGames(props) {
     const dispatch = useDispatch();
 
     const playRegularSeasonGames = useCallback(() => {
-        const gameResults = playGame(teamStats[teamSchedules.week1[0][0].conference][teamSchedules.week1[0][0].team], teamStats[teamSchedules.week1[0][1].conference][teamSchedules.week1[0][1].team]);
-        console.log(gameResults);
-    }, [teamStats, teamSchedules]);
+        Object.keys(teamSchedules).forEach((week) => {
+            teamSchedules[week].forEach((game) => {
+                const gameResult = playGame(teamStats[game[0].conference][game[0].team], teamStats[game[1].conference][game[1].team]);
+                dispatch(regularSeasonRecordActions.addRegularSeasonGameResult(gameResult));
+            });
+        });
+    }, [dispatch, teamStats, teamSchedules]);
 
     useEffect(() => {
         if (!teamSchedules || !teamStats) return;

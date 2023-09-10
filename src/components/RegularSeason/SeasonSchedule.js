@@ -34,10 +34,16 @@ function SeasonSchedule(props) {
         randomTeamSchedule(allNCAATeamsArr, weekNo);
     }, [randomTeamSchedule]);
 
-    const scheduleConferenceGames = useCallback((teamStats, weekNo) => {
+    // BUG
+    const scheduleConferenceGames = useCallback((teamStats, teamArray, weekNo) => {
         const leftoverTeamsArr = [];
         Object.keys(teamStats).forEach((conf) => {
-            const confTeams = Object.keys(teamStats[conf]);
+            const confTeams = [];
+            teamArray.forEach((team) => {
+                if (conf === team.conference) {
+                    confTeams.push(team);
+                }
+            });
             const leftoverTeam = randomTeamSchedule(confTeams, weekNo);
             if (leftoverTeam) {
                 leftoverTeamsArr.push(leftoverTeam[0]);
@@ -53,7 +59,7 @@ function SeasonSchedule(props) {
                 scheduleNonConferenceGames(props.teamArray, i);
             }
             for (let i = AMOUNT_NONCONFERENCE_GAMES + 1; i <= AMOUNT_SEASON_GAMES; i++) {
-                scheduleConferenceGames(props.teamStats, i);
+                scheduleConferenceGames(props.teamStats, props.teamArray, i);
             }
         }
     }, [props.teamArray, props.teamStats, scheduleNonConferenceGames, scheduleConferenceGames])
