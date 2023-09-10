@@ -85,6 +85,7 @@ export default function playGame(team1Stats, team2Stats) {
     let favoredFouls = 0;
     let underdogFouls = 0;
     let potentialPoints = 0;
+    let secondHalf = false;
     
     // Game functions
     const changePossession = () => {favoredHasPossession = !favoredHasPossession;}
@@ -119,7 +120,8 @@ export default function playGame(team1Stats, team2Stats) {
     for (let poss = 1; poss <= possessions; poss++) {
 
         // Halftime Logic
-        if (poss === halftime) {
+        if (poss === halftime && secondHalf === false) {
+            secondHalf = true;
             favoredFouls = 0;
             underdogFouls = 0;
         }
@@ -129,7 +131,6 @@ export default function playGame(team1Stats, team2Stats) {
             // Chance of turnover
             if (teamFavoredTurnoverRate >= Math.random()) {
                 changePossession();
-                poss -= .5;
                 continue;
             }
 
@@ -188,6 +189,11 @@ export default function playGame(team1Stats, team2Stats) {
                         changePossession();
                         continue;
                     }
+                } 
+                // Normal Foul on the floor
+                else {
+                    poss -= 1;
+                    continue;
                 }
             }
 
@@ -220,7 +226,6 @@ export default function playGame(team1Stats, team2Stats) {
         } else {
             if (teamUnderdogTurnoverRate >= Math.random()) {
                 changePossession();
-                poss -= .5;
                 continue;
             }
             
@@ -280,6 +285,11 @@ export default function playGame(team1Stats, team2Stats) {
                         continue;
                     }
                 }
+                // Normal Foul on the floor
+                else {
+                    poss -= 1;
+                    continue;
+                }
             }
 
             // Chance of Scoring
@@ -330,7 +340,9 @@ export default function playGame(team1Stats, team2Stats) {
     return {
         favoredTeam: teamFavored.name,
         favoredScore,
+        favoredRPI: +teamFavored.rpi,
         underdogTeam: teamUnderdog.name,
         underdogScore,
+        underdogRPI: +teamUnderdog.rpi,
     }
 }
