@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // State
 import { tournamentActions } from "@/store/tournamentSlice";
 // Constanst
-import { AMOUNT_NONCONFERENCE_GAMES, AMOUNT_CONFERENCE_GAMES, AMOUNT_SEASON_GAMES } from "@/constants/CONSTANTS";
+import { NUMBER_OF_AT_LARGE_TEAMS, NUMBER_OF_AT_LARGE_TEAMS_PLAYINS, NUMBER_OF_CONF_CHAMP_PLAYINS } from "@/constants/CONSTANTS";
 
 
 function SelectionSunday(props) {
@@ -14,10 +14,8 @@ function SelectionSunday(props) {
     const appState = useSelector((state) => state.appState);
     const seasonResults = useSelector((state) => state.regularSeasonRecords.records);
     const conferenceArrs = useSelector((state) => state.teamStats.conferenceArrays);
-
-    console.log(seasonResults);
     
-
+    // Sort Functions
     const sortByTournamentScore = useCallback((arr) => {
         return [...arr].sort((a, b) => seasonResults[b].tournamentSelectionScore - seasonResults[a].tournamentSelectionScore);
     }, [seasonResults]);
@@ -26,6 +24,7 @@ function SelectionSunday(props) {
         return [...arr].sort((a, b) => seasonResults[b].wins - seasonResults[a].wins);
     }, [seasonResults]);
 
+    // Selection Functions
     const confChampions = useCallback((curConference) => {
         const conferenceTeams = conferenceArrs[curConference];
         const sortedConferenceTeamsWins = sortByWins(conferenceTeams);
@@ -43,7 +42,7 @@ function SelectionSunday(props) {
     
     const getTournamentTeams = useCallback(() => {
         // init
-        const tournamentTeamsArr = [];
+        let tournamentTeamsArr = [];
         const totalTeamsArr = Object.keys(seasonResults);
         const conferences = Object.keys(conferenceArrs);
 
@@ -54,21 +53,30 @@ function SelectionSunday(props) {
             const champIndex = totalTeamsArr.indexOf(champ);
             totalTeamsArr.splice(champIndex, 1);
         });
-        const wildcardTeamArr = sortByTournamentScore(totalTeamsArr);
-        console.log(wildcardTeamArr);
+        // Grab last two conference champs for playin games
+        tournamentTeamsArr = sortByTournamentScore(tournamentTeamsArr);
+        console.log(tournamentTeamsArr);
+        for (let i = 1; i <= NUMBER_OF_CONF_CHAMP_PLAYINS; i++) {
+            dispatch(tournamentActions.setPlayinTeams({seed: 16, team: tournamentTeamsArr.splice(tournamentTeamsArr.length - 1, 1)[0]}));
+        }
+
+        const atLargeTeamArr = sortByTournamentScore(totalTeamsArr);
 
         // Take top remaniming 36 Teams as wild cards
-        for (let i = 0; i < 36; i++) {
-            tournamentTeamsArr.push(wildcardTeamArr[i]);
+        for (let i = 0; i < NUMBER_OF_AT_LARGE_TEAMS; i++) {
+            if (i < (NUMBER_OF_AT_LARGE_TEAMS - NUMBER_OF_AT_LARGE_TEAMS_PLAYINS)) tournamentTeamsArr.push(atLargeTeamArr[i]);
+            else dispatch(tournamentActions.setPlayinTeams({seed: 11, team: atLargeTeamArr[i]}));
         } 
         const finalTournamentTeamsArr = sortByTournamentScore(tournamentTeamsArr);
 
         return finalTournamentTeamsArr;
-    }, [seasonResults, conferenceArrs, confChampions, sortByTournamentScore]);
+    }, [dispatch, seasonResults, conferenceArrs, confChampions, sortByTournamentScore]);
 
+    // Select and dispatch
     useEffect(() => {
         if (appState.selectionSunday === true) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
+            dispatch(tournamentActions.setTournamentSeeds());
         }
     }, [dispatch, appState, seasonResults, getTournamentTeams]);
 
