@@ -30,10 +30,17 @@ const tournamentSlice = createSlice({
             for (let i = 1; i <= HIGHEST_SEED; i++) {
                 for (let j = 0; j < numberOfRegions; j++) {
                     if(i % 2 === 1) {
-                        state.tournamentSeeds[regions[j]].push(seedSettingArr[j]);
+                        if (i === 11 && ((j === 2) || (j === 3))) {
+                            state.tournamentSeeds[regions[j]].push(`playinGameSeed11Game${j-1}`)
+                            seedSettingArr.splice(j, 0, "PlayinTeam")
+                        }
+                        else state.tournamentSeeds[regions[j]].push(seedSettingArr[j]);
                     }
                     else {
-                        state.tournamentSeeds[regions[j]].push(seedSettingArr[numberOfRegions - (j + 1)]);
+                        if (i === 16 && ((j === 0) || (j === 1))) {
+                            state.tournamentSeeds[regions[j]].push(`playinGameSeed11Game${j+1}`)
+                        }
+                        else state.tournamentSeeds[regions[j]].push(seedSettingArr[numberOfRegions - (j + 1)]);
                     }
                 }
                 seedSettingArr.splice(0, 4);
