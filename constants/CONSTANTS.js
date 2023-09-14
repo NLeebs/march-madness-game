@@ -8,3 +8,9 @@ export const AMOUNT_CONFERENCE_GAMES = 15;
 
 // Game Stats
 export const PERCENT_FOULS_THAT_SHOOT_FT = .09;
+
+// Tournament
+export const NUMBER_OF_AT_LARGE_TEAMS = 36;
+export const NUMBER_OF_AT_LARGE_TEAMS_PLAYINS = 4;
+export const NUMBER_OF_CONF_CHAMP_PLAYINS = 4;
+export const HIGHEST_SEED = 16;
