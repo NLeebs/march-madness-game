@@ -10,12 +10,12 @@ const teamStatsSlice = createSlice({
     initialState: initalState,
     reducers: {
         addToStateFromDB(state, action) {
-            state.teamStats = {...action.payload}
+            state.teamStats = {...action.payload};
         },
         addConferenceArrays(state, action) {
             Object.keys(action.payload).forEach((conf) => {
                 state.conferenceArrays[conf] = Object.keys(action.payload[conf]);
-            })
+            });
         }
     },
 });
