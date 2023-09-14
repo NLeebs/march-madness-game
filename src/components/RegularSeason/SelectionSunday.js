@@ -51,16 +51,19 @@ function SelectionSunday(props) {
         conferences.forEach((conf) => {
             const champ = confChampions(conf);
             tournamentTeamsArr.push(champ);
-            // Add to tournament Teams State
-            // Remove from total teams Arr
+            const champIndex = totalTeamsArr.indexOf(champ);
+            totalTeamsArr.splice(champIndex, 1);
         });
-        // Sort total teams Arr by score
-        sortByTournamentScore(totalTeamsArr);
-        console.log(tournamentTeamsArr);
-        console.log(totalTeamsArr);
-        // Take top remaniming Teams as wild cards
-            // Add to tournamanet teamsArr
-        return tournamentTeamsArr;
+        const wildcardTeamArr = sortByTournamentScore(totalTeamsArr);
+        console.log(wildcardTeamArr);
+
+        // Take top remaniming 36 Teams as wild cards
+        for (let i = 0; i < 36; i++) {
+            tournamentTeamsArr.push(wildcardTeamArr[i]);
+        } 
+        const finalTournamentTeamsArr = sortByTournamentScore(tournamentTeamsArr);
+
+        return finalTournamentTeamsArr;
     }, [seasonResults, conferenceArrs, confChampions, sortByTournamentScore]);
 
     useEffect(() => {

@@ -8,7 +8,6 @@ const tournamentSlice = createSlice({
     initialState: initalState,
     reducers: {
         addTournamentTeams(state, action) {
-            console.log(action.payload);
             state.tournamentTeams = action.payload;
         },
     },
