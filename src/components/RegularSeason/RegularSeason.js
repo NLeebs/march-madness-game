@@ -15,7 +15,11 @@ import SelectionSunday from "./SelectionSunday";
 function RegularSeason(props) {
     const appState = useSelector((state) => state.appState);
     const tournamemtTeamsState = useSelector((state) => state.tournament.tournamentTeams);
+    const playinTeamsState = useSelector((state) => state.tournament.playinTeams);
+    const tournamentSeedsState = useSelector((state) => state.tournament.tournamentSeeds);
     console.log(tournamemtTeamsState);
+    console.log(playinTeamsState);
+    console.log(tournamentSeedsState);
 
     // Split conferences for visualization
     const powerConferences = ["acc", "bigTen", "big12", "sec", "bigEast", "pac12", "americanAthletic", "atlantic10", "wcc"];
