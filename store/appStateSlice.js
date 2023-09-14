@@ -5,12 +5,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initalState = {
     startScreen: true,
     regularSeason: false,
+    selectionSunday: false,
     tournament: false,
 };
 
 // Create Team Statistics State Slice
 const appStateSlice = createSlice({
-    name: "appStateSlice",
+    name: "appState",
     initialState: initalState,
     reducers: {
         activateStartScreen(state) {
@@ -20,6 +21,9 @@ const appStateSlice = createSlice({
         activateRegularSeason(state) {
             Object.keys(state).forEach((key) => state[key] = false);
             state.regularSeason = true;
+        },
+        activateSelectionSunday(state) {
+            state.selectionSunday = true;
         },
         activateTournament(state) {
             Object.keys(state).forEach((key) => state[key] = false);

@@ -2,6 +2,7 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // State
+import { appStateActions } from "@/store/appStateSlice";
 import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 // Functions
 import playGame from "@/src/functions/playGame";
@@ -10,10 +11,10 @@ import { AMOUNT_NONCONFERENCE_GAMES, AMOUNT_CONFERENCE_GAMES, AMOUNT_SEASON_GAME
 
 
 function PlayRegularSeasonGames(props) {
+    const dispatch = useDispatch();
+
     const teamSchedules = useSelector((state) => state.teamSchedule.teamSchedules);
     const teamStats = props.teamStats;
-    
-    const dispatch = useDispatch();
 
     const playRegularSeasonGames = useCallback(() => {
         Object.keys(teamSchedules).forEach((week) => {
@@ -27,7 +28,8 @@ function PlayRegularSeasonGames(props) {
     useEffect(() => {
         if (!teamSchedules || !teamStats) return;
         playRegularSeasonGames();
-    }, [playRegularSeasonGames, teamStats, teamSchedules]);
+        dispatch(appStateActions.activateSelectionSunday());
+    }, [dispatch, playRegularSeasonGames, teamStats, teamSchedules]);
 
     return;
 }

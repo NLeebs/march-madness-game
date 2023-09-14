@@ -9,9 +9,13 @@ import separatePowerConferences from "@/src/functions/regularSeason/separatePowe
 // Components
 import ConferenceGroups from "./ConferenceGroups";
 import PlayRegularSeasonGames from "./PlayRegularSeasonGames";
+import SelectionSunday from "./SelectionSunday";
 
 
 function RegularSeason(props) {
+    const appState = useSelector((state) => state.appState);
+    const tournamemtTeamsState = useSelector((state) => state.tournament.tournamentTeams);
+    console.log(tournamemtTeamsState);
 
     // Split conferences for visualization
     const powerConferences = ["acc", "bigTen", "big12", "sec", "bigEast", "pac12", "americanAthletic", "atlantic10", "wcc"];
@@ -28,6 +32,8 @@ function RegularSeason(props) {
                 </div>
             </div>
             <PlayRegularSeasonGames teamStats={props.teamStats} />
+            {appState.selectionSunday && <SelectionSunday />}
+
         </Fragment>
     )
 }
