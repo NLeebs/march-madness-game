@@ -116,7 +116,7 @@ export default function playGame(team1Stats, team2Stats) {
     if (tip < .5) favoredHasPossession = true;
     else favoredHasPossession = false; 
 
-    //?? The Game
+    //// The Game
     for (let poss = 1; poss <= possessions; poss++) {
 
         // Halftime Logic
