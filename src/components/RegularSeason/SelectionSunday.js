@@ -55,14 +55,12 @@ function SelectionSunday(props) {
         });
         // Grab last two conference champs for playin games
         tournamentTeamsArr = sortByTournamentScore(tournamentTeamsArr);
-        console.log(tournamentTeamsArr);
         for (let i = 1; i <= NUMBER_OF_CONF_CHAMP_PLAYINS; i++) {
             dispatch(tournamentActions.setPlayinTeams({seed: 16, team: tournamentTeamsArr.splice(tournamentTeamsArr.length - 1, 1)[0]}));
         }
 
-        const atLargeTeamArr = sortByTournamentScore(totalTeamsArr);
-
         // Take top remaniming 36 Teams as wild cards
+        const atLargeTeamArr = sortByTournamentScore(totalTeamsArr);
         for (let i = 0; i < NUMBER_OF_AT_LARGE_TEAMS; i++) {
             if (i < (NUMBER_OF_AT_LARGE_TEAMS - NUMBER_OF_AT_LARGE_TEAMS_PLAYINS)) tournamentTeamsArr.push(atLargeTeamArr[i]);
             else dispatch(tournamentActions.setPlayinTeams({seed: 11, team: atLargeTeamArr[i]}));
