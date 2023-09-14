@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initalState = {};
+const initalState = {
+    conferenceArrays: {},
+};
 
 // Create Team Statistics State Slice
 const teamStatsSlice = createSlice({
@@ -10,6 +12,11 @@ const teamStatsSlice = createSlice({
         addToStateFromDB(state, action) {
             state.teamStats = {...action.payload}
         },
+        addConferenceArrays(state, action) {
+            Object.keys(action.payload).forEach((conf) => {
+                state.conferenceArrays[conf] = Object.keys(action.payload[conf]);
+            })
+        }
     },
 });
 

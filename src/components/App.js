@@ -26,7 +26,8 @@ function App() {
   // Add Team Stats to State and Config Schedules State
   useEffect(() => {
     getTeamStatData().then((teamStatsData) => {
-      dispatch(teamStatsActions.addToStateFromDB(teamStatsData));;
+      dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
+      dispatch(teamStatsActions.addConferenceArrays(teamStatsData));
       dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
       dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)); //
     });
