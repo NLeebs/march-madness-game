@@ -2,8 +2,7 @@
 // Libraries
 import React, { Fragment } from "react";
 // React Functions
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // Functions
 import separatePowerConferences from "@/src/functions/regularSeason/separatePowerConferences";
 // Components
@@ -17,7 +16,6 @@ function RegularSeason(props) {
     const tournamemtTeamsState = useSelector((state) => state.tournament.tournamentTeams);
     const playinTeamsState = useSelector((state) => state.tournament.playinTeams);
     const tournamentSeedsState = useSelector((state) => state.tournament.tournamentSeeds);
-    console.log(tournamemtTeamsState);
     console.log(playinTeamsState);
     console.log(tournamentSeedsState);
 
