@@ -15,6 +15,7 @@ import AddTeamStatsToFirebase from "@/src/components/Add-To-Firebase/AddTeamStat
 import StartButton from "@/src/components/UI/StartButton.js";
 import SeasonSchedule from "./RegularSeason/SeasonSchedule";
 import RegularSeason from "./RegularSeason/RegularSeason";
+import Tournament from "./Tournament/Tournament";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,11 +36,11 @@ function App() {
   
   return (
     <Fragment>
-      <h1>Hello World!</h1>
       {/* <AddTeamStatsToFirebase /> */}
       {teamArray && <SeasonSchedule teamStats={teamStatsObject.teamStats} teamArray={teamArray} />}      
-      <StartButton />
+      {appState.startScreen && <StartButton />}
       {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
+      {appState.tournament && <Tournament />}
     </Fragment>
    
   );
