@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+// Functions
+import createMatchupsFromSeededArr from "@/src/functions/seeding/createMatchupsFromSeededArr";
+// Constants
 import { HIGHEST_SEED } from "@/constants/CONSTANTS";
 
 const initalState = {
@@ -12,7 +15,36 @@ const initalState = {
     playinTeams: {
         elevenSeeds: [],
         sixteenSeeds: [],
-    }
+    },
+    roundOneMatchups: {
+        east: [],
+        west: [],
+        south: [],
+        midwest: [],
+        playin: {
+            elevenSeeds: [],
+            sixteenSeeds: [],
+        },
+    },
+    roundTwoMatchups: {
+        east: [],
+        west: [],
+        south: [],
+        midwest: [],
+    },
+    roundSweetSixteenMatchups: {
+        east: [],
+        west: [],
+        south: [],
+        midwest: [],
+    },
+    roundFinalFourMatchups: {
+        eastSouth: [],
+        westMidwest: [],
+    },
+    roundFinalsMatchups: {
+        championship: [],
+    },
 };
 
 // Create Team Statistics State Slice
@@ -49,6 +81,14 @@ const tournamentSlice = createSlice({
         setPlayinTeams(state, action) {
             if (action.payload.seed === 11) state.playinTeams.elevenSeeds.push(action.payload.team);
             else if (action.payload.seed === 16) state.playinTeams.sixteenSeeds.push(action.payload.team);
+        },
+        setRoundOneMatchups(state) {
+            Object.keys(state.tournamentSeeds).forEach((region) => {
+                state.roundOneMatchups[region] = createMatchupsFromSeededArr(state.tournamentSeeds[region]);
+            });
+            Object.keys(state.playinTeams).forEach((playinSeed) => {
+                state.roundOneMatchups.playin[playinSeed] = createMatchupsFromSeededArr(state.playinTeams[playinSeed]);
+            });
         },
     },  
 });

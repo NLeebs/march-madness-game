@@ -2,18 +2,25 @@
 // Libraries
 import React from "react"
 // React Functions
-import { useSelector } from "react-redux"
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux"
+// State
+import { tournamentActions } from "@/store/tournamentSlice";
 // Components
 import TournamentRound from "./TournamentRound";
 
 function Tournament(props) {
-    const tournamentTeamsState = useSelector((state) => state.tournament.tournamentSeeds);
-    const tournamentPlayinsState = useSelector((state) => state.tournament.playinTeams);
-    console.log(tournamentTeamsState);
-    console.log(tournamentPlayinsState);
+    const dispatch = useDispatch();
+    const roundOneMatchups = useSelector((state) => state.tournament.roundOneMatchups)
+    
+    console.log(roundOneMatchups);
+
+    useEffect(() => {
+        dispatch(tournamentActions.setRoundOneMatchups());
+    }, [dispatch])
 
     return (
-        <TournamentRound />
+        <TournamentRound region="east" round="1" />
     );
 }
 
