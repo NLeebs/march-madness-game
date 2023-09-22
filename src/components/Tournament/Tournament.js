@@ -11,9 +11,6 @@ import TournamentRound from "./TournamentRound";
 
 function Tournament(props) {
     const dispatch = useDispatch();
-    const roundOneMatchups = useSelector((state) => state.tournament.roundOneMatchups)
-    
-    console.log(roundOneMatchups);
 
     useEffect(() => {
         dispatch(tournamentActions.setRoundOneMatchups());

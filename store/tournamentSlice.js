@@ -76,7 +76,7 @@ const tournamentSlice = createSlice({
                     }
                     else {
                         if (i === 16 && ((j === 0) || (j === 1))) {
-                            state.tournamentSeeds[regions[j]].push(`playinGameSeed11Game${j+1}`)
+                            state.tournamentSeeds[regions[j]].push(`playinGameSeed16Game${j+1}`)
                         }
                         else state.tournamentSeeds[regions[j]].push(seedSettingArr[numberOfRegions - (j + 1)]);
                     }
