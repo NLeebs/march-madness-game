@@ -13,4 +13,6 @@ export const PERCENT_FOULS_THAT_SHOOT_FT = .09;
 export const NUMBER_OF_AT_LARGE_TEAMS = 36;
 export const NUMBER_OF_AT_LARGE_TEAMS_PLAYINS = 4;
 export const NUMBER_OF_CONF_CHAMP_PLAYINS = 4;
+export const NUMBER_OF_REGIONS = 4;
+export const NUMBER_ROUND_ONE_TEAMS = 64;
 export const HIGHEST_SEED = 16;
