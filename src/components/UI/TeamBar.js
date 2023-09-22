@@ -19,7 +19,7 @@ function TeamBar(props) {
 
   return (
     <div>
-        <div className={teamBarclasses}>{props.team} {regularSeasonRecords[props.team].wins}-{regularSeasonRecords[props.team].losses}</div>
+        <div className={teamBarclasses}>{props.team} {regularSeasonRecords[props.team]?.wins}-{regularSeasonRecords[props.team]?.losses}</div>
     </div>
   );
 }

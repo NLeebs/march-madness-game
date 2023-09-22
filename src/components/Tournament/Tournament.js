@@ -20,7 +20,12 @@ function Tournament(props) {
     }, [dispatch])
 
     return (
-        <TournamentRound region="east" round="1" />
+        <div className="flex flex-col gap-y-16">
+            <TournamentRound region="east" round="1" />
+            <TournamentRound region="west" round="1" />
+            <TournamentRound region="south" round="1" />
+            <TournamentRound region="midwest" round="1" />
+        </div>
     );
 }
 

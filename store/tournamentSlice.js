@@ -38,6 +38,12 @@ const initalState = {
         south: [],
         midwest: [],
     },
+    roundEliteEightMatchups: {
+        east: [],
+        west: [],
+        south: [],
+        midwest: [],
+    },
     roundFinalFourMatchups: {
         eastSouth: [],
         westMidwest: [],
