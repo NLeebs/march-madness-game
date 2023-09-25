@@ -12,7 +12,7 @@ const asunStatURLs = {
     "Central Arkansas": {
         "team-colors-URL": "https://teamcolorcodes.com/central-arkansas-bears-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/central-arkansas-bears/stats",
-        "team-logo-URL": "\/team-logos\/asun\/Logo.png",
+        "team-logo-URL": "\/team-logos\/asun\/CentralArkansasLogo.png",
         "list-name": "Central Ark",
     },
     "Eastern Kentucky": {

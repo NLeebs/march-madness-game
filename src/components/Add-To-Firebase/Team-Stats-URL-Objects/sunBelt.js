@@ -2,7 +2,7 @@ const sunBeltStatURLs = {
     "Appalachian State": {
         "team-colors-URL": "https://teamcolorcodes.com/appalachian-state-mountaineers-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/appalachian-st-mountaineers/stats",
-        "team-logo-URL": "\/team-logos\/sunBelt\/Logo.png",
+        "team-logo-URL": "\/team-logos\/sunBelt\/AppalachianStLogo.png",
         "list-name": "App State",
         "mascot-name": "Mountaineers",
         "primary-color": "#222222",
@@ -10,7 +10,7 @@ const sunBeltStatURLs = {
     "Arkansas State": {
         "team-colors-URL": "https://teamcolorcodes.com/arkansas-state-red-wolves/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/arkansas-st-red-wolves/stats",
-        "team-logo-URL": "\/team-logos\/sunBelt\/Logo.png",
+        "team-logo-URL": "\/team-logos\/sunBelt\/ArkansasStLogo.png",
         "list-name": "Arkansas St",  
         "mascot-name" : "Red Wolves",      
     },

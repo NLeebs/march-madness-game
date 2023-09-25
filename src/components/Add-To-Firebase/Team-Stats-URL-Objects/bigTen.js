@@ -27,7 +27,7 @@ const bigTenStatsURLs = {
     "Michigan State": {
         "team-colors-URL": "https://teamcolorcodes.com/michigan-state-spartans-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/michigan-st-spartans/stats",
-        "team-logo-URL": "\/team-logos\/bigTen\/Logo.png",
+        "team-logo-URL": "\/team-logos\/bigTen\/MichiganStLogo.png",
         "list-name": "Michigan St",
         "mascot-name": "Spartans",
     },
