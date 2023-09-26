@@ -5,6 +5,7 @@ import teamScheduleSlice from "./teamScheduleSlice";
 import appStateSlice from "./appStateSlice";
 import regularSeasonRecordSlice from "./regularSeasonRecordSlice";
 import tournamentSlice from "./tournamentSlice";
+import tournamentPlayersPicksSlice from "./tournamentPlayersPicksSlice";
 
 
 const store = configureStore({
@@ -14,6 +15,7 @@ const store = configureStore({
         teamSchedule: teamScheduleSlice.reducer,
         regularSeasonRecords: regularSeasonRecordSlice.reducer,
         tournament: tournamentSlice.reducer,
+        tournamentPlayersPicks: tournamentPlayersPicksSlice.reducer,
     }
 });
 
