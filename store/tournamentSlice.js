@@ -90,7 +90,8 @@ const tournamentSlice = createSlice({
         },
         setRoundOneMatchups(state) {
             Object.keys(state.tournamentSeeds).forEach((region) => {
-                state.roundOneMatchups[region] = createMatchupsFromSeededArr(state.tournamentSeeds[region]);
+                const unorderedMatchupArr = createMatchupsFromSeededArr(state.tournamentSeeds[region]);
+                state.roundOneMatchups[region] = [unorderedMatchupArr[0], unorderedMatchupArr[7], unorderedMatchupArr[4], unorderedMatchupArr[3], unorderedMatchupArr[5], unorderedMatchupArr[2], unorderedMatchupArr[6], unorderedMatchupArr[1]];
             });
             Object.keys(state.playinTeams).forEach((playinSeed) => {
                 state.roundOneMatchups.playin[playinSeed] = createMatchupsFromSeededArr(state.playinTeams[playinSeed]);
