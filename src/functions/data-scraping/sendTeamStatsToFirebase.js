@@ -41,11 +41,14 @@ const pythonDataScrapeHandler = async (e) => {
     e.preventDefault();
 
     // Conference and Ref URLs Config Array
-    const confURLsArr = [
-        ['acc', accStatsURLs], ['americanAthletic', americaAthleticStatURLs], ['americanEast', americaEastStatURLs], ['asun', asunStatURLs], 
+    const firstHalfConfURLsArr = [
+        ['acc', accStatsURLs], ['americanAthletic', americaAthleticStatURLs], ['americaEast', americaEastStatURLs], ['asun', asunStatURLs], 
         ['atlantic10', atlantic10StatURLs], ['big12', big12StatsURLs], ['bigEast', bigEastStatsURLs], ['bigSky', bigSkyStatsURLs], ['bigSouth', bigSouthStatsURLs], 
         ['bigTen', bigTenStatsURLs], ['bigWest', bigWestStatsURLs], ['caa', caaStatsURLs], ['cusa', cusaStatsURLs], ['horizon', horizonStatsURLs], 
-        ['ivy', ivyStatsURLs], ['maac', maacStatsURLs], ['mac', macStatsURLs],  ['meac', meacStatsURLs], ['missouriValley', missouriValleyStatsURLs],
+        ['ivy', ivyStatsURLs],
+    ];
+    const secondHalfConfURLsArr = [
+        ['maac', maacStatsURLs], ['mac', macStatsURLs],  ['meac', meacStatsURLs], ['missouriValley', missouriValleyStatsURLs],
         ['mountainWest', mountainWestStatsURLs], ['nec', necStatsURLs], ['ohioValley', ohioValleyStatsURLs], ['pac12', pac12StatsURLs], ['patriot', patriotStatsURLs],
         ['sec', secStatsURLs], ['southern', southernStatsURLs], ['southland', southlandStatsURLs], ['summit', summitStatsURLs], ['sunBelt', sunBeltStatsURLs], 
         ['swac', swacStatsURLs], ['wac', wacStatsURLs], ['wcc', wccStatsURLs],
@@ -56,12 +59,12 @@ const pythonDataScrapeHandler = async (e) => {
 
     // Create team stats return object
     const teamStatsObj = {};
-    confURLsArr.forEach(teamArr => {
+    testURLArr.forEach(teamArr => {
         teamStatsObj[teamArr[0]] = {};
     });
 
     // Call Python Script for each Conference and populate team stats object
-    await Promise.all(confURLsArr.map( async confData => {
+    await Promise.all(testURLArr.map( async confData => {
         try {
             const confRes = await fetch("http://127.0.0.1:5000/ncaa-stats", {
                 method: "POST",
