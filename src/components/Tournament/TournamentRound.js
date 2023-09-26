@@ -9,22 +9,52 @@ import TournamentMatchup from "./TournamentMatchup";
 
 function TournamentRound(props) {
     // Determine which State to pull from
-    let stateRoundName;
-    if (props.round === "1") stateRoundName = "roundOneMatchups";
-    else if (props.round === "2") stateRoundName = "roundTwoMatchups";
-    else if (props.round === "sweet sixteen") stateRoundName = "roundSweetSixteenMatchups";
-    else if (props.round === "elite eight") stateRoundName = "roundEliteEightMatchups";
-    else if (props.round === "final four") stateRoundName = "roundFinalFourMatchups";
-    else if (props.round === "finals") stateRoundName = "roundFinalsMatchups";
+    let roundResultsName;
+    let playersPicksName;
+    let roundClasses;
+    if (props.round === "1") { 
+        roundResultsName = "roundOneMatchups"; 
+        playersPicksName = "roundTwoPicks";
+        roundClasses = "gap-y-4"
+    }
+    else if (props.round === "2") {
+        roundResultsName = "roundTwoMatchups"; 
+        playersPicksName = "roundTwoPicks";
+        roundClasses = "py-16 gap-y-36"
+    }
+    else if (props.round === "sweet sixteen") {
+        roundResultsName = "roundSweetSixteenMatchups"; 
+        playersPicksName = "roundSweetSixteenPicks";
+    }
+    else if (props.round === "elite eight") {
+        roundResultsName = "roundEliteEightMatchups"; 
+        playersPicksName = "roundEliteEightPicks";
+    }
+    else if (props.round === "final four") {
+        roundResultsName = "roundFinalFourMatchups"; 
+        playersPicksName = "roundFinalFourPicks";
+    }
+    else if (props.round === "finals") {
+        roundResultsName = "roundFinalsMatchups"; 
+        playersPicksName = "roundFinalFourPicks";
+    }
     
-    // Pass Matchup to Matchup Component
-    let matchupObj = useSelector((state) => state.tournament[stateRoundName]);
-    const tournamentMatchupElements = matchupObj[props.region].map((matchup, i) => {
+    // State
+    const matchupObj = useSelector((state) => state.tournament[roundResultsName]);
+    const playerPicksObj = useSelector((state) => state.tournamentPlayersPicks[playersPicksName])
+
+    
+    // Pass Matchups to Matchup Component
+    let matchupElGenerationArr;
+    if (props.round === "1") matchupElGenerationArr = matchupObj;
+    else  matchupElGenerationArr = playerPicksObj;
+
+    const tournamentMatchupElements = matchupElGenerationArr[props.region].map((matchup, i) => {
         return (<TournamentMatchup key={i} matchup={matchup} />);
     })
 
     return (
-        <div className="flex flex-col gap-y-4">
+        <div className={`flex flex-col m-4 ${roundClasses}`}>
             {tournamentMatchupElements}
         </div>
     );

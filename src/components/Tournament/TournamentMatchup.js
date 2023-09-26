@@ -11,8 +11,8 @@ function TournamentMatchup(props) {
   
     const matchupElements = props.matchup.map((teamObj, i) => {
         return (
-        <div key={i} className="flex px-4">
-            <div className="w-8 flex justify-center items-center">
+        <div key={i} className="flex items-center px-4 h-14 border-2 border-slate-100 rounded-md">
+            <div className="flex justify-center items-center w-6 pr-2">
                 {teamObj.seed}
             </div>
             <TeamBar team={teamObj.team} />
@@ -20,7 +20,7 @@ function TournamentMatchup(props) {
     })
 
     return (
-        <div>
+        <div className="bg-slate-50 rounded-md">
             {matchupElements}
         </div>
     );

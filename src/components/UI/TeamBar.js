@@ -28,7 +28,7 @@ function TeamBar(props) {
   let teamLogoPath;
   if (props.team === "playinGameSeed11Game1" || props.team === "playinGameSeed11Game2" || props.team === "playinGameSeed16Game1" || props.team === "playinGameSeed16Game2") {
       isPlayin = true;
-  } else {
+  } else if (props.team !== "") {
       isPlayin = false;
       teamLogoPath = teamStats[teamConf][props.team].logo;
   }
@@ -38,10 +38,14 @@ function TeamBar(props) {
   if(tournamentTeamsArr && appState.selectionSunday && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarclasses = styles.goingToTheDance;
 
   return (
-    <div className={teamBarclasses}>
-        <div className="flex flex-row justify-between items-center gap-4">
-          {isPlayin || <div className=""><Image src={teamLogoPath} alt="Team Logo" width={32} height={32} /></div>}
-          {props.team} {regularSeasonRecords[props.team]?.wins}-{regularSeasonRecords[props.team]?.losses}
+    <div className={`${teamBarclasses}`}>
+        <div className="flex flex-row justify-between items-center gap-2">
+          {isPlayin || props.team !== "" &&
+            <div className="">
+              <Image src={teamLogoPath} alt="Team Logo" width={32} height={32} />
+            </div>
+          }
+          {props.team} {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
         </div>
     </div>
   );
