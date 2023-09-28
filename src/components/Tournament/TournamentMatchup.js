@@ -44,7 +44,7 @@ function TournamentMatchup(props) {
 
     const matchupElements = props.matchup.map((teamObj, i) => {
         return (
-        <div key={i} onClick={appState.tournamentSelection && teamSelectionClickHandler} value={i} team={teamObj.team} seed={teamObj.seed} className="team-selection flex items-center px-4 h-14 border-2 border-slate-100 rounded-md cursor-pointer">
+        <div key={i} onClick={appState.tournamentSelection && teamSelectionClickHandler} value={i} team={teamObj.team} seed={teamObj.seed} className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 rounded-md cursor-pointer ${props.round === "playin" && 'min-w-300'}`}>
             <div className="flex justify-center items-center w-6 pr-2">
                 {teamObj.seed}
             </div>
