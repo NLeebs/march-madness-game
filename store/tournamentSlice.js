@@ -45,11 +45,14 @@ const initalState = {
         midwest: [],
     },
     roundFinalFourMatchups: {
-        eastSouth: [],
-        westMidwest: [],
+        eastWest: [],
+        southMidwest: [],
     },
     roundFinalsMatchups: {
         championship: [],
+    },
+    champion: {
+        champion: [],
     },
 };
 
