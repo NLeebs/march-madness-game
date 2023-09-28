@@ -25,18 +25,26 @@ function TournamentRound(props) {
     else if (props.round === "sweet sixteen") {
         roundResultsName = "roundSweetSixteenMatchups"; 
         playersPicksName = "roundSweetSixteenPicks";
+        roundClasses = "py-48 gap-y-96"
     }
     else if (props.round === "elite eight") {
         roundResultsName = "roundEliteEightMatchups"; 
         playersPicksName = "roundEliteEightPicks";
+        roundClasses = "py-112 gap-y-96"
     }
     else if (props.round === "final four") {
         roundResultsName = "roundFinalFourMatchups"; 
         playersPicksName = "roundFinalFourPicks";
+        roundClasses = "py-252"
     }
     else if (props.round === "finals") {
         roundResultsName = "roundFinalsMatchups"; 
-        playersPicksName = "roundFinalFourPicks";
+        playersPicksName = "roundFinalsPicks";
+        roundClasses = "pt-252"
+    }
+    else if (props.round === "champion") {
+        roundResultsName = "champion"; 
+        playersPicksName = "champion";
     }
     
     // State
@@ -50,7 +58,7 @@ function TournamentRound(props) {
     else  matchupElGenerationArr = playerPicksObj;
 
     const tournamentMatchupElements = matchupElGenerationArr[props.region].map((matchup, i) => {
-        return (<TournamentMatchup key={i} matchup={matchup} />);
+        return (<TournamentMatchup key={i} index={i} region={props.region} round={props.round}  matchup={matchup} />);
     })
 
     return (
