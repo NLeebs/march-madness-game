@@ -7,6 +7,8 @@ const initalState = {
     regularSeason: false,
     selectionSunday: false,
     tournament: false,
+    tournamentSelection: false,
+    tournamentPlayGames: false,
 };
 
 // Create Team Statistics State Slice
@@ -29,6 +31,13 @@ const appStateSlice = createSlice({
             Object.keys(state).forEach((key) => state[key] = false);
             state.tournament = true;
         },
+        activateTournamentSelectionStage(state) {
+            state.tournamentSelection = true;
+        },
+        activateTournamentPlayGamesState(state) {
+            state.tournamentSelection = false;
+            state.tournamentPlayGames = true;
+        }
         
     },
 });
