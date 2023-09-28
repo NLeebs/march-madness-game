@@ -1,14 +1,14 @@
-export default function createMatchupsFromSeededArr(seededArr) {
+export default function createMatchupsFromSeededArr(seededArr, playinSeed = false) {
     const matchupArr = [];
     for (let i = 0; i < (seededArr.length / 2); i++) {
         matchupArr.push([
             {
                 team: seededArr[i], 
-                seed: i + 1,
+                seed: (playinSeed || i + 1),
             }, 
             {
                 team: seededArr[seededArr.length - (i + 1)], 
-                seed: seededArr.length - i,
+                seed: (playinSeed || seededArr.length - i),
             },
         ]);
     }

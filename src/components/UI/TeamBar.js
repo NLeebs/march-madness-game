@@ -18,8 +18,10 @@ function TeamBar(props) {
   const confArrs = useSelector((state) => state.teamStats.conferenceArrays);
   const regularSeasonRecords = useSelector((state) => state.regularSeasonRecords.records);
   const tournamentTeamsArr = useSelector((state) => state.tournament.tournamentTeams);
+  const playinTeamMatchups = useSelector((state) => state.tournament.roundOneMatchups.playin)
   const playinTeamsObj = useSelector((state) => state.tournament.playinTeams);
 
+  console.log(playinTeamMatchups.elevenSeeds[0]);
   // Find conference of the team
   const teamConf = findTeamConference(props.team, confArrs);
 
@@ -35,7 +37,7 @@ function TeamBar(props) {
 
   // Dynamic Styles
   let teamBarclasses = "";
-  if(tournamentTeamsArr && appState.selectionSunday && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarclasses = styles.goingToTheDance;
+  if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarclasses = styles.goingToTheDance;
 
   return (
     <div className={`${teamBarclasses}`}>
@@ -45,7 +47,12 @@ function TeamBar(props) {
               <Image src={teamLogoPath} alt="Team Logo" width={32} height={32} />
             </div>
           }
-          {props.team} {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
+          {isPlayin || props.team} 
+          {isPlayin && props.team === "playinGameSeed11Game1" && `${playinTeamMatchups.elevenSeeds[0][0].team}/${playinTeamMatchups.elevenSeeds[0][1].team}`} 
+          {isPlayin && props.team === "playinGameSeed11Game2" && `${playinTeamMatchups.elevenSeeds[1][0].team}/${playinTeamMatchups.elevenSeeds[1][1].team}`} 
+          {isPlayin && props.team === "playinGameSeed16Game1" && `${playinTeamMatchups.sixteenSeeds[0][0].team}/${playinTeamMatchups.sixteenSeeds[0][1].team}`} 
+          {isPlayin && props.team === "playinGameSeed16Game2" && `${playinTeamMatchups.sixteenSeeds[1][0].team}/${playinTeamMatchups.sixteenSeeds[1][1].team}`} 
+          {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
         </div>
     </div>
   );
