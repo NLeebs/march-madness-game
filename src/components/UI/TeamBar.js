@@ -21,7 +21,6 @@ function TeamBar(props) {
   const playinTeamMatchups = useSelector((state) => state.tournament.roundOneMatchups.playin)
   const playinTeamsObj = useSelector((state) => state.tournament.playinTeams);
 
-  console.log(playinTeamMatchups.elevenSeeds[0]);
   // Find conference of the team
   const teamConf = findTeamConference(props.team, confArrs);
 
