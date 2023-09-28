@@ -97,7 +97,10 @@ const tournamentSlice = createSlice({
                 state.roundOneMatchups[region] = [unorderedMatchupArr[0], unorderedMatchupArr[7], unorderedMatchupArr[4], unorderedMatchupArr[3], unorderedMatchupArr[5], unorderedMatchupArr[2], unorderedMatchupArr[6], unorderedMatchupArr[1]];
             });
             Object.keys(state.playinTeams).forEach((playinSeed) => {
-                state.roundOneMatchups.playin[playinSeed] = createMatchupsFromSeededArr(state.playinTeams[playinSeed]);
+                let seedNum;
+                if (playinSeed === 'elevenSeeds') seedNum = 11;
+                if (playinSeed === 'sixteenSeeds') seedNum = 16;
+                state.roundOneMatchups.playin[playinSeed] = createMatchupsFromSeededArr(state.playinTeams[playinSeed], seedNum);
             });
         },
     },  
