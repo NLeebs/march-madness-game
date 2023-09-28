@@ -2,34 +2,36 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
     playerScore: 0,
-    roundTwoPicks: {
-        east: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
-        west: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
-        south: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
-        midwest: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+    picks: {
+        roundTwoPicks: {
+            east: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+            west: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+            south: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+            midwest: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+        },
+        roundSweetSixteenPicks: {
+            east: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
+            west: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
+            south: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
+            midwest: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
+        },
+        roundEliteEightPicks: {
+            east: [[{team: "", seed: ""}, {team: "", seed: ""}]],
+            west: [[{team: "", seed: ""}, {team: "", seed: ""}]],
+            south: [[{team: "", seed: ""}, {team: "", seed: ""}]],
+            midwest: [[{team: "", seed: ""}, {team: "", seed: ""}]],
+        },
+        roundFinalFourPicks: {
+            eastWest: [[{team: "", seed: ""}, {team: "", seed: ""}]],
+            southMidwest: [[{team: "", seed: ""}, {team: "", seed: ""}]],
+        },
+        roundFinalsPicks: {
+            championship: [[{team: "", seed: ""}, {team: "", seed: ""}]],
+        },
+        champion: {
+            champion: [[{team: "", seed: ""}]],
+        },
     },
-    roundSweetSixteenPicks: {
-        east: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
-        west: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
-        south: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
-        midwest: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}]],
-    },
-    roundEliteEightPicks: {
-        east: [[{team: "", seed: ""}, {team: "", seed: ""}]],
-        west: [[{team: "", seed: ""}, {team: "", seed: ""}]],
-        south: [[{team: "", seed: ""}, {team: "", seed: ""}]],
-        midwest: [[{team: "", seed: ""}, {team: "", seed: ""}]],
-    },
-    roundFinalFourPicks: {
-        eastWest: [[{team: "", seed: ""}, {team: "", seed: ""}]],
-        southMidwest: [[{team: "", seed: ""}, {team: "", seed: ""}]],
-    },
-    roundFinalsPicks: {
-        championship: [[{team: "", seed: ""}, {team: "", seed: ""}]],
-    },
-    champion: {
-        champion: [[{team: "", seed: ""}]],
-    }
 };
 
 const tournamentPlayersPicksSlice = createSlice({
@@ -48,15 +50,15 @@ const tournamentPlayersPicksSlice = createSlice({
 
             // Set Pick
             if (action.payload.team !== "") {
-                state[whichRound][action.payload.region][Math.floor(+action.payload.roundIndex / 2)][+action.payload.roundIndex % 2].team = action.payload.team;
-                state[whichRound][action.payload.region][Math.floor(+action.payload.roundIndex / 2)][+action.payload.roundIndex % 2].seed = action.payload.seed;
+                state.picks[whichRound][action.payload.region][Math.floor(+action.payload.roundIndex / 2)][+action.payload.roundIndex % 2].team = action.payload.team;
+                state.picks[whichRound][action.payload.region][Math.floor(+action.payload.roundIndex / 2)][+action.payload.roundIndex % 2].seed = action.payload.seed;
             }
 
             // Remove erroneous future picks
             if (action.payload.opponent !== "") {
                 removeRoundPicksArr.forEach((round) => {
-                    Object.keys(state[round]).forEach((region) => {
-                        state[round][region].forEach((matchup) => {
+                    Object.keys(state.picks[round]).forEach((region) => {
+                        state.picks[round][region].forEach((matchup) => {
                             matchup.forEach((teamObj) => {
                                 if (teamObj.team === action.payload.opponent) {
                                     teamObj.team = "";
