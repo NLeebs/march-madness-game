@@ -77,6 +77,7 @@ function SelectionSunday(props) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
             dispatch(tournamentActions.setTournamentSeeds());
             dispatch(appStateActions.activateTournament());
+            dispatch(appStateActions.activateTournamentSelectionStage());
         }
     }, [dispatch, appState, seasonResults, getTournamentTeams]);
 
