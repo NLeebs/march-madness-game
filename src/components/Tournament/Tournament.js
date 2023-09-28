@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { tournamentActions } from "@/store/tournamentSlice";
 // Components
 import TournamentRound from "./TournamentRound";
+import PlayTournamentButton from "../UI/PlayTournamentButton";
 
 function Tournament(props) {
     const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function Tournament(props) {
                     <div className="flex flex-col gap-y-16 min-w-300">
                         <TournamentRound region="champion" round="champion" />
                     </div>
+                    <PlayTournamentButton />
                 </div>
                 <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
                     <TournamentRound region="southMidwest" round="final four" />
