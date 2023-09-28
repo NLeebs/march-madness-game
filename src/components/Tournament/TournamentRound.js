@@ -55,9 +55,7 @@ function TournamentRound(props) {
     
     // State
     const matchupObj = useSelector((state) => state.tournament[roundResultsName]);
-    const playerPicksObj = useSelector((state) => state.tournamentPlayersPicks[playersPicksName])
-
-    if(roundResultsName === "roundOneMatchups") console.log(matchupObj);
+    const playerPicksObj = useSelector((state) => state.tournamentPlayersPicks.picks[playersPicksName])
     
     // Pass Matchups to Matchup Component
     let matchupElGenerationArr;
