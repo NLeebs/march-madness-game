@@ -103,6 +103,15 @@ const tournamentSlice = createSlice({
                 state.roundOneMatchups.playin[playinSeed] = createMatchupsFromSeededArr(state.playinTeams[playinSeed], seedNum);
             });
         },
+        setPlayinGameResults(state, action) {
+            if (action.payload.seedType === "elevenSeeds") {
+                if (action.payload.gameIndex === 0) state.roundOneMatchups.south[4][1].team = action.payload.winningTeam;
+                else state.roundOneMatchups.midwest[4][1].team = action.payload.winningTeam;
+            } else {
+                if (action.payload.gameIndex === 0) state.roundOneMatchups.west[0][1].team = action.payload.winningTeam;
+                else state.roundOneMatchups.east[0][1].team = action.payload.winningTeam;
+            }
+        },
     },  
 });
 
