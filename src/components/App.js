@@ -16,6 +16,7 @@ import StartButton from "@/src/components/UI/StartButton.js";
 import SeasonSchedule from "./RegularSeason/SeasonSchedule";
 import RegularSeason from "./RegularSeason/RegularSeason";
 import Tournament from "./Tournament/Tournament";
+import PlayPlayinGames from "./Tournament/PlayPlayinGames";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
       {appState.startScreen && <StartButton />}
       {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
       {appState.tournament && <Tournament />}
+      {appState.tournament && appState.tournamentPlayGames && <PlayPlayinGames />}
     </Fragment>
    
   );
