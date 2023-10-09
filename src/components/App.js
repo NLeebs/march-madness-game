@@ -42,9 +42,8 @@ function App() {
       {appState.startScreen && <StartButton />}
       {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
       {appState.tournament && <Tournament />}
-      {appState.tournament && appState.tournamentPlayGames && <PlayPlayinGames />}
+      {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
     </Fragment>
-   
   );
 }
 

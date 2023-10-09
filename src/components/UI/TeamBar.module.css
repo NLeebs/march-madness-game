@@ -1,3 +1,7 @@
 .goingToTheDance {
     border: 1px solid green;
 }
+
+.selectedTeamDidNotWin {
+    text-decoration: line-through;
+}

@@ -5,6 +5,8 @@ import React, { useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
 // State
 import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSlice";
+// Css Styles
+import classes from "./TournamentMatchup.module.css";
 // Components
 import TeamBar from "../UI/TeamBar";
 
@@ -26,6 +28,7 @@ function TournamentMatchup(props) {
     else if (props.round === "finals") {nextRoundRegion = "champion"; teamIndex = 0;}
     else {nextRoundRegion = props.region; teamIndex = props.index}
 
+    // Handle click of a team during selection
     const teamSelectionClickHandler = useCallback((e) => {
         const teamEl = e.target.closest('div.team-selection');
         let opponentEl;
@@ -42,16 +45,25 @@ function TournamentMatchup(props) {
         }));
     }, [dispatch, nextRoundRegion, props.round, teamIndex]);
 
+    // Create the matchup JSX elements
     const matchupElements = props.matchup.map((teamObj, i) => {
         return (
-        <div key={i} onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} value={i} team={teamObj.team} seed={teamObj.seed} className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 rounded-md cursor-pointer ${props.round === "playin" && 'min-w-300'}`}>
+        <div 
+            key={i} 
+            onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
+            value={i} 
+            team={teamObj.team} 
+            seed={teamObj.seed} 
+            className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 rounded-md cursor-pointer ${teamObj.win && classes.selectedTeamWon} ${props.round === "playin" && 'min-w-300'}`}
+        >
             <div className="flex justify-center items-center w-6 pr-2">
                 {teamObj.seed}
             </div>
-            <TeamBar team={teamObj.team} />
+            <TeamBar team={teamObj.team} win={teamObj?.win} score={teamObj?.score} />
         </div>);
     })
 
+    // JSX
     return (
         <div className="bg-slate-50 rounded-md">
             {matchupElements}

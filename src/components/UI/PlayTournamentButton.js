@@ -17,7 +17,7 @@ function PlayTournamentButton() {
 
     // Change state to tourny play
     const activateTournamentPlay = () => {
-        dispatch(appStateActions.activateTournamentPlayGamesState())
+        dispatch(appStateActions.activateTournamentPlayinGamesState())
     }
 
     // Check to see if all picks are in

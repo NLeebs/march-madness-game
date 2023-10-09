@@ -104,12 +104,29 @@ const tournamentSlice = createSlice({
             });
         },
         setPlayinGameResults(state, action) {
+            // Set round one matchup to winning team
             if (action.payload.seedType === "elevenSeeds") {
                 if (action.payload.gameIndex === 0) state.roundOneMatchups.south[4][1].team = action.payload.winningTeam;
                 else state.roundOneMatchups.midwest[4][1].team = action.payload.winningTeam;
             } else {
                 if (action.payload.gameIndex === 0) state.roundOneMatchups.west[0][1].team = action.payload.winningTeam;
                 else state.roundOneMatchups.east[0][1].team = action.payload.winningTeam;
+            }
+
+            if (state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].team === action.payload.winningTeam) {
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].score = action.payload.winningScore;
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].win = true;
+            } else {
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].score = action.payload.losingScore;
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].win = false;
+            }
+
+            if (state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].team === action.payload.winningTeam) {
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].score = action.payload.winningScore;
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].win = true;  
+            } else {
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].score = action.payload.losingScore;
+                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].win = false;
             }
         },
     },  

@@ -5,8 +5,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 // Functions
 import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
-// CSS Styles
-import styles from './TeamBar.module.css';
+// CSS styles
+import classes from './TeamBar.module.css';
 // Components
 import Image from "next/image";
 
@@ -36,10 +36,11 @@ function TeamBar(props) {
 
   // Dynamic Styles
   let teamBarclasses = "";
-  if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarclasses = styles.goingToTheDance;
+  if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarclasses = classes.goingToTheDance;
+  if(appState.tournamentPlayGames && props.win === false) teamBarclasses = classes.selectedTeamDidNotWin;
 
   return (
-    <div className={`${teamBarclasses}`}>
+    <div className={`w-full flex flex-row justify-between items-center ${teamBarclasses}`}>
         <div className="flex flex-row justify-between items-center gap-2">
           {isPlayin || props.team !== "" &&
             <div className="">
@@ -52,6 +53,9 @@ function TeamBar(props) {
           {isPlayin && props.team === "playinGameSeed16Game1" && `${playinTeamMatchups.sixteenSeeds[0][0].team}/${playinTeamMatchups.sixteenSeeds[0][1].team}`} 
           {isPlayin && props.team === "playinGameSeed16Game2" && `${playinTeamMatchups.sixteenSeeds[1][0].team}/${playinTeamMatchups.sixteenSeeds[1][1].team}`} 
           {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
+        </div>
+        <div>
+          {appState.tournamentPlayGames && props.score}
         </div>
     </div>
   );

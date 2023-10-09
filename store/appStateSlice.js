@@ -8,6 +8,7 @@ const initalState = {
     selectionSunday: false,
     tournament: false,
     tournamentSelection: false,
+    tournamentPlayPlayinGames: false,
     tournamentPlayGames: false,
 };
 
@@ -34,9 +35,14 @@ const appStateSlice = createSlice({
         activateTournamentSelectionStage(state) {
             state.tournamentSelection = true;
         },
-        activateTournamentPlayGamesState(state) {
+        activateTournamentPlayinGamesState(state) {
             state.tournamentSelection = false;
+            state.tournamentPlayPlayinGames = true;
+        },
+        activateTournamentStandardGames(state) {
+            state.tournamentPlayPlayinGames = false;
             state.tournamentPlayGames = true;
+
         }
         
     },
