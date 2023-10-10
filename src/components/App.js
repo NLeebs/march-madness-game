@@ -12,11 +12,12 @@ import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 import getTeamStatData from "@/src/functions/teamStatsData/getTeamStatData";
 // Components
 import AddTeamStatsToFirebase from "@/src/components/Add-To-Firebase/AddTeamStatsToFirebase.js";
-import StartButton from "@/src/components/UI/StartButton.js";
+import StartScreen from "./UI/StartScreen";
 import SeasonSchedule from "./RegularSeason/SeasonSchedule";
 import RegularSeason from "./RegularSeason/RegularSeason";
 import Tournament from "./Tournament/Tournament";
 import PlayPlayinGames from "./Tournament/PlayPlayinGames";
+import PlayStandardGames from "./Tournament/PlayStandardGames";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,10 +40,11 @@ function App() {
     <Fragment>
       {/* <AddTeamStatsToFirebase /> */}
       {teamArray && <SeasonSchedule teamStats={teamStatsObject.teamStats} teamArray={teamArray} />}      
-      {appState.startScreen && <StartButton />}
+      {appState.startScreen && <StartScreen />}
       {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
       {appState.tournament && <Tournament />}
       {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
+      {appState.tournament && appState.tournamentPlayGames && <PlayStandardGames />}
     </Fragment>
   );
 }
