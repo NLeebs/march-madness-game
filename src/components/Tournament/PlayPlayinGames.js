@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // Functions
 import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
 import playGame from "@/src/functions/playGame";
+import getTournamentGameResultObj from "@/src/functions/tournament/getTournamentGameResultObj";
 // State
 import { appStateActions } from "@/store/appStateSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
@@ -13,29 +14,18 @@ function PlayPlayinGames() {
 
     const teamStats = useSelector((state) => state.teamStats.teamStats);
     const confArrs = useSelector((state) => state.teamStats.conferenceArrays);
-    const RoundOneMatchups = useSelector((state) => state.tournament.roundOneMatchups);
     const playinMatchups = useSelector((state) => state.tournament.roundOneMatchups.playin);
-    console.log(playinMatchups);
 
+    // Play playin games and send results to state
     useEffect(() => {
         Object.keys(playinMatchups).forEach((seeds) => {
             playinMatchups[seeds].forEach((matchup, i) => {
-                const gameResults = playGame(teamStats[findTeamConference(matchup[0].team, confArrs)][matchup[0].team], teamStats[findTeamConference(matchup[1].team, confArrs)][matchup[1].team])
-                console.log(gameResults, i);
-                let winningTeam;
-                let winningScore;
-                let losingScore;
-                if (gameResults.favoredScore > gameResults.underdogScore) {
-                    winningTeam = gameResults.favoredTeam; 
-                    winningScore = gameResults.favoredScore;
-                    losingScore = gameResults.underdogScore;
-                }
-                else {
-                    winningTeam = gameResults.underdogTeam;
-                    winningScore = gameResults.underdogScore;
-                    losingScore = gameResults.favoredScore;
-                }
-                dispatch(tournamentActions.setPlayinGameResults({seedType: seeds, gameIndex: i, winningTeam, winningScore, losingScore}))
+                // Play Game
+                const gameResults = playGame(teamStats[findTeamConference(matchup[0].team, confArrs)][matchup[0].team], teamStats[findTeamConference(matchup[1].team, confArrs)][matchup[1].team]);
+                const gameDispatchObj = getTournamentGameResultObj(gameResults, i);
+                gameDispatchObj.seedType = seeds;
+
+                dispatch(tournamentActions.setPlayinGameResults(gameDispatchObj))
             });
         });
         dispatch(appStateActions.activateTournamentStandardGames());
