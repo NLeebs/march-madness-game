@@ -41,7 +41,7 @@ function TeamBar(props) {
 
   return (
     <div className={`w-full flex flex-row justify-between items-center ${teamBarclasses}`}>
-        <div className="flex flex-row justify-between items-center gap-2">
+        <div className="flex flex-row justify-between items-center gap-2 leading-4">
           {isPlayin || props.team !== "" &&
             <div className="">
               <Image src={teamLogoPath} alt="Team Logo" width={32} height={32} />
