@@ -113,21 +113,37 @@ const tournamentSlice = createSlice({
                 else state.roundOneMatchups.east[0][1].team = action.payload.winningTeam;
             }
 
-            if (state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].team === action.payload.winningTeam) {
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].score = action.payload.winningScore;
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].win = true;
-            } else {
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].score = action.payload.losingScore;
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][0].win = false;
+            // Fix Past Round Object with Game Data
+            for (let i = 0; i <= 1; i++) {
+                if (state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][i].team === action.payload.winningTeam) {
+                    state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][i].score = action.payload.winningScore;
+                    state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][i].win = true;
+                } else {
+                    state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][i].score = action.payload.losingScore;
+                    state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][i].win = false;
+                }
             }
+        },
+        setTournamentGameResults(state, action) {
+            let nextRoundKey, currentRoundKey;
+            if (action.payload.round === 1) {nextRoundKey = "roundTwoMatchups"; currentRoundKey = "roundOneMatchups"}
 
-            if (state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].team === action.payload.winningTeam) {
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].score = action.payload.winningScore;
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].win = true;  
-            } else {
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].score = action.payload.losingScore;
-                state.roundOneMatchups.playin[action.payload.seedType][action.payload.gameIndex][1].win = false;
-            }
+            // Add Winning Team to Next Round
+            state[nextRoundKey][action.payload.results.region][action.payload.results.gameIndex] = {
+                team: action.payload.results.winningTeam,
+                seed: action.payload.results.seed,
+            };
+
+            // Fix Past Round Object with Game Data
+            for (let i = 0; i <= 1; i++) {
+                if (state[currentRoundKey][action.payload.results.region][action.payload.results.gameIndex][i].team === action.payload.results.winningTeam) {
+                    state[currentRoundKey][action.payload.results.region][action.payload.results.gameIndex][i].score = action.payload.results.winningScore;
+                    state[currentRoundKey][action.payload.results.region][action.payload.results.gameIndex][i].win = true;
+                } else {
+                    state[currentRoundKey][action.payload.results.region][action.payload.results.gameIndex][i].score = action.payload.results.losingScore;
+                    state[currentRoundKey][action.payload.results.region][action.payload.results.gameIndex][i].win = false;
+                }
+            };
         },
     },  
 });

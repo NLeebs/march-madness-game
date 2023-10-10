@@ -10,6 +10,8 @@ const initalState = {
     tournamentSelection: false,
     tournamentPlayPlayinGames: false,
     tournamentPlayGames: false,
+    tournamentPlayRoundOne: false,
+    tournamentPlayRoundTwo: false,
 };
 
 // Create Team Statistics State Slice
@@ -42,7 +44,11 @@ const appStateSlice = createSlice({
         activateTournamentStandardGames(state) {
             state.tournamentPlayPlayinGames = false;
             state.tournamentPlayGames = true;
-
+            state.tournamentPlayRoundOne = true;
+        },
+        activateTournamentRoundTwo(state) {
+            state.tournamentPlayRoundOne = false;
+            state.tournamentPlayRoundTwo = true;
         }
         
     },
