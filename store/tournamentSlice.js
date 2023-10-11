@@ -27,33 +27,34 @@ const initalState = {
         },
     },
     roundTwoMatchups: {
-        east: [],
-        west: [],
-        south: [],
-        midwest: [],
+        east: [[],[],[],[],],
+        west: [[],[],[],[],],
+        south: [[],[],[],[],],
+        midwest: [[],[],[],[],],
     },
     roundSweetSixteenMatchups: {
-        east: [],
-        west: [],
-        south: [],
-        midwest: [],
+        east: [[],[],],
+        west: [[],[],],
+        south: [[],[],],
+        midwest: [[],[],],
     },
     roundEliteEightMatchups: {
-        east: [],
-        west: [],
-        south: [],
-        midwest: [],
+        east: [[],],
+        west: [[],],
+        south: [[],],
+        midwest: [[],],
     },
     roundFinalFourMatchups: {
-        eastWest: [],
-        southMidwest: [],
+        eastWest: [[],],
+        southMidwest: [[],],
     },
     roundFinalsMatchups: {
-        championship: [],
+        championship: [[],],
     },
     champion: {
         champion: [],
     },
+    playerScore: 0,
 };
 
 // Create Team Statistics State Slice
@@ -129,10 +130,10 @@ const tournamentSlice = createSlice({
             if (action.payload.round === 1) {nextRoundKey = "roundTwoMatchups"; currentRoundKey = "roundOneMatchups"}
 
             // Add Winning Team to Next Round
-            state[nextRoundKey][action.payload.results.region][action.payload.results.gameIndex] = {
+            state[nextRoundKey][action.payload.results.region][Math.floor(action.payload.results.gameIndex / 2)].push({
                 team: action.payload.results.winningTeam,
                 seed: action.payload.results.seed,
-            };
+            });
 
             // Fix Past Round Object with Game Data
             for (let i = 0; i <= 1; i++) {
@@ -143,7 +144,28 @@ const tournamentSlice = createSlice({
                     state[currentRoundKey][action.payload.results.region][action.payload.results.gameIndex][i].score = action.payload.results.losingScore;
                     state[currentRoundKey][action.payload.results.region][action.payload.results.gameIndex][i].win = false;
                 }
-            };
+            }; 
+        },
+        comparePicksAndGames(state, action) {
+            let pointsPerCorrectPick, nextRoundKey;
+            if (action.payload.round === 1) {pointsPerCorrectPick = 10; nextRoundKey = "roundTwoMatchups";}
+
+            // compare picks to winning teams
+            Object.keys(state[nextRoundKey]).forEach((region) => {
+                state[nextRoundKey][region].forEach((matchup, i) => {
+                    matchup.forEach((teamObj, j) => {
+                        console.log(action.payload.picks);
+                        if (action.payload.winningTeams.includes(action.payload.picks[region][i][j].team)) {
+                            console.log(action.payload.winningTeams, action.payload.picks[region][i][j].team, action.payload.winningTeams.includes(action.payload.picks[region][i][j].team));
+                            teamObj.selected = true;
+                            state.playerScore += pointsPerCorrectPick;
+                        } else {
+                            teamObj.selected = false;
+                        }
+                    });
+                });
+            });
+            console.log(action.payload);
         },
     },  
 });

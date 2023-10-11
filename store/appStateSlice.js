@@ -47,7 +47,6 @@ const appStateSlice = createSlice({
             state.tournamentPlayRoundOne = true;
         },
         activateTournamentRoundTwo(state) {
-            state.tournamentPlayRoundOne = false;
             state.tournamentPlayRoundTwo = true;
         }
         
