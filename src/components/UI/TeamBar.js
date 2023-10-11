@@ -35,26 +35,31 @@ function TeamBar(props) {
   }
 
   // Dynamic Styles
-  let teamBarclasses = "";
-  if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarclasses = classes.goingToTheDance;
-  if(appState.tournamentPlayGames && props.win === false) teamBarclasses = classes.selectedTeamDidNotWin;
+  let teamBarClasses, teamBarNameClasses = "";
+  if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarClasses = classes.goingToTheDance;
+  if(appState.tournamentPlayGames && props.win === false) {teamBarClasses = classes.selectedTeamDidNotWin; teamBarNameClasses = classes.strikeTeamName}
 
   return (
-    <div className={`w-full flex flex-row justify-between items-center ${teamBarclasses}`}>
+    <div className={`w-full flex flex-row justify-between items-center ${teamBarClasses}`}>
         <div className="flex flex-row justify-between items-center gap-2 leading-4">
+
           {isPlayin || props.team !== "" &&
             <div className="">
               <Image src={teamLogoPath} alt="Team Logo" width={32} height={32} />
             </div>
           }
-          {isPlayin || props.team} 
-          {isPlayin && props.team === "playinGameSeed11Game1" && `${playinTeamMatchups.elevenSeeds[0][0].team}/${playinTeamMatchups.elevenSeeds[0][1].team}`} 
-          {isPlayin && props.team === "playinGameSeed11Game2" && `${playinTeamMatchups.elevenSeeds[1][0].team}/${playinTeamMatchups.elevenSeeds[1][1].team}`} 
-          {isPlayin && props.team === "playinGameSeed16Game1" && `${playinTeamMatchups.sixteenSeeds[0][0].team}/${playinTeamMatchups.sixteenSeeds[0][1].team}`} 
-          {isPlayin && props.team === "playinGameSeed16Game2" && `${playinTeamMatchups.sixteenSeeds[1][0].team}/${playinTeamMatchups.sixteenSeeds[1][1].team}`} 
-          {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
+          <div className={teamBarNameClasses}> 
+            {isPlayin || props.team} 
+            {isPlayin && props.team === "playinGameSeed11Game1" && `${playinTeamMatchups.elevenSeeds[0][0].team}/${playinTeamMatchups.elevenSeeds[0][1].team}`} 
+            {isPlayin && props.team === "playinGameSeed11Game2" && `${playinTeamMatchups.elevenSeeds[1][0].team}/${playinTeamMatchups.elevenSeeds[1][1].team}`} 
+            {isPlayin && props.team === "playinGameSeed16Game1" && `${playinTeamMatchups.sixteenSeeds[0][0].team}/${playinTeamMatchups.sixteenSeeds[0][1].team}`} 
+            {isPlayin && props.team === "playinGameSeed16Game2" && `${playinTeamMatchups.sixteenSeeds[1][0].team}/${playinTeamMatchups.sixteenSeeds[1][1].team}`} 
+            {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
+          </div>
+          
         </div>
-        <div>
+        
+        <div className={classes.noStrikeThrough}>
           {appState.tournamentPlayGames && props.score}
         </div>
     </div>
