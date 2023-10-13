@@ -54,12 +54,13 @@ function TournamentRound(props) {
     }
     
     // State
+    const appState = useSelector((state) => state.appState);
     const matchupObj = useSelector((state) => state.tournament[roundResultsName]);
     const playerPicksObj = useSelector((state) => state.tournamentPlayersPicks.picks[playersPicksName])
     
     // Pass Matchups to Matchup Component
     let matchupElGenerationArr;
-    if (props.round === "playin" || props.round === "1") matchupElGenerationArr = matchupObj;
+    if (props.round === "playin" || props.round === "1" || (props.round === "2" && appState.tournamentPlayRoundTwo)) matchupElGenerationArr = matchupObj;
     else  matchupElGenerationArr = playerPicksObj;
 
     let tournamentMatchupElements;
