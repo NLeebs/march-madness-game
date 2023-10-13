@@ -42,7 +42,7 @@ function App() {
       {teamArray && <SeasonSchedule teamStats={teamStatsObject.teamStats} teamArray={teamArray} />}      
       {appState.startScreen && <StartScreen />}
       {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
-      {appState.tournament && <Tournament />}
+      {appState.tournament && <Tournament appState={appState} />}
       {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
       {appState.tournament && appState.tournamentPlayGames && <PlayStandardGames />}
     </Fragment>
