@@ -46,7 +46,10 @@ function TournamentMatchup(props) {
     }, [dispatch, nextRoundRegion, props.round, teamIndex]);
 
     // Create the matchup JSX elements
+    // TODO: Need to shape up styles after highlights come back
+    // TODO: Think about how to display the incorrect pick with the team that won
     const matchupElements = props.matchup.map((teamObj, i) => {
+        console.log("Teambar", teamObj?.selected);
         return (
         <div 
             key={i} 
@@ -54,7 +57,13 @@ function TournamentMatchup(props) {
             value={i} 
             team={teamObj.team} 
             seed={teamObj.seed} 
-            className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 rounded-md cursor-pointer ${teamObj.win && classes.selectedTeamWon} ${props.round === "playin" && 'min-w-300'}`}
+            className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 rounded-md cursor-pointer 
+                ${props.round === "playin" && teamObj.win && classes.selectedTeamWon} 
+                ${props.round === "1" && teamObj.win && classes.selectedTeamWon} 
+                ${teamObj.selected && classes.selectedTeamWon} 
+                ${teamObj.selected === false && classes.selectedTeamWasIncorrect} 
+                ${props.round === "playin" && 'min-w-300'}`
+            }
         >
             <div className="flex justify-center items-center w-6 pr-2">
                 {teamObj.seed}
