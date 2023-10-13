@@ -9,6 +9,7 @@ import { tournamentActions } from "@/store/tournamentSlice";
 // Components
 import TournamentRound from "./TournamentRound";
 import PlayTournamentButton from "../UI/PlayTournamentButton";
+import PlayerScore from "./PlayerScore";
 
 
 function Tournament(props) {
@@ -49,6 +50,7 @@ function Tournament(props) {
                                 <TournamentRound region="champion" round="champion" />
                             </div>
                             <PlayTournamentButton />
+                            {props.appState.tournamentPlayGames && <PlayerScore />}
                         </div>
                         <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
                             <TournamentRound region="southMidwest" round="final four" />
