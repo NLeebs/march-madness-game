@@ -8,7 +8,7 @@ const bigWestStatURLs = {
     "Cal State Bakersfield": {
         "team-colors-URL": "https://teamcolorcodes.com/csub-roadrunners-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/csu-bakersfield-roadrunners/stats",
-        "team-logo-URL": "\/team-logos\/bigWest\/CalStateBakersfieldLogoLogo.png",
+        "team-logo-URL": "\/team-logos\/bigWest\/CalStateBakersfieldLogo.png",
         "list-name": "CS Bakersfld",
         "mascot-name": "Roadrunners",
     },
