@@ -1,5 +1,6 @@
 // General
 export const NUMBER_OF_TEAMS = 360;
+export const SOS_MULTIPLIER = 2;
 
 // Regular Season
 export const AMOUNT_SEASON_GAMES = 30;
