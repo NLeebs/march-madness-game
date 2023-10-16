@@ -1,4 +1,4 @@
-import { NUMBER_OF_TEAMS, PERCENT_FOULS_THAT_SHOOT_FT } from "@/constants/CONSTANTS";
+import { SOS_MULTIPLIER, NUMBER_OF_TEAMS, PERCENT_FOULS_THAT_SHOOT_FT } from "@/constants/CONSTANTS";
 
 export default function playGame(team1Stats, team2Stats) {
     
@@ -41,7 +41,7 @@ export default function playGame(team1Stats, team2Stats) {
     const team2SOS = +team2Stats['schedule-strength'];
 
     // Determine by how much a team has the advantage
-    const scheduleStrengthAdvantage = Math.abs(team1SOS - team2SOS)/NUMBER_OF_TEAMS;
+    const scheduleStrengthAdvantage = (Math.abs(team1SOS - team2SOS)/NUMBER_OF_TEAMS) * SOS_MULTIPLIER;
 
     //// POSSESSIONS ////
     const teamFavoredPossessions = +teamFavored.possessions;
