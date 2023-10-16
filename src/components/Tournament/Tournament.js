@@ -24,20 +24,20 @@ function Tournament(props) {
                 <div className="grid grid-flow-row">
                     <div className="grid grid-flow-col">
                         <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
-                            <TournamentRound region="east" round="1" />
                             <TournamentRound region="west" round="1" />
+                            <TournamentRound region="east" round="1" />
                         </div>
                         <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
-                            <TournamentRound region="east" round="2" />
                             <TournamentRound region="west" round="2" />
+                            <TournamentRound region="east" round="2" />
                         </div>
                         <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
-                            <TournamentRound region="east" round="sweet sixteen" />
                             <TournamentRound region="west" round="sweet sixteen" />
+                            <TournamentRound region="east" round="sweet sixteen" />
                         </div>
                         <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
-                            <TournamentRound region="east" round="elite eight" />
                             <TournamentRound region="west" round="elite eight" />
+                            <TournamentRound region="east" round="elite eight" />
                         </div>
                         <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
                             <TournamentRound region="eastWest" round="final four" />

@@ -52,7 +52,7 @@ const initalState = {
         championship: [[],],
     },
     champion: {
-        champion: [],
+        champion: [[],],
     },
     playerScore: 0,
 };
@@ -128,9 +128,20 @@ const tournamentSlice = createSlice({
         setTournamentGameResults(state, action) {
             let nextRoundKey, currentRoundKey;
             if (action.payload.round === 1) {nextRoundKey = "roundTwoMatchups"; currentRoundKey = "roundOneMatchups"}
+            if (action.payload.round === 2) {nextRoundKey = "roundSweetSixteenMatchups"; currentRoundKey = "roundTwoMatchups"}
+            if (action.payload.round === "sweet sixteen") {nextRoundKey = "roundEliteEightMatchups"; currentRoundKey = "roundSweetSixteenMatchups"}
+            if (action.payload.round === "elite eight") {nextRoundKey = "roundFinalFourMatchups"; currentRoundKey = "roundEliteEightMatchups"}
+            if (action.payload.round === "final four") {nextRoundKey = "roundFinalsMatchups"; currentRoundKey = "roundFinalFourMatchups"}
+            if (action.payload.round === "finals") {nextRoundKey = "champion"; currentRoundKey = "roundFinalsMatchups"}
+            
+            // Region correction for elite eight, final four, and finals
+            let nextRegion = action.payload.results.region;
+            if (action.payload.round === "elite eight") nextRegion === "east" || nextRegion === "west" ? nextRegion = "eastWest" : nextRegion = "southMidwest";
+            if (action.payload.round === "final four") nextRegion = "championship";
+            if (action.payload.round === "finals") nextRegion = "champion";
 
             // Add Winning Team to Next Round
-            state[nextRoundKey][action.payload.results.region][Math.floor(action.payload.results.gameIndex / 2)].push({
+            state[nextRoundKey][nextRegion][Math.floor(action.payload.results.gameIndex / 2)].push({
                 team: action.payload.results.winningTeam,
                 seed: action.payload.results.seed,
             });
@@ -149,14 +160,18 @@ const tournamentSlice = createSlice({
         comparePicksAndGames(state, action) {
             let pointsPerCorrectPick, nextRoundKey;
             if (action.payload.round === 1) {pointsPerCorrectPick = 10; nextRoundKey = "roundTwoMatchups";}
+            if (action.payload.round === 2) {pointsPerCorrectPick = 20; nextRoundKey = "roundSweetSixteenMatchups";}
+            if (action.payload.round === "sweet sixteen") {pointsPerCorrectPick = 40; nextRoundKey = "roundEliteEightMatchups";}
+            if (action.payload.round === "elite eight") {pointsPerCorrectPick = 80; nextRoundKey = "roundFinalFourMatchups";}
+            if (action.payload.round === "final four") {pointsPerCorrectPick = 160; nextRoundKey = "roundFinalsMatchups";}
+            if (action.payload.round === "finals") {pointsPerCorrectPick = 320; nextRoundKey = "champion";}
 
+            // TODO: Need to figure out which round is screwing up and correct the team call. Not picking up something up on line 174 if statement
             // compare picks to winning teams
             Object.keys(state[nextRoundKey]).forEach((region) => {
                 state[nextRoundKey][region].forEach((matchup, i) => {
                     matchup.forEach((teamObj, j) => {
-                        console.log(action.payload.picks);
                         if (action.payload.winningTeams.includes(action.payload.picks[region][i][j].team)) {
-                            console.log(action.payload.winningTeams, action.payload.picks[region][i][j].team, action.payload.winningTeams.includes(action.payload.picks[region][i][j].team));
                             teamObj.selected = true;
                             state.playerScore += pointsPerCorrectPick;
                         } else {
@@ -165,7 +180,6 @@ const tournamentSlice = createSlice({
                     });
                 });
             });
-            console.log(action.payload);
         },
     },  
 });
