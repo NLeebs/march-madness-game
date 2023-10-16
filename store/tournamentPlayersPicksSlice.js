@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
-    playerScore: 0,
     picks: {
         roundTwoPicks: {
             east: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
@@ -32,6 +31,42 @@ const initalState = {
             champion: [[{team: "", seed: ""}]],
         },
     },
+    // picks: {
+    //     // roundTwoPicks: {
+    //     //     east: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+    //     //     west: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+    //     //     south: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+    //     //     midwest: [[{team: "", seed: ""}, {team: "", seed: ""}], [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}],  [{team: "", seed: ""}, {team: "", seed: ""}]],
+    //     // },
+    //     roundTwoPicks: {
+    //         east: [[{team: "Ohio State", seed: "1"}, {team: "UCF", seed: "8"}], [{team: "Missouri", seed: "5"}, {team: "East Tennessee State", seed: "13"}],  [{team: "Indiana", seed: "6"}, {team: "Texas", seed: "3"}],  [{team: "Michigan State", seed: "10"}, {team: "UCLA", seed: "2"}]],
+    //         west: [[{team: "Ohio State", seed: "1"}, {team: "UCF", seed: "8"}], [{team: "Missouri", seed: "5"}, {team: "East Tennessee State", seed: "13"}],  [{team: "Indiana", seed: "6"}, {team: "Texas", seed: "3"}],  [{team: "Michigan State", seed: "10"}, {team: "UCLA", seed: "2"}]],
+    //         south: [[{team: "Ohio State", seed: "1"}, {team: "UCF", seed: "8"}], [{team: "Missouri", seed: "5"}, {team: "East Tennessee State", seed: "13"}],  [{team: "Indiana", seed: "6"}, {team: "Texas", seed: "3"}],  [{team: "Michigan State", seed: "10"}, {team: "UCLA", seed: "2"}]],
+    //         midwest: [[{team: "Ohio State", seed: "1"}, {team: "UCF", seed: "8"}], [{team: "Missouri", seed: "5"}, {team: "East Tennessee State", seed: "13"}],  [{team: "Indiana", seed: "6"}, {team: "Texas", seed: "3"}],  [{team: "Michigan State", seed: "10"}, {team: "UCLA", seed: "2"}]],
+    //     },
+    //     roundSweetSixteenPicks: {
+    //         east: [[{team: "Ohio State", seed: "1"}, {team: "Missouri", seed: "5"}], [{team: "Texas", seed: "3"}, {team: "UCLA", seed: "2"}]],
+    //         west: [[{team: "Ohio State", seed: "1"}, {team: "Missouri", seed: "5"}], [{team: "Texas", seed: "3"}, {team: "UCLA", seed: "2"}]],
+    //         south: [[{team: "Ohio State", seed: "1"}, {team: "Missouri", seed: "5"}], [{team: "Texas", seed: "3"}, {team: "UCLA", seed: "2"}]],
+    //         midwest: [[{team: "Ohio State", seed: "1"}, {team: "Missouri", seed: "5"}], [{team: "Texas", seed: "3"}, {team: "UCLA", seed: "2"}]],
+    //     },
+    //     roundEliteEightPicks: {
+    //         east: [[{team: "Ohio State", seed: "1"}, {team: "Texas", seed: "3"}]],
+    //         west: [[{team: "Ohio State", seed: "1"}, {team: "Texas", seed: "3"}]],
+    //         south: [[{team: "Ohio State", seed: "1"}, {team: "Texas", seed: "3"}]],
+    //         midwest: [[{team: "Ohio State", seed: "1"}, {team: "Texas", seed: "3"}]],
+    //     },
+    //     roundFinalFourPicks: {
+    //         eastWest: [[{team: "Ohio State", seed: "1"}, {team: "Ohio State", seed: "1"}]],
+    //         southMidwest: [[{team: "Ohio State", seed: "1"}, {team: "Ohio State", seed: "1"}]],
+    //     },
+    //     roundFinalsPicks: {
+    //         championship: [[{team: "Ohio State", seed: "1"}, {team: "Ohio State", seed: "1"}]],
+    //     },
+    //     champion: {
+    //         champion: [[{team: "Ohio State", seed: "1"}]],
+    //     },
+    // },
 };
 
 const tournamentPlayersPicksSlice = createSlice({
