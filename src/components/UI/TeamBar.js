@@ -37,7 +37,6 @@ function TeamBar(props) {
   // Dynamic Styles
   let teamBarClasses, teamBarNameClasses = "";
   if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarClasses = classes.goingToTheDance;
-  if(appState.tournamentPlayGames && props.win === false) {teamBarClasses = classes.selectedTeamDidNotWin; teamBarNameClasses = classes.strikeTeamName}
 
   return (
     <div className={`w-full flex flex-row justify-between items-center ${teamBarClasses}`}>
@@ -48,7 +47,7 @@ function TeamBar(props) {
               <Image src={teamLogoPath} alt="Team Logo" width={32} height={32} />
             </div>
           }
-          <div className={teamBarNameClasses}> 
+          <div className={`${props.win && "font-bold"} ${teamBarNameClasses}`}> 
             {isPlayin || props.team} 
             {isPlayin && props.team === "playinGameSeed11Game1" && `${playinTeamMatchups.elevenSeeds[0][0].team}/${playinTeamMatchups.elevenSeeds[0][1].team}`} 
             {isPlayin && props.team === "playinGameSeed11Game2" && `${playinTeamMatchups.elevenSeeds[1][0].team}/${playinTeamMatchups.elevenSeeds[1][1].team}`} 
@@ -59,7 +58,7 @@ function TeamBar(props) {
           
         </div>
         
-        <div className={classes.noStrikeThrough}>
+        <div className={`${props.win && "font-bold"}`}>
           {appState.tournamentPlayGames && props.score}
         </div>
     </div>

@@ -9,6 +9,7 @@ import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSli
 import classes from "./TournamentMatchup.module.css";
 // Components
 import TeamBar from "../UI/TeamBar";
+import PlayerPickBar from "../UI/PlayerPickBar";
 
 
 function TournamentMatchup(props) {
@@ -32,8 +33,8 @@ function TournamentMatchup(props) {
     const teamSelectionClickHandler = useCallback((e) => {
         const teamEl = e.target.closest('div.team-selection');
         let opponentEl;
-        if (teamEl.getAttribute('value') === "0" ) opponentEl = teamEl.nextElementSibling;
-        else if (teamEl.getAttribute('value') === "1") opponentEl = teamEl.previousElementSibling;
+        if (teamEl.getAttribute('value') === "0" ) opponentEl = teamEl.closest('div.matchup-container').querySelector('div.team-selection[value="1"]');
+        else if (teamEl.getAttribute('value') === "1") opponentEl = teamEl.closest('div.matchup-container').querySelector('div.team-selection[value="0"]');
 
         dispatch(tounramentPlayersPicksActions.setPick({
             round: props.round,
@@ -47,34 +48,38 @@ function TournamentMatchup(props) {
 
     // Create the matchup JSX elements
     // TODO: Need to shape up styles after highlights come back
-    // TODO: Think about how to display the incorrect pick with the team that won
     const matchupElements = props.matchup.map((teamObj, i) => {
-        console.log("Teambar", teamObj?.selected);
         return (
-        <div 
-            key={i} 
-            onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
-            value={i} 
-            team={teamObj.team} 
-            seed={teamObj.seed} 
-            className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 rounded-md cursor-pointer 
-                ${props.round === "playin" && teamObj.win && classes.selectedTeamWon} 
-                ${props.round === "1" && teamObj.win && classes.selectedTeamWon} 
-                ${teamObj.selected && classes.selectedTeamWon} 
-                ${teamObj.selected === false && classes.selectedTeamWasIncorrect} 
-                ${props.round === "playin" && 'min-w-300'}`
-            }
-        >
-            <div className="flex justify-center items-center w-6 pr-2">
-                {teamObj.seed}
+            <div 
+                key={i}
+                onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
+                value={i} 
+                team={teamObj.team} 
+                seed={teamObj.seed} 
+            >
+                {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 0 && <PlayerPickBar team={teamObj.team} pick={props.playerpicks[i]?.team} />}
+                <div 
+                    onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
+                    value={i} 
+                    team={teamObj.team} 
+                    seed={teamObj.seed} 
+                    className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 cursor-pointer 
+                    ${props.round === "playin" && 'min-w-300'}`
+                }
+                >
+                    <div className="flex justify-center items-center w-6 pr-2">
+                        {teamObj.seed}
+                    </div>
+                    <TeamBar team={teamObj.team} win={teamObj?.win} score={teamObj?.score} />
+                </div>
+                {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 1 && <PlayerPickBar team={teamObj.team} pick={props.playerpicks[i]?.team} />}
             </div>
-            <TeamBar team={teamObj.team} win={teamObj?.win} score={teamObj?.score} />
-        </div>);
+        );
     })
 
     // JSX
     return (
-        <div className="bg-slate-50 rounded-md">
+        <div className="matchup-container bg-slate-50">
             {matchupElements}
         </div>
     );

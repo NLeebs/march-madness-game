@@ -12,6 +12,11 @@ const initalState = {
     tournamentPlayGames: false,
     tournamentPlayRoundOne: false,
     tournamentPlayRoundTwo: false,
+    tournamentPlaySweetSixteen: false,
+    tournamentPlayEliteEight: false,
+    tournamentPlayFinalFour: false,
+    tournamentPlayFinals: false,
+    tournamentRecap: false,
 };
 
 // Create Team Statistics State Slice
@@ -48,7 +53,22 @@ const appStateSlice = createSlice({
         },
         activateTournamentRoundTwo(state) {
             state.tournamentPlayRoundTwo = true;
-        }
+        },
+        activateTournamentSweetSixteen(state) {
+            state.tournamentPlaySweetSixteen = true;
+        },
+        activateTournamentEliteEight(state) {
+            state.tournamentPlayEliteEight = true;
+        },
+        activateTournamentFinalFour(state) {
+            state.tournamentPlayFinalFour = true;
+        },
+        activateTournamentFinals(state) {
+            state.tournamentPlayFinals = true;
+        },
+        activateTournamentRecap(state) {
+            state.tournamentRecap = true;
+        },
         
     },
 });

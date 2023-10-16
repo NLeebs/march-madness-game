@@ -25,17 +25,17 @@ function TournamentRound(props) {
     else if (props.round === "2") {
         roundResultsName = "roundTwoMatchups"; 
         playersPicksName = "roundTwoPicks";
-        roundClasses = "flex-col py-16 gap-y-36"
+        roundClasses = "flex-col py-8 gap-y-20"
     }
     else if (props.round === "sweet sixteen") {
         roundResultsName = "roundSweetSixteenMatchups"; 
         playersPicksName = "roundSweetSixteenPicks";
-        roundClasses = "flex-col py-48 gap-y-96"
+        roundClasses = "flex-col py-40 gap-y-84"
     }
     else if (props.round === "elite eight") {
         roundResultsName = "roundEliteEightMatchups"; 
         playersPicksName = "roundEliteEightPicks";
-        roundClasses = "flex-col py-112 gap-y-96"
+        roundClasses = "flex-col py-104 gap-y-96"
     }
     else if (props.round === "final four") {
         roundResultsName = "roundFinalFourMatchups"; 
@@ -60,7 +60,14 @@ function TournamentRound(props) {
     
     // Pass Matchups to Matchup Component
     let matchupElGenerationArr;
-    if (props.round === "playin" || props.round === "1" || (props.round === "2" && appState.tournamentPlayRoundTwo)) matchupElGenerationArr = matchupObj;
+    if (props.round === "playin" || 
+        props.round === "1" || 
+        (props.round === "2" && appState.tournamentPlayRoundTwo) ||
+        (props.round === "sweet sixteen" && appState.tournamentPlaySweetSixteen) ||
+        (props.round === "elite eight" && appState.tournamentPlayEliteEight) ||
+        (props.round === "final four" && appState.tournamentPlayFinalFour) ||
+        (props.round === "finals" && appState.tournamentPlayFinals) || 
+        appState.tournamentRecap) matchupElGenerationArr = matchupObj;
     else  matchupElGenerationArr = playerPicksObj;
 
     let tournamentMatchupElements;
@@ -78,7 +85,7 @@ function TournamentRound(props) {
     // Generate Matchups for all other rounds
     else {
         tournamentMatchupElements = matchupElGenerationArr[props.region].map((matchup, i) => {
-            return (<TournamentMatchup key={i} index={i} region={props.region} round={props.round}  matchup={matchup} />);
+            return (<TournamentMatchup key={i} index={i} region={props.region} round={props.round}  matchup={matchup} playerpicks={playerPicksObj[props.region][i]} />);
         })
     }
 

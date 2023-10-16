@@ -2,11 +2,3 @@
     border: 1px solid green;
 }
 
-.selectedTeamDidNotWin  {
-    text-decoration: none;
-}
-
-.strikeTeamName {
-    text-decoration: line-through;
- 
-}
