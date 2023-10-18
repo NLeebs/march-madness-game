@@ -7,8 +7,8 @@ import { HIGHEST_SEED } from "@/constants/CONSTANTS";
 const initalState = {
     tournamentTeams: [],
     tournamentSeeds: {
-        east: [],
         west: [],
+        east: [],
         south: [],
         midwest: [],
     },
@@ -17,8 +17,8 @@ const initalState = {
         sixteenSeeds: [],
     },
     roundOneMatchups: {
-        east: [],
         west: [],
+        east: [],
         south: [],
         midwest: [],
         playin: {
@@ -27,20 +27,20 @@ const initalState = {
         },
     },
     roundTwoMatchups: {
-        east: [[],[],[],[],],
         west: [[],[],[],[],],
+        east: [[],[],[],[],],
         south: [[],[],[],[],],
         midwest: [[],[],[],[],],
     },
     roundSweetSixteenMatchups: {
-        east: [[],[],],
         west: [[],[],],
+        east: [[],[],],
         south: [[],[],],
         midwest: [[],[],],
     },
     roundEliteEightMatchups: {
-        east: [[],],
         west: [[],],
+        east: [[],],
         south: [[],],
         midwest: [[],],
     },

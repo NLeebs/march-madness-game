@@ -18,37 +18,38 @@ function TournamentRound(props) {
     else if (props.round === "1") { 
         roundResultsName = "roundOneMatchups"; 
         playersPicksName = "roundTwoPicks";
-        roundSelectClasses = roundPlayClasses = "gap-y-4"
+        roundSelectClasses = "gap-y-4";
+        roundPlayClasses = "gap-y-12";
     }
     else if (props.round === "2") {
         roundResultsName = "roundTwoMatchups"; 
         playersPicksName = "roundTwoPicks";
         roundSelectClasses = "py-16 gap-y-36"
-        roundPlayClasses = "py-8 gap-y-20"
+        roundPlayClasses = "py-16 gap-y-42"
     }
     else if (props.round === "sweet sixteen") {
         roundResultsName = "roundSweetSixteenMatchups"; 
         playersPicksName = "roundSweetSixteenPicks";
         roundSelectClasses = "py-48 gap-y-100"
-        roundPlayClasses = "py-40 gap-y-84"
+        roundPlayClasses = "py-56 gap-y-122"
     }
     else if (props.round === "elite eight") {
         roundResultsName = "roundEliteEightMatchups"; 
         playersPicksName = "roundEliteEightPicks";
         roundSelectClasses = "py-112 gap-y-100"
-        roundPlayClasses = "py-104 gap-y-96"
+        roundPlayClasses = "py-135"
     }
     else if (props.round === "final four") {
         roundResultsName = "roundFinalFourMatchups"; 
         playersPicksName = "roundFinalFourPicks";
         roundSelectClasses = "py-252"
-        roundPlayClasses = "py-252"
+        roundPlayClasses = "py-280"
     }
     else if (props.round === "finals") {
         roundResultsName = "roundFinalsMatchups"; 
         playersPicksName = "roundFinalsPicks";
         roundSelectClasses = "pt-252"
-        roundPlayClasses = "pt-252"
+        roundPlayClasses = "pt-280"
     }
     else if (props.round === "champion") {
         roundResultsName = "champion"; 
