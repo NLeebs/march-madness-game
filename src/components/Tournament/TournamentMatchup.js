@@ -52,6 +52,7 @@ function TournamentMatchup(props) {
         return (
             <div 
                 key={i}
+                className="relative z-10"
                 onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
                 value={i} 
                 team={teamObj.team} 

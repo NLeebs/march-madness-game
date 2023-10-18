@@ -9,48 +9,51 @@ import TournamentMatchup from "./TournamentMatchup";
 
 function TournamentRound(props) {
     // Determine which State to pull from
-    let roundResultsName;
-    let playersPicksName;
-    let roundClasses;
+    let roundResultsName, playersPicksName, roundPlayClasses, roundSelectClasses;
     if (props.round === "playin") { 
         roundResultsName = "roundOneMatchups"; 
         playersPicksName = "roundTwoPicks";
-        roundClasses = "flex-row justify-center gap-x-8"
+        roundSelectClasses = roundPlayClasses = "gap-x-8"
     }
     else if (props.round === "1") { 
         roundResultsName = "roundOneMatchups"; 
         playersPicksName = "roundTwoPicks";
-        roundClasses = "flex-col gap-y-4"
+        roundSelectClasses = roundPlayClasses = "gap-y-4"
     }
     else if (props.round === "2") {
         roundResultsName = "roundTwoMatchups"; 
         playersPicksName = "roundTwoPicks";
-        roundClasses = "flex-col py-8 gap-y-20"
+        roundSelectClasses = "py-16 gap-y-36"
+        roundPlayClasses = "py-8 gap-y-20"
     }
     else if (props.round === "sweet sixteen") {
         roundResultsName = "roundSweetSixteenMatchups"; 
         playersPicksName = "roundSweetSixteenPicks";
-        roundClasses = "flex-col py-40 gap-y-84"
+        roundSelectClasses = "py-48 gap-y-100"
+        roundPlayClasses = "py-40 gap-y-84"
     }
     else if (props.round === "elite eight") {
         roundResultsName = "roundEliteEightMatchups"; 
         playersPicksName = "roundEliteEightPicks";
-        roundClasses = "flex-col py-104 gap-y-96"
+        roundSelectClasses = "py-112 gap-y-100"
+        roundPlayClasses = "py-104 gap-y-96"
     }
     else if (props.round === "final four") {
         roundResultsName = "roundFinalFourMatchups"; 
         playersPicksName = "roundFinalFourPicks";
-        roundClasses = "flex-col py-252"
+        roundSelectClasses = "py-252"
+        roundPlayClasses = "py-252"
     }
     else if (props.round === "finals") {
         roundResultsName = "roundFinalsMatchups"; 
         playersPicksName = "roundFinalsPicks";
-        roundClasses = "flex-col pt-252"
+        roundSelectClasses = "pt-252"
+        roundPlayClasses = "pt-252"
     }
     else if (props.round === "champion") {
         roundResultsName = "champion"; 
         playersPicksName = "champion";
-        roundClasses = "flex-col"
+        roundPlayClasses = ""
     }
     
     // State
@@ -90,7 +93,10 @@ function TournamentRound(props) {
     }
 
     return (
-        <div className={`flex m-4 ${roundClasses}`}>
+        <div className={`flex m-4
+            ${props.round === "playin" ? "flex-row justify-center" : "flex-col"} 
+            ${appState.tournamentPlayGames ? roundPlayClasses : roundSelectClasses}`}
+        >
             {tournamentMatchupElements}
         </div>
     );

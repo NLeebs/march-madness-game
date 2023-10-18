@@ -19,14 +19,22 @@ module.exports = {
         '250': '250px',
         '300': '300px',
       },
+      maxWidth: {
+        "tourny": "2100px"
+      },
       padding: {
         "104": "26rem",
         "112": "28rem",
         "252": "63rem",
       },
       gap: {
-        '84': "21rem"
-      }
+        '84': "21rem",
+        '100': '25rem',
+      },
+      inset: {
+        "120": "30rem",
+        "156": "38rem",
+      },
     },
   },
   plugins: [],
