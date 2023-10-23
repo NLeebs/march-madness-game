@@ -9,7 +9,7 @@ import playGame from "@/src/functions/playGame";
 import { appStateActions } from "@/store/appStateSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
 
-function PlayStandardGames(props) {
+function PlayTournamentGames(props) {
     const dispatch = useDispatch();
 
     // State pieces
@@ -127,4 +127,4 @@ function PlayStandardGames(props) {
     return;
 }
 
-export default PlayStandardGames;
+export default PlayTournamentGames;

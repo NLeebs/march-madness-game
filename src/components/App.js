@@ -17,14 +17,13 @@ import SeasonSchedule from "./RegularSeason/SeasonSchedule";
 import RegularSeason from "./RegularSeason/RegularSeason";
 import Tournament from "./Tournament/Tournament";
 import PlayPlayinGames from "./Tournament/PlayPlayinGames";
-import PlayStandardGames from "./Tournament/PlayStandardGames";
+import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 
 function App() {
   const dispatch = useDispatch();
   const appState = useSelector((state) => state.appState);
   const teamStatsObject = useSelector((state) => state.teamStats);
   const teamArray = useSelector((state) => state.teamSchedule.teamArray);
-  // console.log(teamArray);
 
   // Add Team Stats to State and Config Schedules State
   useEffect(() => {
@@ -44,7 +43,7 @@ function App() {
       {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
       {appState.tournament && <Tournament appState={appState} />}
       {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
-      {appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap && <PlayStandardGames />}
+      {appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap && <PlayTournamentGames />}
     </Fragment>
   );
 }
