@@ -66,7 +66,7 @@ function Tournament(props) {
                     <TournamentRound region="south" round="2" />
                     <TournamentRound region="midwest" round="2" />
                 </div>
-                <div className="col-span-1 flex flex-col gap-y-16 min-w-300 relative">
+                <div className="col-span-1 flex flex-col gap-y-16 relative">
                     <TournamentRound region="south" round="1" />
                     <TournamentRound region="midwest" round="1" />
                 </div>

@@ -15,11 +15,16 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      width: {
+        "teamBar": '300px',
+      },
       minWidth: {
         '250': '250px',
-        '300': '300px',
+        '350': '350px',
       },
       maxWidth: {
+        '275': '275px',
+        '300': '300px',
         "tourny": "2100px"
       },
       padding: {

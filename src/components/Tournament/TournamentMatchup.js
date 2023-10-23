@@ -47,7 +47,6 @@ function TournamentMatchup(props) {
     }, [dispatch, nextRoundRegion, props.round, teamIndex]);
 
     // Create the matchup JSX elements
-    // TODO: Need to shape up styles after highlights come back
     const matchupElements = props.matchup.map((teamObj, i) => {
         return (
             <div 
@@ -80,7 +79,7 @@ function TournamentMatchup(props) {
 
     // JSX
     return (
-        <div className="matchup-container bg-slate-50">
+        <div className="matchup-container bg-slate-50 w-teamBar">
             {matchupElements}
         </div>
     );
