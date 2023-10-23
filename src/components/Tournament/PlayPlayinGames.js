@@ -7,6 +7,7 @@ import playGame from "@/src/functions/playGame";
 import getTournamentGameResultObj from "@/src/functions/tournament/getTournamentGameResultObj";
 // State
 import { appStateActions } from "@/store/appStateSlice";
+import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
 
 function PlayPlayinGames() {
@@ -25,7 +26,8 @@ function PlayPlayinGames() {
                 const gameDispatchObj = getTournamentGameResultObj(gameResults, i);
                 gameDispatchObj.seedType = seeds;
 
-                dispatch(tournamentActions.setPlayinGameResults(gameDispatchObj))
+                dispatch(tounramentPlayersPicksActions.replacePlayinPicksWithWinner(gameDispatchObj));
+                dispatch(tournamentActions.setPlayinGameResults(gameDispatchObj));
             });
         });
         dispatch(appStateActions.activateTournamentStandardGames());

@@ -105,6 +105,25 @@ const tournamentPlayersPicksSlice = createSlice({
                 });
             }
         },
+        replacePlayinPicksWithWinner(state, action) {
+            let playinTeamPlaceholder;
+            if (action.payload.seedType === "sixteenSeeds") {
+                playinTeamPlaceholder = action.payload.gameIndex === 0 ? "playinGameSeed16Game1" : "playinGameSeed16Game2"; 
+            } else {
+                playinTeamPlaceholder = action.payload.gameIndex === 0 ? "playinGameSeed11Game1" : "playinGameSeed11Game2"; 
+            }
+
+            Object.keys(state.picks).forEach((roundPicks) => {
+                state.picks
+                Object.keys(state.picks[roundPicks]).forEach((region) => {
+                    state.picks[roundPicks][region].forEach((matchup) => {
+                        matchup.forEach((teamObj) => {
+                            if (teamObj.team === playinTeamPlaceholder) teamObj.team = action.payload.winningTeam;
+                        })
+                    })
+                })
+            });
+        },
     },
 });
 

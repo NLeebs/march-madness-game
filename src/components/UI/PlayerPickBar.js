@@ -4,7 +4,6 @@ import React from "react";
 // React Functions
 import { useSelector } from "react-redux";
 
-// TODO: Pick of the playin team displays as "playinGameSeed11Game1" or the like
 // Component Function
 function PlayerPickBar(props) {
   const appState = useSelector((state) => state.appState);
