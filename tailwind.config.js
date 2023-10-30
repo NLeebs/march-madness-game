@@ -19,13 +19,14 @@ module.exports = {
         "teamBar": '300px',
       },
       minWidth: {
+        '50' : '50px', 
         '250': '250px',
         '350': '350px',
       },
       maxWidth: {
         '275': '275px',
         '300': '300px',
-        "tourny": "2100px"
+        "tourny": "2325px"
       },
       padding: {
         "104": "26rem",

@@ -53,12 +53,12 @@ function TeamBar(props) {
             {isPlayin && props.team === "playinGameSeed11Game2" && `${playinTeamMatchups.elevenSeeds[1][0].team}/${playinTeamMatchups.elevenSeeds[1][1].team}`} 
             {isPlayin && props.team === "playinGameSeed16Game1" && `${playinTeamMatchups.sixteenSeeds[0][0].team}/${playinTeamMatchups.sixteenSeeds[0][1].team}`} 
             {isPlayin && props.team === "playinGameSeed16Game2" && `${playinTeamMatchups.sixteenSeeds[1][0].team}/${playinTeamMatchups.sixteenSeeds[1][1].team}`} 
-            {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
           </div>
           
         </div>
         
-        <div className={`${props.win && "font-bold"}`}>
+        <div className={`${appState.regularSeason && "min-w-50"} ${props.win && "font-bold"}`}>
+          {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
           {appState.tournamentPlayGames && props.score}
         </div>
     </div>

@@ -20,11 +20,9 @@ function RegularSeason(props) {
 
     return (
         <Fragment>
-            <div>
-                <div>
+            <div className="flex flex-col justify-center items-center p-8 gap-y-12">
+                <div className="flex flex-row flex-wrap justify-center gap-12">
                     {powerConferences.map((conf) => <ConferenceGroups key={conf} conferenceTeams={props.teamStats[conf]} />)}
-                </div>
-                <div>
                     {otherConferences.map((conf) => <ConferenceGroups key={conf} conferenceTeams={props.teamStats[conf]} />)}
                 </div>
             </div>
