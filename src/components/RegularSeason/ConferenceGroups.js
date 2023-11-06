@@ -12,7 +12,7 @@ function ConferenceGroups(props) {
   const regularSeasonRecords = useSelector((state) => state.regularSeasonRecords.records);
  
   return (
-    <div className="max-w-300 flex flex-row flex-wrap gap-4 p-8 bg-slate-50">
+    <div className={`max-w-300 flex flex-row flex-wrap gap-4 p-8 bg-slate-50 ${props.isPowerConf === "true" ? "" : "lg:flex hidden "}`}>
         {Object.keys(props.conferenceTeams)
           .sort((a, b) => regularSeasonRecords[b].wins - regularSeasonRecords[a].wins)
           .map((team) => <TeamBar key={team} team={team} />)}

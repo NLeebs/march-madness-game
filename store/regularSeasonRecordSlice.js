@@ -40,7 +40,10 @@ const regularSeasonRecordSlice = createSlice({
         },
         addWeekPlayedtoTotal(state) {
             state.weeksPlayed++;
-        }
+        },
+        addConferneceChampion(state, action) {
+            state.records[action.payload.confChampion].confChampion = true;
+        },
     },
 });
 

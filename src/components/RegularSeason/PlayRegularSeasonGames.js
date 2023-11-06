@@ -7,7 +7,7 @@ import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 // Functions
 import playGame from "@/src/functions/playGame";
 import delay from "@/src/functions/generic/delay";
-// Constanst
+// Constants
 import { AMOUNT_SEASON_GAMES, TIMER_PER_REGULAR_SEASON_GAME } from "@/constants/CONSTANTS";
 
 
@@ -35,7 +35,6 @@ function PlayRegularSeasonGames(props) {
         if (!teamSchedules || !teamStats) return;
         if (weeksPlayed === 0) playRegularSeasonGames();
         if (weeksPlayed === AMOUNT_SEASON_GAMES) dispatch(appStateActions.activateSelectionSunday());
-        console.log("Hello");
     }, [dispatch, weeksPlayed, playRegularSeasonGames, teamStats, teamSchedules]);
 
     return;

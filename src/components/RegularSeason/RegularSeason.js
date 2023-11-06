@@ -36,8 +36,8 @@ function RegularSeason(props) {
         <Fragment>
             <div className="flex flex-col justify-center items-center p-8 gap-y-12">
                 <div className="flex flex-row flex-wrap justify-center gap-12">
-                    {powerConferences.map((conf) => <ConferenceGroups key={conf} conferenceTeams={props.teamStats[conf]} />)}
-                    {otherConferences.map((conf) => <ConferenceGroups key={conf} conferenceTeams={props.teamStats[conf]} />)}
+                    {powerConferences.map((conf) => <ConferenceGroups key={conf} isPowerConf="true" conferenceTeams={props.teamStats[conf]} />)}
+                    {otherConferences.map((conf) => <ConferenceGroups key={conf} isPowerConf="false" conferenceTeams={props.teamStats[conf]} />)}
                 </div>
             </div>
             {pauseGames || <PlayRegularSeasonGames teamStats={props.teamStats} />}

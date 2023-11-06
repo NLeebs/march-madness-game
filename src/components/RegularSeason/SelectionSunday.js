@@ -3,7 +3,10 @@ import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // State
 import { appStateActions } from "@/store/appStateSlice";
+import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
+// Functions
+import delay from "@/src/functions/generic/delay";
 // Constanst
 import { NUMBER_OF_AT_LARGE_TEAMS, 
         NUMBER_OF_AT_LARGE_TEAMS_PLAYINS, 
@@ -53,6 +56,7 @@ function SelectionSunday(props) {
         // Determine Confernece Champions
         conferences.forEach((conf) => {
             const champ = confChampions(conf);
+            dispatch(regularSeasonRecordActions.addConferneceChampion({confChampion: champ,}));
             tournamentTeamsArr.push(champ);
             const champIndex = totalTeamsArr.indexOf(champ);
             totalTeamsArr.splice(champIndex, 1);
@@ -79,6 +83,10 @@ function SelectionSunday(props) {
         if (appState.selectionSunday === true) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
             dispatch(tournamentActions.setTournamentSeeds());
+            Promise.all([delay(TIMER_BEFORE_TOURNAMENT * 1000)]).then(() => {
+                dispatch(appStateActions.activateTournament());
+                dispatch(appStateActions.activateTournamentSelectionStage());
+            })
             // setTimeout(() => {
             //     dispatch(appStateActions.activateTournament());
             //     dispatch(appStateActions.activateTournamentSelectionStage());
