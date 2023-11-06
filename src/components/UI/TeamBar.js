@@ -58,7 +58,7 @@ function TeamBar(props) {
         </div>
         
         <div className={`${appState.regularSeason && "min-w-50"} ${props.win && "font-bold"}`}>
-          {appState.selectionSunday && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
+          {appState.regularSeason && `${regularSeasonRecords[props.team]?.wins}-${regularSeasonRecords[props.team]?.losses}`}
           {appState.tournamentPlayGames && props.score}
         </div>
     </div>

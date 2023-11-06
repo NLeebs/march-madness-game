@@ -1,10 +1,11 @@
 "use client"
 // Libraries
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 // React Functions
 import { useSelector } from "react-redux";
 // Functions
 import separatePowerConferences from "@/src/functions/regularSeason/separatePowerConferences";
+import delay from "@/src/functions/generic/delay";
 // Components
 import ConferenceGroups from "./ConferenceGroups";
 import PlayRegularSeasonGames from "./PlayRegularSeasonGames";
@@ -12,11 +13,24 @@ import SelectionSunday from "./SelectionSunday";
 
 
 function RegularSeason(props) {
+    const [pauseGames, setPauseGames] = useState(true);
+    
     const appState = useSelector((state) => state.appState);
     
     // Split conferences for visualization
     const powerConferences = ["acc", "bigTen", "big12", "sec", "bigEast", "pac12", "americanAthletic", "atlantic10", "wcc"];
     const otherConferences = separatePowerConferences(props.teamStats, powerConferences);
+
+    // Delay the Playing of the games
+    useEffect(() => {
+        async function pauseRegularSeasonGames() {
+            if (pauseGames) {
+                // await delay(5000);
+                setPauseGames(false);
+            }
+        }
+        pauseRegularSeasonGames();
+    }, [pauseGames]);
 
     return (
         <Fragment>
@@ -26,7 +40,7 @@ function RegularSeason(props) {
                     {otherConferences.map((conf) => <ConferenceGroups key={conf} conferenceTeams={props.teamStats[conf]} />)}
                 </div>
             </div>
-            <PlayRegularSeasonGames teamStats={props.teamStats} />
+            {pauseGames || <PlayRegularSeasonGames teamStats={props.teamStats} />}
             {appState.selectionSunday && <SelectionSunday />}
 
         </Fragment>

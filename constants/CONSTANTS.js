@@ -20,4 +20,5 @@ export const NUMBER_ROUND_ONE_TEAMS = 64;
 export const HIGHEST_SEED = 16;
 
 // Timeouts (in seconds)
+export const TIMER_PER_REGULAR_SEASON_GAME = .3;
 export const TIMER_BEFORE_TOURNAMENT = 5;

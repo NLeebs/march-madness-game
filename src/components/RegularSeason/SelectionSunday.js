@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { appStateActions } from "@/store/appStateSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
 // Constanst
-import { NUMBER_OF_AT_LARGE_TEAMS, NUMBER_OF_AT_LARGE_TEAMS_PLAYINS, NUMBER_OF_CONF_CHAMP_PLAYINS } from "@/constants/CONSTANTS";
+import { NUMBER_OF_AT_LARGE_TEAMS, 
+        NUMBER_OF_AT_LARGE_TEAMS_PLAYINS, 
+        NUMBER_OF_CONF_CHAMP_PLAYINS,
+        TIMER_BEFORE_TOURNAMENT } from "@/constants/CONSTANTS";
 
 
 function SelectionSunday(props) {
@@ -76,8 +79,10 @@ function SelectionSunday(props) {
         if (appState.selectionSunday === true) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
             dispatch(tournamentActions.setTournamentSeeds());
-            dispatch(appStateActions.activateTournament());
-            dispatch(appStateActions.activateTournamentSelectionStage());
+            // setTimeout(() => {
+            //     dispatch(appStateActions.activateTournament());
+            //     dispatch(appStateActions.activateTournamentSelectionStage());
+            // }, TIMER_BEFORE_TOURNAMENT * 1000);
         }
     }, [dispatch, appState, seasonResults, getTournamentTeams]);
 

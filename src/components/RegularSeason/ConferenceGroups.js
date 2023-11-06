@@ -10,8 +10,7 @@ import TeamBar from "../UI/TeamBar";
 // Component Function
 function ConferenceGroups(props) {
   const regularSeasonRecords = useSelector((state) => state.regularSeasonRecords.records);
-  console.log(Object.keys(props.conferenceTeams));
-  console.log(regularSeasonRecords);
+ 
   return (
     <div className="max-w-300 flex flex-row flex-wrap gap-4 p-8 bg-slate-50">
         {Object.keys(props.conferenceTeams)

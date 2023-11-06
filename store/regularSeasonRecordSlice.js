@@ -5,6 +5,7 @@ import { NUMBER_OF_TEAMS, POINTS_PER_WIN } from "@/constants/CONSTANTS";
 
 
 const initalState = {
+    weeksPlayed: 0,
     records: {},
 };
 
@@ -36,8 +37,10 @@ const regularSeasonRecordSlice = createSlice({
                 state.records[action.payload.favoredTeam].losses++;
                 state.records[action.payload.underdogTeam].tournamentSelectionScore += NUMBER_OF_TEAMS - action.payload.favoredRPI + POINTS_PER_WIN;
             }  
+        },
+        addWeekPlayedtoTotal(state) {
+            state.weeksPlayed++;
         }
-        
     },
 });
 
