@@ -80,17 +80,14 @@ function SelectionSunday(props) {
 
     // Select and dispatch
     useEffect(() => {
-        if (appState.selectionSunday === true) {
+        if (appState.selectionSunday === true && appState.transition === false) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
             dispatch(tournamentActions.setTournamentSeeds());
+            dispatch(appStateActions.activateTransition());
             Promise.all([delay(TIMER_BEFORE_TOURNAMENT * 1000)]).then(() => {
                 dispatch(appStateActions.activateTournament());
                 dispatch(appStateActions.activateTournamentSelectionStage());
             })
-            // setTimeout(() => {
-            //     dispatch(appStateActions.activateTournament());
-            //     dispatch(appStateActions.activateTournamentSelectionStage());
-            // }, TIMER_BEFORE_TOURNAMENT * 1000);
         }
     }, [dispatch, appState, seasonResults, getTournamentTeams]);
 

@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initalState = {
     startScreen: true,
     loading: true,
+    transition: false,
     regularSeason: false,
     selectionSunday: false,
     tournament: false,
@@ -31,6 +32,12 @@ const appStateSlice = createSlice({
         },
         loadingComplete(state) {
             state.loading = false;
+        },
+        activateTransition(state) {
+            state.transition = true;
+        },
+        deactivateTransition(state) {
+            state.transition = false;
         },
         activateRegularSeason(state) {
             Object.keys(state).forEach((key) => state[key] = false);
