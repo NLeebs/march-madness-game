@@ -6,7 +6,7 @@ import React from "react";
 // Component Function
 function BasketballSVG(props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 105.833 105.833">
+    <svg xmlns="http://www.w3.org/2000/svg" width={props.size} height={props.size} viewBox="0 0 105.833 105.833">
         <ellipse cx="102.708" cy="72.616" fill={props.seamColor} rx="52.868" ry="52.841" transform="translate(-49.792 -19.699)"/>
         <g fill={props.basketballColor} stroke="#000" stroke-width=".1">
             <path d="M79.31 119.834c1.601 1.037 11.44 3.83 18.98 3.784 9.002-.054 17.415-2.093 24.038-5.546-10.9-1.556-14.525-3.549-23.86-8.147-8.315-4.096-15.707-9.569-16.193-9.828-1.02-.545-1.252-.356-1.952.253-.397.345-2.84 4.255-3.61 9.066-.656 4.114.755 8.167 2.598 10.418z" transform="matrix(.99908 0 0 .99856 -45.808 -17.658)"/>

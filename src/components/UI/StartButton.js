@@ -29,10 +29,12 @@ function StartButton() {
   }
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+      };
+    }
   }, []);
 
   const activateRegularSeason = () => {
@@ -45,6 +47,9 @@ function StartButton() {
       disabled={isLoading}
       className={`relative rounded-full transition-transform ease-out hover:scale-110`}
     >
+      <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full ${isLoading && "bg-gray-300"} opacity-50`}>
+
+      </div>
       <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full`}>
         <h2 className="text-7xl">
           {isLoading ? "Loading..." : "Start"}
@@ -54,7 +59,10 @@ function StartButton() {
         className={`${isLoading && 'motion-safe:animate-spin'}`}
         style={{ transform: !isLoading && `rotate(${elRotation}deg)`}}
       >
-        <BasketballSVG basketballColor={BASKETBALL_COLOR} seamColor={BASKETBALL_SEAM_COLOR} />
+        <BasketballSVG size={window.matchMedia('(min-width: 640px)').matches ? "400" : "300"} 
+          basketballColor={BASKETBALL_COLOR} 
+          seamColor={BASKETBALL_SEAM_COLOR} 
+        />
       </div>
     </button>);
 }
