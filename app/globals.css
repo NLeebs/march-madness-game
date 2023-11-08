@@ -26,6 +26,17 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+h1 {
+  font-weight: 900;
+  font-size: 10rem;
+  line-height: .75;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 4rem;
+}
 
 button {
   text-align: center;
