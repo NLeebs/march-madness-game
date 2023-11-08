@@ -8,12 +8,14 @@ import { appStateActions } from "@/store/appStateSlice";
 // Componenets
 import BasketballSVG from "../Graphics/BasketballSVG";
 // Constants
-import { BASKETBALL_COLOR, BASKETBALL_SEAM_COLOR } from "@/constants/CONSTANTS";
+import { SMALL_BREAK_POINT, LARGE_BREAK_POINT, BASKETBALL_COLOR, BASKETBALL_SEAM_COLOR } from "@/constants/CONSTANTS";
 
 
 // Component Function
 function StartButton() {
   const dispatch = useDispatch();
+
+  const screenWidth = useSelector((state) => state.uiState.screenWidth);
 
   const [elRotation, setElRotation] = useState("");
 
@@ -29,13 +31,13 @@ function StartButton() {
   }
 
   useEffect(() => {
-    if (window.matchMedia('(min-width: 1024px)').matches) {
+    if (screenWidth >= LARGE_BREAK_POINT) {
       window.addEventListener('mousemove', handleMouseMove);
       return () => {
         window.removeEventListener('mousemove', handleMouseMove);
       };
     }
-  }, []);
+  }, [screenWidth]);
 
   const activateRegularSeason = () => {
     dispatch(appStateActions.activateRegularSeason())
@@ -59,7 +61,7 @@ function StartButton() {
         className={`${isLoading && 'motion-safe:animate-spin'}`}
         style={{ transform: !isLoading && `rotate(${elRotation}deg)`}}
       >
-        <BasketballSVG size={window.matchMedia('(min-width: 640px)').matches ? "400" : "300"} 
+        <BasketballSVG size={screenWidth >= SMALL_BREAK_POINT ? "400" : "300"} 
           basketballColor={BASKETBALL_COLOR} 
           seamColor={BASKETBALL_SEAM_COLOR} 
         />

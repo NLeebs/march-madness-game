@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // State
 import { appStateActions } from "@/store/appStateSlice";
+import { uiStateActions } from "@/store/uiStateSlice";
 import { teamStatsActions } from "@/store/teamStatsSlice";
 import { teamScheduleActions } from "@/store/teamScheduleSlice";
 import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
@@ -36,6 +37,23 @@ function App() {
       dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
       dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)); //
     });
+  }, [dispatch]);
+
+  useEffect(() => {
+    function handleResize() {
+      const screenSizeObj = {
+        screenWidth: window.innerWidth,
+        screenHeigth: window.innerHeight,
+      };
+      dispatch(uiStateActions.screenSize(screenSizeObj));
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
   }, [dispatch]);
 
   // Turn off loading app state once TeamStats populated

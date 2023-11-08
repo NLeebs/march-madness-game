@@ -1,10 +1,15 @@
-// General
-export const NUMBER_OF_TEAMS = 360;
-export const SOS_MULTIPLIER = 2.15;
+// UI
+export const SMALL_BREAK_POINT = 640;
+export const MEDIUM_BREAK_POINT = 768;
+export const LARGE_BREAK_POINT = 1024;
 
 // App Colors
 export const BASKETBALL_COLOR = "#ea580c";
 export const BASKETBALL_SEAM_COLOR = "#57534e";
+
+// General Gameplay
+export const NUMBER_OF_TEAMS = 360;
+export const SOS_MULTIPLIER = 2.15;
 
 // Regular Season
 export const AMOUNT_SEASON_GAMES = 30;
