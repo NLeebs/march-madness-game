@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { appStateActions } from "@/store/appStateSlice";
 // Componenets
 import BasketballSVG from "../Graphics/BasketballSVG";
+// Constatns
+import { BASKETBALL_COLOR, BASKETBALL_SEAM_COLOR } from "@/constants/CONSTANTS";
 
 
 // Component Function
@@ -33,7 +35,7 @@ function StartButton() {
         </h2>
       </div>
       <div className={`${isLoading && 'motion-safe:animate-spin'}`}>
-        <BasketballSVG />
+        <BasketballSVG basketballColor={BASKETBALL_COLOR} seamColor={BASKETBALL_SEAM_COLOR} />
       </div>
     </button>);
 }

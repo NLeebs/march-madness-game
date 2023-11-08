@@ -2,6 +2,10 @@
 export const NUMBER_OF_TEAMS = 360;
 export const SOS_MULTIPLIER = 2.15;
 
+// App Colors
+export const BASKETBALL_COLOR = "#ea580c";
+export const BASKETBALL_SEAM_COLOR = "#57534e";
+
 // Regular Season
 export const AMOUNT_SEASON_GAMES = 30;
 export const AMOUNT_NONCONFERENCE_GAMES = 15;
