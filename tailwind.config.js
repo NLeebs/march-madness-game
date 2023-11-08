@@ -45,6 +45,14 @@ module.exports = {
         "120": "30rem",
         "156": "38rem",
       },
+      keyframes: {
+        buttonHover: {
+          '100%': { transform: 'scale(1.1)', },
+        },
+      },
+      animation: {
+        buttonHover: 'buttonHover .25s ease-out both'
+      }
     },
   },
   plugins: [],

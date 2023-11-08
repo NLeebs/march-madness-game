@@ -26,6 +26,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+
 button {
   padding: 0.5rem;
   text-align: center;
