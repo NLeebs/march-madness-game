@@ -20,7 +20,7 @@ function PlayRegularSeasonGames(props) {
 
     const playRegularSeasonGames = useCallback(() => {
         Object.keys(teamSchedules).forEach(async (week) => {
-             await Promise.all([delay(TIMER_PER_REGULAR_SEASON_GAME * 1000)]).then(() => {
+             await Promise.all([delay(TIMER_PER_REGULAR_SEASON_GAME)]).then(() => {
                 teamSchedules[week].forEach((game) => {
                     const gameResult = playGame(teamStats[game[0].conference][game[0].team], teamStats[game[1].conference][game[1].team]);
                     dispatch(regularSeasonRecordActions.addRegularSeasonGameResult(gameResult));

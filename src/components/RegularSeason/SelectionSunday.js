@@ -84,7 +84,7 @@ function SelectionSunday(props) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
             dispatch(tournamentActions.setTournamentSeeds());
             dispatch(appStateActions.activateTransition());
-            Promise.all([delay(TIMER_BEFORE_TOURNAMENT * 1000)]).then(() => {
+            Promise.all([delay(TIMER_BEFORE_TOURNAMENT)]).then(() => {
                 dispatch(appStateActions.activateTournament());
                 dispatch(appStateActions.activateTournamentSelectionStage());
             })

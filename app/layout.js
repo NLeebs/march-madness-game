@@ -3,7 +3,6 @@ import './globals.css'
 // Fonts
 import { Geologica } from 'next/font/google'
 
-
 const geologica = Geologica({ subsets: ['latin'] })
 
 export const metadata = {
