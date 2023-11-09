@@ -46,12 +46,33 @@ module.exports = {
         "156": "38rem",
       },
       keyframes: {
-        buttonHover: {
-          '100%': { transform: 'scale(1.1)', },
+        fadeOut: {
+          '0%': {
+            visibility: "visibile",
+          },
+          '100%': {
+            visibility: "hidden",
+          },
+        },
+        startTheGameBasketball: {
+          '0%': { 
+            tranform: 'translateY(0)', 
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '15%, 45%': { 
+            transform: 'translateY(15%)', 
+            animationTimingGunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+          '30%, 60%': { 
+            transform: 'translateY(-15%)', 
+            animationTimingGunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+          '100%': { transform: 'translateY(-1000px) rotate(1turn)', },
         },
       },
       animation: {
-        buttonHover: 'buttonHover .25s ease-out both'
+        fadeOut: 'fadeOut 1s ease-out forwards',
+        startTheGameBasketball: 'startTheGameBasketball 1s forwards'
       }
     },
   },

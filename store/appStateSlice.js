@@ -40,7 +40,7 @@ const appStateSlice = createSlice({
             state.transition = false;
         },
         activateRegularSeason(state) {
-            Object.keys(state).forEach((key) => state[key] = false);
+            state.startScreen = false
             state.regularSeason = true;
         },
         activateSelectionSunday(state) {

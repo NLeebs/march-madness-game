@@ -6,13 +6,18 @@ import { useSelector } from "react-redux";
 // Components
 import TeamBar from "../UI/TeamBar";
 
-// TODO: Keep working those styles: Pulse winners, make nicer
 // Component Function
 function ConferenceGroups(props) {
+  const appState = useSelector((state) => state.appState);
   const regularSeasonRecords = useSelector((state) => state.regularSeasonRecords.records);
  
   return (
-    <div className={`max-w-300 flex flex-row flex-wrap gap-4 p-8 bg-slate-50 ${props.isPowerConf === "true" ? "" : "lg:flex hidden "}`}>
+    <div className={
+      `max-w-300 flex flex-row flex-wrap gap-4 p-8 bg-slate-50 
+      ${props.isPowerConf === "true" ? "" : "lg:flex hidden "}
+      transition-opacity duration-500 opacity-0
+      ${(!appState.transition || appState.selectionSunday) && "opacity-100"}`
+    }>
         {Object.keys(props.conferenceTeams)
           .sort((a, b) => regularSeasonRecords[b].wins - regularSeasonRecords[a].wins)
           .map((team) => <TeamBar key={team} team={team} />)}

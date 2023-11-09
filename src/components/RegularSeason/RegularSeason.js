@@ -2,7 +2,9 @@
 // Libraries
 import React, { Fragment, useEffect, useState } from "react";
 // React Functions
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+// State
+import { appStateActions } from "@/store/appStateSlice";
 // Functions
 import separatePowerConferences from "@/src/functions/regularSeason/separatePowerConferences";
 import delay from "@/src/functions/generic/delay";
@@ -10,10 +12,12 @@ import delay from "@/src/functions/generic/delay";
 import ConferenceGroups from "./ConferenceGroups";
 import PlayRegularSeasonGames from "./PlayRegularSeasonGames";
 import SelectionSunday from "./SelectionSunday";
+// Constants
+import { TIMER_TRIGGER_FADE } from "@/constants/CONSTANTS";
 
 
 function RegularSeason(props) {
-    const [pauseGames, setPauseGames] = useState(true);
+    const dispatch = useDispatch();
     
     const appState = useSelector((state) => state.appState);
     
@@ -21,17 +25,12 @@ function RegularSeason(props) {
     const powerConferences = ["acc", "bigTen", "big12", "sec", "bigEast", "pac12", "americanAthletic", "atlantic10", "wcc"];
     const otherConferences = separatePowerConferences(props.teamStats, powerConferences);
 
-    // Delay the Playing of the games
     useEffect(() => {
-        async function pauseRegularSeasonGames() {
-            if (pauseGames) {
-                // await delay(5000);
-                setPauseGames(false);
-            }
-        }
-        pauseRegularSeasonGames();
-    }, [pauseGames]);
-
+        Promise.all([delay(TIMER_TRIGGER_FADE)]).then(() => {
+            dispatch(appStateActions.deactivateTransition());
+        }); 
+    }, [dispatch]);
+    
     return (
         <Fragment>
             <div className="flex flex-col justify-center items-center p-8 gap-y-12">
@@ -40,7 +39,7 @@ function RegularSeason(props) {
                     {otherConferences.map((conf) => <ConferenceGroups key={conf} isPowerConf="false" conferenceTeams={props.teamStats[conf]} />)}
                 </div>
             </div>
-            {pauseGames || <PlayRegularSeasonGames teamStats={props.teamStats} />}
+            {appState.transition || <PlayRegularSeasonGames teamStats={props.teamStats} />}
             {appState.selectionSunday && <SelectionSunday />}
 
         </Fragment>

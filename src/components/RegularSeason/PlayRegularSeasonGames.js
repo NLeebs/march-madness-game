@@ -8,12 +8,13 @@ import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 import playGame from "@/src/functions/playGame";
 import delay from "@/src/functions/generic/delay";
 // Constants
-import { AMOUNT_SEASON_GAMES, TIMER_PER_REGULAR_SEASON_GAME } from "@/constants/CONSTANTS";
+import { AMOUNT_SEASON_GAMES, TIMER_BETWEEN_APP_STATES, TIMER_PER_REGULAR_SEASON_GAME } from "@/constants/CONSTANTS";
 
 
 function PlayRegularSeasonGames(props) {
     const dispatch = useDispatch();
 
+    const appState = useSelector((state) => state.appState);
     const teamSchedules = useSelector((state) => state.teamSchedule.teamSchedules);
     const weeksPlayed = useSelector((state) => state.regularSeasonRecords.weeksPlayed);
     const teamStats = props.teamStats;
@@ -32,10 +33,10 @@ function PlayRegularSeasonGames(props) {
     }, [dispatch, teamStats, teamSchedules]);
 
     useEffect(() => {
-        if (!teamSchedules || !teamStats) return;
-        if (weeksPlayed === 0) playRegularSeasonGames();
+        if (!teamSchedules || !teamStats || appState.transition) return;
+        if (weeksPlayed === 0) Promise.all([delay(TIMER_BETWEEN_APP_STATES)]).then(playRegularSeasonGames());
         if (weeksPlayed === AMOUNT_SEASON_GAMES) dispatch(appStateActions.activateSelectionSunday());
-    }, [dispatch, weeksPlayed, playRegularSeasonGames, teamStats, teamSchedules]);
+    }, [dispatch, appState.transition, weeksPlayed, playRegularSeasonGames, teamStats, teamSchedules]);
 
     return;
 }

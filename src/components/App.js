@@ -29,16 +29,7 @@ function App() {
   const teamArray = useSelector((state) => state.teamSchedule.teamArray);
   const teamScheduleObj = useSelector((state) => state.teamSchedule);
 
-  // Add Team Stats to State and Config Schedules State
-  useEffect(() => {
-    getTeamStatData().then((teamStatsData) => {
-      dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
-      dispatch(teamStatsActions.addConferenceArrays(teamStatsData));
-      dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
-      dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)); //
-    });
-  }, [dispatch]);
-
+  // Monitor resizing of the screen
   useEffect(() => {
     function handleResize() {
       const screenSizeObj = {
@@ -54,6 +45,16 @@ function App() {
     return () => {
       window.removeEventListener('resize', handleResize);
     }
+  }, [dispatch]);
+
+  // Add Team Stats to State and Config Schedules State
+  useEffect(() => {
+    getTeamStatData().then((teamStatsData) => {
+      dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
+      dispatch(teamStatsActions.addConferenceArrays(teamStatsData));
+      dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
+      dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)); //
+    });
   }, [dispatch]);
 
   // Turn off loading app state once TeamStats populated
