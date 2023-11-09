@@ -30,4 +30,5 @@ export const HIGHEST_SEED = 16;
 
 // Timeouts (in seconds)
 export const TIMER_PER_REGULAR_SEASON_GAME = .3;
+export const TIMER_BETWEEN_APP_STATES = 1;
 export const TIMER_BEFORE_TOURNAMENT = 5;
