@@ -63,10 +63,10 @@ function StartButton() {
       disabled={isLoading}
       className={`relative rounded-full transition-transform ease-out ${appState.transition ? "motion-safe:animate-startTheGameBasketball" : "hover:scale-110"}`}
     >
-      <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full ${isLoading && "bg-gray-300"} opacity-50`}>
+      <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full ${isLoading ? "bg-gray-300 opacity-50" : "bg-orange-600 opacity-20"}`}>
       </div>
       <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full`}>
-        <h2 className="text-6xl md:text-7xl">
+        <h2 className={`text-6xl md:text-7xl ${!isLoading && "text-neutral-50"}`}>
           {isLoading ? "Loading..." : "Start"}
         </h2>
       </div>
