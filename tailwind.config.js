@@ -46,14 +46,6 @@ module.exports = {
         "156": "38rem",
       },
       keyframes: {
-        fadeOut: {
-          '0%': {
-            visibility: "visibile",
-          },
-          '100%': {
-            visibility: "hidden",
-          },
-        },
         startTheGameBasketball: {
           '0%': { 
             tranform: 'translateY(0)', 
