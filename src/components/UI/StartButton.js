@@ -66,7 +66,7 @@ function StartButton() {
       <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full ${isLoading && "bg-gray-300"} opacity-50`}>
       </div>
       <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full`}>
-        <h2 className="text-7xl">
+        <h2 className="text-6xl md:text-7xl">
           {isLoading ? "Loading..." : "Start"}
         </h2>
       </div>
