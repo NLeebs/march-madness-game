@@ -61,7 +61,7 @@ function StartButton() {
     <button 
       onClick={activateRegularSeason}
       disabled={isLoading}
-      className={`relative rounded-full transition-transform ease-out ${appState.transition ? "motion-safe:animate-startTheGameBasketball" : "hover:scale-110"}`}
+      className={`relative rounded-full transition-transform ease-out ${appState.transition ? "motion-safe:animate-startTheGameBasketball" : "hover:scale-110"} focus-visible:outline-orange-600`}
     >
       <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full ${isLoading ? "bg-gray-300 opacity-50" : "bg-orange-600 opacity-20"}`}>
       </div>

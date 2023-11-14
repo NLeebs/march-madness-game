@@ -30,7 +30,9 @@ function RegularSeason(props) {
             dispatch(appStateActions.deactivateTransition());
         }); 
     }, [dispatch]);
-    
+    // TODO: Add Regular Season Title
+    // TODO: Add Selection Sunday Title
+    // TODO: Animate the selection of teams - stagger or bounce in
     return (
         <Fragment>
             <div className="flex flex-col justify-center items-center p-8 gap-y-12">

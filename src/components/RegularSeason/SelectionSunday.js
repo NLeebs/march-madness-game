@@ -83,6 +83,7 @@ function SelectionSunday(props) {
         if (appState.selectionSunday === true && appState.transition === false) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
             dispatch(tournamentActions.setTournamentSeeds());
+            // TODO: Ship this out to a button instead of timer
             dispatch(appStateActions.activateTransition());
             Promise.all([delay(TIMER_BEFORE_TOURNAMENT)]).then(() => {
                 dispatch(appStateActions.activateTournament());
