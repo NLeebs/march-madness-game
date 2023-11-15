@@ -39,24 +39,26 @@ function RegularSeason(props) {
         dispatch(appStateActions.activateTournamentSelectionStage());
     };
 
-    // TODO: Add slection Sunday Button Handler
     // TODO: Add Regular Season Title
     // TODO: Add Selection Sunday Title
-    // TODO: Animate the selection of teams - stagger or bounce in
     return (
         <Fragment>
-            <div className="flex flex-col justify-center items-center p-8 gap-y-12">
+            <motion.div
+                exit={{opacity: 0}} 
+                className="flex flex-col justify-center items-center p-8 gap-y-12"
+            >
                 <div className="flex flex-row flex-wrap justify-center gap-12">
                     {powerConferences.map((conf) => <ConferenceGroups key={conf} isPowerConf="true" conferenceTeams={props.teamStats[conf]} />)}
                     {otherConferences.map((conf) => <ConferenceGroups key={conf} isPowerConf="false" conferenceTeams={props.teamStats[conf]} />)}
                 </div>
-            </div>
+            </motion.div>
             {!appState.transition && appState.regularSeason && !appState.selectionSunday && <PlayRegularSeasonGames teamStats={props.teamStats} />}
             {appState.selectionSunday && <SelectionSunday />}
             {appState.selectionSunday && 
                 <motion.div 
                     initial={{opacity: 0}}
                     animate={{opacity: 1}}
+                    exit={{opacity: 0}}
                     className="w-full flex justify-center fixed z-10 bottom-10 motion-safe:animate-bounce"
                 >
                     <Button onClick={selectionSundayButtonHandler} text="Go to Tournament" backgroundColor={PRIMARY_COLOR} />

@@ -14,6 +14,7 @@ import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 import getTeamStatData from "@/src/functions/teamStatsData/getTeamStatData";
 // Components
 import AddTeamStatsToFirebase from "@/src/components/Add-To-Firebase/AddTeamStatsToFirebase.js";
+import { AnimatePresence } from "framer-motion";
 import StartScreen from "./UI/StartScreen";
 import SeasonSchedule from "./RegularSeason/SeasonSchedule";
 import RegularSeason from "./RegularSeason/RegularSeason";
@@ -67,8 +68,10 @@ function App() {
       {/* <AddTeamStatsToFirebase /> */}
       {teamArray && <SeasonSchedule teamStats={teamStatsObject.teamStats} teamArray={teamArray} />}      
       {appState.startScreen && <StartScreen />}
-      {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
-      {appState.tournament && <Tournament appState={appState} />}
+      <AnimatePresence>
+        {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
+        {appState.tournament && <Tournament appState={appState} />}
+      </AnimatePresence>
       {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
       {appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap && <PlayTournamentGames />}
     </Fragment>

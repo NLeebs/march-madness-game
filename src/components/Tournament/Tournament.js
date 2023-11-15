@@ -1,6 +1,7 @@
 "use client"
 // Libraries
 import React, { Fragment }  from "react"
+import { motion } from "framer-motion";
 // React Functions
 import { useEffect } from "react";
 import { useDispatch } from "react-redux"
@@ -20,7 +21,11 @@ function Tournament(props) {
     }, [dispatch])
 
     return (
-        <div className="mx-auto max-w-tourny grid grid-flow-row">
+        <motion.div 
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            className="mx-auto max-w-tourny grid grid-flow-row"
+        >
             <div className="grid grid-flow-col relative">
                 <div className="col-span-1 flex flex-col gap-y-16 min-w-300">
                     <TournamentRound region="west" round="1" />
@@ -74,7 +79,7 @@ function Tournament(props) {
             <div>
                 <TournamentRound region="playin" round="playin" />
             </div>
-        </div>
+        </motion.div>
     );
 }
 
