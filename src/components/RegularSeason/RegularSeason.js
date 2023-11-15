@@ -1,6 +1,7 @@
 "use client"
 // Libraries
 import React, { Fragment, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 // React Functions
 import { useDispatch, useSelector } from "react-redux";
 // State
@@ -53,9 +54,13 @@ function RegularSeason(props) {
             {!appState.transition && appState.regularSeason && !appState.selectionSunday && <PlayRegularSeasonGames teamStats={props.teamStats} />}
             {appState.selectionSunday && <SelectionSunday />}
             {appState.selectionSunday && 
-                <div className="w-full flex justify-center fixed z-10 bottom-10 motion-safe:animate-bounce">
+                <motion.div 
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    className="w-full flex justify-center fixed z-10 bottom-10 motion-safe:animate-bounce"
+                >
                     <Button onClick={selectionSundayButtonHandler} text="Go to Tournament" backgroundColor={PRIMARY_COLOR} />
-                </div>}
+                </motion.div>}
 
         </Fragment>
     )

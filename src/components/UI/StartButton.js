@@ -1,6 +1,7 @@
 "use client"
 // Libraries
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 // React Functions
 import { useDispatch, useSelector } from "react-redux";
 // State
@@ -58,9 +59,12 @@ function StartButton(props) {
   }
 
   return (
-    <button 
+    <motion.button 
       onClick={activateRegularSeason}
       disabled={isLoading}
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      duration
       className={`relative rounded-full transition-transform ease-out ${appState.transition ? "motion-safe:animate-startTheGameBasketball" : "hover:scale-110"} focus-visible:outline-neutral-300`}
     >
       <div 
@@ -84,7 +88,7 @@ function StartButton(props) {
           seamColor={SECONDARY_COLOR} 
         />
       </div>
-    </button>);
+    </motion.button>);
 }
 
 export default StartButton;
