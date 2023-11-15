@@ -13,13 +13,13 @@ import BasketballSVG from "../Graphics/BasketballSVG";
 import { 
         SMALL_BREAK_POINT, 
         LARGE_BREAK_POINT, 
-        BASKETBALL_COLOR, 
-        BASKETBALL_SEAM_COLOR, 
+        PRIMARY_COLOR, 
+        SECONDARY_COLOR, 
         TIMER_BETWEEN_APP_STATES } from "@/constants/CONSTANTS";
 
 
 // Component Function
-function StartButton() {
+function StartButton(props) {
   const dispatch = useDispatch();
 
   const screenWidth = useSelector((state) => state.uiState.screenWidth);
@@ -61,9 +61,14 @@ function StartButton() {
     <button 
       onClick={activateRegularSeason}
       disabled={isLoading}
-      className={`relative rounded-full transition-transform ease-out ${appState.transition ? "motion-safe:animate-startTheGameBasketball" : "hover:scale-110"} focus-visible:outline-orange-600`}
+      className={`relative rounded-full transition-transform ease-out ${appState.transition ? "motion-safe:animate-startTheGameBasketball" : "hover:scale-110"} focus-visible:outline-neutral-300`}
     >
-      <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full ${isLoading ? "bg-gray-300 opacity-50" : "bg-orange-600 opacity-20"}`}>
+      <div 
+        className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full ${isLoading ? "opacity-50" : "opacity-20"}`}
+        style={{
+          backgroundColor: `${isLoading ? "#d1d5db" : PRIMARY_COLOR}`,
+        }}
+      >
       </div>
       <div className={`absolute inset-0 w-full h-full z-10 flex justify-center items-center rounded-full`}>
         <h2 className={`text-6xl md:text-7xl ${!isLoading && "text-neutral-50"}`}>
@@ -75,8 +80,8 @@ function StartButton() {
         style={{ transform: !isLoading && `rotate(${elRotation}deg)`}}
       >
         <BasketballSVG size={screenWidth >= SMALL_BREAK_POINT ? "400" : "300"} 
-          basketballColor={BASKETBALL_COLOR} 
-          seamColor={BASKETBALL_SEAM_COLOR} 
+          basketballColor={PRIMARY_COLOR} 
+          seamColor={SECONDARY_COLOR} 
         />
       </div>
     </button>);

@@ -4,8 +4,8 @@ export const MEDIUM_BREAK_POINT = 768;
 export const LARGE_BREAK_POINT = 1024;
 
 // App Colors
-export const BASKETBALL_COLOR = "#ea580c";
-export const BASKETBALL_SEAM_COLOR = "#57534e";
+export const PRIMARY_COLOR = "#ea580c";
+export const SECONDARY_COLOR = "#57534e";
 
 // General Gameplay
 export const NUMBER_OF_TEAMS = 360;

@@ -5,6 +5,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 // Components
 import StartButton from "./StartButton";
+// Constants
+import { BASKETBALL_COLOR } from "@/constants/CONSTANTS";
 
 
 function StartScreen() {
