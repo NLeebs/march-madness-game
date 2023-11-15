@@ -12,8 +12,10 @@ import delay from "@/src/functions/generic/delay";
 import ConferenceGroups from "./ConferenceGroups";
 import PlayRegularSeasonGames from "./PlayRegularSeasonGames";
 import SelectionSunday from "./SelectionSunday";
+import Button from "../UI/Button";
 // Constants
 import { TIMER_TRIGGER_FADE } from "@/constants/CONSTANTS";
+import { PRIMARY_COLOR } from "@/constants/CONSTANTS";
 
 
 function RegularSeason(props) {
@@ -30,6 +32,13 @@ function RegularSeason(props) {
             dispatch(appStateActions.deactivateTransition());
         }); 
     }, [dispatch]);
+
+    const selectionSundayButtonHandler = () => {
+        dispatch(appStateActions.activateTournament());
+        dispatch(appStateActions.activateTournamentSelectionStage());
+    };
+
+    // TODO: Add slection Sunday Button Handler
     // TODO: Add Regular Season Title
     // TODO: Add Selection Sunday Title
     // TODO: Animate the selection of teams - stagger or bounce in
@@ -41,8 +50,12 @@ function RegularSeason(props) {
                     {otherConferences.map((conf) => <ConferenceGroups key={conf} isPowerConf="false" conferenceTeams={props.teamStats[conf]} />)}
                 </div>
             </div>
-            {appState.transition || <PlayRegularSeasonGames teamStats={props.teamStats} />}
+            {!appState.transition && appState.regularSeason && !appState.selectionSunday && <PlayRegularSeasonGames teamStats={props.teamStats} />}
             {appState.selectionSunday && <SelectionSunday />}
+            {appState.selectionSunday && 
+                <div className="w-full flex justify-center fixed z-10 bottom-10 motion-safe:animate-bounce">
+                    <Button onClick={selectionSundayButtonHandler} text="Go to Tournament" backgroundColor={PRIMARY_COLOR} />
+                </div>}
 
         </Fragment>
     )

@@ -10,8 +10,7 @@ import delay from "@/src/functions/generic/delay";
 // Constanst
 import { NUMBER_OF_AT_LARGE_TEAMS, 
         NUMBER_OF_AT_LARGE_TEAMS_PLAYINS, 
-        NUMBER_OF_CONF_CHAMP_PLAYINS,
-        TIMER_BEFORE_TOURNAMENT } from "@/constants/CONSTANTS";
+        NUMBER_OF_CONF_CHAMP_PLAYINS } from "@/constants/CONSTANTS";
 
 
 function SelectionSunday(props) {
@@ -21,6 +20,7 @@ function SelectionSunday(props) {
     const appState = useSelector((state) => state.appState);
     const seasonResults = useSelector((state) => state.regularSeasonRecords.records);
     const conferenceArrs = useSelector((state) => state.teamStats.conferenceArrays);
+    const tournamentTeams = useSelector((state) => state.tournament.tournamentTeams);
     
     // Sort Functions
     const sortByTournamentScore = useCallback((arr) => {
@@ -80,17 +80,11 @@ function SelectionSunday(props) {
 
     // Select and dispatch
     useEffect(() => {
-        if (appState.selectionSunday === true && appState.transition === false) {
+        if (appState.selectionSunday === true && tournamentTeams.length === 0) {
             dispatch(tournamentActions.addTournamentTeams(getTournamentTeams()));
             dispatch(tournamentActions.setTournamentSeeds());
-            // TODO: Ship this out to a button instead of timer
-            dispatch(appStateActions.activateTransition());
-            Promise.all([delay(TIMER_BEFORE_TOURNAMENT)]).then(() => {
-                dispatch(appStateActions.activateTournament());
-                dispatch(appStateActions.activateTournamentSelectionStage());
-            })
         }
-    }, [dispatch, appState, seasonResults, getTournamentTeams]);
+    }, [dispatch, appState, getTournamentTeams, tournamentTeams]);
 
     return;
 }

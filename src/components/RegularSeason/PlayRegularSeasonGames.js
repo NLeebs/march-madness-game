@@ -33,10 +33,10 @@ function PlayRegularSeasonGames(props) {
     }, [dispatch, teamStats, teamSchedules]);
 
     useEffect(() => {
-        if (!teamSchedules || !teamStats || appState.transition) return;
-        if (weeksPlayed === 0) Promise.all([delay(TIMER_BETWEEN_APP_STATES)]).then(playRegularSeasonGames());
+        if (!teamSchedules || !teamStats) return;
+        if (weeksPlayed === 0) playRegularSeasonGames();
         if (weeksPlayed === AMOUNT_SEASON_GAMES) dispatch(appStateActions.activateSelectionSunday());
-    }, [dispatch, appState.transition, weeksPlayed, playRegularSeasonGames, teamStats, teamSchedules]);
+    }, [dispatch, weeksPlayed, playRegularSeasonGames, teamStats, teamSchedules]);
 
     return;
 }

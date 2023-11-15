@@ -32,4 +32,3 @@ export const HIGHEST_SEED = 16;
 export const TIMER_PER_REGULAR_SEASON_GAME = .5;
 export const TIMER_TRIGGER_FADE = .1;
 export const TIMER_BETWEEN_APP_STATES = 1;
-export const TIMER_BEFORE_TOURNAMENT = 5;
