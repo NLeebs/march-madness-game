@@ -16,7 +16,8 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       width: {
-        "teamBar": '300px',
+        "teamBar": '18.75rem',
+        'tournamentRoundColumn': '21rem',
       },
       minWidth: {
         '50' : '50px', 
