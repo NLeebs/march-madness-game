@@ -42,7 +42,7 @@ function RegularSeason(props) {
     // TODO: Add Regular Season Title
     // TODO: Add Selection Sunday Title
     return (
-        <Fragment>
+        <div className="h-screen overflow-y-scroll">
             <motion.div
                 exit={{opacity: 0}} 
                 className="flex flex-col justify-center items-center p-8 gap-y-12"
@@ -64,7 +64,7 @@ function RegularSeason(props) {
                     <Button onClick={selectionSundayButtonHandler} text="Go to Tournament" backgroundColor={PRIMARY_COLOR} />
                 </motion.div>}
 
-        </Fragment>
+        </div>
     )
 }
 

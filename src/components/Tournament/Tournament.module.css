@@ -1,0 +1,47 @@
+.tournamentGrid {
+    grid-auto-rows: min-content;
+    grid-auto-columns: min-content;
+    grid-template-areas: 
+        "round64Top round32Top sweetSixteenTop eliteEightTop finalFourTop final"
+        "round64Bottom round32Bottom sweetSixteenBottom eliteEightBottom finalFourBottom final";
+}
+
+.gridRound64Top {
+    grid-area: round64Top;
+}
+.gridRound64Bottom {
+    grid-area: round64Bottom;
+}
+.gridRound32Top {
+    grid-area: round32Top;
+}
+.gridRound32Bottom {
+    grid-area: round32Bottom;
+}
+.gridSweetSixteenTop {
+    grid-area: sweetSixteenTop;
+}
+.gridSweetSixteenBottom {
+    grid-area: sweetSixteenBottom;
+}
+.gridEliteEightTop {
+    grid-area: eliteEightTop;
+}
+.gridEliteEightBottom {
+    grid-area: eliteEightBottom;
+}
+.gridFinalFourTop {
+    grid-area: finalFourTop;
+}
+.gridFinalFourBottom {
+    grid-area: finalFourBottom;
+}
+.gridFinal {
+    grid-area: final;
+}
+
+
+.regionTitle {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
