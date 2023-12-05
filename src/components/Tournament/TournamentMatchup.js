@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 // State
 import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSlice";
 // Css Styles
-import classes from "./TournamentMatchup.module.css";
+import styles from "./TournamentMatchup.module.css";
 // Components
 import TeamBar from "../UI/TeamBar";
 import PlayerPickBar from "../UI/PlayerPickBar";
