@@ -25,6 +25,7 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 
 function App() {
   const dispatch = useDispatch();
+  
   const appState = useSelector((state) => state.appState);
   const teamStatsObject = useSelector((state) => state.teamStats);
   const teamArray = useSelector((state) => state.teamSchedule.teamArray);
