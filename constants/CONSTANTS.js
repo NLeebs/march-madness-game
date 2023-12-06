@@ -7,9 +7,6 @@ export const XXL_LARGE_BREAK_POINT = 1700;
 export const XXXL_LARGE_BREAK_POINT = 2040;
 export const TOURNAMENT_BREAK_POINT = 2350;
 
-export const TOURNAMENT_ROUND_COLUMN_PX_WIDTH = 336;
-export const TOURNAMENT_ROUND_PLAYIN_DIV_PX_HEIGHT = 648;
-
 // App Colors
 export const PRIMARY_COLOR = "#ea580c";
 export const SECONDARY_COLOR = "#57534e";

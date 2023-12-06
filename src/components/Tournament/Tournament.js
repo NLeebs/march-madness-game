@@ -17,8 +17,6 @@ import PlayerScore from "./PlayerScore";
 import styles from "./Tournament.module.css";
 // Constants
 import { TOURNAMENT_BREAK_POINT, 
-        TOURNAMENT_ROUND_COLUMN_PX_WIDTH, 
-        TOURNAMENT_ROUND_PLAYIN_DIV_PX_HEIGHT,
         XXXL_LARGE_BREAK_POINT,
         XXL_LARGE_BREAK_POINT,
         XL_LARGE_BREAK_POINT,
@@ -42,14 +40,24 @@ function Tournament(props) {
     }, [dispatch, screenWidth]);
 
     // Determine UI position for each round
-    let firstRoundUIPosition, secondRoundUIPosition, sweetSixteenUIPosition, eliteEightUIPosition, finalFourUIPosition, finalsUIPosition;
+    let firstRoundUIPosition, secondRoundUIPosition, sweetSixteenUIPosition, eliteEightUIPosition, finalFourUIPosition; 
+    const finalsUIPosition = "finals";
     if (selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT) {
-        firstRoundUIPosition = 1; secondRoundUIPosition = 2; sweetSixteenUIPosition = 3; eliteEightUIPosition = 4;
-        finalFourUIPosition = 5; finalsUIPosition = 6;
+        firstRoundUIPosition = 1; secondRoundUIPosition = 2; sweetSixteenUIPosition = 3; eliteEightUIPosition = 4; finalFourUIPosition = 5;
     } else if (selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT) {
-        secondRoundUIPosition = 1; sweetSixteenUIPosition = 2; eliteEightUIPosition = 3;
-        finalFourUIPosition = 4; finalsUIPosition = 5;
+        secondRoundUIPosition = 1; sweetSixteenUIPosition = 2; eliteEightUIPosition = 3; finalFourUIPosition = 4;
         firstRoundUIPosition = 0;
+    } else if (selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT) {
+        sweetSixteenUIPosition = 1; eliteEightUIPosition = 2; finalFourUIPosition = 3;
+        firstRoundUIPosition = secondRoundUIPosition = 0;
+    } else if (selectedRound === "eliteEight" || screenWidth > LARGE_BREAK_POINT) {
+        eliteEightUIPosition = 1; finalFourUIPosition = 2;
+        firstRoundUIPosition = secondRoundUIPosition = sweetSixteenUIPosition = 0;
+    } else if (selectedRound === "finalFour" || screenWidth > MEDIUM_BREAK_POINT) {
+        finalFourUIPosition = 1;
+        firstRoundUIPosition = secondRoundUIPosition = sweetSixteenUIPosition = eliteEightUIPosition = 0;
+    } else if (selectedRound === "finals") {
+        firstRoundUIPosition = secondRoundUIPosition = sweetSixteenUIPosition = eliteEightUIPosition = finalFourUIPosition = 0;
     }
 
     return (
@@ -73,98 +81,89 @@ function Tournament(props) {
                 {/* Round 1 */}
                 <motion.div 
                     initial={false}
-                    animate={{width: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT
-                        ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0}}
+                    animate={{
+                        width: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT ? "max-content" : 0,
+                    }}
                     className={`
                         overflow-x-clip h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300" : styles.gridRound64Top}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>West</div>}
-                    <TournamentRound region="west" round="1" roundUIPosition={firstRoundUIPosition} 
-                    />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>East</div>}
-                    <TournamentRound region="east" round="1" roundUIPosition={firstRoundUIPosition} 
-                    />
+                    <TournamentRound region="west" round="1" set="A" roundUIPosition={firstRoundUIPosition} />
+                    <TournamentRound region="east" round="1" set="B"  roundUIPosition={firstRoundUIPosition} />
                 </motion.div>
 
                 {/* Round 2 */}
                 <motion.div 
                     initial={false}
                     animate={{
-                        width: selectedRound === "round1" || selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound === "round1" || selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound === "round1" || selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT ? "max-content" : 0,
                     }}
                     className={`
                         overflow-x-clip h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 relative" : styles.gridRound32Top}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>West</div>}
-                    <TournamentRound region="west" round="2" roundUIPosition={secondRoundUIPosition}  />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>East</div>}
-                    <TournamentRound region="east" round="2" roundUIPosition={secondRoundUIPosition}  />
+                    <TournamentRound region="west" round="2" set="A" roundUIPosition={secondRoundUIPosition}  />
+                    <TournamentRound region="east" round="2" set="B" roundUIPosition={secondRoundUIPosition}  />
                 </motion.div>
 
                 {/* Sweet Sixteen */}
                 <motion.div 
                     initial={false}
                     animate={{
-                        width: selectedRound === "round1" || selectedRound === "round2" || selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT 
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound === "round1" || selectedRound === "round2" || selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound === "round1" || selectedRound === "round2" || selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT ? "max-content" : 0,
                     }}
                     className={`
                         overflow-x-clip h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" : styles.gridSweetSixteenTop}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>West</div>}
-                    <TournamentRound region="west" round="sweet sixteen" roundUIPosition={sweetSixteenUIPosition} />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>East</div>}
-                    <TournamentRound region="east" round="sweet sixteen" roundUIPosition={sweetSixteenUIPosition} />
+                    <TournamentRound region="west" round="sweet sixteen" set="A" roundUIPosition={sweetSixteenUIPosition} />
+                    <TournamentRound region="east" round="sweet sixteen" set="B" roundUIPosition={sweetSixteenUIPosition} />
                 </motion.div>
 
                 {/* Elite Eight  */}
                 <motion.div 
                     initial={false}
                     animate={{
-                        width: selectedRound !== "finalFour" && selectedRound !== "finals" || screenWidth > LARGE_BREAK_POINT
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound !== "finalFour" && selectedRound !== "finals" || screenWidth > LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound !== "finalFour" && selectedRound !== "finals" || screenWidth > LARGE_BREAK_POINT ? "max-content" : 0,
                     }}
                     className={`
                         overflow-x-clip h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" : styles.gridEliteEightTop}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>West</div>}
-                    <TournamentRound region="west" round="elite eight" roundUIPosition={eliteEightUIPosition} />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>East</div>}
-                    <TournamentRound region="east" round="elite eight" roundUIPosition={eliteEightUIPosition} />
+                    <TournamentRound region="west" round="elite eight" set="A" roundUIPosition={eliteEightUIPosition} />
+                    <TournamentRound region="east" round="elite eight" set="B" roundUIPosition={eliteEightUIPosition} />
                 </motion.div>
 
                 {/* Final Four  */}
                 <motion.div
                     initial={false}
                     animate={{
-                        width: selectedRound !== "finals" || screenWidth > MEDIUM_BREAK_POINT
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound !== "finals" || screenWidth > MEDIUM_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound !== "finals" || screenWidth > MEDIUM_BREAK_POINT ? "max-content" : 0,
                     }}  
                     className={`
                         overflow-x-clip h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" : styles.gridFinalFourTop}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>East & West</div>}
-                    <TournamentRound region="eastWest" round="final four" roundUIPosition={finalFourUIPosition} />
+                    <TournamentRound region="eastWest" round="final four" set="A" roundUIPosition={finalFourUIPosition} />
                 </motion.div>
 
                 {/* Finals  */}
-                <div className={`${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16" : ` h-max ${styles.gridFinal}`}`}>
+                <div className={`${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-4" : ` h-max ${styles.gridFinal}`}`}>
                     <div className="flex flex-col gap-y-16 min-w-300">
-                        <TournamentRound region="championship" round="finals" roundUIPosition={finalsUIPosition} />
+                        <TournamentRound region="championship" round="finals" roundUIPosition={finalsUIPosition} selectedRound={selectedRound} />
                     </div>
                     <div className="flex flex-col gap-y-16 min-w-300">
-                        <TournamentRound region="champion" round="champion" roundUIPosition={finalsUIPosition} />
+                        <TournamentRound region="champion" round="champion" roundUIPosition={0} />
                     </div>
                     <PlayTournamentButton />
                     {props.appState.tournamentPlayGames && <PlayerScore />}
@@ -174,94 +173,79 @@ function Tournament(props) {
                 <motion.div 
                     initial={false}
                     animate={{
-                        width: selectedRound !== "finals" || screenWidth > MEDIUM_BREAK_POINT
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound !== "finals" || screenWidth > MEDIUM_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound !== "finals" || screenWidth > MEDIUM_BREAK_POINT ? "max-content" : 0,
                     }}  
                     className={`
                         overflow-x-clip  h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" : styles.gridFinalFourBottom}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>South & Midwest</div>}
-                    <TournamentRound region="southMidwest" round="final four" roundUIPosition={finalFourUIPosition} />
+                    <TournamentRound region="southMidwest" round="final four" set="B" roundUIPosition={finalFourUIPosition} />
                 </motion.div>
 
                 {/* Elite Eight  */}
                 <motion.div
                     initial={false}
                     animate={{
-                        width: selectedRound !== "finalFour" && selectedRound !== "finals" || screenWidth > LARGE_BREAK_POINT
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound !== "finalFour" && selectedRound !== "finals" || screenWidth > LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound !== "finalFour" && selectedRound !== "finals" || screenWidth > LARGE_BREAK_POINT ? "max-content" : 0,
                     }} 
                     className={`
                         overflow-x-clip  h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" : styles.gridEliteEightBottom}
                         `}
                     >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>South</div>}
-                    <TournamentRound region="south" round="elite eight" roundUIPosition={eliteEightUIPosition} />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>Midwest</div>}
-                    <TournamentRound region="midwest" round="elite eight" roundUIPosition={eliteEightUIPosition} />
+                    <TournamentRound region="south" round="elite eight" set="A" roundUIPosition={eliteEightUIPosition} />
+                    <TournamentRound region="midwest" round="elite eight" set="B" roundUIPosition={eliteEightUIPosition} />
                 </motion.div>
 
                 {/* Sweet Sixteen  */}
                 <motion.div 
                     initial={false}
                     animate={{
-                        width: selectedRound === "round1" || selectedRound === "round2" || selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound === "round1" || selectedRound === "round2" || selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound === "round1" || selectedRound === "round2" || selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT ? "max-content" : 0,
                     }}
                     className={`
                         overflow-x-clip  h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" : styles.gridSweetSixteenBottom}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>South</div>}
-                    <TournamentRound region="south" round="sweet sixteen" roundUIPosition={sweetSixteenUIPosition} />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>Midwest</div>}
-                    <TournamentRound region="midwest" round="sweet sixteen" roundUIPosition={sweetSixteenUIPosition} />
+                    <TournamentRound region="south" round="sweet sixteen" set="A" roundUIPosition={sweetSixteenUIPosition} />
+                    <TournamentRound region="midwest" round="sweet sixteen" set="B" roundUIPosition={sweetSixteenUIPosition} />
                 </motion.div>
 
                 {/* Round 2  */}
                 <motion.div 
                     initial={false}
                     animate={{
-                        width: selectedRound === "round1" || selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT
-                            ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0
+                        width: selectedRound === "round1" || selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound === "round1" || selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT ? "max-content" : 0,
                     }} 
                     className={`
                     overflow-x-clip  h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300 relative" : styles.gridRound32Bottom}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>South</div>}
-                    <TournamentRound region="south" round="2" 
-                        roundUIPosition={
-                            selectedRound === "round1" ? 
-                                2 :
-                                selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT ? 1 : 0
-                        }
-                    />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>Midwest</div>}
-                    <TournamentRound region="midwest" round="2" />
+                    <TournamentRound region="south" round="2" set="A" roundUIPosition={secondRoundUIPosition} />
+                    <TournamentRound region="midwest" round="2" set="B" roundUIPosition={secondRoundUIPosition}  />
                 </motion.div>
 
                 {/* Round 1  */}
                 <motion.div
                     initial={false}
-                    animate={{width: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT
-                        ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0}} 
+                    animate={{
+                        width: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT ? "max-content" : 0,
+                        height: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT ? "max-content" : 0,
+                        }} 
                     className={`
                         overflow-hidden  h-max
                         ${screenWidth > TOURNAMENT_BREAK_POINT ? "col-span-1 flex flex-col gap-y-16 min-w-300" : styles.gridRound64Bottom}
                     `}
                 >
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>South</div>}
-                    <TournamentRound region="south" round="1" roundUIPosition={secondRoundUIPosition} 
-                    />
-                    {screenWidth < TOURNAMENT_BREAK_POINT && <div className={`${styles.regionTitle} m-4`}>Midwest</div>}
-                    <TournamentRound region="midwest" round="1" roundUIPosition={secondRoundUIPosition} 
-                    />
+                    <TournamentRound region="south" round="1" set="A" roundUIPosition={firstRoundUIPosition} />
+                    <TournamentRound region="midwest" round="1" set="B" roundUIPosition={firstRoundUIPosition} />
                 </motion.div>
 
                 {/* Playin Games Smaller Screens  */}
@@ -269,8 +253,8 @@ function Tournament(props) {
                     <motion.div 
                         initial={false}
                         animate={{
-                            width: selectedRound === "round1" ? TOURNAMENT_ROUND_COLUMN_PX_WIDTH : 0,
-                            height: selectedRound === "round1" ? TOURNAMENT_ROUND_PLAYIN_DIV_PX_HEIGHT : 0,
+                            width: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT ? "max-content" : 0,
+                            height: selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT ? "max-content" : 0,
                         }}
                         className={`
                             overflow-hidden  h-max

@@ -1,66 +1,114 @@
 "use client"
 // Libraries
 import React from "react"
+import { motion } from "framer-motion";
 // React Functions
 import { useSelector } from "react-redux"
 // Components
 import TournamentMatchup from "./TournamentMatchup";
+// Constants
+import { TOURNAMENT_BREAK_POINT, 
+        XXXL_LARGE_BREAK_POINT, 
+        XXL_LARGE_BREAK_POINT, 
+        XL_LARGE_BREAK_POINT, 
+        LARGE_BREAK_POINT, 
+        MEDIUM_BREAK_POINT } from "@/constants/CONSTANTS";
 
 
 function TournamentRound(props) {
     // Determine which State to pull from
-    let roundResultsName, playersPicksName, roundPlayClasses, roundSelectClasses;
+    let roundResultsName, playersPicksName;
     if (props.round === "playin") { 
-        roundResultsName = "roundOneMatchups"; 
-        playersPicksName = "roundTwoPicks";
-        roundSelectClasses = roundPlayClasses = "gap-x-8"
+        roundResultsName = "roundOneMatchups"; playersPicksName = "roundTwoPicks";
     }
     else if (props.round === "1") { 
-        roundResultsName = "roundOneMatchups"; 
-        playersPicksName = "roundTwoPicks";
-        roundSelectClasses = "gap-y-4";
-        roundPlayClasses = "gap-y-12";
+        roundResultsName = "roundOneMatchups"; playersPicksName = "roundTwoPicks";
     }
     else if (props.round === "2") {
-        roundResultsName = "roundTwoMatchups"; 
-        playersPicksName = "roundTwoPicks";
-        roundSelectClasses = "py-16 gap-y-36"
-        roundPlayClasses = "py-16 gap-y-42"
+        roundResultsName = "roundTwoMatchups"; playersPicksName = "roundTwoPicks";
     }
     else if (props.round === "sweet sixteen") {
-        roundResultsName = "roundSweetSixteenMatchups"; 
-        playersPicksName = "roundSweetSixteenPicks";
-        roundSelectClasses = "py-48 gap-y-100"
-        roundPlayClasses = "py-56 gap-y-122"
+        roundResultsName = "roundSweetSixteenMatchups"; playersPicksName = "roundSweetSixteenPicks";
     }
     else if (props.round === "elite eight") {
-        roundResultsName = "roundEliteEightMatchups"; 
-        playersPicksName = "roundEliteEightPicks";
-        roundSelectClasses = "py-112 gap-y-100"
-        roundPlayClasses = "py-135"
+        roundResultsName = "roundEliteEightMatchups"; playersPicksName = "roundEliteEightPicks";
     }
     else if (props.round === "final four") {
-        roundResultsName = "roundFinalFourMatchups"; 
-        playersPicksName = "roundFinalFourPicks";
-        roundSelectClasses = "py-252"
-        roundPlayClasses = "py-280"
+        roundResultsName = "roundFinalFourMatchups"; playersPicksName = "roundFinalFourPicks";
     }
     else if (props.round === "finals") {
-        roundResultsName = "roundFinalsMatchups"; 
-        playersPicksName = "roundFinalsPicks";
-        roundSelectClasses = "pt-252"
-        roundPlayClasses = "pt-280"
+        roundResultsName = "roundFinalsMatchups"; playersPicksName = "roundFinalsPicks";
     }
     else if (props.round === "champion") {
-        roundResultsName = "champion"; 
-        playersPicksName = "champion";
-        roundPlayClasses = ""
+        roundResultsName = "champion"; playersPicksName = "champion";
     }
-    
+
     // State
     const appState = useSelector((state) => state.appState);
+    const screenWidth = useSelector((state) => state.uiState.screenWidth);
+    const selectedRound = useSelector((state) => state.uiState.selectedRound);
     const matchupObj = useSelector((state) => state.tournament[roundResultsName]);
     const playerPicksObj = useSelector((state) => state.tournamentPlayersPicks.picks[playersPicksName])
+
+
+    // Round Styles and spacing
+    let roundSelectGap, roundSelectPaddingTop, roundSelectPaddingBottom, roundPlayGap, roundPlayPaddingTop, roundPlayPaddingBottom;
+    if (props.roundUIPosition === 0 || props.roundUIPosition === 1) {
+        roundSelectGap = "1rem"; roundSelectPaddingTop = 0; roundSelectPaddingBottom = "3rem";
+        roundPlayGap = "3rem"; roundPlayPaddingTop = 0; roundPlayPaddingBottom = "4rem";
+
+        // if (selectedRound === "finalFour") {
+        //     roundSelectPaddingBottom = 0;
+        // }
+    }
+    else if (props.roundUIPosition === 2) {
+        roundSelectGap = "9rem"; roundSelectPaddingTop = "4rem"; roundSelectPaddingBottom = "7rem";
+        roundPlayGap = "10.5rem"; roundPlayPaddingTop = "4rem"; roundPlayPaddingBottom = "7rem";
+
+        if (selectedRound === "eliteEight") {
+            roundSelectPaddingTop = "6rem";
+            roundPlayPaddingTop = "4rem";
+        }
+    }
+    else if (props.roundUIPosition === 3) {
+        roundSelectGap = "25rem"; roundSelectPaddingTop = "12rem"; roundSelectPaddingBottom = "15rem";
+        roundPlayGap = "30.5rem"; roundPlayPaddingTop = "14rem"; roundPlayPaddingBottom = "17rem";
+    }
+    else if (props.roundUIPosition === 4) {
+        roundSelectGap = "25"; roundSelectPaddingTop = "28rem"; roundSelectPaddingBottom = "31rem";
+        roundPlayGap = 0; roundPlayPaddingTop = "33.75rem"; roundPlayPaddingBottom = "36.75rem";
+    }
+    else if (props.roundUIPosition === 5) {
+        roundSelectGap = 0; roundSelectPaddingTop = roundSelectPaddingBottom = "62rem";
+        roundPlayGap = 0; roundPlayPaddingTop = roundPlayPaddingBottom = "75rem";
+    }
+    else if (props.roundUIPosition === "finals") {
+        if (selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT) {
+            roundSelectGap = 0; roundSelectPaddingTop = screenWidth > TOURNAMENT_BREAK_POINT ? "62rem" : "128rem"; roundSelectPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = screenWidth > TOURNAMENT_BREAK_POINT ? "75rem" : "150rem"; roundPlayPaddingBottom = 0;
+        }        
+        else if (selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT){
+            roundSelectGap = 0; roundSelectPaddingTop = "64rem"; roundSelectPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+        }        
+        else if (selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT){
+            roundSelectGap = 0; roundSelectPaddingTop = "33rem"; roundSelectPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+        }        
+        else if (selectedRound === "eliteEight" || screenWidth > LARGE_BREAK_POINT){
+            roundSelectGap = 0; roundSelectPaddingTop = "17rem"; roundSelectPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+        }        
+        else if (selectedRound === "finalFour" || screenWidth > MEDIUM_BREAK_POINT){
+            roundSelectGap = 0; roundSelectPaddingTop = "6rem"; roundSelectPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+        }
+        else {
+            roundSelectGap = "1rem"; roundSelectPaddingTop = 0; roundSelectPaddingBottom = 0;
+            roundPlayGap = "3rem"; roundPlayPaddingTop = 0; roundPlayPaddingBottom = "4rem";
+        }   
+    }
+    
     
     // Pass Matchups to Matchup Component
     let matchupElGenerationArr;
@@ -74,6 +122,8 @@ function TournamentRound(props) {
         appState.tournamentRecap) matchupElGenerationArr = matchupObj;
     else  matchupElGenerationArr = playerPicksObj;
 
+
+    // Matchup Generation
     let tournamentMatchupElements;
     // Generate matchups for playin round
     if (props.round === "playin") {
@@ -94,12 +144,20 @@ function TournamentRound(props) {
     }
 
     return (
-        <div className={`flex m-4
-            ${props.round === "playin" ? "flex-row justify-center" : "flex-col"} 
-            ${appState.tournamentPlayGames ? roundPlayClasses : roundSelectClasses}`}
+        <motion.div 
+            initial={false}
+            animate={{
+                rowGap: appState.tournamentPlayGames ? roundPlayGap : roundSelectGap,
+                paddingTop: appState.tournamentPlayGames ? roundPlayPaddingTop : roundSelectPaddingTop,
+                paddingBottom: appState.tournamentPlayGames ? roundPlayPaddingBottom : roundSelectPaddingBottom,
+            }}
+            className={`
+                flex m-4
+                ${props.round === "playin" ? `${screenWidth > TOURNAMENT_BREAK_POINT ? "flex-row justify-center gap-8" : "flex-col"}` : "flex-col"} 
+            `}
         >
             {tournamentMatchupElements}
-        </div>
+        </motion.div>
     );
     
 }
