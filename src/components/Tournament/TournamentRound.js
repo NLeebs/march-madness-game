@@ -57,26 +57,40 @@ function TournamentRound(props) {
         roundSelectGap = "1rem"; roundSelectPaddingTop = 0; roundSelectPaddingBottom = "3rem";
         roundPlayGap = "3rem"; roundPlayPaddingTop = 0; roundPlayPaddingBottom = "4rem";
 
-        // if (selectedRound === "finalFour") {
-        //     roundSelectPaddingBottom = 0;
-        // }
+        
     }
     else if (props.roundUIPosition === 2) {
         roundSelectGap = "9rem"; roundSelectPaddingTop = "4rem"; roundSelectPaddingBottom = "7rem";
-        roundPlayGap = "10.5rem"; roundPlayPaddingTop = "4rem"; roundPlayPaddingBottom = "7rem";
+        roundPlayGap = "10.5rem"; roundPlayPaddingTop = "3.75rem"; roundPlayPaddingBottom = "7.75rem";
 
-        if (selectedRound === "eliteEight") {
+        if (selectedRound !== "round1" && screenWidth <= XXXL_LARGE_BREAK_POINT) {
+            roundPlayGap = "15.5rem"; roundPlayPaddingTop = "6.5rem"; roundPlayPaddingBottom = "10rem";
+        }
+
+        if (selectedRound === "eliteEight" || selectedRound === "finalFour" || selectedRound === "finals" && screenWidth <= XL_LARGE_BREAK_POINT ) {
             roundSelectPaddingTop = "6rem";
-            roundPlayPaddingTop = "4rem";
+            roundPlayPaddingTop = "7rem";
         }
     }
     else if (props.roundUIPosition === 3) {
         roundSelectGap = "25rem"; roundSelectPaddingTop = "12rem"; roundSelectPaddingBottom = "15rem";
         roundPlayGap = "30.5rem"; roundPlayPaddingTop = "14rem"; roundPlayPaddingBottom = "17rem";
+
+        if (selectedRound !== "round1" && screenWidth <= XXXL_LARGE_BREAK_POINT) {
+            roundPlayGap = "18rem"; roundPlayPaddingTop = "19rem"; roundPlayPaddingBottom = "22.5rem";
+        }
+
+        if (selectedRound !== "round1" && selectedRound !== "round2" && screenWidth <= XXL_LARGE_BREAK_POINT) {
+            roundPlayPaddingTop = "20rem";
+        }
     }
     else if (props.roundUIPosition === 4) {
         roundSelectGap = "25"; roundSelectPaddingTop = "28rem"; roundSelectPaddingBottom = "31rem";
         roundPlayGap = 0; roundPlayPaddingTop = "33.75rem"; roundPlayPaddingBottom = "36.75rem";
+
+        if (selectedRound !== "round1" && screenWidth < XXXL_LARGE_BREAK_POINT) {
+            roundPlayGap = "15.5rem"; roundPlayPaddingTop = "44.5rem";
+        }
     }
     else if (props.roundUIPosition === 5) {
         roundSelectGap = 0; roundSelectPaddingTop = roundSelectPaddingBottom = "62rem";
@@ -85,27 +99,27 @@ function TournamentRound(props) {
     else if (props.roundUIPosition === "finals") {
         if (selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT) {
             roundSelectGap = 0; roundSelectPaddingTop = screenWidth > TOURNAMENT_BREAK_POINT ? "62rem" : "128rem"; roundSelectPaddingBottom = 0;
-            roundPlayGap = 0; roundPlayPaddingTop = screenWidth > TOURNAMENT_BREAK_POINT ? "75rem" : "150rem"; roundPlayPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = screenWidth > TOURNAMENT_BREAK_POINT ? "75rem" : "157rem"; roundPlayPaddingBottom = 0;
         }        
         else if (selectedRound === "round2" || screenWidth > XXL_LARGE_BREAK_POINT){
             roundSelectGap = 0; roundSelectPaddingTop = "64rem"; roundSelectPaddingBottom = 0;
-            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "97rem"; roundPlayPaddingBottom = 0;
         }        
         else if (selectedRound === "sweetSixteen" || screenWidth > XL_LARGE_BREAK_POINT){
             roundSelectGap = 0; roundSelectPaddingTop = "33rem"; roundSelectPaddingBottom = 0;
-            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "47rem"; roundPlayPaddingBottom = 0;
         }        
         else if (selectedRound === "eliteEight" || screenWidth > LARGE_BREAK_POINT){
             roundSelectGap = 0; roundSelectPaddingTop = "17rem"; roundSelectPaddingBottom = 0;
-            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "22rem"; roundPlayPaddingBottom = 0;
         }        
         else if (selectedRound === "finalFour" || screenWidth > MEDIUM_BREAK_POINT){
             roundSelectGap = 0; roundSelectPaddingTop = "6rem"; roundSelectPaddingBottom = 0;
-            roundPlayGap = 0; roundPlayPaddingTop = "75rem"; roundPlayPaddingBottom = 0;
+            roundPlayGap = 0; roundPlayPaddingTop = "9rem"; roundPlayPaddingBottom = 0;
         }
         else {
             roundSelectGap = "1rem"; roundSelectPaddingTop = 0; roundSelectPaddingBottom = 0;
-            roundPlayGap = "3rem"; roundPlayPaddingTop = 0; roundPlayPaddingBottom = "4rem";
+            roundPlayGap = "3rem"; roundPlayPaddingTop = 0; roundPlayPaddingBottom = 0;
         }   
     }
     
