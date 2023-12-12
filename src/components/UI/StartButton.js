@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { appStateActions } from "@/store/appStateSlice";
 // Functions
 import delay from "@/src/functions/generic/delay";
-// Componenets
+// Components
 import BasketballSVG from "../Graphics/BasketballSVG";
 // Constants
 import { 

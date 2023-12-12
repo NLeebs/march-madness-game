@@ -74,7 +74,7 @@ function Tournament(props) {
                     relative grid 
                     ${screenWidth > TOURNAMENT_BREAK_POINT ? 
                         "grid-flow-col" : 
-                        `${styles.tournamentGrid} w-screen h-[calc(100vh-5.5rem)] overflow-x-hidden overflow-y-scroll scrollable-container`}
+                        `${styles.tournamentGrid} w-screen h-[calc(100vh-4rem)] overflow-x-hidden overflow-y-scroll scrollable-container`}
                 `}
             >
                 

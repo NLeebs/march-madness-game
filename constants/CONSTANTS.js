@@ -7,9 +7,15 @@ export const XXL_LARGE_BREAK_POINT = 1700;
 export const XXXL_LARGE_BREAK_POINT = 2040;
 export const TOURNAMENT_BREAK_POINT = 2350;
 
+export const DEFAULT_FONT_SIZE = "1rem";
+export const TOURNAMENT_ROUND_COLUMN_WIDTH = "20.75rem";
+export const TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH = "17.75rem";
+export const TOURNAMENT_ROUND_BACK_BUTTON_WIDTH = "3rem";
+
 // App Colors
 export const PRIMARY_COLOR = "#ea580c";
 export const SECONDARY_COLOR = "#57534e";
+export const PRIMARY_TEXT_COLOR = "#000000";
 
 // General Gameplay
 export const NUMBER_OF_TEAMS = 360;

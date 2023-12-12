@@ -67,7 +67,7 @@ function TournamentRound(props) {
             roundPlayGap = "15.5rem"; roundPlayPaddingTop = "6.5rem"; roundPlayPaddingBottom = "10rem";
         }
 
-        if (selectedRound === "eliteEight" || selectedRound === "finalFour" || selectedRound === "finals" && screenWidth <= XL_LARGE_BREAK_POINT ) {
+        if ((selectedRound === "eliteEight" || selectedRound === "finalFour" || selectedRound === "finals") && screenWidth <= XL_LARGE_BREAK_POINT ) {
             roundSelectPaddingTop = "6rem";
             roundPlayPaddingTop = "7rem";
         }

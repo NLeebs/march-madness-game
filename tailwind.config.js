@@ -17,7 +17,10 @@ module.exports = {
       },
       width: {
         "teamBar": '18.75rem',
-        'tournamentRoundColumn': '21rem',
+        'tournamentRoundColumn': '20.75rem',
+        'roundSelectBackButton': '3rem',
+        'roundSelectButtonwithBackButton': '17.75rem',
+        
       },
       minWidth: {
         '50' : '50px', 
