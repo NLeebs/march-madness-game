@@ -16,6 +16,7 @@ export const TOURNAMENT_ROUND_BACK_BUTTON_WIDTH = "3rem";
 export const PRIMARY_COLOR = "#ea580c";
 export const SECONDARY_COLOR = "#57534e";
 export const PRIMARY_TEXT_COLOR = "#000000";
+export const NON_CTA_BUTTON_COLOR = "#f8fafc";
 
 // General Gameplay
 export const NUMBER_OF_TEAMS = 360;

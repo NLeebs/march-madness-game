@@ -85,7 +85,7 @@ function TournamentRound(props) {
         }
     }
     else if (props.roundUIPosition === 4) {
-        roundSelectGap = "25"; roundSelectPaddingTop = "28rem"; roundSelectPaddingBottom = "31rem";
+        roundSelectGap = "25rem"; roundSelectPaddingTop = "28rem"; roundSelectPaddingBottom = "31rem";
         roundPlayGap = 0; roundPlayPaddingTop = "33.75rem"; roundPlayPaddingBottom = "36.75rem";
 
         if (selectedRound !== "round1" && screenWidth < XXXL_LARGE_BREAK_POINT) {
@@ -153,10 +153,12 @@ function TournamentRound(props) {
     // Generate Matchups for all other rounds
     else {
         tournamentMatchupElements = matchupElGenerationArr[props.region].map((matchup, i) => {
-            return (<TournamentMatchup key={i} index={i} region={props.region} round={props.round}  matchup={matchup} playerpicks={playerPicksObj[props.region][i]} />);
+            return (<TournamentMatchup key={i} index={i} region={props.region} round={props.round} matchup={matchup} playerpicks={playerPicksObj[props.region][i]} />);
         })
     }
 
+
+    // JSX
     return (
         <motion.div 
             initial={false}

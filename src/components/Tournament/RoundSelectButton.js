@@ -14,7 +14,8 @@ import { XXXL_LARGE_BREAK_POINT,
         LARGE_BREAK_POINT,
         MEDIUM_BREAK_POINT} from "@/constants/CONSTANTS";
 import { TOURNAMENT_ROUND_COLUMN_WIDTH,
-        TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH} from "@/constants/CONSTANTS";
+        TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH,
+        NON_CTA_BUTTON_COLOR} from "@/constants/CONSTANTS";
 
 
 // Component Function
@@ -42,7 +43,7 @@ function RoundSelectButton(props) {
         accentLineScale = 1; accentLinePosition = 0; accentLineBackgroundColor = PRIMARY_COLOR;
     } 
     else {
-        accentLineScale = 0; accentLinePosition = "50%"; accentLineBackgroundColor = "transparent";
+        accentLineScale = 0; accentLinePosition = "50%"; accentLineBackgroundColor = NON_CTA_BUTTON_COLOR;
     }
 
 
@@ -50,7 +51,7 @@ function RoundSelectButton(props) {
     let roundSelectButtonWidth, roundSelectButtonTextColor, roundSelectButtonFontSize;
     const setButtonShrinkStyles = () => {
         roundSelectButtonWidth = 0; 
-        roundSelectButtonTextColor = "transparent"; 
+        roundSelectButtonTextColor = NON_CTA_BUTTON_COLOR; 
         roundSelectButtonFontSize = 0;
     }
     const setButtonDefaultStyles = () => {
@@ -118,12 +119,17 @@ function RoundSelectButton(props) {
                     color: roundSelectButtonTextColor,
                     fontSize: roundSelectButtonFontSize,
                 }}
-                className={`relative h-16 text-center bg-slate-100`}
+                className={`relative h-16 text-center`}
+                style={{backgroundColor: NON_CTA_BUTTON_COLOR,}}
             >
                 {props.buttonText}
                 <motion.div
                     className="absolute bottom-0 left-1/2 origin-left w-full h-1"
-                    initial={{ scaleX: 0, left: "50%", backgroundColor: "transparent", }} 
+                    initial={{ 
+                        scaleX: 0, 
+                        left: "50%", 
+                        backgroundColor: "transparent", 
+                }} 
                     animate={{ 
                         scaleX: accentLineScale, 
                         left: accentLinePosition, 

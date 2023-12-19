@@ -39,7 +39,12 @@ function TeamBar(props) {
 
   // Dynamic Styles
   let teamBarClasses, teamBarNameClasses = "";
-  if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarClasses = `animate-pulse ${classes.goingToTheDance}`;
+  if(appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team))) teamBarClasses = `animate-pulse`;
+
+  // Champion Styles
+  if (props.round === "champion") {
+    // console.log("Hello!");
+  }
 
   return (
     <div className={`w-full relative flex flex-row justify-between items-center ${teamBarClasses}`}>

@@ -1,0 +1,16 @@
+.championRibbon {
+    position: relative;
+}
+
+.championRibbon:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    bottom: -3rem;
+    left: 50%;
+    transform: translate(-50%);
+    border-width: 3rem 9.375rem 0 9.375rem;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+    z-index: 1;
+}

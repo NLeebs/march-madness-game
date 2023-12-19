@@ -4,13 +4,11 @@ import React from "react";
 // Components
 import RoundSelectBackButton from "./RoundSelectBackButton";
 import RoundSelectButton from "./RoundSelectButton";
-import { useSelector } from "react-redux";
 
 
 // Component Function
 function RoundSelectBanner() {
 
-  const selectedRound = useSelector((state) => state.uiState.selectedRound);
 
   return (
     <div 

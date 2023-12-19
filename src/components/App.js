@@ -28,6 +28,7 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 // 3. Championship banner when chosen
 // 4. Submit Picks button
 // 5. Missing picks Validation
+// 6. Slow down tourny playing
 // 6. Authentication and user login
 // 7. Send game data to database
 // 8. User Dashboard with Statistics

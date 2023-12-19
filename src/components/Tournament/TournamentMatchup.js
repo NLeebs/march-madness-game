@@ -1,21 +1,30 @@
 "use client"
 // Libraries
 import React, { useCallback } from "react"
+import { motion } from "framer-motion";
 // React Functions
 import { useSelector, useDispatch } from "react-redux"
+// Functions
+import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
 // State
 import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSlice";
 // Css Styles
-import styles from "./TournamentMatchup.module.css";
+import classes from "./TournamentMatchup.module.css";
 // Components
 import TeamBar from "../UI/TeamBar";
 import PlayerPickBar from "../UI/PlayerPickBar";
+// Constants
+import { NON_CTA_BUTTON_COLOR } from "@/constants/CONSTANTS";
 
 
 function TournamentMatchup(props) {
     const dispatch = useDispatch();
 
+    // State
     const appState = useSelector((state) => state.appState)
+    const teamStatsObject = useSelector((state) => state.teamStats.teamStats);
+    const confArrs = useSelector((state) => state.teamStats.conferenceArrays);
+
 
     // Account for change of regions in final four and beyond
     let nextRoundRegion;
@@ -28,6 +37,7 @@ function TournamentMatchup(props) {
     else if (props.round === "final four" && props.region === "southMidwest") {nextRoundRegion = "championship"; teamIndex = 1}
     else if (props.round === "finals") {nextRoundRegion = "champion"; teamIndex = 0;}
     else {nextRoundRegion = props.region; teamIndex = props.index}
+
 
     // Handle click of a team during selection
     const teamSelectionClickHandler = useCallback((e) => {
@@ -46,16 +56,42 @@ function TournamentMatchup(props) {
         }));
     }, [dispatch, nextRoundRegion, props.round, teamIndex]);
 
+
+    // Champion Dynamic Styles
+    let teamBarHeight, teamBarColor;
+    if (props.round === "champion" && props.matchup[0].team) {
+        // Find conference of the team
+        const teamConf = findTeamConference(props.matchup[0].team, confArrs);
+        // Find Champion Team Color
+        const championPrimaryColor = teamStatsObject[teamConf][props.matchup[0].team]["primary-color"];
+
+        teamBarHeight = "12rem";
+        teamBarColor = championPrimaryColor;
+    }
+    else {
+        teamBarHeight = "auto";
+        teamBarColor = NON_CTA_BUTTON_COLOR;
+    }
+
     // Create the matchup JSX elements
     const matchupElements = props.matchup.map((teamObj, i) => {
         return (
-            <div 
+            <motion.div 
                 key={i}
-                className="relative z-10"
+                className={`relative z-10 ${props.round === "champion" && props.matchup[0].team ? classes.championRibbon : ""}`}
                 onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
                 value={i} 
                 team={teamObj.team} 
                 seed={teamObj.seed} 
+
+                intial={{
+                    height: "auto", 
+                    backgroundColor: teamBarColor,
+                }}
+                animate={{
+                    height: teamBarHeight,
+                    backgroundColor: teamBarColor,
+                }}
             >
                 {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 0 && <PlayerPickBar team={teamObj.team} pick={props.playerpicks[i]?.team} />}
                 <div 
@@ -70,16 +106,20 @@ function TournamentMatchup(props) {
                     <div className="flex justify-center items-center w-6 pr-2">
                         {teamObj.seed}
                     </div>
-                    <TeamBar team={teamObj.team} win={teamObj?.win} score={teamObj?.score} />
+                    <TeamBar round={props.round} team={teamObj.team} win={teamObj?.win} score={teamObj?.score} />
                 </div>
                 {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 1 && <PlayerPickBar team={teamObj.team} pick={props.playerpicks[i]?.team} />}
-            </div>
+            </motion.div>
         );
     })
 
+
     // JSX
     return (
-        <div className="matchup-container bg-slate-50 w-teamBar">
+        <div 
+            className="matchup-container w-teamBar"
+            style={{backgroundColor: NON_CTA_BUTTON_COLOR,}}
+        >
             {matchupElements}
         </div>
     );

@@ -9,7 +9,7 @@ import { uiStateActions } from "@/store/uiStateSlice";
 //Components
 import LeftChevronSVG from "../Graphics/LeftChevronSVG";
 // Constants
-import { PRIMARY_COLOR } from "@/constants/CONSTANTS";
+import { NON_CTA_BUTTON_COLOR } from "@/constants/CONSTANTS";
 import { XXXL_LARGE_BREAK_POINT } from "@/constants/CONSTANTS";
 
 
@@ -40,7 +40,8 @@ function RoundSelectBackButton(props) {
         {selectedRound !== "round1" && screenWidth <= XXXL_LARGE_BREAK_POINT &&
             <motion.button 
                 onClick={roundSelectBackHandler}
-                className="relative w-roundSelectBackButton h-16 flex justify-center items-center text-center bg-slate-100"
+                className="relative w-roundSelectBackButton h-16 flex justify-center items-center text-center"
+                style={{backgroundColor: NON_CTA_BUTTON_COLOR,}}
             >
                 <LeftChevronSVG />
             </motion.button>
