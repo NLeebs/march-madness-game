@@ -22,6 +22,17 @@ import Tournament from "./Tournament/Tournament";
 import PlayPlayinGames from "./Tournament/PlayPlayinGames";
 import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 
+// TODO:
+// 1. End of game Dialog
+// 2. Restart the game functionality
+// 3. Championship banner when chosen
+// 4. Submit Picks button
+// 5. Missing picks Validation
+// 6. Authentication and user login
+// 7. Send game data to database
+// 8. User Dashboard with Statistics
+// 9. Winner animations
+
 
 function App() {
   const dispatch = useDispatch();
