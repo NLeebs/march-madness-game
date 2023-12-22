@@ -14,7 +14,8 @@ import classes from "./TournamentMatchup.module.css";
 import TeamBar from "../UI/TeamBar";
 import PlayerPickBar from "../UI/PlayerPickBar";
 // Constants
-import { NON_CTA_BUTTON_COLOR } from "@/constants/CONSTANTS";
+import { NON_CTA_BUTTON_COLOR, 
+        TOURAMENT_CHAMPION_RIBBON_HEIGHT } from "@/constants/CONSTANTS";
 
 
 function TournamentMatchup(props) {
@@ -58,14 +59,21 @@ function TournamentMatchup(props) {
 
 
     // Champion Dynamic Styles
-    let teamBarHeight, teamBarColor;
+    let teamBarHeight, teamBarColor, championPrimaryColor;
     if (props.round === "champion" && props.matchup[0].team) {
-        // Find conference of the team
-        const teamConf = findTeamConference(props.matchup[0].team, confArrs);
-        // Find Champion Team Color
-        const championPrimaryColor = teamStatsObject[teamConf][props.matchup[0].team]["primary-color"];
+        if (props.matchup[0].team !== "playinGameSeed16Game1" && props.matchup[0].team !== "playinGameSeed16Game2" && 
+            props.matchup[0].team !== "playinGameSeed11Game1" && props.matchup[0].team !== "playinGameSeed11Game2") {
+            // Find conference of the team
+            const teamConf = findTeamConference(props.matchup[0].team, confArrs);
+            // Find Champion Team Color
+            championPrimaryColor = teamStatsObject[teamConf][props.matchup[0].team]["primary-color"];
+        }
+        // If playin game is selected to win tourney
+        else {
+            championPrimaryColor = NON_CTA_BUTTON_COLOR;
+        }
 
-        teamBarHeight = "12rem";
+        teamBarHeight = TOURAMENT_CHAMPION_RIBBON_HEIGHT;
         teamBarColor = championPrimaryColor;
     }
     else {
@@ -73,12 +81,15 @@ function TournamentMatchup(props) {
         teamBarColor = NON_CTA_BUTTON_COLOR;
     }
 
+
     // Create the matchup JSX elements
     const matchupElements = props.matchup.map((teamObj, i) => {
         return (
             <motion.div 
                 key={i}
-                className={`relative z-10 ${props.round === "champion" && props.matchup[0].team ? classes.championRibbon : ""}`}
+                className={`relative z-10
+                    ${props.round === "champion" && props.matchup[0].team ? "flex justify-center items-center" : ""}
+                `}
                 onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
                 value={i} 
                 team={teamObj.team} 
@@ -99,16 +110,31 @@ function TournamentMatchup(props) {
                     value={i} 
                     team={teamObj.team} 
                     seed={teamObj.seed} 
-                    className={`team-selection flex items-center px-4 h-14 border-2 border-slate-100 cursor-pointer 
-                    ${props.round === "playin" && 'min-w-300'}`
+                    className={`team-selection flex items-center px-4 h-14 
+                        ${props.round === "champion" && props.matchup[0].team ? "" : "border-2 border-slate-100 cursor-pointer"} 
+                        ${props.round === "playin" && 'min-w-300'}`
                 }
                 >
+                    {props.round !== "champion" && 
                     <div className="flex justify-center items-center w-6 pr-2">
                         {teamObj.seed}
-                    </div>
+                    </div>}
+
                     <TeamBar round={props.round} team={teamObj.team} win={teamObj?.win} score={teamObj?.score} />
                 </div>
                 {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 1 && <PlayerPickBar team={teamObj.team} pick={props.playerpicks[i]?.team} />}
+                
+                {props.round === "champion" && props.matchup[0].team && 
+                    <motion.div 
+                        className={classes.championRibbon}
+                        intial={{
+                            borderTopColor: teamBarColor,
+                        }}
+                        animate={{
+                            borderTopColor: teamBarColor,
+                        }}
+                    >
+                    </motion.div>}
             </motion.div>
         );
     })

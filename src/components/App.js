@@ -1,6 +1,7 @@
 "use client"
 // Libraries
 import React, { Fragment } from "react";
+import { MotionConfig } from "framer-motion"
 // React Functions
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,8 +26,9 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 // TODO:
 // 1. End of game Dialog
 // 2. Restart the game functionality
-// 3. Championship banner when chosen
+// 3. Championship banner when chosen - played state left
 // 4. Submit Picks button
+// 5. Notification Component
 // 5. Missing picks Validation
 // 6. Slow down tourny playing
 // 6. Authentication and user login
@@ -77,7 +79,7 @@ function App() {
   }, [dispatch, teamScheduleObj.teamArray.length]);
   
   return (
-    <Fragment>
+    <MotionConfig reducedMotion="user">
       {/* <AddTeamStatsToFirebase /> */}
       {teamArray && <SeasonSchedule teamStats={teamStatsObject.teamStats} teamArray={teamArray} />}      
       {appState.startScreen && <StartScreen />}
@@ -87,7 +89,7 @@ function App() {
       </AnimatePresence>
       {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
       {appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap && <PlayTournamentGames />}
-    </Fragment>
+    </MotionConfig>
   );
 }
 

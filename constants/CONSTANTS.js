@@ -11,6 +11,7 @@ export const DEFAULT_FONT_SIZE = "1rem";
 export const TOURNAMENT_ROUND_COLUMN_WIDTH = "20.75rem";
 export const TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH = "17.75rem";
 export const TOURNAMENT_ROUND_BACK_BUTTON_WIDTH = "3rem";
+export const TOURAMENT_CHAMPION_RIBBON_HEIGHT = "14rem";
 
 // App Colors
 export const PRIMARY_COLOR = "#ea580c";
