@@ -104,7 +104,8 @@ function TournamentMatchup(props) {
                     backgroundColor: teamBarColor,
                 }}
             >
-                {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 0 && <PlayerPickBar team={teamObj.team} pick={props.playerpicks[i]?.team} />}
+                {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 0 && <PlayerPickBar round={props.round} team={teamObj.team} pick={props.playerpicks[i]?.team} />}
+
                 <div 
                     onClick={appState.tournamentSelection ? teamSelectionClickHandler : undefined} 
                     value={i} 
@@ -122,6 +123,7 @@ function TournamentMatchup(props) {
 
                     <TeamBar round={props.round} team={teamObj.team} win={teamObj?.win} score={teamObj?.score} />
                 </div>
+
                 {(appState.tournamentPlayPlayinGames || appState.tournamentPlayGames) && props.round !== "playin" && props.round !== "1" && i % 2 === 1 && <PlayerPickBar team={teamObj.team} pick={props.playerpicks[i]?.team} />}
                 
                 {props.round === "champion" && props.matchup[0].team && 
