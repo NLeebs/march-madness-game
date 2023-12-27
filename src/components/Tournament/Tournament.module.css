@@ -38,6 +38,9 @@
 }
 .gridFinal {
     grid-area: final;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 

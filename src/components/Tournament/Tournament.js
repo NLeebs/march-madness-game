@@ -28,6 +28,7 @@ import { TOURNAMENT_BREAK_POINT,
 function Tournament(props) {
     const dispatch = useDispatch();
 
+    const appState = useSelector((state) => state.appState);
     const screenWidth = useSelector((state) => state.uiState.screenWidth);
     const selectedRound = useSelector((state => state.uiState.selectedRound));
 
@@ -165,7 +166,9 @@ function Tournament(props) {
                     <div className="flex flex-col gap-y-16 min-w-300">
                         <TournamentRound region="champion" round="champion" roundUIPosition={0} />
                     </div>
-                    <PlayTournamentButton />
+                    {appState.tournamentSelection && 
+                        <PlayTournamentButton />
+                    }
                     {props.appState.tournamentPlayGames && <PlayerScore />}
                 </div>
 

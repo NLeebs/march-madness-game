@@ -68,6 +68,7 @@ module.exports = {
       },
       animation: {
         fadeOut: 'fadeOut 1s ease-out forwards',
+        'spin-slow': 'spin 3s linear infinite',
         startTheGameBasketball: 'startTheGameBasketball 1s forwards'
       }
     },

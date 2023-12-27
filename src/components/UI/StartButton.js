@@ -64,7 +64,6 @@ function StartButton(props) {
       disabled={isLoading}
       initial={{opacity: 0}}
       animate={{opacity: 1}}
-      duration
       className={`relative rounded-full transition-transform ease-out ${appState.transition ? "motion-safe:animate-startTheGameBasketball" : "hover:scale-110"} focus-visible:outline-neutral-300`}
     >
       <div 
