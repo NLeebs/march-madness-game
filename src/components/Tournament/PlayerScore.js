@@ -5,6 +5,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 // State
 import { appStateActions } from "@/store/appStateSlice";
+// Constants
+import { NON_CTA_BUTTON_COLOR, CONFIRMATION_GREEN } from "@/constants/CONSTANTS";
 
 
 // Component Function
@@ -16,9 +18,12 @@ function PlayerScore() {
   }
 
   return (
-    <div>
-        <div className="text-center text-lg">Score</div>
-        <div className="text-center">{playerScore}</div>
+    <div 
+      className="p-8 rounded-full"
+      style={{backgroundColor: CONFIRMATION_GREEN, color: NON_CTA_BUTTON_COLOR,}}
+    >
+        <div className="text-center text-2xl">Score</div>
+        <div className="text-center text-xl">{playerScore}</div>
     </div>
    )
 }
