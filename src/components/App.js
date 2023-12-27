@@ -26,10 +26,7 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 // TODO:
 // 1. End of game Dialog
 // 2. Restart the game functionality
-// 3. Championship banner when chosen - played state left
-// 4. Submit Picks button
-// 5. Notification Component
-// 5. Missing picks Validation
+// 4. Player Score
 // 6. Slow down tourny playing
 // 6. Authentication and user login
 // 7. Send game data to database

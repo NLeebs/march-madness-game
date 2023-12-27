@@ -5,15 +5,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 // Functions
 import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
-// CSS styles
-import classes from './TeamBar.module.css';
 // Icons
 import { TrophyIcon } from '@heroicons/react/24/solid'
 import { CheckIcon } from '@heroicons/react/24/solid'
 // Components
 import Image from "next/image";
+import PingNotification from "./PingNotification";
 // Constants
-import { NON_CTA_BUTTON_COLOR } from "@/constants/CONSTANTS";
+import { NON_CTA_BUTTON_COLOR, CONFIRMATION_GREEN } from "@/constants/CONSTANTS";
 
 
 // Component Function
@@ -120,9 +119,7 @@ function TeamBar(props) {
 
       {/* Selection Sunday Notification */}
       {appState.selectionSunday  && (tournamentTeamsArr.includes(props.team) || playinTeamsObj.elevenSeeds.includes(props.team) || playinTeamsObj.sixteenSeeds.includes(props.team)) &&
-        <div className="absolute flex justify-center items-center p-1 -top-2 -right-2 bg-green-700 rounded-full">
-          {regularSeasonRecords[props.team].confChampion === true ? <TrophyIcon className="h-4 w-4 text-slate-50" /> : <CheckIcon className="h-4 w-4 text-slate-50" />}
-        </div>
+        <PingNotification icon={regularSeasonRecords[props.team].confChampion ? "trophy" : "check"} />
       }
 
     </div>

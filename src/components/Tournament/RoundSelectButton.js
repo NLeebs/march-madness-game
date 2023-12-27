@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 // State
 import { uiStateActions } from "@/store/uiStateSlice";
+// Components
+import PingNotification from "../UI/PingNotification";
 // Constants
 import { PRIMARY_COLOR, PRIMARY_TEXT_COLOR, DEFAULT_FONT_SIZE } from "@/constants/CONSTANTS";
 import { XXXL_LARGE_BREAK_POINT,
@@ -22,6 +24,8 @@ import { TOURNAMENT_ROUND_COLUMN_WIDTH,
 function RoundSelectButton(props) {
     const dispatch = useDispatch();
 
+    // State
+    const playerPicksObj = useSelector((state) => state.tournamentPlayersPicks.picks);
     const screenWidth = useSelector((state) => state.uiState.screenWidth);
     const selectedRound = useSelector((state) => state.uiState.selectedRound);
 
@@ -104,6 +108,37 @@ function RoundSelectButton(props) {
     }
 
 
+    // Ping Notifcation logic
+    let isAllRoundPicksSelected;
+    const checkIfPicksWereMade = (roundPicksIndex) => {
+        return Object.keys(playerPicksObj[roundPicksIndex]).every((region) => {
+            return playerPicksObj[roundPicksIndex][region].every((matchup) => {
+                return matchup.every((team => {
+                    return team.team !== "";
+                }));
+            });
+        });
+    }
+
+    let playerPicksRoundIndex;
+    if(props.round === "round2") playerPicksRoundIndex = "roundTwoPicks";
+    else if(props.round === "sweetSixteen") playerPicksRoundIndex = "roundSweetSixteenPicks";
+    else if(props.round === "eliteEight") playerPicksRoundIndex = "roundEliteEightPicks";
+    else if(props.round === "finalFour") playerPicksRoundIndex = "roundFinalFourPicks";
+    else if(props.round === "finals") playerPicksRoundIndex = ["roundFinalsPicks", "champion"];
+
+    if (props.round === "finals") {
+        isAllRoundPicksSelected = playerPicksRoundIndex.every((round) => {
+            return checkIfPicksWereMade(round);
+        })
+    }
+    else if (props.round !== "round1" && props.round !== "finals") {
+        isAllRoundPicksSelected = checkIfPicksWereMade(playerPicksRoundIndex);
+    } 
+    else {
+        isAllRoundPicksSelected = false;
+    }
+
     //JSX
     return (
         <div>
@@ -119,10 +154,16 @@ function RoundSelectButton(props) {
                     color: roundSelectButtonTextColor,
                     fontSize: roundSelectButtonFontSize,
                 }}
-                className={`relative h-16 text-center`}
+                className={`relative h-16 flex justify-center items-center`}
                 style={{backgroundColor: NON_CTA_BUTTON_COLOR,}}
             >
-                {props.buttonText}
+                <div className="relative w-max px-5">
+                    {props.buttonText}
+                    {props.round !== "round1" && isAllRoundPicksSelected && <PingNotification icon="check" /> }  
+                </div>
+
+
+                {/* Accent Bar */}
                 <motion.div
                     className="absolute bottom-0 left-1/2 origin-left w-full h-1"
                     initial={{ 
