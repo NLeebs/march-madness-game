@@ -54,7 +54,7 @@ function PlayTournamentButton() {
             </div>
             <div className={`${isAllPicksSelected && 'motion-safe:animate-spin-slow'}`}>
                 <BasketballSVG 
-                    size={"200"} 
+                    size={"225"} 
                     basketballColor={PRIMARY_COLOR} 
                     seamColor={SECONDARY_COLOR} 
                 />

@@ -22,6 +22,7 @@ import RegularSeason from "./RegularSeason/RegularSeason";
 import Tournament from "./Tournament/Tournament";
 import PlayPlayinGames from "./Tournament/PlayPlayinGames";
 import PlayTournamentGames from "./Tournament/PlayTournamentGames";
+import TournamentRecapDialog from "./Tournament/TournamentRecapDialog";
 
 // TODO:
 // 1. End of game Dialog
@@ -86,6 +87,7 @@ function App() {
       </AnimatePresence>
       {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
       {appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap && <PlayTournamentGames />}
+      {appState.tournamentRecap && <TournamentRecapDialog />}
     </MotionConfig>
   );
 }

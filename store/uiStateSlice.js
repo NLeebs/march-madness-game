@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
+    isRecapDialogOpen: false,
     selectedRound: "round1"
 };
 
@@ -12,6 +13,9 @@ const uiStateSlice = createSlice({
         screenSize(state, action) {
             state.screenWidth = action.payload.screenWidth;
             state.screenHeight = action.payload.screenHeight;
+        },
+        toggleRecapDialog(state) {
+            state.isRecapDialogOpen = !state.isRecapDialogOpen;
         },
         selectRound(state, action) {
             state.selectedRound = action.payload.newRound;

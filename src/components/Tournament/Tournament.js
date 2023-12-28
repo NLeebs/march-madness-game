@@ -13,9 +13,11 @@ import RoundSelectBanner from "./RoundSelectBanner";
 import TournamentRound from "./TournamentRound";
 import PlayTournamentButton from "../UI/PlayTournamentButton";
 import PlayerScore from "./PlayerScore";
+import Button from "../UI/Button";
 // CSS Styles
 import styles from "./Tournament.module.css";
 // Constants
+import { PRIMARY_COLOR } from "@/constants/CONSTANTS";
 import { TOURNAMENT_BREAK_POINT, 
         XXXL_LARGE_BREAK_POINT,
         XXL_LARGE_BREAK_POINT,
@@ -39,6 +41,11 @@ function Tournament(props) {
     useEffect(() => {
         if(screenWidth > TOURNAMENT_BREAK_POINT) dispatch(uiStateActions.selectRound({newRound: "round1",}));
     }, [dispatch, screenWidth]);
+
+    // Tournement Recap Handlers
+    const showTournamentRecapButtonHandler = () => {
+        dispatch(uiStateActions.toggleRecapDialog());
+    }
 
     // Determine UI position for each round
     let firstRoundUIPosition, secondRoundUIPosition, sweetSixteenUIPosition, eliteEightUIPosition, finalFourUIPosition; 
@@ -170,6 +177,7 @@ function Tournament(props) {
                         <PlayTournamentButton />
                     }
                     {props.appState.tournamentPlayGames && <PlayerScore />}
+                    {props.appState.tournamentRecap && <Button onClick={showTournamentRecapButtonHandler} text="See Recap" backgroundColor={PRIMARY_COLOR} />}
                 </div>
 
                 {/* Final Four  */}

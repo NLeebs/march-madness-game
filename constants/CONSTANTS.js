@@ -16,6 +16,7 @@ export const TOURAMENT_CHAMPION_RIBBON_HEIGHT = "14rem";
 // App Colors
 export const PRIMARY_COLOR = "#ea580c";
 export const SECONDARY_COLOR = "#57534e";
+export const ACCENT_COLOR = "#f8fafc";
 export const PRIMARY_TEXT_COLOR = "#000000";
 export const NON_CTA_BUTTON_COLOR = "#f8fafc";
 export const CONFIRMATION_GREEN = "#15803d";

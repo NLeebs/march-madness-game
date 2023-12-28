@@ -7,6 +7,7 @@ import findTeamConference from "@/src/functions/teamStatsData/findTeamConference
 import playGame from "@/src/functions/playGame";
 // State
 import { appStateActions } from "@/store/appStateSlice";
+import { uiStateActions } from "@/store/uiStateSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
 
 function PlayTournamentGames(props) {
@@ -121,6 +122,7 @@ function PlayTournamentGames(props) {
         dispatch(tournamentActions.comparePicksAndGames({round: "finals", winningTeams: winningTeamsArr, picks:playersPicks.champion}));
         // Switch app to round Finals
         dispatch(appStateActions.activateTournamentRecap());
+        dispatch(uiStateActions.toggleRecapDialog());
     }, [dispatch, playTournamentround, appState, roundFinalsMatchups, playersPicks]);
 
 
