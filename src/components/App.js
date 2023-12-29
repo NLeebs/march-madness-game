@@ -25,7 +25,7 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 import TournamentRecapDialog from "./Tournament/TournamentRecapDialog";
 
 // TODO:
-// 2. Restart the game functionality
+// 2. Restart game loading
 // 6. Slow down tourny playing
 // 6. Authentication and user login
 // 6. Select favorite team -> color changes

@@ -14,7 +14,6 @@ import { AMOUNT_SEASON_GAMES, TIMER_BETWEEN_APP_STATES, TIMER_PER_REGULAR_SEASON
 function PlayRegularSeasonGames(props) {
     const dispatch = useDispatch();
 
-    const appState = useSelector((state) => state.appState);
     const teamSchedules = useSelector((state) => state.teamSchedule.teamSchedules);
     const weeksPlayed = useSelector((state) => state.regularSeasonRecords.weeksPlayed);
     const teamStats = props.teamStats;

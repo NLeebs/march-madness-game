@@ -3,6 +3,8 @@
 import React from "react";
 // React Functions
 import { useDispatch, useSelector } from "react-redux";
+// Functions
+import delay from "@/src/functions/generic/delay";
 //State
 import { appStateActions } from "@/store/appStateSlice";
 import { uiStateActions } from "@/store/uiStateSlice";
@@ -14,6 +16,7 @@ import { tournamentActions } from "@/store/tournamentSlice";
 import Button from "../UI/Button";
 // Constants
 import { PRIMARY_COLOR } from "@/constants/CONSTANTS";
+import { TIMER_BETWEEN_APP_STATES } from "@/constants/CONSTANTS";
 
 
 // Component Function
@@ -24,21 +27,18 @@ function RestartGameButton(props) {
 
     const restartButtonClickHandler = () => {
         dispatch(appStateActions.restartGame());
-        dispatch(appStateActions.loadingComplete());
-
         dispatch(uiStateActions.restartGame());
-
         dispatch(teamScheduleActions.restartGame());
-        dispatch(teamScheduleActions.teamScheduleConfig(teamStats));
-
         dispatch(regularSeasonRecordActions.restartGame());
-        dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStats))
-
         dispatch(tounramentPlayersPicksActions.restartGame());
-
         dispatch(tournamentActions.restartGame());
+        
+        Promise.all([delay(TIMER_BETWEEN_APP_STATES)]).then(() => {
+            dispatch(teamScheduleActions.teamScheduleConfig(teamStats));
+            dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStats))
+        });
 
-    }
+    };
 
     return (
         <Button onClick={restartButtonClickHandler} text={"Play Again"} backgroundColor={PRIMARY_COLOR} />
