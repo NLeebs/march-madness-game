@@ -14,6 +14,7 @@ import TournamentRound from "./TournamentRound";
 import PlayTournamentButton from "../UI/PlayTournamentButton";
 import PlayerScore from "./PlayerScore";
 import Button from "../UI/Button";
+import RestartGameButton from "../General/RestartGameButton";
 // CSS Styles
 import styles from "./Tournament.module.css";
 // Constants
@@ -176,8 +177,11 @@ function Tournament(props) {
                     {appState.tournamentSelection && 
                         <PlayTournamentButton />
                     }
-                    {props.appState.tournamentPlayGames && <PlayerScore />}
-                    {props.appState.tournamentRecap && <Button onClick={showTournamentRecapButtonHandler} text="See Recap" backgroundColor={PRIMARY_COLOR} />}
+                    <div className="flex flex-col justify-start items-center gap-8">
+                        {props.appState.tournamentPlayGames && <PlayerScore />}
+                        {props.appState.tournamentRecap && <Button onClick={showTournamentRecapButtonHandler} text="See Recap" backgroundColor={PRIMARY_COLOR} />}
+                        {props.appState.tournamentRecap && <RestartGameButton />}
+                    </div>
                 </div>
 
                 {/* Final Four  */}

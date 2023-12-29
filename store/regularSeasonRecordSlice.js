@@ -14,6 +14,7 @@ const regularSeasonRecordSlice = createSlice({
     name: "regularSeasonRecords",
     initialState: initalState,
     reducers: {
+        restartGame: () => initalState,
         regularSeasonRecordConfig(state, action) {
             const conferences = Object.keys(action.payload);
             conferences.forEach((conf) => {

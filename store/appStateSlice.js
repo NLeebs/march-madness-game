@@ -26,6 +26,7 @@ const appStateSlice = createSlice({
     name: "appState",
     initialState: initalState,
     reducers: {
+        restartGame: () => initalState,
         activateStartScreen(state) {
             Object.keys(state).forEach((key) => state[key] = false);
             state.startScreen = true;

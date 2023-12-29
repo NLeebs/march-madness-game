@@ -11,6 +11,7 @@ import { uiStateActions } from "@/store/uiStateSlice";
 import Dialog from "../UI/Dialog";
 import Image from "next/image";
 import PlayerScore from "./PlayerScore";
+import RestartGameButton from "../General/RestartGameButton";
 // Constants
 import { ACCENT_COLOR } from "@/constants/CONSTANTS";
 
@@ -61,6 +62,7 @@ function TournamentRecapDialog(props) {
             </div>
             <h4 className="leading-7 text-center" style={{color: ACCENT_COLOR}}>{championObj.team === playerPickChampion ? "And You're a Genius for Picking Them!" : `Not sure why you picked ${playerPickChampion}`}</h4>
             <PlayerScore />
+            <RestartGameButton />
         </Dialog>
     );
 }

@@ -1,10 +1,6 @@
 "use client"
 // Libraries
 import React from "react";
-// React Functions
-import { useDispatch, useSelector } from "react-redux";
-// Images
-
 
 
 // Component Function

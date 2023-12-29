@@ -25,11 +25,11 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 import TournamentRecapDialog from "./Tournament/TournamentRecapDialog";
 
 // TODO:
-// 1. End of game Dialog
 // 2. Restart the game functionality
-// 4. Player Score
 // 6. Slow down tourny playing
 // 6. Authentication and user login
+// 6. Select favorite team -> color changes
+// 6. Favorite team stat boost
 // 7. Send game data to database
 // 8. User Dashboard with Statistics
 // 9. Winner animations
@@ -67,7 +67,7 @@ function App() {
       dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
       dispatch(teamStatsActions.addConferenceArrays(teamStatsData));
       dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
-      dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)); //
+      dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData));
     });
   }, [dispatch]);
 

@@ -14,6 +14,7 @@ const teamScheduleSlice = createSlice({
     name: "teamSchedule",
     initialState: initalState,
     reducers: {
+        restartGame: () => initalState,
         teamScheduleConfig(state, action) {
             // Make Large Team Array
             state.teamArray = [];

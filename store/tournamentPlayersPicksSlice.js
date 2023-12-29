@@ -73,6 +73,7 @@ const tournamentPlayersPicksSlice = createSlice({
     name: "tounramentPlayersPicks",
     initialState: initalState,
     reducers: {
+        restartGame: () => initalState,
         setPick(state, action) {
             let whichRound;
             let removeRoundPicksArr;

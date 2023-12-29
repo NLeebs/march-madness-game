@@ -10,6 +10,10 @@ const uiStateSlice = createSlice({
     name: "uiState",
     initialState: initalState,
     reducers: {
+        restartGame(state) {
+            state.isRecapDialogOpen = false
+            state.selectedRound = "round1"
+        },
         screenSize(state, action) {
             state.screenWidth = action.payload.screenWidth;
             state.screenHeight = action.payload.screenHeight;
