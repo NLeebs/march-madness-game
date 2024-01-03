@@ -25,9 +25,11 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 import TournamentRecapDialog from "./Tournament/TournamentRecapDialog";
 
 // TODO:
-// 2. Restart game loading
+// 5. Multiple year stats 
 // 6. Slow down tourny playing
+// 6. Stop lazy load of team icons in regular season
 // 6. Authentication and user login
+// 6. Login and API error validation
 // 6. Select favorite team -> color changes
 // 6. Favorite team stat boost
 // 7. Send game data to database
