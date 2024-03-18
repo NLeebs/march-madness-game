@@ -25,6 +25,7 @@ const big12StatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/iowa-state-cyclones-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/iowa-state-cyclones/stats",
         "team-logo-URL": "\/team-logos\/big12\/IowaStLogo.png",
+        "list-name": "Iowa St",
     },
     "Kansas": {
         "team-colors-URL": "https://teamcolorcodes.com/kansas-jayhawks-color-codes/",
@@ -68,7 +69,6 @@ const big12StatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/ucf-knights-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/central-florida-knights/stats",
         "team-logo-URL": "\/team-logos\/big12\/CentralFloridaLogo.png",
-        "list-name": "Central FL",
         "mascot-name": "Knights",
     },
     "West Virginia": {

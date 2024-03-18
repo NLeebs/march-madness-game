@@ -28,7 +28,7 @@ const atlantic10StatURLs = {
     },
     "George Washington": {
         "team-colors-URL": "https://teamcolorcodes.com/george-washington-colonials-color-codes/",
-        "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/george-washington-colonials/stats",
+        "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/george-washington-revolutionaries/stats",
         "team-logo-URL": "\/team-logos\/atlantic10\/GeorgeWashingtonLogo.png",
         "list-name": "Geo Wshgtn",
     },

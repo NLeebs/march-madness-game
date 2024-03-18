@@ -50,12 +50,14 @@ const bigTenStatsURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/ohio-state-buckeyes-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/ohio-st-buckeyes/stats",
         "team-logo-URL": "\/team-logos\/bigTen\/OhioStLogo.png",
+        "list-name": "Ohio St",
         "mascot-name": "Buckeyes",
     },
     "Penn State": {
         "team-colors-URL": "https://teamcolorcodes.com/penn-state-nittany-lions-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/penn-st-nittany-lions/stats",
         "team-logo-URL": "\/team-logos\/bigTen\/PennStLogo.png",
+        "list-name": "Penn St",
         "mascot-name": "Nittany Lions",
     },
     "Purdue": {

@@ -42,7 +42,6 @@ const southernStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/vmi-keydets-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/vmi-keydets/stats",
         "team-logo-URL": "\/team-logos\/southern\/VMILogo.png",
-        "list-name": "VA Military",
     },
     "Western Carolina": {
         "team-colors-URL": "https://teamcolorcodes.com/western-carolina-catamounts-colors/",

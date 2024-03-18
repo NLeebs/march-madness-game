@@ -8,6 +8,7 @@ const macStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/ball-state-cardinals-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/ball-st-cardinals/stats",
         "team-logo-URL": "\/team-logos\/mac\/BallStLogo.png",
+        "list-name": "Ball St",
         "mascot-name": "Cardinals",
     },
     "Bowling Green": {
@@ -40,6 +41,7 @@ const macStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/kent-state-golden-flashes-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/kent-st-golden-flashes/stats",
         "team-logo-URL": "\/team-logos\/mac\/KentStLogo.png",
+        "list-name": "Kent St",
         "mascot-name": "Golden Flashes",
     },
     "Miami (OH)": {

@@ -39,6 +39,7 @@ const wacStatURLs = {
         "team-colors-URL": "",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/tarleton-state-texans/stats",
         "team-logo-URL": "\/team-logos\/wac\/TarletonStLogo.png",
+        "list-name": "Tarleton St",
         "mascot-name": "Texans",
         "primary-color": "#4F2D7F",
         "secondary-color": "#FFFFFF",
@@ -65,7 +66,6 @@ const wacStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/utah-valley-wolverines-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/utah-valley-wolverines/stats",
         "team-logo-URL": "\/team-logos\/wac\/UtahValleyLogo.png",
-        "list-name": "Utah Val St"
     },
 }
 

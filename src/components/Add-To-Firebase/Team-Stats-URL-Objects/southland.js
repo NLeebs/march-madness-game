@@ -33,7 +33,7 @@ const southlandStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/nicholls-colonels-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/nicholls-state-colonels/stats",
         "team-logo-URL": "\/team-logos\/southland\/NichollsStLogo.png",
-        "list-name": "Nicholls St",
+        "list-name": "Nicholls",
     },
     "Northwestern State": {
         "team-colors-URL": "https://teamcolorcodes.com/northwestern-state-demons-colors/",

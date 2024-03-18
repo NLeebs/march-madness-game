@@ -58,7 +58,7 @@ const asunStatURLs = {
     },
     "Queens": {
         "team-colors-URL": "https://teamcolorcodes.com/queens-royals-color-codes/",
-        "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/queens-royals/stats",
+        "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/queens-university-of-charlotte-royals/stats",
         "team-logo-URL": "\/team-logos\/asun\/QueensLogo.png",
     },
     "Stetson": {

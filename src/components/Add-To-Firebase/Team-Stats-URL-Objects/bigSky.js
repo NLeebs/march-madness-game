@@ -15,6 +15,7 @@ const bigSkyStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/idaho-state-bengals-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/idaho-state-bengals/stats",
         "team-logo-URL": "\/team-logos\/bigSky\/IdahoStLogo.png",
+        "list-name": "Idaho St",
     },
     "Montana": {
         "team-colors-URL": "https://teamcolorcodes.com/montana-grizzlies-color-codes/",
@@ -57,6 +58,7 @@ const bigSkyStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/weber-state-wildcats-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/weber-st-wildcats/stats",
         "team-logo-URL": "\/team-logos\/bigSky\/WeberStLogo.png",
+        "list-name": "Weber St",
         "mascot-name": "Wildcats",
     },
 }

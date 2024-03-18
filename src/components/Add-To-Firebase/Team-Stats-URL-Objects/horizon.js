@@ -58,6 +58,7 @@ const horizonStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/wright-state-raiders-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/wright-st-raiders/stats",
         "team-logo-URL": "\/team-logos\/horizon\/WrightStLogo.png",
+        "list-name": "Wright St",
         "mascot-name": "Raiders",
     },
     "Youngstown State": {

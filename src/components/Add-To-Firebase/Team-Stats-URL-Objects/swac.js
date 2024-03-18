@@ -16,6 +16,7 @@ const swacStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/alcorn-state-braves-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/alcorn-st-braves/stats",
         "team-logo-URL": "\/team-logos\/swac\/AlcornStLogo.png",
+        "list-name": "Alcorn St",
         "mascot-name": "Braves",
     },
     "Arkansas-Pine Bluff": {

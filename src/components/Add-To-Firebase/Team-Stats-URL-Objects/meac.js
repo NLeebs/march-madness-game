@@ -3,6 +3,7 @@ const meacStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/coppin-state-eagles-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/coppin-st-eagles/stats",
         "team-logo-URL": "\/team-logos\/meac\/CoppinStLogo.png",
+        "list-name": "Coppin St",
         "mascot-name": "Eagles",
     },
     "Delaware State": {

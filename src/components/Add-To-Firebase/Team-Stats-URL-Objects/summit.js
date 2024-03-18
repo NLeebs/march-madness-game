@@ -8,7 +8,6 @@ const summitStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/umkc-kangaroos-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/kansas-city-roos/stats",
         "team-logo-URL": "\/team-logos\/summit\/UMKCLogo.png",
-        "list-name": "UMKC",
     },
     "North Dakota": {
         "team-colors-URL": "https://teamcolorcodes.com/north-dakota-fighting-hawks/",

@@ -55,7 +55,7 @@ const pythonDataScrapeHandler = async (e) => {
     ];
 
     // To test individual conferences for errors
-    const testURLArr=[['wcc', wccStatsURLs]];
+    const testURLArr=[ ['wac', wacStatsURLs]];
 
     // Create team stats return object
     const teamStatsObj = {};

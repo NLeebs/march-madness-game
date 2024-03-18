@@ -9,6 +9,7 @@ const mountainWestStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/boise-state-colors/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/boise-st-broncos/stats",
         "team-logo-URL": "\/team-logos\/mountainWest\/BoiseStLogo.png",
+        "list-name": "Boise St",
         "mascot-name": "Broncos",
     },
     "Colorado State": {
@@ -58,6 +59,7 @@ const mountainWestStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/utah-state-aggies-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/utah-st-aggies/stats",
         "team-logo-URL": "\/team-logos\/mountainWest\/UtahStLogo.png",
+        "list-name": "Utah St",
         "mascot-name": "Aggies",
     },
     "Wyoming": {

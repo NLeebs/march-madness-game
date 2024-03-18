@@ -70,7 +70,6 @@ const americanAthleticStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/utsa-roadrunners-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/texas-san-antonio-roadrunners/stats",
         "team-logo-URL": "\/team-logos\/americanAthletic\/UTSALogo.png",
-        "list-name": "TX-San Ant",
         "mascot-name": "Roadrunners",
     },
     "Wichita State": {

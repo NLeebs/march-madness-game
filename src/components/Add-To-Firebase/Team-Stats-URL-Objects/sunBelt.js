@@ -44,14 +44,14 @@ const sunBeltStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/louisiana-ragin-cajuns-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/ul-lafayette-ragin-cajuns/stats",
         "team-logo-URL": "\/team-logos\/sunBelt\/LouisianaLafayetteLogo.png",
-        "list-name": "LA Lafayette",
+        "list-name": "Louisiana",
         "mascot-name" : "Ragin' Cajuns",
     },
     "Louisiana-Monroe": {
         "team-colors-URL": "https://teamcolorcodes.com/louisiana-monroe-warhawks-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/ul-monroe-warhawks/stats",
         "team-logo-URL": "\/team-logos\/sunBelt\/LouisianaMonroeLogo.png",
-        "list-name": "LA Monroe",
+        "list-name": "UL Monroe",
         "mascot-name" : "Warhawks",
     },
     "Marshall": {
@@ -80,6 +80,7 @@ const sunBeltStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/texas-state-bobcats-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/texas-state-bobcats/stats",
         "team-logo-URL": "\/team-logos\/sunBelt\/TexasStLogo.png",
+        "list-name": "Texas St",
     },
     "Troy": {
         "team-colors-URL": "https://teamcolorcodes.com/troy-trojans-colors/",

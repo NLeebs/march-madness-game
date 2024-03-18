@@ -59,6 +59,7 @@ const bigWestStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/uc-san-diego-tritons-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/uc-san-diego-tritons/stats",
         "team-logo-URL": "\/team-logos\/bigWest\/UCSanDiegoLogo.png",
+        "list-name": "UCSD",
     },
     "UC Santa Barbara": {
         "team-colors-URL": "https://teamcolorcodes.com/uc-santa-barbara-gauchos-color-codes/",

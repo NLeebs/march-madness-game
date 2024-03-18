@@ -37,7 +37,7 @@ const accStatURLs = {
         "team-colors-URL": "https://teamcolorcodes.com/miami-hurricanes-color-codes/",
         "team-stats-URL": "https://www.teamrankings.com/ncaa-basketball/team/miami-hurricanes/stats",
         "team-logo-URL": "\/team-logos\/acc\/MiamiLogo.png",
-        "list-name": "Miami (FL)",
+        "list-name": "Miami",
     },
     "North Carolina": {
         "team-colors-URL": "https://teamcolorcodes.com/north-carolina-tar-heels-colors/",
