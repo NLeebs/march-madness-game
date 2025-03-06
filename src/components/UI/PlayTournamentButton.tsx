@@ -6,7 +6,7 @@ import { Tournament } from "@/types";
 import { BasketballSVG } from "@/src/components/Graphics";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@/src/constants";
 
-function PlayTournamentButton() {
+export function PlayTournamentButton() {
   const dispatch = useDispatch();
 
   const playerPicksObj = useSelector<RootState, Tournament>(
@@ -60,5 +60,3 @@ function PlayTournamentButton() {
     </button>
   );
 }
-
-export default PlayTournamentButton;
