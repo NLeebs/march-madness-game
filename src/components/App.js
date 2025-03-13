@@ -1,6 +1,6 @@
 "use client";
 // Libraries
-import React, { Fragment } from "react";
+import React from "react";
 import { MotionConfig } from "framer-motion";
 // React Functions
 import { useEffect } from "react";
