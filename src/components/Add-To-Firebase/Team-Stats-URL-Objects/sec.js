@@ -53,7 +53,7 @@ const secStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/mississippi-state-bulldogs/stats",
     "team-logo-URL": "/team-logos/sec/MississippiStLogo.png",
-    "list-name": "Miss State",
+    "list-name": "Mississippi St",
   },
   Missouri: {
     "team-colors-URL": "https://teamcolorcodes.com/missouri-tigers-colors/",
@@ -84,7 +84,6 @@ const secStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/south-carolina-gamecocks/stats",
     "team-logo-URL": "/team-logos/sec/SouthCarolinaLogo.png",
-    "list-name": "S Carolina",
   },
   Tennessee: {
     "team-colors-URL":

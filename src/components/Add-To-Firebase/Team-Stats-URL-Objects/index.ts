@@ -1,4 +1,5 @@
 export { default as accStatURLs } from "./acc";
+export { default as americaEastStatURLs } from "./americaEast";
 export { default as americanAthleticStatURLs } from "./americanAthletic";
 export { default as asunStatURLs } from "./asun";
 export { default as atlantic10StatURLs } from "./atlantic10";
@@ -9,6 +10,7 @@ export { default as bigSouthStatURLs } from "./bigSouth";
 export { default as bigTenStatURLs } from "./bigTen";
 export { default as bigWestStatURLs } from "./bigWest";
 export { default as caaStatURLs } from "./caa";
+export { default as cusaStatURLs } from "./cusa";
 export { default as horizonStatURLs } from "./horizon";
 export { default as ivyStatURLs } from "./ivy";
 export { default as maacStatURLs } from "./maac";

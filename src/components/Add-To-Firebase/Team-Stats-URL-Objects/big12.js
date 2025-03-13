@@ -87,7 +87,7 @@ const big12StatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/texas-christian-horned-frogs/stats",
     "team-logo-URL": "/team-logos/big12/TexasChristianLogo.png",
-    "list-name": "TX Christian",
+    "list-name": "TCU",
   },
   "Texas Tech": {
     "team-colors-URL":
@@ -116,7 +116,6 @@ const big12StatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/west-virginia-mountaineers/stats",
     "team-logo-URL": "/team-logos/big12/WestVirginiaLogo.png",
-    "list-name": "W Virginia",
   },
 };
 

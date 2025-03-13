@@ -1,7 +1,7 @@
-"use client"
+"use client";
 // Libraries
 import React, { Fragment } from "react";
-import { MotionConfig } from "framer-motion"
+import { MotionConfig } from "framer-motion";
 // React Functions
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +25,7 @@ import PlayTournamentGames from "./Tournament/PlayTournamentGames";
 import TournamentRecapDialog from "./Tournament/TournamentRecapDialog";
 
 // TODO:
-// 5. Multiple year stats 
+// 5. Multiple year stats
 // 6. Slow down tourny playing
 // 6. Stop lazy load of team icons in regular season
 // 6. Authentication and user login
@@ -36,10 +36,9 @@ import TournamentRecapDialog from "./Tournament/TournamentRecapDialog";
 // 8. User Dashboard with Statistics
 // 9. Winner animations
 
-
 function App() {
   const dispatch = useDispatch();
-  
+
   const appState = useSelector((state) => state.appState);
   const teamStatsObject = useSelector((state) => state.teamStats);
   const teamArray = useSelector((state) => state.teamSchedule.teamArray);
@@ -53,14 +52,14 @@ function App() {
         screenHeigth: window.innerHeight,
       };
       dispatch(uiStateActions.screenSize(screenSizeObj));
-    };
+    }
 
     window.addEventListener("resize", handleResize);
     handleResize();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-    }
+      window.removeEventListener("resize", handleResize);
+    };
   }, [dispatch]);
 
   // Add Team Stats to State and Config Schedules State
@@ -69,26 +68,40 @@ function App() {
       dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
       dispatch(teamStatsActions.addConferenceArrays(teamStatsData));
       dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
-      dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData));
+      dispatch(
+        regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)
+      );
     });
   }, [dispatch]);
 
   // Turn off loading app state once TeamStats populated
   useEffect(() => {
-    if (teamScheduleObj.teamArray.length > 0) dispatch(appStateActions.loadingComplete()); 
+    if (teamScheduleObj.teamArray.length > 0)
+      dispatch(appStateActions.loadingComplete());
   }, [dispatch, teamScheduleObj.teamArray.length]);
-  
+
   return (
     <MotionConfig reducedMotion="user">
       {/* <AddTeamStatsToFirebase /> */}
-      {teamArray && <SeasonSchedule teamStats={teamStatsObject.teamStats} teamArray={teamArray} />}      
+      {teamArray && (
+        <SeasonSchedule
+          teamStats={teamStatsObject.teamStats}
+          teamArray={teamArray}
+        />
+      )}
       {appState.startScreen && <StartScreen />}
       <AnimatePresence>
-        {appState.regularSeason && <RegularSeason teamStats={teamStatsObject.teamStats} />}
+        {appState.regularSeason && (
+          <RegularSeason teamStats={teamStatsObject.teamStats} />
+        )}
         {appState.tournament && <Tournament appState={appState} />}
       </AnimatePresence>
-      {appState.tournament && appState.tournamentPlayPlayinGames && <PlayPlayinGames />}
-      {appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap && <PlayTournamentGames />}
+      {appState.tournament && appState.tournamentPlayPlayinGames && (
+        <PlayPlayinGames />
+      )}
+      {appState.tournament &&
+        appState.tournamentPlayGames &&
+        !appState.tournamentRecap && <PlayTournamentGames />}
       {appState.tournamentRecap && <TournamentRecapDialog />}
     </MotionConfig>
   );

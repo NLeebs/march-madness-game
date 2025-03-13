@@ -1,11 +1,11 @@
 const necStatURLs = {
-  "Central Connecticut State": {
+  "Central Connecticut": {
     "team-colors-URL":
       "https://teamcolorcodes.com/central-connecticut-blue-devils-colors/",
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/central-conn-st-blue-devils/stats",
     "team-logo-URL": "/team-logos/nec/CentralConnecticutStLogo.png",
-    "list-name": "Central Conn",
+    "list-name": "C Connecticut",
     "mascot-name": "Blue Devils",
   },
   "Chicago State": {
@@ -45,7 +45,7 @@ const necStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/st-francis-pa-red-flash/stats",
     "team-logo-URL": "/team-logos/nec/StFrancisPALogo.png",
-    "list-name": "St Fran (PA)",
+    "list-name": "St Francis PA",
     "mascot-name": "Red Flash",
   },
   Stonehill: {

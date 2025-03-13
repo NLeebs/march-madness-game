@@ -5,7 +5,6 @@ const accStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/boston-college-eagles/stats",
     "team-logo-URL": "/team-logos/acc/BostonCollegeLogo.png",
-    "list-name": "Boston Col",
   },
   California: {
     "team-colors-URL":
@@ -42,7 +41,6 @@ const accStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/georgia-tech-yellow-jackets/stats",
     "team-logo-URL": "/team-logos/acc/GeorgiaTechLogo.png",
-    "list-name": "GA Tech",
   },
   Louisville: {
     "team-colors-URL":
@@ -65,7 +63,6 @@ const accStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/north-carolina-tar-heels/stats",
     "team-logo-URL": "/team-logos/acc/NorthCarolinaLogo.png",
-    "list-name": "N Carolina",
   },
   "North Carolina State": {
     "team-colors-URL":
@@ -95,7 +92,6 @@ const accStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/southern-methodist-mustangs/stats",
     "team-logo-URL": "/team-logos/americanAthletic/SMULogo.png",
-    "list-name": "S Methodist",
     "mascot-name": "Mustangs",
   },
   Stanford: {
@@ -125,7 +121,6 @@ const accStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/virginia-tech-hokies/stats",
     "team-logo-URL": "/team-logos/acc/VirginiaTechLogo.png",
-    "list-name": "VA Tech",
   },
   "Wake Forest": {
     "team-colors-URL":

@@ -5,7 +5,7 @@ const southlandStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/houston-christian-huskies/stats",
     "team-logo-URL": "/team-logos/southland/HoustonChristianLogo.png",
-    "list-name": "Hsn Christian",
+    "list-name": "Hou Christian",
     "mascot-name": "Huskies",
   },
   "Incarnate Word": {
@@ -14,7 +14,6 @@ const southlandStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/incarnate-word-cardinals/stats",
     "team-logo-URL": "/team-logos/southland/IncarnateWordLogo.png",
-    "list-name": "Incar Word",
   },
   Lamar: {
     "team-colors-URL": "https://teamcolorcodes.com/lamar-cardinals-colors/",
@@ -27,7 +26,7 @@ const southlandStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/mcneese-st-cowboys/stats",
     "team-logo-URL": "/team-logos/southland/McNeeseStLogo.png",
-    "list-name": "McNeese St",
+    "list-name": "McNeese",
     "mascot-name": "Cowboys",
   },
   "New Orleans": {
@@ -67,7 +66,7 @@ const southlandStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/stephen-f-austin-lumberjacks/stats",
     "team-logo-URL": "/team-logos/wac/StephenFAustinLogo.png",
-    "list-name": "Ste F Austin",
+    "list-name": "SF Austin",
     "mascot-name": "Lumberjacks",
   },
   "Texas A&M-CC": {
@@ -76,14 +75,14 @@ const southlandStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/texas-am-cc-islanders/stats",
     "team-logo-URL": "/team-logos/southland/TexasAnMCCLogo.png",
-    "list-name": "TX A&M-CC",
+    "list-name": "Texas A&M-CC",
   },
-  "Texas A&M-Commerce": {
+  "East Texas A&M": {
     "team-colors-URL": "",
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/texas-am-commerce-lions/stats",
     "team-logo-URL": "/team-logos/southland/TexasAnMCommerceLogo.png",
-    "list-name": "TX A&M-Com",
+    "list-name": "E Texas A&M",
     "primary-color": "#1D2953",
     "secondary-color": "#E8A311",
   },
@@ -92,7 +91,7 @@ const southlandStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/texas-rio-grande-valley-vaqueros/stats",
     "team-logo-URL": "/team-logos/wac/TexasRioGrandeLogo.png",
-    "list-name": "TX-Pan Am",
+    "list-name": "UT Rio Grande",
   },
 };
 

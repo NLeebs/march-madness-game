@@ -13,7 +13,7 @@ const cusaStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/jacksonville-st-gamecocks/stats",
     "team-logo-URL": "/team-logos/cusa/JacksonvilleStLogo.png",
-    "list-name": "Jackson St",
+    "list-name": "Jacksonville St",
     "mascot-name": "Gamecocks",
   },
   "Kennesaw State": {
@@ -37,7 +37,7 @@ const cusaStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/louisiana-tech-bulldogs/stats",
     "team-logo-URL": "/team-logos/cusa/LouisianaTechLogo.png",
-    "list-name": "LA Tech",
+    "list-name": "Louisiana Tech",
   },
   "Middle Tennessee State": {
     "team-colors-URL":
@@ -56,7 +56,7 @@ const cusaStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/new-mexico-st-aggies/stats",
     "team-logo-URL": "/team-logos/cusa/NewMexicoStLogo.png",
-    "list-name": "N Mex State",
+    "list-name": "New Mexico St",
     "mascot-name": "Aggies",
   },
   "Sam Houston State": {
@@ -65,7 +65,7 @@ const cusaStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/sam-houston-st-bearkats/stats",
     "team-logo-URL": "/team-logos/cusa/SamHoustonStLogo.png",
-    "list-name": "Sam Hous St",
+    "list-name": "Sam Houston",
     "mascot-name": "Bearkats",
   },
   UTEP: {
@@ -73,7 +73,6 @@ const cusaStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/texas-el-paso-miners/stats",
     "team-logo-URL": "/team-logos/cusa/UTEPLogo.png",
-    "list-name": "TX El Paso",
     "mascot-name": "Miners",
   },
   "Western Kentucky": {

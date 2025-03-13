@@ -19,7 +19,7 @@ const asunStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/central-arkansas-bears/stats",
     "team-logo-URL": "/team-logos/asun/CentralArkansasLogo.png",
-    "list-name": "Central Ark",
+    "list-name": "C Arkansas",
   },
   "Eastern Kentucky": {
     "team-colors-URL":
@@ -35,7 +35,7 @@ const asunStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/florida-gulf-coast-eagles/stats",
     "team-logo-URL": "/team-logos/asun/FGCULogo.png",
-    "list-name": "Fla Gulf Cst",
+    "list-name": "FGCU",
   },
   Jacksonville: {
     "team-colors-URL":

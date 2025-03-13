@@ -18,9 +18,8 @@ const wacStatURLs = {
   "Grand Canyon": {
     "team-colors-URL": "https://teamcolorcodes.com/gcu-antelopes-color-codes/",
     "team-stats-URL":
-      "https://www.teamrankings.com/ncaa-basketball/team/grand-canyon-antelopes/stats",
+      "https://www.teamrankings.com/ncaa-basketball/team/grand-canyon-lopes/stats",
     "team-logo-URL": "/team-logos/wac/GrandCanyonLogo.png",
-    "list-name": "Grd Canyon",
   },
   Seattle: {
     "team-colors-URL":
@@ -53,7 +52,7 @@ const wacStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/texas-arlington-mavericks/stats",
     "team-logo-URL": "/team-logos/wac/TexasArlingtonLogo.png",
-    "list-name": "TX-Arlington",
+    "list-name": "UT Arlington",
   },
   "Utah Tech": {
     "team-colors-URL":

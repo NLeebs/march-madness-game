@@ -5,6 +5,7 @@ import db from "@/src/firebase/config.js";
 // Team Statistics URLs
 import {
   accStatURLs,
+  americaEastStatURLs,
   americanAthleticStatURLs,
   asunStatURLs,
   atlantic10StatURLs,
@@ -15,6 +16,7 @@ import {
   bigTenStatURLs,
   bigWestStatURLs,
   caaStatURLs,
+  cusaStatURLs,
   horizonStatURLs,
   ivyStatURLs,
   maacStatURLs,
@@ -42,8 +44,8 @@ const pythonDataScrapeHandler = async (e) => {
   // Conference and Ref URLs Config Array
   const firstHalfConfURLsArr = [
     ["acc", accStatURLs],
-    ["americanAthletic", americanAthleticStatURLs],
     ["americaEast", americaEastStatURLs],
+    ["americanAthletic", americanAthleticStatURLs],
     ["asun", asunStatURLs],
     ["atlantic10", atlantic10StatURLs],
     ["big12", big12StatURLs],
@@ -77,7 +79,7 @@ const pythonDataScrapeHandler = async (e) => {
   ];
 
   // To test individual conferences for errors
-  const testURLArr = [["wac", wacStatsURLs]];
+  const testURLArr = [["wcc", wccStatURLs]];
 
   // Create team stats return object
   const teamStatsObj = {};

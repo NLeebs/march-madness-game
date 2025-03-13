@@ -47,7 +47,6 @@ const wccStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/saint-marys-gaels/stats",
     "team-logo-URL": "/team-logos/wcc/StMarysLogo.png",
-    "list-name": "St Marys",
     "mascot-name": "Gaels",
   },
   "San Diego": {
@@ -76,7 +75,7 @@ const wccStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/washington-st-cougars/stats",
     "team-logo-URL": "/team-logos/pac12/WashingtonStLogo.png",
-    "list-name": "Wash State",
+    "list-name": "Washington St",
     "mascot-name": "Cougars",
   },
 };

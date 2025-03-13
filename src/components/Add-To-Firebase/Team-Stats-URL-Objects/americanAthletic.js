@@ -20,7 +20,6 @@ const americanAthleticStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/florida-atlantic-owls/stats",
     "team-logo-URL": "/team-logos/americanAthletic/FloridaAtlanticLogo.png",
-    "list-name": "Fla Atlantic",
   },
   Memphis: {
     "team-colors-URL": "https://teamcolorcodes.com/memphis-tigers-color-codes/",
@@ -34,6 +33,7 @@ const americanAthleticStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/north-texas-mean-green/stats",
     "team-logo-URL": "/team-logos/americanAthletic/NorthTexasLogo.png",
+    "list-name": "N Texas",
   },
   Rice: {
     "team-colors-URL": "https://teamcolorcodes.com/rice-owls-color-codes/",

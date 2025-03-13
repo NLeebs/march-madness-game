@@ -45,7 +45,7 @@ const maacStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/mount-st-marys-mountaineers/stats",
     "team-logo-URL": "/team-logos/maac/MountStMarysLogo.png",
-    "list-name": "Mt St Marys",
+    "list-name": "Mt St Mary's",
     "mascot-name": "Mountaineers",
   },
   Niagara: {
@@ -74,7 +74,6 @@ const maacStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/sacred-heart-pioneers/stats",
     "team-logo-URL": "/team-logos/nec/SacredHeartLogo.png",
-    "list-name": "Sacred Hrt",
   },
   "Saint Peter's": {
     "team-colors-URL":
@@ -82,7 +81,6 @@ const maacStatURLs = {
     "team-stats-URL":
       "https://www.teamrankings.com/ncaa-basketball/team/saint-peters-peacocks/stats",
     "team-logo-URL": "/team-logos/maac/StPetersLogo.png",
-    "list-name": "St Peters",
     "mascot-name": "Peacocks",
   },
   Siena: {
