@@ -1,3 +1,5 @@
+import { numberOfConferences } from "@/src/components/Add-To-Firebase/teamStatURLUtils";
+
 // UI
 export const SMALL_BREAK_POINT = 640;
 export const MEDIUM_BREAK_POINT = 768;
@@ -45,7 +47,9 @@ export const POINTS_PER_WIN = 75;
 export const PERCENT_FOULS_THAT_SHOOT_FT = 0.09;
 
 // Tournament
-export const NUMBER_OF_AT_LARGE_TEAMS = 36;
+export const NUMBER_OF_TOURNAMENT_TEAMS = 68;
+export const NUMBER_OF_AT_LARGE_TEAMS =
+  NUMBER_OF_TOURNAMENT_TEAMS - numberOfConferences;
 export const NUMBER_OF_AT_LARGE_TEAMS_PLAYINS = 4;
 export const NUMBER_OF_CONF_CHAMP_PLAYINS = 4;
 export const NUMBER_OF_REGIONS = 4;
