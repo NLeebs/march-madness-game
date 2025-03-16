@@ -52,7 +52,7 @@ export function PlayTournamentButton() {
         className={`${isAllPicksSelected && "motion-safe:animate-spin-slow"}`}
       >
         <BasketballSVG
-          size={"225"}
+          size={225}
           basketballColor={PRIMARY_COLOR}
           seamColor={SECONDARY_COLOR}
         />
