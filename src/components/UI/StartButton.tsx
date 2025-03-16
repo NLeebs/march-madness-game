@@ -13,7 +13,6 @@ import {
   TIMER_BETWEEN_APP_STATES,
 } from "@/src/constants";
 
-// Component Function
 export function StartButton() {
   const dispatch = useDispatch();
 
@@ -95,7 +94,7 @@ export function StartButton() {
         style={{ transform: !isLoading && `rotate(${elRotation}deg)` }}
       >
         <BasketballSVG
-          size={screenWidth >= SMALL_BREAK_POINT ? "400" : "300"}
+          size={screenWidth >= SMALL_BREAK_POINT ? 400 : 300}
           basketballColor={PRIMARY_COLOR}
           seamColor={SECONDARY_COLOR}
         />
