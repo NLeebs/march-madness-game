@@ -6,12 +6,12 @@ import { appStateActions } from "@/store/appStateSlice";
 import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 // Functions
 import playGame from "@/src/functions/playGame";
-import delay from "@/src/functions/generic/delay";
+import { delay } from "@/src/functions/generic";
 // Constants
 import {
   AMOUNT_SEASON_GAMES,
   TIMER_PER_REGULAR_SEASON_GAME,
-} from "@/constants/CONSTANTS";
+} from "@/src/constants";
 
 function PlayRegularSeasonGames(props) {
   const dispatch = useDispatch();

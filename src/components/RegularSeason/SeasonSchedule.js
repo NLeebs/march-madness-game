@@ -7,7 +7,7 @@ import { teamScheduleActions } from "@/store/teamScheduleSlice";
 import {
   AMOUNT_NONCONFERENCE_GAMES,
   AMOUNT_SEASON_GAMES,
-} from "@/constants/CONSTANTS";
+} from "@/src/constants";
 
 function SeasonSchedule(props) {
   const dispatch = useDispatch();

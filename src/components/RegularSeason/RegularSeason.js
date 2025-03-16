@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { appStateActions } from "@/store/appStateSlice";
 // Functions
 import separatePowerConferences from "@/src/functions/regularSeason/separatePowerConferences";
-import delay from "@/src/functions/generic/delay";
+import { delay } from "@/src/functions/generic";
 // Components
 import ConferenceGroups from "./ConferenceGroups";
 import PlayRegularSeasonGames from "./PlayRegularSeasonGames";
@@ -19,7 +19,7 @@ import {
   TIMER_TRIGGER_FADE,
   PRIMARY_COLOR,
   POWER_CONFERENCE_LIST,
-} from "@/constants/CONSTANTS";
+} from "@/src/constants";
 
 function RegularSeason(props) {
   const dispatch = useDispatch();

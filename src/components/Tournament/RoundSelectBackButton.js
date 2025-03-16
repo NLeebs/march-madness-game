@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // Libraries
 import React from "react";
 import { motion } from "framer-motion";
@@ -9,45 +9,45 @@ import { uiStateActions } from "@/store/uiStateSlice";
 //Components
 import LeftChevronSVG from "../Graphics/LeftChevronSVG";
 // Constants
-import { NON_CTA_BUTTON_COLOR } from "@/constants/CONSTANTS";
-import { XXXL_LARGE_BREAK_POINT } from "@/constants/CONSTANTS";
-
+import { NON_CTA_BUTTON_COLOR, XXXL_LARGE_BREAK_POINT } from "@/src/constants";
 
 // Component Function
 function RoundSelectBackButton(props) {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const screenWidth = useSelector((state) => state.uiState.screenWidth);
-    const selectedRound = useSelector((state) => state.uiState.selectedRound);
+  const screenWidth = useSelector((state) => state.uiState.screenWidth);
+  const selectedRound = useSelector((state) => state.uiState.selectedRound);
 
-    // Send new round selection to state
-    const roundSelectBackHandler = () => {
-        let prevRound;
-        if (selectedRound === "round2") prevRound = "round1";
-        else if (selectedRound === "sweetSixteen") prevRound = "round2";
-        else if (selectedRound === "eliteEight") prevRound = "sweetSixteen";
-        else if (selectedRound === "finalFour") prevRound = "eliteEight";
-        else if (selectedRound === "finals") prevRound = "finalFour";
-        else prevRound = "round1";
-        
-        dispatch(uiStateActions.selectRound({
-            newRound: prevRound,
-        }))
-    }
+  // Send new round selection to state
+  const roundSelectBackHandler = () => {
+    let prevRound;
+    if (selectedRound === "round2") prevRound = "round1";
+    else if (selectedRound === "sweetSixteen") prevRound = "round2";
+    else if (selectedRound === "eliteEight") prevRound = "sweetSixteen";
+    else if (selectedRound === "finalFour") prevRound = "eliteEight";
+    else if (selectedRound === "finals") prevRound = "finalFour";
+    else prevRound = "round1";
+
+    dispatch(
+      uiStateActions.selectRound({
+        newRound: prevRound,
+      })
+    );
+  };
 
   return (
     <div>
-        {selectedRound !== "round1" && screenWidth <= XXXL_LARGE_BREAK_POINT &&
-            <motion.button 
-                onClick={roundSelectBackHandler}
-                className="relative w-roundSelectBackButton h-16 flex justify-center items-center text-center"
-                style={{backgroundColor: NON_CTA_BUTTON_COLOR,}}
-            >
-                <LeftChevronSVG />
-            </motion.button>
-        }
+      {selectedRound !== "round1" && screenWidth <= XXXL_LARGE_BREAK_POINT && (
+        <motion.button
+          onClick={roundSelectBackHandler}
+          className="relative w-roundSelectBackButton h-16 flex justify-center items-center text-center"
+          style={{ backgroundColor: NON_CTA_BUTTON_COLOR }}
+        >
+          <LeftChevronSVG />
+        </motion.button>
+      )}
     </div>
-   );
+  );
 }
 
 export default RoundSelectBackButton;
