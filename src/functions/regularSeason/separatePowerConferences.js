@@ -1,12 +1,12 @@
-export default function separatePowerConferences(confObject, powerConfArr) {
-    const otherConfArr = [];
+export const separatePowerConferences = (confObject, powerConfArr) => {
+  const otherConfArr = [];
 
-    for (const key in confObject) {
-        if (powerConfArr.includes(key)) {}
-        else {
-            otherConfArr.push(key);
-        }
+  for (const key in confObject) {
+    if (powerConfArr.includes(key)) {
+    } else {
+      otherConfArr.push(key);
     }
+  }
 
-    return otherConfArr;
-}
+  return otherConfArr;
+};

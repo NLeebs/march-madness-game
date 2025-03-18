@@ -4,7 +4,7 @@ import {
   PERCENT_FOULS_THAT_SHOOT_FT,
 } from "@/src/constants";
 
-export default function playGame(team1Stats, team2Stats) {
+export const playGame = (team1Stats, team2Stats) => {
   // Functions
   const determineBiasedStat = (favoredStat, underdogStat, isBetter, round) => {
     let statAdvantage =
@@ -399,4 +399,4 @@ export default function playGame(team1Stats, team2Stats) {
     underdogScore,
     underdogRPI: +teamUnderdog.rpi,
   };
-}
+};
