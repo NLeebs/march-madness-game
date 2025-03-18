@@ -1,9 +1,7 @@
 import React from "react";
+import { BracketRound, BracketLine } from "@/src/components";
 
-import BracketRound from "./BracketRound";
-import BracketLine from "./BracketLine";
-
-function TournamentBracket() {
+export const TournamentBracket = () => {
   const teams = Array.from({ length: 64 }, (_, index) => `Team ${index + 1}`);
   console.log(teams);
 
@@ -17,6 +15,4 @@ function TournamentBracket() {
       </div>
     </div>
   );
-}
-
-export default TournamentBracket;
+};

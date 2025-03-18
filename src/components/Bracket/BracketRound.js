@@ -1,6 +1,6 @@
 import React from "react";
 
-function BracketRound({ teams }) {
+export const BracketRound = ({ teams }) => {
   return (
     <div className="flex flex-col space-y-2">
       {teams.map((team, index) => (
@@ -15,6 +15,4 @@ function BracketRound({ teams }) {
       ))}
     </div>
   );
-}
-
-export default BracketRound;
+};

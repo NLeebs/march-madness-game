@@ -20,8 +20,7 @@ import {
   TIMER_BETWEEN_APP_STATES,
 } from "@/src/constants/CONSTANTS";
 
-// Component Function
-function RestartGameButton(props) {
+export const RestartGameButton = () => {
   const dispatch = useDispatch();
 
   const teamStats = useSelector((state) => state.teamStats.teamStats);
@@ -47,6 +46,4 @@ function RestartGameButton(props) {
       backgroundColor={PRIMARY_COLOR}
     />
   );
-}
-
-export default RestartGameButton;
+};

@@ -14,7 +14,7 @@ import {
   NUMBER_OF_CONF_CHAMP_PLAYINS,
 } from "@/src/constants";
 
-function SelectionSunday(props) {
+export const SelectionSunday = (props) => {
   const dispatch = useDispatch();
 
   // App State
@@ -138,6 +138,4 @@ function SelectionSunday(props) {
   }, [dispatch, appState, getTournamentTeams, tournamentTeams]);
 
   return;
-}
-
-export default SelectionSunday;
+};

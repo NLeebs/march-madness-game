@@ -16,7 +16,7 @@ import {
   POWER_CONFERENCE_LIST,
 } from "@/src/constants";
 
-function RegularSeason(props) {
+export const RegularSeason = (props) => {
   const dispatch = useDispatch();
 
   const appState = useSelector((state) => state.appState);
@@ -86,6 +86,4 @@ function RegularSeason(props) {
       )}
     </div>
   );
-}
-
-export default RegularSeason;
+};

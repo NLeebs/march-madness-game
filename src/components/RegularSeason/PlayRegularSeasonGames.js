@@ -13,7 +13,7 @@ import {
   TIMER_PER_REGULAR_SEASON_GAME,
 } from "@/src/constants";
 
-function PlayRegularSeasonGames(props) {
+export const PlayRegularSeasonGames = (props) => {
   const dispatch = useDispatch();
   const [seasonPlayed, setSeasonPlayed] = useState(false);
 
@@ -55,6 +55,6 @@ function PlayRegularSeasonGames(props) {
   }, [dispatch, weeksPlayed, playRegularSeasonGames, teamStats, teamSchedules]);
 
   return;
-}
+};
 
 export default PlayRegularSeasonGames;

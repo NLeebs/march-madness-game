@@ -5,3 +5,4 @@ export * from "./PlayerPickBar";
 export * from "./PlayTournamentButton";
 export * from "./StartScreen";
 export * from "./StartButton";
+export * from "./TeamBar";

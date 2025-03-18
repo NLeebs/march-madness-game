@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
-import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
-import Image from "next/image";
-import { PingNotification } from "@/src/components/UI/PingNotification";
 import { RootState } from "@/store";
+import Image from "next/image";
+import { PingNotification } from "@/src/components";
+import { findTeamConference } from "@/src/functions";
 import { NON_CTA_BUTTON_COLOR } from "@/src/constants/CONSTANTS";
 
 interface TeamBarProps {
   team: string;
-  round: string;
-  score: string;
-  win: boolean;
+  round?: string;
+  score?: string;
+  win?: boolean;
 }
 
 export const TeamBar: React.FC<TeamBarProps> = ({

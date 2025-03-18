@@ -1,15 +1,12 @@
-// React Functions
 import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-// State
-import { teamScheduleActions } from "@/store/teamScheduleSlice";
-// Constanst
+import { teamScheduleActions } from "@/store";
 import {
   AMOUNT_NONCONFERENCE_GAMES,
   AMOUNT_SEASON_GAMES,
 } from "@/src/constants";
 
-function SeasonSchedule(props) {
+export const SeasonSchedule = (props) => {
   const dispatch = useDispatch();
 
   const randomTeamSchedule = useCallback(
@@ -89,6 +86,4 @@ function SeasonSchedule(props) {
   ]);
 
   return;
-}
-
-export default SeasonSchedule;
+};

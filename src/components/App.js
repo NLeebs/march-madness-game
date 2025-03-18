@@ -1,22 +1,25 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { MotionConfig, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appStateActions } from "@/store/appStateSlice";
-import { uiStateActions } from "@/store/uiStateSlice";
-import { teamStatsActions } from "@/store/teamStatsSlice";
-import { teamScheduleActions } from "@/store/teamScheduleSlice";
-import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
-import getTeamStatData from "@/src/functions/teamStatsData/getTeamStatData";
-import { AddTeamStatsToFirebase } from "@/src/components";
-import StartScreen from "./UI/StartScreen";
-import SeasonSchedule from "./RegularSeason/SeasonSchedule";
-import RegularSeason from "./RegularSeason/RegularSeason";
-import Tournament from "./Tournament/Tournament";
-import PlayPlayinGames from "./Tournament/PlayPlayinGames";
-import PlayTournamentGames from "./Tournament/PlayTournamentGames";
-import TournamentRecapDialog from "./Tournament/TournamentRecapDialog";
+import {
+  appStateActions,
+  uiStateActions,
+  teamStatsActions,
+  teamScheduleActions,
+  regularSeasonRecordActions,
+} from "@/store";
+import {
+  AddTeamStatsToFirebase,
+  PlayPlayinGames,
+  StartScreen,
+  Tournament,
+  PlayTournamentGames,
+  RegularSeason,
+  SeasonSchedule,
+  TournamentRecapDialog,
+} from "@/src/components";
+import { getTeamStatData } from "@/src/functions";
 
 // TODO:
 // 5. Multiple year stats
