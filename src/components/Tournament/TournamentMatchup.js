@@ -1,19 +1,12 @@
 "use client";
-// Libraries
 import React, { useCallback } from "react";
 import { motion } from "framer-motion";
-// React Functions
 import { useSelector, useDispatch } from "react-redux";
-// Functions
 import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
-// State
 import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSlice";
-// Css Styles
-import classes from "./TournamentMatchup.module.css";
-// Components
+import classes from "@/src/components/Tournament/css/TournamentMatchup.module.css";
 import TeamBar from "../UI/TeamBar";
 import PlayerPickBar from "../UI/PlayerPickBar";
-// Constants
 import {
   NON_CTA_BUTTON_COLOR,
   TOURAMENT_CHAMPION_RIBBON_HEIGHT,

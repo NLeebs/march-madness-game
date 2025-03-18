@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TournamentPlayerPicks, Pick, PlayInGame } from "@/types";
+import { TournamentPlayerPicks, Pick, PlayInGameWinner } from "@/types";
 
 const initalState: TournamentPlayerPicks =
   process.env.NEXT_PUBLIC_APP_MODE !== "dev"
@@ -420,7 +420,10 @@ const tournamentPlayersPicksSlice = createSlice({
         });
       }
     },
-    replacePlayinPicksWithWinner(state, action: PayloadAction<PlayInGame>) {
+    replacePlayinPicksWithWinner(
+      state,
+      action: PayloadAction<PlayInGameWinner>
+    ) {
       let playinTeamPlaceholder;
       if (action.payload.seedType === "sixteenSeeds") {
         playinTeamPlaceholder =

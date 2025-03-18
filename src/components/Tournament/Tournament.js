@@ -1,23 +1,17 @@
 "use client";
-// Libraries
 import React, { Fragment } from "react";
 import { motion } from "framer-motion";
-// React Functions
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// State
 import { tournamentActions } from "@/store/tournamentSlice";
 import { uiStateActions } from "@/store/uiStateSlice";
-// Components
 import RoundSelectBanner from "./RoundSelectBanner";
 import TournamentRound from "./TournamentRound";
 import PlayTournamentButton from "../UI/PlayTournamentButton";
 import PlayerScore from "./PlayerScore";
 import Button from "../UI/Button";
 import RestartGameButton from "../General/RestartGameButton";
-// CSS Styles
-import styles from "./Tournament.module.css";
-// Constants
+import styles from "@/src/components/Tournament/css/Tournament.module.css";
 import {
   PRIMARY_COLOR,
   TOURNAMENT_BREAK_POINT,

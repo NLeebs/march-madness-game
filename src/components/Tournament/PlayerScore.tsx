@@ -1,24 +1,17 @@
 "use client";
-// Libraries
 import React from "react";
-// React Functions
 import { useSelector } from "react-redux";
-// State
-import { appStateActions } from "@/store/appStateSlice";
-// Constants
+import { RootState } from "@/store";
 import {
   ACCENT_COLOR,
   NON_CTA_BUTTON_COLOR,
   CONFIRMATION_GREEN,
 } from "@/src/constants";
 
-// Component Function
-function PlayerScore() {
-  const playerScore = useSelector((state) => state.tournament.playerScore);
-
-  const activateRegularSeason = () => {
-    dispatch(appStateActions.activateRegularSeason());
-  };
+export const PlayerScore = () => {
+  const playerScore = useSelector(
+    (state: RootState) => state.tournament.playerScore
+  );
 
   return (
     <div
@@ -33,6 +26,4 @@ function PlayerScore() {
       <div className="text-center text-xl">{playerScore}</div>
     </div>
   );
-}
-
-export default PlayerScore;
+};

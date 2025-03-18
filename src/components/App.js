@@ -1,21 +1,15 @@
 "use client";
-// Libraries
 import React from "react";
-import { MotionConfig } from "framer-motion";
-// React Functions
+import { MotionConfig, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// State
 import { appStateActions } from "@/store/appStateSlice";
 import { uiStateActions } from "@/store/uiStateSlice";
 import { teamStatsActions } from "@/store/teamStatsSlice";
 import { teamScheduleActions } from "@/store/teamScheduleSlice";
 import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
-//Functions
 import getTeamStatData from "@/src/functions/teamStatsData/getTeamStatData";
-// Components
-import AddTeamStatsToFirebase from "@/src/components/Add-To-Firebase/AddTeamStatsToFirebase.js";
-import { AnimatePresence } from "framer-motion";
+import { AddTeamStatsToFirebase } from "@/src/components";
 import StartScreen from "./UI/StartScreen";
 import SeasonSchedule from "./RegularSeason/SeasonSchedule";
 import RegularSeason from "./RegularSeason/RegularSeason";

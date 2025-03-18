@@ -12,9 +12,3 @@ export interface Pick {
   seed: string;
   opponent: string;
 }
-
-export interface PlayInGame {
-  seedType: string;
-  gameIndex: number;
-  winningTeam: string;
-}

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { StartButton } from "@/src/components/UI/StartButton";
 import { RootState } from "@/store";
 
-function StartScreen() {
+export const StartScreen = () => {
   const appState = useSelector((state: RootState) => state.appState);
 
   return (
@@ -20,6 +20,4 @@ function StartScreen() {
       <StartButton />
     </div>
   );
-}
-
-export default StartScreen;
+};

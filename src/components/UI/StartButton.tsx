@@ -13,7 +13,7 @@ import {
   TIMER_BETWEEN_APP_STATES,
 } from "@/src/constants";
 
-export function StartButton() {
+export const StartButton = () => {
   const dispatch = useDispatch();
 
   const screenWidth = useSelector<RootState, number>(
@@ -101,4 +101,4 @@ export function StartButton() {
       </div>
     </motion.button>
   );
-}
+};

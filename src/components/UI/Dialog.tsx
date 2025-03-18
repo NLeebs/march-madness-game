@@ -72,5 +72,3 @@ export const Dialog: React.FC<DialogProps> = ({
     document.getElementById("modal-root")
   );
 };
-
-export default Dialog;

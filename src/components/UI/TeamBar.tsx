@@ -201,5 +201,3 @@ export const TeamBar: React.FC<TeamBarProps> = ({
     </div>
   );
 };
-
-export default TeamBar;

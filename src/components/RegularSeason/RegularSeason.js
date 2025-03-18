@@ -1,15 +1,10 @@
 "use client";
-// Libraries
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-// React Functions
 import { useDispatch, useSelector } from "react-redux";
-// State
 import { appStateActions } from "@/store/appStateSlice";
-// Functions
 import separatePowerConferences from "@/src/functions/regularSeason/separatePowerConferences";
 import { delay } from "@/src/functions/generic";
-// Components
 import ConferenceGroups from "./ConferenceGroups";
 import PlayRegularSeasonGames from "./PlayRegularSeasonGames";
 import SelectionSunday from "./SelectionSunday";
