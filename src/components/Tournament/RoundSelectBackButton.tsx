@@ -1,26 +1,23 @@
 "use client";
-// Libraries
 import React from "react";
 import { motion } from "framer-motion";
-// React Functions
 import { useDispatch, useSelector } from "react-redux";
-// State
-import { uiStateActions } from "@/store/uiStateSlice";
-//Components
-import LeftChevronSVG from "../Graphics/LeftChevronSVG";
-// Constants
+import { RootState, uiStateActions } from "@/store";
+import { LeftChevronSVG } from "@/src/components";
 import { NON_CTA_BUTTON_COLOR, XXXL_LARGE_BREAK_POINT } from "@/src/constants";
 
-// Component Function
 export const RoundSelectBackButton = () => {
   const dispatch = useDispatch();
 
-  const screenWidth = useSelector((state) => state.uiState.screenWidth);
-  const selectedRound = useSelector((state) => state.uiState.selectedRound);
+  const screenWidth = useSelector(
+    (state: RootState) => state.uiState.screenWidth
+  );
+  const selectedRound = useSelector(
+    (state: RootState) => state.uiState.selectedRound
+  );
 
-  // Send new round selection to state
   const roundSelectBackHandler = () => {
-    let prevRound;
+    let prevRound: string;
     if (selectedRound === "round2") prevRound = "round1";
     else if (selectedRound === "sweetSixteen") prevRound = "round2";
     else if (selectedRound === "eliteEight") prevRound = "sweetSixteen";
