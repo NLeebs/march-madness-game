@@ -1,22 +1,14 @@
 "use client";
-// Libraries
 import React from "react";
-// React Functions
 import { useDispatch, useSelector } from "react-redux";
-// Functions
-import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
-//State
-import { uiStateActions } from "@/store/uiStateSlice";
-// Components
-import Dialog from "../UI/Dialog";
+import { uiStateActions } from "@/store";
+import { Dialog, PlayerScore, RestartGameButton } from "@/src/components";
 import Image from "next/image";
-import PlayerScore from "./PlayerScore";
-import RestartGameButton from "../General/RestartGameButton";
-// Constants
+import { findTeamConference } from "@/src/functions";
 import { ACCENT_COLOR } from "@/src/constants";
 
 // Component Function
-function TournamentRecapDialog(props) {
+export const TournamentRecapDialog = () => {
   const dispatch = useDispatch();
 
   const isRecapDialogOpen = useSelector(
@@ -78,6 +70,4 @@ function TournamentRecapDialog(props) {
       <RestartGameButton />
     </Dialog>
   );
-}
-
-export default TournamentRecapDialog;
+};

@@ -1,12 +1,8 @@
 "use client";
-// Libraries
 import React from "react";
-import { motion } from "framer-motion";
-// React Functions
 import { useSelector } from "react-redux";
-// Components
-import TournamentMatchup from "./TournamentMatchup";
-// Constants
+import { TournamentMatchup } from "@/src/components";
+import { motion } from "framer-motion";
 import {
   TOURNAMENT_BREAK_POINT,
   XXXL_LARGE_BREAK_POINT,
@@ -16,7 +12,7 @@ import {
   MEDIUM_BREAK_POINT,
 } from "@/src/constants";
 
-function TournamentRound(props) {
+export const TournamentRound = (props) => {
   // Determine which State to pull from
   let roundResultsName, playersPicksName;
   if (props.round === "playin") {
@@ -284,6 +280,4 @@ function TournamentRound(props) {
       {tournamentMatchupElements}
     </motion.div>
   );
-}
-
-export default TournamentRound;
+};

@@ -1,16 +1,16 @@
 "use client";
-import React, { Fragment } from "react";
-import { motion } from "framer-motion";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { tournamentActions } from "@/store/tournamentSlice";
-import { uiStateActions } from "@/store/uiStateSlice";
-import RoundSelectBanner from "./RoundSelectBanner";
-import TournamentRound from "./TournamentRound";
-import PlayTournamentButton from "../UI/PlayTournamentButton";
-import PlayerScore from "./PlayerScore";
-import Button from "../UI/Button";
-import RestartGameButton from "../General/RestartGameButton";
+import { tournamentActions, uiStateActions } from "@/store";
+import {
+  Button,
+  PlayerScore,
+  PlayTournamentButton,
+  RestartGameButton,
+  RoundSelectBanner,
+  TournamentRound,
+} from "@/src/components";
+import { motion } from "framer-motion";
 import styles from "@/src/components/Tournament/css/Tournament.module.css";
 import {
   PRIMARY_COLOR,
@@ -22,7 +22,7 @@ import {
   MEDIUM_BREAK_POINT,
 } from "@/src/constants";
 
-function Tournament(props) {
+export const Tournament = (props) => {
   const dispatch = useDispatch();
 
   const appState = useSelector((state) => state.appState);
@@ -571,6 +571,4 @@ function Tournament(props) {
       )}
     </motion.div>
   );
-}
-
-export default Tournament;
+};

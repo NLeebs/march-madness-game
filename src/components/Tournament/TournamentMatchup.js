@@ -1,18 +1,17 @@
 "use client";
 import React, { useCallback } from "react";
-import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import findTeamConference from "@/src/functions/teamStatsData/findTeamConference";
-import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSlice";
+import { tounramentPlayersPicksActions } from "@/store";
+import { PlayerPickBar, TeamBar } from "@/src/components";
+import { findTeamConference } from "@/src/functions";
+import { motion } from "framer-motion";
 import classes from "@/src/components/Tournament/css/TournamentMatchup.module.css";
-import TeamBar from "../UI/TeamBar";
-import PlayerPickBar from "../UI/PlayerPickBar";
 import {
   NON_CTA_BUTTON_COLOR,
   TOURAMENT_CHAMPION_RIBBON_HEIGHT,
 } from "@/src/constants";
 
-function TournamentMatchup(props) {
+export const TournamentMatchup = (props) => {
   const dispatch = useDispatch();
 
   // State
@@ -205,6 +204,4 @@ function TournamentMatchup(props) {
       {matchupElements}
     </div>
   );
-}
-
-export default TournamentMatchup;
+};

@@ -1,24 +1,17 @@
 "use client";
-// Libraries
 import React from "react";
-// React Functions
 import { useDispatch, useSelector } from "react-redux";
-// Functions
-import delay from "@/src/functions/generic/delay";
-//State
-import { appStateActions } from "@/store/appStateSlice";
-import { uiStateActions } from "@/store/uiStateSlice";
-import { teamScheduleActions } from "@/store/teamScheduleSlice";
-import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
-import { tounramentPlayersPicksActions } from "@/store/tournamentPlayersPicksSlice";
-import { tournamentActions } from "@/store/tournamentSlice";
-// Components
-import { Button } from "@/src/components";
-// Constants
 import {
-  PRIMARY_COLOR,
-  TIMER_BETWEEN_APP_STATES,
-} from "@/src/constants/CONSTANTS";
+  appStateActions,
+  uiStateActions,
+  teamScheduleActions,
+  regularSeasonRecordActions,
+  tounramentPlayersPicksActions,
+  tournamentActions,
+} from "@/store";
+import { Button } from "@/src/components";
+import { delay } from "@/src/functions";
+import { PRIMARY_COLOR, TIMER_BETWEEN_APP_STATES } from "@/src/constants";
 
 export const RestartGameButton = () => {
   const dispatch = useDispatch();

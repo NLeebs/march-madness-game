@@ -12,7 +12,7 @@ import LeftChevronSVG from "../Graphics/LeftChevronSVG";
 import { NON_CTA_BUTTON_COLOR, XXXL_LARGE_BREAK_POINT } from "@/src/constants";
 
 // Component Function
-function RoundSelectBackButton(props) {
+export const RoundSelectBackButton = () => {
   const dispatch = useDispatch();
 
   const screenWidth = useSelector((state) => state.uiState.screenWidth);
@@ -48,6 +48,4 @@ function RoundSelectBackButton(props) {
       )}
     </div>
   );
-}
-
-export default RoundSelectBackButton;
+};

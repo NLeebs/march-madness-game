@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { appStateActions } from "@/store/appStateSlice";
-import separatePowerConferences from "@/src/functions/regularSeason/separatePowerConferences";
-import { delay } from "@/src/functions/generic";
-import ConferenceGroups from "./ConferenceGroups";
-import PlayRegularSeasonGames from "./PlayRegularSeasonGames";
-import SelectionSunday from "./SelectionSunday";
-import Button from "../UI/Button";
-// Constants
+import { delay, separatePowerConferences } from "@/src/functions";
+import {
+  Button,
+  ConferenceGroups,
+  PlayRegularSeasonGames,
+  SelectionSunday,
+} from "@/src/components";
 import {
   TIMER_TRIGGER_FADE,
   PRIMARY_COLOR,

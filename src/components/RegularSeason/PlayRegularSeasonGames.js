@@ -1,13 +1,7 @@
-// React Functions
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// State
-import { appStateActions } from "@/store/appStateSlice";
-import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
-// Functions
-import playGame from "@/src/functions/playGame";
-import { delay } from "@/src/functions/generic";
-// Constants
+import { appStateActions, regularSeasonRecordActions } from "@/store";
+import { delay, playGame } from "@/src/functions";
 import {
   AMOUNT_SEASON_GAMES,
   TIMER_PER_REGULAR_SEASON_GAME,
