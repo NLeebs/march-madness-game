@@ -1,4 +1,4 @@
-import { Tournament } from "./tournamentStructure";
+import { Tournament } from "@/types";
 
 export interface TournamentPlayerPicks {
   picks: Tournament;
@@ -12,3 +12,11 @@ export interface Pick {
   seed: string;
   opponent: string;
 }
+
+export type TournamentPlayerPickRound =
+  | "roundTwoPicks"
+  | "roundSweetSixteenPicks"
+  | "roundEliteEightPicks"
+  | "roundFinalFourPicks"
+  | "roundFinalsPicks"
+  | "champion";

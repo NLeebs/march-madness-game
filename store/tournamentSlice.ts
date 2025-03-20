@@ -1,10 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-// Functions
-import createMatchupsFromSeededArr from "@/src/functions/seeding/createMatchupsFromSeededArr";
-// Constants
+import { createMatchupsFromSeededArr } from "@/src/functions";
+import {
+  TournamentRoundMatchups,
+  TournamentRegion,
+  TournamentTeam,
+} from "@/types";
 import { HIGHEST_SEED } from "@/src/constants";
 
-const initalState = {
+interface TournamentState {
+  tournamentTeams: string[];
+  tournamentSeeds: {
+    [region in TournamentRegion]?: string[];
+  };
+  playinTeams: {
+    elevenSeeds: string[];
+    sixteenSeeds: string[];
+  };
+  roundOneMatchups: TournamentRoundMatchups;
+  roundTwoMatchups: TournamentRoundMatchups;
+  roundSweetSixteenMatchups: TournamentRoundMatchups;
+  roundEliteEightMatchups: TournamentRoundMatchups;
+  roundFinalFourMatchups: TournamentRoundMatchups;
+  roundFinalsMatchups: TournamentRoundMatchups;
+  champion: { [region in TournamentRegion]?: TournamentTeam[][] };
+  playerScore: number;
+}
+
+const initalState: TournamentState = {
   tournamentTeams: [],
   tournamentSeeds: {
     west: [],
@@ -25,7 +47,7 @@ const initalState = {
       elevenSeeds: [],
       sixteenSeeds: [],
     },
-  },
+  } as TournamentRoundMatchups,
   roundTwoMatchups: {
     west: [[], [], [], []],
     east: [[], [], [], []],
@@ -57,7 +79,6 @@ const initalState = {
   playerScore: 0,
 };
 
-// Create Team Statistics State Slice
 const tournamentSlice = createSlice({
   name: "tournament",
   initialState: initalState,
