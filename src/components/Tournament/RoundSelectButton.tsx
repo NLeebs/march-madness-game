@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { uiStateActions } from "@/store";
+import { RootState, uiStateActions } from "@/store";
 import { PingNotification } from "@/src/components";
 import {
   PRIMARY_COLOR,
@@ -17,33 +17,44 @@ import {
   TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH,
   NON_CTA_BUTTON_COLOR,
 } from "@/src/constants";
+import { TournamentRound } from "@/types";
 
-// Component Function
-export const RoundSelectButton = (props) => {
+interface RoundSelectButtonProps {
+  round: TournamentRound;
+  buttonText: string;
+}
+
+export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
+  round,
+  buttonText,
+}) => {
   const dispatch = useDispatch();
 
-  // State
   const playerPicksObj = useSelector(
-    (state) => state.tournamentPlayersPicks.picks
+    (state: RootState) => state.tournamentPlayersPicks.picks
   );
-  const screenWidth = useSelector((state) => state.uiState.screenWidth);
-  const selectedRound = useSelector((state) => state.uiState.selectedRound);
+  const screenWidth = useSelector(
+    (state: RootState) => state.uiState.screenWidth
+  );
+  const selectedRound = useSelector(
+    (state: RootState) => state.uiState.selectedRound
+  );
 
-  // Send new round selection to state
   const roundSelectHandler = () => {
     const roundSelectionBarEl = document.getElementById("roundSelectionBar");
     roundSelectionBarEl.scrollLeft = 0;
 
     dispatch(
       uiStateActions.selectRound({
-        newRound: props.round,
+        newRound: round,
       })
     );
   };
 
-  // Animations if it is the selected round
-  let accentLineScale, accentLinePosition, accentLineBackgroundColor;
-  if (props.round === selectedRound) {
+  let accentLineScale: number,
+    accentLinePosition: string | number,
+    accentLineBackgroundColor: string;
+  if (round === selectedRound) {
     accentLineScale = 1;
     accentLinePosition = 0;
     accentLineBackgroundColor = PRIMARY_COLOR;
@@ -53,10 +64,9 @@ export const RoundSelectButton = (props) => {
     accentLineBackgroundColor = NON_CTA_BUTTON_COLOR;
   }
 
-  // Animation variables for rounds other than selected
-  let roundSelectButtonWidth,
-    roundSelectButtonTextColor,
-    roundSelectButtonFontSize;
+  let roundSelectButtonWidth: number | string,
+    roundSelectButtonTextColor: string,
+    roundSelectButtonFontSize: number;
   const setButtonShrinkStyles = () => {
     roundSelectButtonWidth = 0;
     roundSelectButtonTextColor = NON_CTA_BUTTON_COLOR;
@@ -71,21 +81,21 @@ export const RoundSelectButton = (props) => {
     screenWidth > XXL_LARGE_BREAK_POINT
   ) {
     if (
-      (selectedRound === "round2" ||
-        selectedRound === "sweetSixteen" ||
-        selectedRound === "eliteEight" ||
-        selectedRound === "finalFour" ||
+      (selectedRound === 2 ||
+        selectedRound === "sweet sixteen" ||
+        selectedRound === "elite eight" ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
-      props.round === "round1"
+      round === 1
     ) {
       setButtonShrinkStyles();
     } else if (
-      (selectedRound === "round2" ||
-        selectedRound === "sweetSixteen" ||
-        selectedRound === "eliteEight" ||
-        selectedRound === "finalFour" ||
+      (selectedRound === 2 ||
+        selectedRound === "sweet sixteen" ||
+        selectedRound === "elite eight" ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
-      props.round === "round2"
+      round === 2
     ) {
       setButtonDefaultStyles();
     }
@@ -94,21 +104,21 @@ export const RoundSelectButton = (props) => {
     screenWidth > XL_LARGE_BREAK_POINT
   ) {
     if (
-      ((selectedRound === "round2" && props.round !== "round2") ||
-        selectedRound === "sweetSixteen" ||
-        selectedRound === "eliteEight" ||
-        selectedRound === "finalFour" ||
+      ((selectedRound === 2 && round !== 2) ||
+        selectedRound === "sweet sixteen" ||
+        selectedRound === "elite eight" ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
-      (props.round === "round1" || props.round === "round2")
+      (round === 1 || round === 2)
     ) {
       setButtonShrinkStyles();
     } else if (
-      (selectedRound === "round2" && props.round === "round2") ||
-      ((selectedRound === "sweetSixteen" ||
-        selectedRound === "eliteEight" ||
-        selectedRound === "finalFour" ||
+      (selectedRound === 2 && round === 2) ||
+      ((selectedRound === "sweet sixteen" ||
+        selectedRound === "elite eight" ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
-        props.round === "sweetSixteen")
+        round === "sweet sixteen")
     ) {
       setButtonDefaultStyles();
     }
@@ -117,25 +127,21 @@ export const RoundSelectButton = (props) => {
     screenWidth > LARGE_BREAK_POINT
   ) {
     if (
-      ((selectedRound === "round2" &&
-        props.round !== "round2" &&
-        props.round !== "sweetSixteen") ||
-        (selectedRound === "sweetSixteen" && props.round !== "sweetSixteen") ||
-        selectedRound === "eliteEight" ||
-        selectedRound === "finalFour" ||
+      ((selectedRound === 2 && round !== 2 && round !== "sweet sixteen") ||
+        (selectedRound === "sweet sixteen" && round !== "sweet sixteen") ||
+        selectedRound === "elite eight" ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
-      (props.round === "round1" ||
-        props.round === "round2" ||
-        props.round === "sweetSixteen")
+      (round === 1 || round === 2 || round === "sweet sixteen")
     ) {
       setButtonShrinkStyles();
     } else if (
-      (selectedRound === "round2" && props.round === "round2") ||
-      (selectedRound === "sweetSixteen" && props.round === "sweetSixteen") ||
-      ((selectedRound === "eliteEight" ||
-        selectedRound === "finalFour" ||
+      (selectedRound === 2 && round === 2) ||
+      (selectedRound === "sweet sixteen" && round === "sweet sixteen") ||
+      ((selectedRound === "elite eight" ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
-        props.round === "eliteEight")
+        round === "elite eight")
     ) {
       setButtonDefaultStyles();
     }
@@ -144,60 +150,60 @@ export const RoundSelectButton = (props) => {
     screenWidth > MEDIUM_BREAK_POINT
   ) {
     if (
-      ((selectedRound === "round2" &&
-        props.round !== "round2" &&
-        props.round !== "sweetSixteen" &&
-        props.round !== "eliteEight") ||
-        (selectedRound === "sweetSixteen" &&
-          props.round !== "sweetSixteen" &&
-          props.round !== "eliteEight") ||
-        (selectedRound === "eliteEight" && props.round !== "eliteEight") ||
-        selectedRound === "finalFour" ||
+      ((selectedRound === 2 &&
+        round !== 2 &&
+        round !== "sweet sixteen" &&
+        round !== "elite eight") ||
+        (selectedRound === "sweet sixteen" &&
+          round !== "sweet sixteen" &&
+          round !== "elite eight") ||
+        (selectedRound === "elite eight" && round !== "elite eight") ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
-      (props.round === "round1" ||
-        props.round === "round2" ||
-        props.round === "sweetSixteen" ||
-        props.round === "eliteEight")
+      (round === 1 ||
+        round === 2 ||
+        round === "sweet sixteen" ||
+        round === "elite eight")
     ) {
       setButtonShrinkStyles();
     } else if (
-      (selectedRound === "round2" && props.round === "round2") ||
-      (selectedRound === "sweetSixteen" && props.round === "sweetSixteen") ||
-      (selectedRound === "eliteEight" && props.round === "eliteEight") ||
-      ((selectedRound === "finalFour" || selectedRound === "finals") &&
-        props.round === "finalFour")
+      (selectedRound === 2 && round === 2) ||
+      (selectedRound === "sweet sixteen" && round === "sweet sixteen") ||
+      (selectedRound === "elite eight" && round === "elite eight") ||
+      ((selectedRound === "final four" || selectedRound === "finals") &&
+        round === "final four")
     ) {
       setButtonDefaultStyles();
     }
   } else if (screenWidth <= MEDIUM_BREAK_POINT) {
     if (
-      ((selectedRound === "round2" &&
-        props.round !== "round2" &&
-        props.round !== "sweetSixteen" &&
-        props.round !== "eliteEight" &&
-        props.round !== "finalFour") ||
-        (selectedRound === "sweetSixteen" &&
-          props.round !== "sweetSixteen" &&
-          props.round !== "eliteEight" &&
-          props.round !== "finalFour") ||
-        (selectedRound === "eliteEight" &&
-          props.round !== "eliteEight" &&
-          props.round !== "finalFour") ||
-        (selectedRound === "finalFour" && props.round !== "finalFour") ||
+      ((selectedRound === 2 &&
+        round !== 2 &&
+        round !== "sweet sixteen" &&
+        round !== "elite eight" &&
+        round !== "final four") ||
+        (selectedRound === "sweet sixteen" &&
+          round !== "sweet sixteen" &&
+          round !== "elite eight" &&
+          round !== "final four") ||
+        (selectedRound === "elite eight" &&
+          round !== "elite eight" &&
+          round !== "final four") ||
+        (selectedRound === "final four" && round !== "final four") ||
         selectedRound === "finals") &&
-      (props.round === "round1" ||
-        props.round === "round2" ||
-        props.round === "sweetSixteen" ||
-        props.round === "eliteEight" ||
-        props.round === "finalFour")
+      (round === 1 ||
+        round === 2 ||
+        round === "sweet sixteen" ||
+        round === "elite eight" ||
+        round === "final four")
     ) {
       setButtonShrinkStyles();
     } else if (
-      (selectedRound === "round2" && props.round === "round2") ||
-      (selectedRound === "sweetSixteen" && props.round === "sweetSixteen") ||
-      (selectedRound === "eliteEight" && props.round === "eliteEight") ||
-      (selectedRound === "finalFour" && props.round === "finalFour") ||
-      (selectedRound === "finals" && props.round === "finals")
+      (selectedRound === 2 && round === 2) ||
+      (selectedRound === "sweet sixteen" && round === "sweet sixteen") ||
+      (selectedRound === "elite eight" && round === "elite eight") ||
+      (selectedRound === "final four" && round === "final four") ||
+      (selectedRound === "finals" && round === "finals")
     ) {
       setButtonDefaultStyles();
     }
@@ -218,21 +224,21 @@ export const RoundSelectButton = (props) => {
   };
 
   let playerPicksRoundIndex;
-  if (props.round === "round2") playerPicksRoundIndex = "roundTwoPicks";
-  else if (props.round === "sweetSixteen")
+  if (round === 2) playerPicksRoundIndex = "roundTwoPicks";
+  else if (round === "sweet sixteen")
     playerPicksRoundIndex = "roundSweetSixteenPicks";
-  else if (props.round === "eliteEight")
+  else if (round === "elite eight")
     playerPicksRoundIndex = "roundEliteEightPicks";
-  else if (props.round === "finalFour")
+  else if (round === "final four")
     playerPicksRoundIndex = "roundFinalFourPicks";
-  else if (props.round === "finals")
+  else if (round === "finals")
     playerPicksRoundIndex = ["roundFinalsPicks", "champion"];
 
-  if (props.round === "finals") {
+  if (round === "finals") {
     isAllRoundPicksSelected = playerPicksRoundIndex.every((round) => {
       return checkIfPicksWereMade(round);
     });
-  } else if (props.round !== "round1" && props.round !== "finals") {
+  } else if (round !== 1) {
     isAllRoundPicksSelected = checkIfPicksWereMade(playerPicksRoundIndex);
   } else {
     isAllRoundPicksSelected = false;
@@ -257,8 +263,8 @@ export const RoundSelectButton = (props) => {
         style={{ backgroundColor: NON_CTA_BUTTON_COLOR }}
       >
         <div className="relative w-max px-5">
-          {props.buttonText}
-          {props.round !== "round1" && isAllRoundPicksSelected && (
+          {buttonText}
+          {round !== 1 && isAllRoundPicksSelected && (
             <PingNotification icon="check" />
           )}
         </div>
