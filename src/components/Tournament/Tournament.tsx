@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { tournamentActions, uiStateActions } from "@/store";
+import { RootState, tournamentActions, uiStateActions } from "@/store";
 import {
   Button,
   PlayerScore,
@@ -22,12 +22,16 @@ import {
   MEDIUM_BREAK_POINT,
 } from "@/src/constants";
 
-export const Tournament = (props) => {
+export const Tournament = () => {
   const dispatch = useDispatch();
 
-  const appState = useSelector((state) => state.appState);
-  const screenWidth = useSelector((state) => state.uiState.screenWidth);
-  const selectedRound = useSelector((state) => state.uiState.selectedRound);
+  const appState = useSelector((state: RootState) => state.appState);
+  const screenWidth = useSelector(
+    (state: RootState) => state.uiState.screenWidth
+  );
+  const selectedRound = useSelector(
+    (state: RootState) => state.uiState.selectedRound
+  );
 
   useEffect(() => {
     dispatch(tournamentActions.setRoundOneMatchups());
@@ -35,38 +39,34 @@ export const Tournament = (props) => {
 
   useEffect(() => {
     if (screenWidth > TOURNAMENT_BREAK_POINT)
-      dispatch(uiStateActions.selectRound({ newRound: "round1" }));
+      dispatch(uiStateActions.selectRound({ newRound: 1 }));
   }, [dispatch, screenWidth]);
 
-  // Tournement Recap Handlers
   const showTournamentRecapButtonHandler = () => {
     dispatch(uiStateActions.toggleRecapDialog());
   };
 
   // Determine UI position for each round
-  let firstRoundUIPosition,
-    secondRoundUIPosition,
-    sweetSixteenUIPosition,
-    eliteEightUIPosition,
-    finalFourUIPosition;
+  let firstRoundUIPosition: number,
+    secondRoundUIPosition: number,
+    sweetSixteenUIPosition: number,
+    eliteEightUIPosition: number,
+    finalFourUIPosition: number;
   const finalsUIPosition = "finals";
-  if (selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT) {
+  if (selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT) {
     firstRoundUIPosition = 1;
     secondRoundUIPosition = 2;
     sweetSixteenUIPosition = 3;
     eliteEightUIPosition = 4;
     finalFourUIPosition = 5;
-  } else if (
-    selectedRound === "round2" ||
-    screenWidth > XXL_LARGE_BREAK_POINT
-  ) {
+  } else if (selectedRound === 2 || screenWidth > XXL_LARGE_BREAK_POINT) {
     secondRoundUIPosition = 1;
     sweetSixteenUIPosition = 2;
     eliteEightUIPosition = 3;
     finalFourUIPosition = 4;
     firstRoundUIPosition = 0;
   } else if (
-    selectedRound === "sweetSixteen" ||
+    selectedRound === "sweet sixteen" ||
     screenWidth > XL_LARGE_BREAK_POINT
   ) {
     sweetSixteenUIPosition = 1;
@@ -74,14 +74,14 @@ export const Tournament = (props) => {
     finalFourUIPosition = 3;
     firstRoundUIPosition = secondRoundUIPosition = 0;
   } else if (
-    selectedRound === "eliteEight" ||
+    selectedRound === "elite eight" ||
     screenWidth > LARGE_BREAK_POINT
   ) {
     eliteEightUIPosition = 1;
     finalFourUIPosition = 2;
     firstRoundUIPosition = secondRoundUIPosition = sweetSixteenUIPosition = 0;
   } else if (
-    selectedRound === "finalFour" ||
+    selectedRound === "final four" ||
     screenWidth > MEDIUM_BREAK_POINT
   ) {
     finalFourUIPosition = 1;
@@ -105,10 +105,8 @@ export const Tournament = (props) => {
       animate={{ opacity: 1 }}
       className="mx-auto max-w-tourny grid grid-flow-row"
     >
-      {/* Round Button Banner */}
       {screenWidth < TOURNAMENT_BREAK_POINT && <RoundSelectBanner />}
 
-      {/* Tournament Grid */}
       <div
         className={`
                     relative grid 
@@ -119,16 +117,15 @@ export const Tournament = (props) => {
                     }
                 `}
       >
-        {/* Round 1 */}
         <motion.div
           initial={false}
           animate={{
             width:
-              selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT
+              selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT
+              selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
           }}
@@ -155,19 +152,18 @@ export const Tournament = (props) => {
           />
         </motion.div>
 
-        {/* Round 2 */}
         <motion.div
           initial={false}
           animate={{
             width:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
               screenWidth > XXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
               screenWidth > XXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
@@ -195,21 +191,20 @@ export const Tournament = (props) => {
           />
         </motion.div>
 
-        {/* Sweet Sixteen */}
         <motion.div
           initial={false}
           animate={{
             width:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
-              selectedRound === "sweetSixteen" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
+              selectedRound === "sweet sixteen" ||
               screenWidth > XL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
-              selectedRound === "sweetSixteen" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
+              selectedRound === "sweet sixteen" ||
               screenWidth > XL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
@@ -242,12 +237,12 @@ export const Tournament = (props) => {
           initial={false}
           animate={{
             width:
-              (selectedRound !== "finalFour" && selectedRound !== "finals") ||
+              (selectedRound !== "final four" && selectedRound !== "finals") ||
               screenWidth > LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              (selectedRound !== "finalFour" && selectedRound !== "finals") ||
+              (selectedRound !== "final four" && selectedRound !== "finals") ||
               screenWidth > LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
@@ -330,15 +325,15 @@ export const Tournament = (props) => {
           </div>
           {appState.tournamentSelection && <PlayTournamentButton />}
           <div className="flex flex-col justify-start items-center gap-8">
-            {props.appState.tournamentPlayGames && <PlayerScore />}
-            {props.appState.tournamentRecap && (
+            {appState.tournamentPlayGames && <PlayerScore />}
+            {appState.tournamentRecap && (
               <Button
                 onClick={showTournamentRecapButtonHandler}
                 text="See Recap"
                 backgroundColor={PRIMARY_COLOR}
               />
             )}
-            {props.appState.tournamentRecap && <RestartGameButton />}
+            {appState.tournamentRecap && <RestartGameButton />}
           </div>
         </div>
 
@@ -377,12 +372,12 @@ export const Tournament = (props) => {
           initial={false}
           animate={{
             width:
-              (selectedRound !== "finalFour" && selectedRound !== "finals") ||
+              (selectedRound !== "final four" && selectedRound !== "finals") ||
               screenWidth > LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              (selectedRound !== "finalFour" && selectedRound !== "finals") ||
+              (selectedRound !== "final four" && selectedRound !== "finals") ||
               screenWidth > LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
@@ -415,16 +410,16 @@ export const Tournament = (props) => {
           initial={false}
           animate={{
             width:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
-              selectedRound === "sweetSixteen" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
+              selectedRound === "sweet sixteen" ||
               screenWidth > XL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
-              selectedRound === "sweetSixteen" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
+              selectedRound === "sweet sixteen" ||
               screenWidth > XL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
@@ -457,14 +452,14 @@ export const Tournament = (props) => {
           initial={false}
           animate={{
             width:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
               screenWidth > XXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              selectedRound === "round1" ||
-              selectedRound === "round2" ||
+              selectedRound === 1 ||
+              selectedRound === 2 ||
               screenWidth > XXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
@@ -497,11 +492,11 @@ export const Tournament = (props) => {
           initial={false}
           animate={{
             width:
-              selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT
+              selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
             height:
-              selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT
+              selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT
                 ? "max-content"
                 : 0,
           }}
@@ -534,13 +529,11 @@ export const Tournament = (props) => {
             initial={false}
             animate={{
               width:
-                selectedRound === "round1" ||
-                screenWidth > XXXL_LARGE_BREAK_POINT
+                selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT
                   ? "max-content"
                   : 0,
               height:
-                selectedRound === "round1" ||
-                screenWidth > XXXL_LARGE_BREAK_POINT
+                selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT
                   ? "max-content"
                   : 0,
             }}

@@ -91,7 +91,7 @@ function App() {
         {appState.regularSeason && (
           <RegularSeason teamStats={teamStatsObject.teamStats} />
         )}
-        {appState.tournament && <Tournament appState={appState} />}
+        {appState.tournament && <Tournament />}
       </AnimatePresence>
       {appState.tournament && appState.tournamentPlayPlayinGames && (
         <PlayPlayinGames />

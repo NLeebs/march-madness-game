@@ -50,7 +50,6 @@ export const TournamentRound = (props) => {
     (state) => state.tournamentPlayersPicks.picks[playersPicksName]
   );
 
-  // Round Styles and spacing
   let roundSelectGap,
     roundSelectPaddingTop,
     roundSelectPaddingBottom,
@@ -72,15 +71,15 @@ export const TournamentRound = (props) => {
     roundPlayPaddingTop = "3.75rem";
     roundPlayPaddingBottom = "7.75rem";
 
-    if (selectedRound !== "round1" && screenWidth <= XXXL_LARGE_BREAK_POINT) {
+    if (selectedRound !== 1 && screenWidth <= XXXL_LARGE_BREAK_POINT) {
       roundPlayGap = "15.5rem";
       roundPlayPaddingTop = "6.5rem";
       roundPlayPaddingBottom = "10rem";
     }
 
     if (
-      (selectedRound === "eliteEight" ||
-        selectedRound === "finalFour" ||
+      (selectedRound === "elite eight" ||
+        selectedRound === "final four" ||
         selectedRound === "finals") &&
       screenWidth <= XL_LARGE_BREAK_POINT
     ) {
@@ -95,15 +94,15 @@ export const TournamentRound = (props) => {
     roundPlayPaddingTop = "14rem";
     roundPlayPaddingBottom = "17rem";
 
-    if (selectedRound !== "round1" && screenWidth <= XXXL_LARGE_BREAK_POINT) {
+    if (selectedRound !== 1 && screenWidth <= XXXL_LARGE_BREAK_POINT) {
       roundPlayGap = "18rem";
       roundPlayPaddingTop = "19rem";
       roundPlayPaddingBottom = "22.5rem";
     }
 
     if (
-      selectedRound !== "round1" &&
-      selectedRound !== "round2" &&
+      selectedRound !== 1 &&
+      selectedRound !== 2 &&
       screenWidth <= XXL_LARGE_BREAK_POINT
     ) {
       roundPlayPaddingTop = "20rem";
@@ -116,7 +115,7 @@ export const TournamentRound = (props) => {
     roundPlayPaddingTop = "33.75rem";
     roundPlayPaddingBottom = "36.75rem";
 
-    if (selectedRound !== "round1" && screenWidth < XXXL_LARGE_BREAK_POINT) {
+    if (selectedRound !== 1 && screenWidth < XXXL_LARGE_BREAK_POINT) {
       roundPlayGap = "15.5rem";
       roundPlayPaddingTop = "44.5rem";
     }
@@ -126,7 +125,7 @@ export const TournamentRound = (props) => {
     roundPlayGap = 0;
     roundPlayPaddingTop = roundPlayPaddingBottom = "75rem";
   } else if (props.roundUIPosition === "finals") {
-    if (selectedRound === "round1" || screenWidth > XXXL_LARGE_BREAK_POINT) {
+    if (selectedRound === 1 || screenWidth > XXXL_LARGE_BREAK_POINT) {
       roundSelectGap = 0;
       roundSelectPaddingTop =
         screenWidth > TOURNAMENT_BREAK_POINT ? "62rem" : "128rem";
@@ -135,10 +134,7 @@ export const TournamentRound = (props) => {
       roundPlayPaddingTop =
         screenWidth > TOURNAMENT_BREAK_POINT ? "75rem" : "157rem";
       roundPlayPaddingBottom = 0;
-    } else if (
-      selectedRound === "round2" ||
-      screenWidth > XXL_LARGE_BREAK_POINT
-    ) {
+    } else if (selectedRound === 2 || screenWidth > XXL_LARGE_BREAK_POINT) {
       roundSelectGap = 0;
       roundSelectPaddingTop = "64rem";
       roundSelectPaddingBottom = 0;
@@ -146,7 +142,7 @@ export const TournamentRound = (props) => {
       roundPlayPaddingTop = "97rem";
       roundPlayPaddingBottom = 0;
     } else if (
-      selectedRound === "sweetSixteen" ||
+      selectedRound === "sweet sixteen" ||
       screenWidth > XL_LARGE_BREAK_POINT
     ) {
       roundSelectGap = 0;
@@ -156,7 +152,7 @@ export const TournamentRound = (props) => {
       roundPlayPaddingTop = "47rem";
       roundPlayPaddingBottom = 0;
     } else if (
-      selectedRound === "eliteEight" ||
+      selectedRound === "elite eight" ||
       screenWidth > LARGE_BREAK_POINT
     ) {
       roundSelectGap = 0;
@@ -166,7 +162,7 @@ export const TournamentRound = (props) => {
       roundPlayPaddingTop = "22rem";
       roundPlayPaddingBottom = 0;
     } else if (
-      selectedRound === "finalFour" ||
+      selectedRound === "final four" ||
       screenWidth > MEDIUM_BREAK_POINT
     ) {
       roundSelectGap = 0;

@@ -6,3 +6,5 @@ export type TournamentRound =
   | "final four"
   | "finals"
   | "champion";
+
+export type Round = string | number;
