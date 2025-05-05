@@ -6,38 +6,37 @@ import { Dialog, PlayerScore, RestartGameButton } from "@/src/components";
 import Image from "next/image";
 import { findTeamConference } from "@/src/functions";
 import { ACCENT_COLOR } from "@/src/constants";
+import { RootState } from "@/store/store";
 
-// Component Function
-export const TournamentRecapDialog = () => {
+export const TournamentRecapDialog: React.FC = () => {
   const dispatch = useDispatch();
 
   const isRecapDialogOpen = useSelector(
-    (state) => state.uiState.isRecapDialogOpen
+    (state: RootState) => state.uiState.isRecapDialogOpen
   );
-  const teamStatsObject = useSelector((state) => state.teamStats.teamStats);
-  const confArrs = useSelector((state) => state.teamStats.conferenceArrays);
+  const teamStatsObject = useSelector(
+    (state: RootState) => state.teamStats.teamStats
+  );
+  const confArrs = useSelector(
+    (state: RootState) => state.teamStats.conferenceArrays
+  );
   const championObj = useSelector(
-    (state) => state.tournament.champion.champion[0][0]
+    (state: RootState) => state.tournament.champion.champion[0][0]
   );
   const playerPickChampion = useSelector(
-    (state) => state.tournamentPlayersPicks.picks.champion.champion[0][0].team
+    (state: RootState) =>
+      state.tournamentPlayersPicks.picks.champion.champion[0][0].team
   );
 
   const onCloseRecapDialogHandler = () => {
     dispatch(uiStateActions.toggleRecapDialog());
   };
 
-  // Get Champions Conference
   const champConf = findTeamConference(championObj.team, confArrs);
-
-  // Get Champion's Team Color
   const championPrimaryColor =
     teamStatsObject[champConf][championObj.team]["primary-color"];
-
-  // Get Champion's Logo
   const championLogo = teamStatsObject[champConf][championObj.team]["logo"];
 
-  // JSX
   return (
     <Dialog
       isOpen={isRecapDialogOpen}
