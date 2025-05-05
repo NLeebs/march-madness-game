@@ -278,7 +278,6 @@ const tournamentSlice = createSlice({
         nextRoundKey = "champion";
       }
 
-      // TODO: Need to figure out which round is screwing up and correct the team call. Not picking up something up on line 174 if statement
       // compare picks to winning teams
       Object.keys(state[nextRoundKey]).forEach((region) => {
         state[nextRoundKey][region].forEach((matchup, i) => {
