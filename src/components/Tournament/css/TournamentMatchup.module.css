@@ -1,12 +1,11 @@
 .championRibbon {
-    position: absolute;
-    width: 100%;
-    bottom: -3rem;
-    left: 50%;
-    transform: translate(-50%);
-    border-width: 3rem 9.375rem 0 9.375rem;
-    border-style: solid;
-    border-color: transparent transparent transparent transparent;
-    z-index: 1;
+  position: absolute;
+  width: 100%;
+  bottom: -3rem;
+  left: 50%;
+  transform: translate(-50%);
+  border-width: 3rem 9.375rem 0 9.375rem;
+  border-style: solid;
+  border-color: transparent transparent transparent transparent;
+  z-index: 1;
 }
-

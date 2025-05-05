@@ -1,13 +1,21 @@
-import { Tournament } from "@/types";
+import { TournamentRound, TournamentRegion } from "@/types";
 
 export interface TournamentPlayerPicks {
-  picks: Tournament;
+  picks: TournamentPicks;
 }
 
+export type TournamentPicks = {
+  [round in TournamentPlayerPickRound]: RegionPicks;
+};
+
+export type RegionPicks = {
+  [region in TournamentRegion]?: TournamentPickMatchup[];
+};
+
 export interface Pick {
-  round: string;
+  round: TournamentRound;
   region: string;
-  roundIndex: string;
+  roundIndex: number;
   team: string;
   seed: string;
   opponent: string;
@@ -20,3 +28,10 @@ export type TournamentPlayerPickRound =
   | "roundFinalFourPicks"
   | "roundFinalsPicks"
   | "champion";
+
+export type TournamentPickMatchup = TournamentPickTeam[];
+
+export type TournamentPickTeam = {
+  team: string;
+  seed: string;
+};

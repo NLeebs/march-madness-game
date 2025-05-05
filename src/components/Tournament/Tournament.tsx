@@ -46,7 +46,6 @@ export const Tournament = () => {
     dispatch(uiStateActions.toggleRecapDialog());
   };
 
-  // Determine UI position for each round
   let firstRoundUIPosition: number,
     secondRoundUIPosition: number,
     sweetSixteenUIPosition: number,
@@ -140,14 +139,12 @@ export const Tournament = () => {
         >
           <TournamentRound
             region="west"
-            round="1"
-            set="A"
+            round={1}
             roundUIPosition={firstRoundUIPosition}
           />
           <TournamentRound
             region="east"
-            round="1"
-            set="B"
+            round={1}
             roundUIPosition={firstRoundUIPosition}
           />
         </motion.div>
@@ -179,14 +176,12 @@ export const Tournament = () => {
         >
           <TournamentRound
             region="west"
-            round="2"
-            set="A"
+            round={2}
             roundUIPosition={secondRoundUIPosition}
           />
           <TournamentRound
             region="east"
-            round="2"
-            set="B"
+            round={2}
             roundUIPosition={secondRoundUIPosition}
           />
         </motion.div>
@@ -221,13 +216,11 @@ export const Tournament = () => {
           <TournamentRound
             region="west"
             round="sweet sixteen"
-            set="A"
             roundUIPosition={sweetSixteenUIPosition}
           />
           <TournamentRound
             region="east"
             round="sweet sixteen"
-            set="B"
             roundUIPosition={sweetSixteenUIPosition}
           />
         </motion.div>
@@ -259,13 +252,11 @@ export const Tournament = () => {
           <TournamentRound
             region="west"
             round="elite eight"
-            set="A"
             roundUIPosition={eliteEightUIPosition}
           />
           <TournamentRound
             region="east"
             round="elite eight"
-            set="B"
             roundUIPosition={eliteEightUIPosition}
           />
         </motion.div>
@@ -295,7 +286,6 @@ export const Tournament = () => {
           <TournamentRound
             region="eastWest"
             round="final four"
-            set="A"
             roundUIPosition={finalFourUIPosition}
           />
         </motion.div>
@@ -313,7 +303,6 @@ export const Tournament = () => {
               region="championship"
               round="finals"
               roundUIPosition={finalsUIPosition}
-              selectedRound={selectedRound}
             />
           </div>
           <div className="flex flex-col gap-y-16 min-w-300">
@@ -362,7 +351,6 @@ export const Tournament = () => {
           <TournamentRound
             region="southMidwest"
             round="final four"
-            set="B"
             roundUIPosition={finalFourUIPosition}
           />
         </motion.div>
@@ -394,13 +382,11 @@ export const Tournament = () => {
           <TournamentRound
             region="south"
             round="elite eight"
-            set="A"
             roundUIPosition={eliteEightUIPosition}
           />
           <TournamentRound
             region="midwest"
             round="elite eight"
-            set="B"
             roundUIPosition={eliteEightUIPosition}
           />
         </motion.div>
@@ -436,13 +422,11 @@ export const Tournament = () => {
           <TournamentRound
             region="south"
             round="sweet sixteen"
-            set="A"
             roundUIPosition={sweetSixteenUIPosition}
           />
           <TournamentRound
             region="midwest"
             round="sweet sixteen"
-            set="B"
             roundUIPosition={sweetSixteenUIPosition}
           />
         </motion.div>
@@ -475,14 +459,12 @@ export const Tournament = () => {
         >
           <TournamentRound
             region="south"
-            round="2"
-            set="A"
+            round={2}
             roundUIPosition={secondRoundUIPosition}
           />
           <TournamentRound
             region="midwest"
-            round="2"
-            set="B"
+            round={2}
             roundUIPosition={secondRoundUIPosition}
           />
         </motion.div>
@@ -511,14 +493,12 @@ export const Tournament = () => {
         >
           <TournamentRound
             region="south"
-            round="1"
-            set="A"
+            round={1}
             roundUIPosition={firstRoundUIPosition}
           />
           <TournamentRound
             region="midwest"
-            round="1"
-            set="B"
+            round={1}
             roundUIPosition={firstRoundUIPosition}
           />
         </motion.div>

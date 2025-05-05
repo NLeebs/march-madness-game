@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TournamentPlayerPicks, Pick, PlayInGameWinner } from "@/types";
+import {
+  TournamentPlayerPicks,
+  Pick,
+  PlayInGameWinner,
+  TournamentPlayerPickRound,
+} from "@/types";
 
 const initalState: TournamentPlayerPicks =
   process.env.NEXT_PUBLIC_APP_MODE !== "dev"
@@ -352,9 +357,9 @@ const tournamentPlayersPicksSlice = createSlice({
   reducers: {
     restartGame: () => initalState,
     setPick(state, action: PayloadAction<Pick>) {
-      let whichRound;
-      let removeRoundPicksArr;
-      if (action.payload.round === "1") {
+      let whichRound: TournamentPlayerPickRound;
+      let removeRoundPicksArr: TournamentPlayerPickRound[];
+      if (action.payload.round === 1) {
         whichRound = "roundTwoPicks";
         removeRoundPicksArr = [
           "roundSweetSixteenPicks",
@@ -364,7 +369,7 @@ const tournamentPlayersPicksSlice = createSlice({
           "champion",
         ];
       }
-      if (action.payload.round === "2") {
+      if (action.payload.round === 2) {
         whichRound = "roundSweetSixteenPicks";
         removeRoundPicksArr = [
           "roundEliteEightPicks",

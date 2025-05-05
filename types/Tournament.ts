@@ -1,5 +1,5 @@
-import { TournamentMatchup, TournamentPlayerPickRound } from "@/types";
-
-export type Tournament = {
-  [round in TournamentPlayerPickRound]: TournamentMatchup[];
-};
+import {
+  TournamentMatchup,
+  TournamentPlayerPickRound,
+  TournamentRegion,
+} from "@/types";

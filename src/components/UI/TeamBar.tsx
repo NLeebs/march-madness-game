@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
+import { TournamentRound } from "@/types";
 import { RootState } from "@/store";
 import Image from "next/image";
 import { PingNotification } from "@/src/components";
@@ -9,7 +10,7 @@ import { NON_CTA_BUTTON_COLOR } from "@/src/constants/CONSTANTS";
 
 interface TeamBarProps {
   team: string;
-  round?: string;
+  round?: TournamentRound | "playin";
   score?: string;
   win?: boolean;
 }
