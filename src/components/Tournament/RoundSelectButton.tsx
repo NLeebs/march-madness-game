@@ -246,45 +246,43 @@ export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
 
   //JSX
   return (
-    <div>
-      <motion.button
-        onClick={roundSelectHandler}
+    <motion.button
+      onClick={roundSelectHandler}
+      initial={{
+        width: TOURNAMENT_ROUND_COLUMN_WIDTH,
+        color: PRIMARY_TEXT_COLOR,
+        fontSize: DEFAULT_FONT_SIZE,
+      }}
+      animate={{
+        width: roundSelectButtonWidth,
+        color: roundSelectButtonTextColor,
+        fontSize: roundSelectButtonFontSize,
+      }}
+      className="relative h-16 flex justify-center items-center"
+      style={{ backgroundColor: NON_CTA_BUTTON_COLOR }}
+    >
+      <div className="relative w-max px-5">
+        {buttonText}
+        {round !== 1 && isAllRoundPicksSelected && (
+          <PingNotification icon="check" />
+        )}
+      </div>
+
+      {/* Accent Bar */}
+      <motion.div
+        className="absolute bottom-0 left-1/2 origin-left w-full h-1"
         initial={{
-          width: TOURNAMENT_ROUND_COLUMN_WIDTH,
-          color: PRIMARY_TEXT_COLOR,
-          fontSize: DEFAULT_FONT_SIZE,
+          scaleX: 0,
+          left: "50%",
+          backgroundColor: "transparent",
         }}
         animate={{
-          width: roundSelectButtonWidth,
-          color: roundSelectButtonTextColor,
-          fontSize: roundSelectButtonFontSize,
+          scaleX: accentLineScale,
+          left: accentLinePosition,
+          backgroundColor: accentLineBackgroundColor,
         }}
-        className={`relative h-16 flex justify-center items-center`}
-        style={{ backgroundColor: NON_CTA_BUTTON_COLOR }}
-      >
-        <div className="relative w-max px-5">
-          {buttonText}
-          {round !== 1 && isAllRoundPicksSelected && (
-            <PingNotification icon="check" />
-          )}
-        </div>
-
-        {/* Accent Bar */}
-        <motion.div
-          className="absolute bottom-0 left-1/2 origin-left w-full h-1"
-          initial={{
-            scaleX: 0,
-            left: "50%",
-            backgroundColor: "transparent",
-          }}
-          animate={{
-            scaleX: accentLineScale,
-            left: accentLinePosition,
-            backgroundColor: accentLineBackgroundColor,
-          }}
-          transition={{ duration: 0.25 }}
-        />
-      </motion.button>
-    </div>
+        transition={{ duration: 0.25 }}
+      />
+    </motion.button>
   );
 };
