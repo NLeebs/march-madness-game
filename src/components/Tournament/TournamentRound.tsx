@@ -268,7 +268,7 @@ export const TournamentRound: React.FC<TournamentRoundProps> = ({
     tournamentMatchupElements = matchupElGenerationArr[region].map(
       (matchup: TournamentMatchupType, i: number) => (
         <TournamentMatchup
-          key={`${region}-${matchup[0].team}-${matchup[1]?.team}`}
+          key={`${region}-${matchup[0].team}-${matchup[1]?.team}-index-${i}`}
           index={i}
           region={region}
           round={round}
