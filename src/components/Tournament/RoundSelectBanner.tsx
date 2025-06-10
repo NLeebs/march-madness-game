@@ -6,7 +6,7 @@ export const RoundSelectBanner = () => {
   return (
     <div
       id="roundSelectionBar"
-      className="w-full flex flex-row justify-start overflow-x-auto bg-slate-100 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      className="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
     >
       <div className="flex flex-row items-center">
         <RoundSelectBackButton />

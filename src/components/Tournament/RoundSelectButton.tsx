@@ -211,7 +211,6 @@ export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
     setButtonDefaultStyles();
   }
 
-  // Ping Notifcation logic
   let isAllRoundPicksSelected;
   const checkIfPicksWereMade = (roundPicksIndex) => {
     return Object.keys(playerPicksObj[roundPicksIndex]).every((region) => {
@@ -244,7 +243,6 @@ export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
     isAllRoundPicksSelected = false;
   }
 
-  //JSX
   return (
     <motion.button
       onClick={roundSelectHandler}
@@ -270,7 +268,7 @@ export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
 
       {/* Accent Bar */}
       <motion.div
-        className="absolute bottom-0 left-1/2 origin-left w-full h-1"
+        className="absolute bottom-0 left-1/2 origin-left w-full h-1 bg-slate-50"
         initial={{
           scaleX: 0,
           left: "50%",
