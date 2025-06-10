@@ -39,7 +39,6 @@ export const PlayTournamentGames = () => {
     roundFinalFourMatchups,
     roundFinalsMatchups,
   } = useSelector((state: RootState) => state.tournament);
-  console.log(roundOneMatchups);
 
   const playTournamentRound = useCallback(
     (round: TournamentRound, roundMatchups: TournamentRoundMatchups) => {

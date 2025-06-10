@@ -313,7 +313,7 @@ export const Tournament = () => {
             />
           </div>
           {appState.tournamentSelection && <PlayTournamentButton />}
-          <div className="flex flex-col justify-start items-center gap-8">
+          <div className="flex flex-col justify-start items-center gap-4 mb-4">
             {appState.tournamentPlayGames && <PlayerScore />}
             {appState.tournamentRecap && (
               <Button
