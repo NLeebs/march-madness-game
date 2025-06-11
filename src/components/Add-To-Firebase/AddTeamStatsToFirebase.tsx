@@ -1,11 +1,15 @@
 "use client";
-// Libraries
 import React from "react";
-// Functions
 import pythonDataScrapeHandler from "@/src/functions/data-scraping/sendTeamStatsToFirebase";
 
+interface TeamColorData {
+  [key: string]: {
+    "team-colors-URL": string;
+  };
+}
+
 // Test Data
-const colorTestData = {
+const colorTestData: TeamColorData = {
   Illinois: {
     "team-colors-URL":
       "https://teamcolorcodes.com/illinois-fighting-illini-colors/",
@@ -62,7 +66,9 @@ const colorTestData = {
 };
 
 // Test Handler for new color website
-const testHandler = async (e) => {
+const testHandler = async (
+  e: React.MouseEvent<HTMLButtonElement>
+): Promise<void> => {
   e.preventDefault();
 
   const testRes = await fetch("http://127.0.0.1:5000/test", {
@@ -76,11 +82,11 @@ const testHandler = async (e) => {
   if (testRes.ok) {
     console.log(testRes);
   } else {
-    alert(big12Res.statusText);
+    alert(testRes.statusText);
   }
 };
 
 // Component Function
-export const AddTeamStatsToFirebase = () => {
+export const AddTeamStatsToFirebase: React.FC = () => {
   return <button onClick={pythonDataScrapeHandler}>Add Team to FB</button>;
 };

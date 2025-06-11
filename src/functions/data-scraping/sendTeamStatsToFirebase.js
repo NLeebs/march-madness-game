@@ -1,6 +1,7 @@
 // Database
 import { doc, setDoc } from "firebase/firestore";
 import db from "@/src/firebase/config.js";
+import { ConferenceSubmissionSchema } from "@/schemas";
 
 // Team Statistics URLs
 import {
@@ -82,9 +83,9 @@ const pythonDataScrapeHandler = async (e) => {
   const testURLArr = [["wcc", wccStatURLs]];
 
   // Create team stats return object
-  const teamStatsObj = {};
+  const conferenceSubmission = {};
   testURLArr.forEach((teamArr) => {
-    teamStatsObj[teamArr[0]] = {};
+    conferenceSubmission[teamArr[0]] = {};
   });
 
   // Call Python Script for each Conference and populate team stats object
@@ -102,7 +103,7 @@ const pythonDataScrapeHandler = async (e) => {
         if (confRes.ok) {
           const postData = await confRes.json();
           postData.forEach((obj) => {
-            teamStatsObj[confData[0]][Object.keys(obj)[0]] =
+            conferenceSubmission[confData[0]][Object.keys(obj)[0]] =
               obj[Object.keys(obj)[0]];
           });
         }
@@ -112,10 +113,30 @@ const pythonDataScrapeHandler = async (e) => {
     })
   );
 
-  // Add item to database
-  const currentYear = new Date().getFullYear();
-  const statsRef = doc(db, "team-statistics", `${currentYear}`);
-  await setDoc(statsRef, teamStatsObj, { merge: true });
+  try {
+    // Validate data structure before parsing
+    if (!conferenceSubmission || typeof conferenceSubmission !== "object") {
+      throw new Error("Invalid conference submission data structure");
+    }
+
+    // Parse and validate the data against the schema
+    const parsedConferenceSubmission =
+      ConferenceSubmissionSchema.parse(conferenceSubmission);
+
+    // Add item to database
+    const currentYear = new Date().getFullYear();
+    const statsRef = doc(db, "team-statistics", `${currentYear}`);
+    await setDoc(statsRef, parsedConferenceSubmission, { merge: true });
+  } catch (error) {
+    if (error.name === "ZodError") {
+      console.error("Schema validation failed:", error.errors);
+      throw new Error(
+        "Data validation failed: " +
+          error.errors.map((e) => e.message).join(", ")
+      );
+    }
+    throw error;
+  }
 };
 
 export default pythonDataScrapeHandler;
