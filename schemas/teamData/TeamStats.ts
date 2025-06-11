@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { TeamDefensiveStatsSchema, TeamOffensiveStatsSchema } from "@/schemas";
+import { TeamDefensiveStatsSchema } from "./TeamDefensiveStats";
+import { TeamOffensiveStatsSchema } from "./TeamOffensiveStats";
 
 export const TeamStatsSchema = z.object({
   name: z.string(),

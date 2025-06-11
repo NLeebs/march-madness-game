@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TeamMapSchema } from "@/schemas";
+import { TeamMapSchema } from "./TeamMap";
 
 const ConferenceMapSchema = z.record(TeamMapSchema);
 export type ConferenceMap = z.infer<typeof ConferenceMapSchema>;
