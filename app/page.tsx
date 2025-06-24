@@ -1,18 +1,16 @@
-"use client"
+"use client";
 // Libraries
 import React from "react";
 // State
 import store from "@/store/store";
 // Components
-import App from "@/src/components/App.js";
+import App from "@/src/components/App";
 import { Provider } from "react-redux";
 
-
-export default function Home() {
-  
+export default function Home(): JSX.Element {
   return (
-    <Provider store={store} >
+    <Provider store={store}>
       <App />
     </Provider>
-    );
+  );
 }
