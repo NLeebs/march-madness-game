@@ -12,13 +12,16 @@ import {
 import { Button } from "@/src/components";
 import { delay } from "@/src/functions";
 import { PRIMARY_COLOR, TIMER_BETWEEN_APP_STATES } from "@/src/constants";
+import { RootState } from "@/store";
 
-export const RestartGameButton = () => {
+export const RestartGameButton: React.FC = () => {
   const dispatch = useDispatch();
 
-  const teamStats = useSelector((state) => state.teamStats.teamStats);
+  const teamStats = useSelector(
+    (state: RootState) => state.teamStats.teamStats
+  );
 
-  const restartButtonClickHandler = () => {
+  const restartButtonClickHandler = (): void => {
     dispatch(appStateActions.restartGame());
     dispatch(uiStateActions.restartGame());
     dispatch(teamScheduleActions.restartGame());
