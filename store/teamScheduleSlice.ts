@@ -1,21 +1,37 @@
-// Redux
-import { createSlice } from "@reduxjs/toolkit";
-// Constants
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AMOUNT_SEASON_GAMES } from "@/src/constants";
+import { TeamSchedule, TeamSchedules } from "@/types";
 
-const initalState = {
+interface TeamScheduleState {
+  teamArray: TeamSchedule[];
+  teamSchedules: TeamSchedules;
+}
+
+interface TeamScheduleConfigPayload {
+  [conference: string]: {
+    [team: string]: any;
+  };
+}
+
+interface AddGameToTeamSchedulePayload {
+  weekNumber: string;
+  matchup: TeamSchedule[];
+}
+
+const initialState: TeamScheduleState = {
   teamArray: [],
   teamSchedules: {},
 };
 
-// Create Team Statistics State Slice
 const teamScheduleSlice = createSlice({
   name: "teamSchedule",
-  initialState: initalState,
+  initialState,
   reducers: {
-    restartGame: () => initalState,
-    teamScheduleConfig(state, action) {
-      // Make Large Team Array
+    restartGame: () => initialState,
+    teamScheduleConfig(
+      state,
+      action: PayloadAction<TeamScheduleConfigPayload>
+    ) {
       state.teamArray = [];
       const conferences = Object.keys(action.payload);
       conferences.forEach((conf) => {
@@ -28,15 +44,16 @@ const teamScheduleSlice = createSlice({
         });
       });
 
-      // Make Team Schedule Object
       state.teamSchedules = {};
       for (let i = 1; i <= AMOUNT_SEASON_GAMES; i++) {
         const key = `week${i}`;
         state.teamSchedules[key] = [];
       }
     },
-    addGameToTeamSchedule(state, action) {
-      // payload should be object like {week: weekNumber, matchups: [team1, team2]}
+    addGameToTeamSchedule(
+      state,
+      action: PayloadAction<AddGameToTeamSchedulePayload>
+    ) {
       state.teamSchedules[action.payload.weekNumber].push(
         action.payload.matchup
       );
