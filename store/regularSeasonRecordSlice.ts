@@ -1,20 +1,31 @@
-// Redux
-import { createSlice } from "@reduxjs/toolkit";
-//Constants
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NUMBER_OF_TEAMS, POINTS_PER_WIN } from "@/src/constants";
+import { RegularSeasonTeam, GameResult } from "@/types";
+import { ConferenceMap } from "@/schemas";
 
-const initalState = {
+interface RegularSeasonRecordState {
+  weeksPlayed: number;
+  records: Record<string, RegularSeasonTeam>;
+}
+
+interface ConferenceChampionPayload {
+  confChampion: string;
+}
+
+const initialState: RegularSeasonRecordState = {
   weeksPlayed: 0,
   records: {},
 };
 
-// Create Team Statistics State Slice
 const regularSeasonRecordSlice = createSlice({
   name: "regularSeasonRecords",
-  initialState: initalState,
+  initialState,
   reducers: {
-    restartGame: () => initalState,
-    regularSeasonRecordConfig(state, action) {
+    restartGame: () => initialState,
+    regularSeasonRecordConfig: (
+      state,
+      action: PayloadAction<ConferenceMap>
+    ) => {
       const conferences = Object.keys(action.payload);
       conferences.forEach((conf) => {
         const teams = Object.keys(action.payload[conf]);
@@ -27,7 +38,7 @@ const regularSeasonRecordSlice = createSlice({
         });
       });
     },
-    addRegularSeasonGameResult(state, action) {
+    addRegularSeasonGameResult: (state, action: PayloadAction<GameResult>) => {
       if (action.payload.favoredScore > action.payload.underdogScore) {
         state.records[action.payload.favoredTeam].wins++;
         state.records[action.payload.underdogTeam].losses++;
@@ -40,10 +51,13 @@ const regularSeasonRecordSlice = createSlice({
           NUMBER_OF_TEAMS - action.payload.favoredRPI + POINTS_PER_WIN;
       }
     },
-    addWeekPlayedtoTotal(state) {
+    addWeekPlayedToTotal: (state) => {
       state.weeksPlayed++;
     },
-    addConferneceChampion(state, action) {
+    addConferenceChampion: (
+      state,
+      action: PayloadAction<ConferenceChampionPayload>
+    ) => {
       state.records[action.payload.confChampion].confChampion = true;
     },
   },

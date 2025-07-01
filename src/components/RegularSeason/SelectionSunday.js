@@ -86,7 +86,7 @@ export const SelectionSunday = (props) => {
     conferences.forEach((conf) => {
       const champ = confChampions(conf);
       dispatch(
-        regularSeasonRecordActions.addConferneceChampion({
+        regularSeasonRecordActions.addConferenceChampion({
           confChampion: champ,
         })
       );

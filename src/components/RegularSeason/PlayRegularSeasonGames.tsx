@@ -6,26 +6,43 @@ import {
   AMOUNT_SEASON_GAMES,
   TIMER_PER_REGULAR_SEASON_GAME,
 } from "@/src/constants";
+import { RootState } from "@/store";
+import { ConferenceMap } from "@/schemas";
 
-export const PlayRegularSeasonGames = (props) => {
+interface PlayRegularSeasonGamesProps {
+  teamStats: ConferenceMap;
+}
+
+interface TeamSchedule {
+  team: string;
+  conference: string;
+}
+
+interface TeamSchedules {
+  [week: string]: TeamSchedule[][];
+}
+
+export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = (
+  props
+) => {
   const dispatch = useDispatch();
-  const [seasonPlayed, setSeasonPlayed] = useState(false);
+  const [seasonPlayed, setSeasonPlayed] = useState<boolean>(false);
 
   const teamSchedules = useSelector(
-    (state) => state.teamSchedule.teamSchedules
-  );
+    (state: RootState) => state.teamSchedule.teamSchedules
+  ) as TeamSchedules;
   const weeksPlayed = useSelector(
-    (state) => state.regularSeasonRecords.weeksPlayed
+    (state: RootState) => state.regularSeasonRecords.weeksPlayed
   );
   const teamStats = props.teamStats;
 
   const playRegularSeasonGames = useCallback(() => {
     if (seasonPlayed) return;
 
-    Object.keys(teamSchedules).forEach(async (week) => {
+    Object.keys(teamSchedules).forEach(async (week: string) => {
       await Promise.all([delay(TIMER_PER_REGULAR_SEASON_GAME)])
         .then(() => {
-          teamSchedules[week].forEach((game) => {
+          teamSchedules[week].forEach((game: TeamSchedule[]) => {
             const gameResult = playGame(
               teamStats[game[0].conference][game[0].team],
               teamStats[game[1].conference][game[1].team]
@@ -33,13 +50,13 @@ export const PlayRegularSeasonGames = (props) => {
             dispatch(
               regularSeasonRecordActions.addRegularSeasonGameResult(gameResult)
             );
-          }, []);
+          });
         })
-        .catch((e) => console.error(e));
-      dispatch(regularSeasonRecordActions.addWeekPlayedtoTotal());
+        .catch((e: Error) => console.error(e));
+      dispatch(regularSeasonRecordActions.addWeekPlayedToTotal());
       setSeasonPlayed(true);
     });
-  });
+  }, [seasonPlayed, teamSchedules, teamStats, dispatch]);
 
   useEffect(() => {
     if (!teamSchedules || !teamStats) return;
@@ -48,7 +65,7 @@ export const PlayRegularSeasonGames = (props) => {
       dispatch(appStateActions.activateSelectionSunday());
   }, [dispatch, weeksPlayed, playRegularSeasonGames, teamStats, teamSchedules]);
 
-  return;
+  return null;
 };
 
 export default PlayRegularSeasonGames;
