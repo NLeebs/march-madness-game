@@ -3,10 +3,20 @@ import {
   NUMBER_OF_TEAMS,
   PERCENT_FOULS_THAT_SHOOT_FT,
 } from "@/src/constants";
+import { GameResult } from "@/types";
+import { TeamStats } from "@/schemas";
 
-export const playGame = (team1Stats, team2Stats) => {
+export const playGame = (
+  team1Stats: TeamStats,
+  team2Stats: TeamStats
+): GameResult => {
   // Functions
-  const determineBiasedStat = (favoredStat, underdogStat, isBetter, round) => {
+  const determineBiasedStat = (
+    favoredStat: number,
+    underdogStat: number,
+    isBetter: string,
+    roundToInteger?: boolean
+  ) => {
     let statAdvantage =
       (Math.abs(favoredStat - underdogStat) / 2) * scheduleStrengthAdvantage;
     if (
@@ -18,14 +28,14 @@ export const playGame = (team1Stats, team2Stats) => {
 
     const biasStat = (favoredStat + underdogStat) / 2 + statAdvantage;
 
-    if (round) return Math.round(biasStat);
+    if (roundToInteger) return Math.round(biasStat);
     return biasStat;
   };
 
   const determineBiasedReboundStats = (
-    defenseRebound,
-    offenseRebound,
-    isDefenseFavorded
+    defenseRebound: number,
+    offenseRebound: number,
+    isDefenseFavorded: boolean
   ) => {
     if (defenseRebound + offenseRebound < 1) return defenseRebound;
 
@@ -63,7 +73,7 @@ export const playGame = (team1Stats, team2Stats) => {
     teamFavoredPossessions,
     teamUnderdogPossessions,
     "sync",
-    "round"
+    true
   );
   const possessions = halftime * 2;
 
@@ -146,8 +156,8 @@ export const playGame = (team1Stats, team2Stats) => {
   const changePossession = () => {
     favoredHasPossession = !favoredHasPossession;
   };
-  const favoredShootFT = (numberOfShots) => {
-    let missedLastFT;
+  const favoredShootFT = (numberOfShots: number) => {
+    let missedLastFT: boolean;
     for (let FT = 1; FT <= numberOfShots; FT++) {
       if (teamFavoredFreeThrowPercentage >= Math.random()) {
         favoredScore++;
@@ -156,8 +166,8 @@ export const playGame = (team1Stats, team2Stats) => {
     }
     return missedLastFT;
   };
-  const underdogShootFT = (numberOfShots) => {
-    let missedLastFT;
+  const underdogShootFT = (numberOfShots: number) => {
+    let missedLastFT: boolean;
     for (let FT = 1; FT <= numberOfShots; FT++) {
       if (teamUnderdogFreeThrowPercentage >= Math.random()) {
         underdogScore++;
@@ -169,7 +179,7 @@ export const playGame = (team1Stats, team2Stats) => {
 
   // The Tipoff
   const tip = Math.random();
-  let favoredHasPossession;
+  let favoredHasPossession: boolean;
   if (tip < 0.5) favoredHasPossession = true;
   else favoredHasPossession = false;
 
