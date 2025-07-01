@@ -7,19 +7,11 @@ import {
   TIMER_PER_REGULAR_SEASON_GAME,
 } from "@/src/constants";
 import { RootState } from "@/store";
+import { TeamSchedule, TeamSchedules } from "@/types";
 import { ConferenceMap } from "@/schemas";
 
 interface PlayRegularSeasonGamesProps {
   teamStats: ConferenceMap;
-}
-
-interface TeamSchedule {
-  team: string;
-  conference: string;
-}
-
-interface TeamSchedules {
-  [week: string]: TeamSchedule[][];
 }
 
 export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = (
