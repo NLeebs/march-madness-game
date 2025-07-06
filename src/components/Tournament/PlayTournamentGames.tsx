@@ -207,8 +207,7 @@ export const PlayTournamentGames = () => {
   // Play round Finals
   useEffect(() => {
     // Check if Round Finals
-    if (!appState.tournamentPlayFinals || appState.activateTournamentRecap)
-      return;
+    if (!appState.tournamentPlayFinals || appState.tournamentRecap) return;
     // Play Round and send winners
     const winningTeamsArr = playTournamentRound("finals", roundFinalsMatchups);
     // Compare to picks
