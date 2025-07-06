@@ -1,5 +1,14 @@
 import { TournamentRound } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+interface ScreenSizePayload {
+  screenWidth: number;
+  screenHeight: number;
+}
+
+interface SelectRoundPayload {
+  newRound: TournamentRound;
+}
 
 interface UiState {
   isRecapDialogOpen: boolean;
@@ -21,14 +30,14 @@ const uiStateSlice = createSlice({
       state.isRecapDialogOpen = false;
       state.selectedRound = 1;
     },
-    screenSize(state, action) {
+    screenSize(state, action: PayloadAction<ScreenSizePayload>) {
       state.screenWidth = action.payload.screenWidth;
       state.screenHeight = action.payload.screenHeight;
     },
     toggleRecapDialog(state) {
       state.isRecapDialogOpen = !state.isRecapDialogOpen;
     },
-    selectRound(state, action) {
+    selectRound(state, action: PayloadAction<SelectRoundPayload>) {
       state.selectedRound = action.payload.newRound;
     },
   },
