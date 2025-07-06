@@ -1,12 +1,13 @@
+import { GameResult, TournamentGameResult, TournamentRegion } from "@/types";
+
 export const getTournamentGameResultObj = (
-  resultObj,
-  gameIndex,
-  region = null
-) => {
-  // Construct Results Object
-  let winningTeam;
-  let winningScore;
-  let losingScore;
+  resultObj: GameResult,
+  gameIndex: number,
+  region: TournamentRegion | null = null
+): TournamentGameResult => {
+  let winningTeam: string;
+  let winningScore: number;
+  let losingScore: number;
 
   if (resultObj.favoredScore > resultObj.underdogScore) {
     winningTeam = resultObj.favoredTeam;
