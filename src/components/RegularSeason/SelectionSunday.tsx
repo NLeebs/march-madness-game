@@ -1,13 +1,8 @@
-// React Functions
 import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// State
-import { appStateActions } from "@/store/appStateSlice";
+import { appStateActions, RootState } from "@/store";
 import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
-// Functions
-import delay from "@/src/functions/generic/delay";
-// Constanst
 import {
   NUMBER_OF_AT_LARGE_TEAMS,
   NUMBER_OF_AT_LARGE_TEAMS_PLAYINS,
@@ -17,21 +12,19 @@ import {
 export const SelectionSunday = (props) => {
   const dispatch = useDispatch();
 
-  // App State
-  const appState = useSelector((state) => state.appState);
+  const appState = useSelector((state: RootState) => state.appState);
   const seasonResults = useSelector(
-    (state) => state.regularSeasonRecords.records
+    (state: RootState) => state.regularSeasonRecords.records
   );
   const conferenceArrs = useSelector(
-    (state) => state.teamStats.conferenceArrays
+    (state: RootState) => state.teamStats.conferenceArrays
   );
   const tournamentTeams = useSelector(
-    (state) => state.tournament.tournamentTeams
+    (state: RootState) => state.tournament.tournamentTeams
   );
 
-  // Sort Functions
   const sortByTournamentScore = useCallback(
-    (arr) => {
+    (arr: string[]) => {
       return [...arr].sort(
         (a, b) =>
           seasonResults[b].tournamentSelectionScore -
@@ -42,7 +35,7 @@ export const SelectionSunday = (props) => {
   );
 
   const sortByWins = useCallback(
-    (arr) => {
+    (arr: string[]) => {
       return [...arr].sort(
         (a, b) => seasonResults[b].wins - seasonResults[a].wins
       );
@@ -52,7 +45,7 @@ export const SelectionSunday = (props) => {
 
   // Selection Functions
   const confChampions = useCallback(
-    (curConference) => {
+    (curConference: string) => {
       const conferenceTeams = conferenceArrs[curConference];
       const sortedConferenceTeamsWins = sortByWins(conferenceTeams);
 
@@ -137,5 +130,5 @@ export const SelectionSunday = (props) => {
     }
   }, [dispatch, appState, getTournamentTeams, tournamentTeams]);
 
-  return;
+  return null;
 };

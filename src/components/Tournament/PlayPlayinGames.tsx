@@ -58,4 +58,6 @@ export const PlayPlayinGames = () => {
     });
     dispatch(appStateActions.activateTournamentStandardGames());
   }, [dispatch, playinMatchups, teamStats, confArrs]);
+
+  return null;
 };

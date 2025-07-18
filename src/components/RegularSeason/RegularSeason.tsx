@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { appStateActions } from "@/store/appStateSlice";
+import { appStateActions, RootState } from "@/store";
 import { delay, separatePowerConferences } from "@/src/functions";
 import {
   Button,
@@ -15,16 +15,21 @@ import {
   PRIMARY_COLOR,
   POWER_CONFERENCE_LIST,
 } from "@/src/constants";
+import { ConferenceMap } from "@/schemas";
 
-export const RegularSeason = (props) => {
+interface RegularSeasonProps {
+  teamStats: ConferenceMap;
+}
+
+export const RegularSeason: React.FC<RegularSeasonProps> = ({ teamStats }) => {
   const dispatch = useDispatch();
 
-  const appState = useSelector((state) => state.appState);
+  const appState = useSelector((state: RootState) => state.appState);
 
   // Split conferences for visualization
   const powerConferences = POWER_CONFERENCE_LIST;
   const otherConferences = separatePowerConferences(
-    props.teamStats,
+    teamStats,
     powerConferences
   );
 
@@ -52,14 +57,14 @@ export const RegularSeason = (props) => {
             <ConferenceGroups
               key={conf}
               isPowerConf="true"
-              conferenceTeams={props.teamStats[conf]}
+              conferenceTeams={teamStats[conf]}
             />
           ))}
           {otherConferences.map((conf) => (
             <ConferenceGroups
               key={conf}
               isPowerConf="false"
-              conferenceTeams={props.teamStats[conf]}
+              conferenceTeams={teamStats[conf]}
             />
           ))}
         </div>
@@ -67,7 +72,7 @@ export const RegularSeason = (props) => {
       {!appState.transition &&
         appState.regularSeason &&
         !appState.selectionSunday && (
-          <PlayRegularSeasonGames teamStats={props.teamStats} />
+          <PlayRegularSeasonGames teamStats={teamStats} />
         )}
       {appState.selectionSunday && <SelectionSunday />}
       {appState.selectionSunday && (

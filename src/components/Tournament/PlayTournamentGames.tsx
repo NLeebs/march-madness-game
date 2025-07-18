@@ -228,4 +228,6 @@ export const PlayTournamentGames = () => {
     roundFinalsMatchups,
     playersPicks,
   ]);
+
+  return null;
 };

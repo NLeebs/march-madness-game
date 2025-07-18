@@ -5,12 +5,22 @@ import {
   AMOUNT_NONCONFERENCE_GAMES,
   AMOUNT_SEASON_GAMES,
 } from "@/src/constants";
+import { ConferenceMap } from "@/schemas";
+import { TeamSchedule } from "@/types";
 
-export const SeasonSchedule = (props) => {
+interface SeasonScheduleProps {
+  teamStats: ConferenceMap;
+  teamArray: TeamSchedule[];
+}
+
+export const SeasonSchedule: React.FC<SeasonScheduleProps> = ({
+  teamStats,
+  teamArray,
+}) => {
   const dispatch = useDispatch();
 
   const randomTeamSchedule = useCallback(
-    (arr, weekNo) => {
+    (arr: TeamSchedule[], weekNo: number) => {
       const loopedArr = arr;
 
       while (loopedArr.length >= 2) {
@@ -35,18 +45,16 @@ export const SeasonSchedule = (props) => {
     [dispatch]
   );
 
-  // Declare function to schedule a non-conference game for every team
   const scheduleNonConferenceGames = useCallback(
-    (teamArray, weekNo) => {
+    (teamArray: TeamSchedule[], weekNo: number) => {
       const allNCAATeamsArr = [...teamArray];
       randomTeamSchedule(allNCAATeamsArr, weekNo);
     },
     [randomTeamSchedule]
   );
 
-  // BUG
   const scheduleConferenceGames = useCallback(
-    (teamStats, teamArray, weekNo) => {
+    (teamStats: ConferenceMap, teamArray: TeamSchedule[], weekNo: number) => {
       const leftoverTeamsArr = [];
       Object.keys(teamStats).forEach((conf) => {
         const confTeams = [];
@@ -66,24 +74,24 @@ export const SeasonSchedule = (props) => {
   );
 
   useEffect(() => {
-    if (props.teamArray.length > 0) {
+    if (teamArray.length > 0) {
       for (let i = 1; i <= AMOUNT_NONCONFERENCE_GAMES; i++) {
-        scheduleNonConferenceGames(props.teamArray, i);
+        scheduleNonConferenceGames(teamArray, i);
       }
       for (
         let i = AMOUNT_NONCONFERENCE_GAMES + 1;
         i <= AMOUNT_SEASON_GAMES;
         i++
       ) {
-        scheduleConferenceGames(props.teamStats, props.teamArray, i);
+        scheduleConferenceGames(teamStats, teamArray, i);
       }
     }
   }, [
-    props.teamArray,
-    props.teamStats,
+    teamArray,
+    teamStats,
     scheduleNonConferenceGames,
     scheduleConferenceGames,
   ]);
 
-  return;
+  return null;
 };

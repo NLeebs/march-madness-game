@@ -8,6 +8,7 @@ import {
   teamStatsActions,
   teamScheduleActions,
   regularSeasonRecordActions,
+  RootState,
 } from "@/store";
 import {
   AddTeamStatsToFirebase,
@@ -36,17 +37,19 @@ import { getTeamStatData } from "@/src/functions";
 function App() {
   const dispatch = useDispatch();
 
-  const appState = useSelector((state) => state.appState);
-  const teamStatsObject = useSelector((state) => state.teamStats);
-  const teamArray = useSelector((state) => state.teamSchedule.teamArray);
-  const teamScheduleObj = useSelector((state) => state.teamSchedule);
+  const appState = useSelector((state: RootState) => state.appState);
+  const teamStatsObject = useSelector((state: RootState) => state.teamStats);
+  const teamArray = useSelector(
+    (state: RootState) => state.teamSchedule.teamArray
+  );
+  const teamScheduleObj = useSelector((state: RootState) => state.teamSchedule);
 
   // Monitor resizing of the screen
   useEffect(() => {
     function handleResize() {
       const screenSizeObj = {
         screenWidth: window.innerWidth,
-        screenHeigth: window.innerHeight,
+        screenHeight: window.innerHeight,
       };
       dispatch(uiStateActions.screenSize(screenSizeObj));
     }
