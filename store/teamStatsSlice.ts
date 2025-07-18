@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ConferenceMap } from "@/schemas";
+import { ConferenceArrays } from "@/types";
 
 interface TeamStatsState {
   teamStats?: ConferenceMap;
-  conferenceArrays: {
-    [conferenceName: string]: string[];
-  };
+  conferenceArrays: ConferenceArrays;
 }
 
 const initialState: TeamStatsState = {
