@@ -1,5 +1,5 @@
 import { doc, getDoc, DocumentData } from "firebase/firestore";
-import db from "@/src/firebase/config.js";
+import db from "@/src/firebase/config";
 import { ConferenceMap } from "@/schemas";
 
 export const getTeamStatData = async (): Promise<ConferenceMap | null> => {
