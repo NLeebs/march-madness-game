@@ -1,4 +1,9 @@
-export const createMatchupsFromSeededArr = (seededArr, playinSeed = false) => {
+import { TournamentMatchup } from "@/types";
+
+export const createMatchupsFromSeededArr = (
+  seededArr: string[],
+  playinSeed = false
+): TournamentMatchup[] => {
   const matchupArr = [];
   for (let i = 0; i < seededArr.length / 2; i++) {
     matchupArr.push([
