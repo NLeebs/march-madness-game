@@ -2,6 +2,7 @@
 import { doc, setDoc } from "firebase/firestore";
 import db from "@/src/firebase/config.js";
 import { ConferenceSubmissionSchema } from "@/schemas";
+import { ConferenceStatsScraper, TeamStatsScraper } from "@/types";
 
 // Team Statistics URLs
 import {
@@ -39,11 +40,13 @@ import {
 } from "@/src/components/Add-To-Firebase/Team-Stats-URL-Objects";
 
 ////// Team Stats and Color handler //////
-const pythonDataScrapeHandler = async (e) => {
+const pythonDataScrapeHandler = async (
+  e: React.MouseEvent<HTMLButtonElement>
+) => {
   e.preventDefault();
 
   // Conference and Ref URLs Config Array
-  const firstHalfConfURLsArr = [
+  const firstHalfConfURLsArr: [string, ConferenceStatsScraper][] = [
     ["acc", accStatURLs],
     ["americaEast", americaEastStatURLs],
     ["americanAthletic", americanAthleticStatURLs],
@@ -60,7 +63,7 @@ const pythonDataScrapeHandler = async (e) => {
     ["horizon", horizonStatURLs],
     ["ivy", ivyStatURLs],
   ];
-  const secondHalfConfURLsArr = [
+  const secondHalfConfURLsArr: [string, ConferenceStatsScraper][] = [
     ["maac", maacStatURLs],
     ["mac", macStatURLs],
     ["meac", meacStatURLs],
@@ -80,12 +83,12 @@ const pythonDataScrapeHandler = async (e) => {
   ];
 
   // To test individual conferences for errors
-  const testURLArr = [["wcc", wccStatURLs]];
+  const testURLArr: [string, ConferenceStatsScraper][] = [["wcc", wccStatURLs]];
 
   // Create team stats return object
-  const conferenceSubmission = {};
+  const conferenceSubmission: ConferenceStatsScraper = {};
   testURLArr.forEach((teamArr) => {
-    conferenceSubmission[teamArr[0]] = {};
+    conferenceSubmission[teamArr[0]] = {} as TeamStatsScraper;
   });
 
   // Call Python Script for each Conference and populate team stats object
@@ -102,7 +105,7 @@ const pythonDataScrapeHandler = async (e) => {
         });
         if (confRes.ok) {
           const postData = await confRes.json();
-          postData.forEach((obj) => {
+          postData.forEach((obj: TeamStatsScraper) => {
             conferenceSubmission[confData[0]][Object.keys(obj)[0]] =
               obj[Object.keys(obj)[0]];
           });
