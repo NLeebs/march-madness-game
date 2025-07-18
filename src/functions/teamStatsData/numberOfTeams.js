@@ -1,8 +1,0 @@
-export const numberOfTeams = function (teamStatsObj) {
-  let numberOfTeams = 0;
-  Object.keys(teamStatsObj).forEach((conf) => {
-    numberOfTeams += Object.keys(teamStatsObj[conf]).length;
-  });
-
-  return numberOfTeams;
-};
