@@ -352,7 +352,7 @@ const initalState: TournamentPlayerPicks =
       };
 
 const tournamentPlayersPicksSlice = createSlice({
-  name: "tounramentPlayersPicks",
+  name: "tournamentPlayersPicks",
   initialState: initalState,
   reducers: {
     restartGame: () => initalState,

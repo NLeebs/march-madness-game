@@ -16,12 +16,17 @@ import { RootState } from "@/store";
 
 export const RestartGameButton: React.FC = () => {
   const dispatch = useDispatch();
+  const [isRestarting, setIsRestarting] = React.useState(false);
 
   const teamStats = useSelector(
     (state: RootState) => state.teamStats.teamStats
   );
 
   const restartButtonClickHandler = (): void => {
+    if (isRestarting) return; // Prevent multiple clicks
+
+    setIsRestarting(true);
+
     dispatch(appStateActions.restartGame());
     dispatch(uiStateActions.restartGame());
     dispatch(teamScheduleActions.restartGame());
@@ -29,17 +34,26 @@ export const RestartGameButton: React.FC = () => {
     dispatch(tounramentPlayersPicksActions.restartGame());
     dispatch(tournamentActions.restartGame());
 
-    Promise.all([delay(TIMER_BETWEEN_APP_STATES)]).then(() => {
-      dispatch(teamScheduleActions.teamScheduleConfig(teamStats));
-      dispatch(regularSeasonRecordActions.regularSeasonRecordConfig(teamStats));
-    });
+    Promise.all([delay(TIMER_BETWEEN_APP_STATES)])
+      .then(() => {
+        dispatch(teamScheduleActions.teamScheduleConfig(teamStats));
+        dispatch(
+          regularSeasonRecordActions.regularSeasonRecordConfig(teamStats)
+        );
+        setIsRestarting(false);
+      })
+      .catch((error) => {
+        console.error("Restart failed:", error);
+        setIsRestarting(false);
+      });
   };
 
   return (
     <Button
       onClick={restartButtonClickHandler}
-      text={"Play Again"}
+      text={isRestarting ? "Restarting..." : "Play Again"}
       backgroundColor={PRIMARY_COLOR}
+      disabled={isRestarting}
     />
   );
 };
