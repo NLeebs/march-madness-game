@@ -23,7 +23,7 @@ export const RestartGameButton: React.FC = () => {
   );
 
   const restartButtonClickHandler = (): void => {
-    if (isRestarting) return; // Prevent multiple clicks
+    if (isRestarting) return;
 
     setIsRestarting(true);
 

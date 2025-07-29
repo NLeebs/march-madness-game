@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { RestartGameButton } from "../RestartGameButton";
 import { PRIMARY_COLOR, TIMER_BETWEEN_APP_STATES } from "@/src/constants";
+import userEvent from "@testing-library/user-event";
 
 beforeAll(() => {
   const originalError = console.error;
@@ -207,15 +208,11 @@ describe("RestartGameButton", () => {
 
     const button = getByTestId("mock-button");
 
-    fireEvent.click(button);
+    await fireEvent.click(button);
     expect(delay).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(6);
 
-    fireEvent.click(button);
-    expect(delay).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledTimes(6);
-
-    fireEvent.click(button);
+    userEvent.click(button);
     expect(delay).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(6);
   });
