@@ -1,4 +1,4 @@
-import { ConferenceMap } from "@/schemas";
+import { ConferenceMap } from "@/models";
 
 export const separatePowerConferences = (
   teamStats: ConferenceMap,

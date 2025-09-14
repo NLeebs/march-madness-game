@@ -5,7 +5,7 @@ import {
   AMOUNT_NONCONFERENCE_GAMES,
   AMOUNT_SEASON_GAMES,
 } from "@/src/constants";
-import { ConferenceMap } from "@/schemas";
+import { ConferenceMap } from "@/models";
 import { TeamSchedule } from "@/types";
 
 interface SeasonScheduleProps {

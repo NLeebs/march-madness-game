@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ConferenceMap } from "@/schemas";
+import { ConferenceMap } from "@/models";
 import { ConferenceArrays } from "@/types";
 
 interface TeamStatsState {

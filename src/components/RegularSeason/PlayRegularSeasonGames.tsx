@@ -8,7 +8,7 @@ import {
 } from "@/src/constants";
 import { RootState } from "@/store";
 import { TeamSchedule, TeamSchedules } from "@/types";
-import { ConferenceMap } from "@/schemas";
+import { ConferenceMap } from "@/models";
 
 interface PlayRegularSeasonGamesProps {
   teamStats: ConferenceMap;

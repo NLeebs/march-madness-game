@@ -4,7 +4,7 @@ import {
   PERCENT_FOULS_THAT_SHOOT_FT,
 } from "@/src/constants";
 import { GameResult } from "@/types";
-import { TeamStats } from "@/schemas";
+import { TeamStats } from "@/models";
 
 export const playGame = (
   team1Stats: TeamStats,

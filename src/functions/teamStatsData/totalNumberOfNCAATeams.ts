@@ -1,4 +1,4 @@
-import { TeamStats } from "@/schemas";
+import { TeamStats } from "@/models";
 
 export const totalNumberOfNCAATeams = function (teamStatsObj: TeamStats) {
   let numberOfTeams = 0;

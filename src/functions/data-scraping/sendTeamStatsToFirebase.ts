@@ -1,7 +1,7 @@
 // Database
 import { doc, setDoc } from "firebase/firestore";
 import db from "@/src/firebase/config";
-import { ConferenceSubmissionSchema } from "@/schemas";
+import { ConferenceSubmissionSchema } from "@/models";
 import { ConferenceStatsScraper, TeamStatsScraper } from "@/types";
 
 // Team Statistics URLs

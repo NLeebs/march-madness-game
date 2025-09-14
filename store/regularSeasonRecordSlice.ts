@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NUMBER_OF_TEAMS, POINTS_PER_WIN } from "@/src/constants";
 import { RegularSeasonTeam, GameResult } from "@/types";
-import { ConferenceMap } from "@/schemas";
+import { ConferenceMap } from "@/models";
 
 interface RegularSeasonRecordState {
   weeksPlayed: number;
