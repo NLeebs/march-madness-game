@@ -111,11 +111,11 @@ export function rateLimit(
     const windowStart = now - windowMs;
 
     // Clean up old entries
-    for (const [key, value] of rateLimitMap.entries()) {
+    rateLimitMap.forEach((value, key) => {
       if (value.resetTime < windowStart) {
         rateLimitMap.delete(key);
       }
-    }
+    });
 
     const current = rateLimitMap.get(ip);
 
