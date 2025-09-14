@@ -14,6 +14,7 @@ export default defineConfig({
       "src/components/Add-To-Firebase/Team-Stats-URL-Objects",
     ],
     environment: "jsdom",
+    setupFiles: ["./src/test-setup.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],

@@ -14,9 +14,9 @@ interface PlayRegularSeasonGamesProps {
   teamStats: ConferenceMap;
 }
 
-export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = (
-  props
-) => {
+export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = ({
+  teamStats,
+}) => {
   const dispatch = useDispatch();
   const [seasonPlayed, setSeasonPlayed] = useState<boolean>(false);
 
@@ -26,7 +26,6 @@ export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = (
   const weeksPlayed = useSelector(
     (state: RootState) => state.regularSeasonRecords.weeksPlayed
   );
-  const teamStats = props.teamStats;
 
   const playRegularSeasonGames = useCallback(() => {
     if (seasonPlayed) return;
