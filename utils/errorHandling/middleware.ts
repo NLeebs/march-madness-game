@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { ZodSchema, ZodError } from "zod";
 import { ValidationError } from "./AppError";
 
-/**
- * Request validation middleware
- */
 export function validateRequest<T>(
   schema: ZodSchema<T>,
   getData: (req: NextRequest) => any = (req) => req.json()
@@ -25,9 +22,6 @@ export function validateRequest<T>(
   };
 }
 
-/**
- * Method validation middleware
- */
 export function validateMethod(allowedMethods: string[]) {
   return (req: NextRequest) => {
     if (!allowedMethods.includes(req.method)) {
@@ -41,9 +35,6 @@ export function validateMethod(allowedMethods: string[]) {
   };
 }
 
-/**
- * Content-Type validation middleware
- */
 export function validateContentType(expectedTypes: string[]) {
   return (req: NextRequest) => {
     const contentType = req.headers.get("content-type");
@@ -70,9 +61,6 @@ export function validateContentType(expectedTypes: string[]) {
   };
 }
 
-/**
- * Authentication middleware (placeholder - implement based on your auth system)
- */
 export function requireAuth(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
 
@@ -96,9 +84,6 @@ export function requireAuth(req: NextRequest) {
   return token;
 }
 
-/**
- * Rate limiting middleware (basic implementation)
- */
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 export function rateLimit(
@@ -110,7 +95,6 @@ export function rateLimit(
     const now = Date.now();
     const windowStart = now - windowMs;
 
-    // Clean up old entries
     rateLimitMap.forEach((value, key) => {
       if (value.resetTime < windowStart) {
         rateLimitMap.delete(key);
@@ -140,14 +124,10 @@ export function rateLimit(
   };
 }
 
-/**
- * CORS middleware
- */
 export function corsHeaders(origin?: string) {
   return (req: NextRequest) => {
     const response = NextResponse.next();
 
-    // Set CORS headers
     response.headers.set("Access-Control-Allow-Origin", origin || "*");
     response.headers.set(
       "Access-Control-Allow-Methods",
@@ -163,9 +143,6 @@ export function corsHeaders(origin?: string) {
   };
 }
 
-/**
- * Combine multiple middleware functions
- */
 export function combineMiddleware(
   ...middlewares: Array<(req: NextRequest) => any>
 ) {
