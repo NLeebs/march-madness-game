@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { MotionConfig, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "@/src/hooks";
 import {
   appStateActions,
   uiStateActions,
@@ -36,6 +37,8 @@ import { getTeamStatData } from "@/src/functions";
 
 function App() {
   const dispatch = useDispatch();
+
+  const { user, authLoading } = useAuth();
 
   const appState = useSelector((state: RootState) => state.appState);
   const teamStatsObject = useSelector((state: RootState) => state.teamStats);
@@ -76,13 +79,19 @@ function App() {
 
   // Turn off loading app state once TeamStats populated
   useEffect(() => {
-    if (teamScheduleObj.teamArray.length > 0)
+    if (teamScheduleObj.teamArray.length > 0 && !authLoading)
       dispatch(appStateActions.loadingComplete());
-  }, [dispatch, teamScheduleObj.teamArray.length]);
+  }, [dispatch, teamScheduleObj.teamArray.length, authLoading]);
 
+  //https://www.youtube.com/watch?v=6XGvBBDtRfo @ 11:10
   return (
     <MotionConfig reducedMotion="user">
       {/* <AddTeamStatsToFirebase /> */}
+
+      {authLoading && <div>Loading...</div>}
+      {user && <div>User Logged In</div>}
+      {!user && <div>User NOT Logged In</div>}
+
       {teamArray && (
         <SeasonSchedule
           teamStats={teamStatsObject.teamStats}

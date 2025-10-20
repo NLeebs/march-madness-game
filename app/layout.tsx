@@ -1,6 +1,6 @@
 // Global CSS
 import "./globals.css";
-// Fonts
+import { AuthProvider } from "@/src/components/Context/AuthProvider";
 import { Geologica } from "next/font/google";
 
 const geologica = Geologica({ subsets: ["latin"] });
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="description" content={metadata.description}></meta>
       </head>
       <body suppressHydrationWarning={true} className={geologica.className}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <div id="modal-root"></div>
       </body>
     </html>
