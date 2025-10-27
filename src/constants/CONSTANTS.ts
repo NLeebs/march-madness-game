@@ -23,6 +23,26 @@ export const PRIMARY_TEXT_COLOR = "#000000";
 export const NON_CTA_BUTTON_COLOR = "#f8fafc";
 export const CONFIRMATION_GREEN = "#15803d";
 
+// Form Validation
+export const PASSWORD_REGEX =
+  /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+export const PASSWORD_MIN_LENGTH = 8;
+export const PASSWORD_MAX_LENGTH = 100;
+
+// Spam Protection
+export const MIN_FORM_FILL_TIME = 3000; // 3 seconds minimum form fill time
+export const MAX_FORM_FILL_TIME = 300000; // 5 minutes maximum form fill time
+export const RATE_LIMIT_WINDOW = 60000; // 1 minute rate limit window
+export const MAX_SUBMISSIONS_PER_WINDOW = 3; // Max 3 submissions per minute
+export const HONEYPOT_FIELD_NAME = "website"; // Hidden field name for honeypot
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const SUSPICIOUS_PATTERNS = [
+  /(.)\1{4,}/, // Repeated characters (aaaaa)
+  /(.)\1{2,}(.)\2{2,}/, // Pattern repetition (abcabc)
+  /^(.)\1+$/, // All same character
+  /(.)\1{3,}/, // 4+ repeated characters
+];
+
 // General Gameplay
 export const NUMBER_OF_TEAMS = 360;
 export const SOS_MULTIPLIER = 2.15;

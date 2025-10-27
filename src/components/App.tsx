@@ -20,6 +20,7 @@ import {
   RegularSeason,
   SeasonSchedule,
   TournamentRecapDialog,
+  NavigationBar,
 } from "@/src/components";
 import { getTeamStatData } from "@/src/functions";
 
@@ -86,8 +87,8 @@ function App() {
   //https://www.youtube.com/watch?v=6XGvBBDtRfo @ 11:10
   return (
     <MotionConfig reducedMotion="user">
+      <NavigationBar />
       {/* <AddTeamStatsToFirebase /> */}
-
       {authLoading && <div>Loading...</div>}
       {user && <div>User Logged In</div>}
       {!user && <div>User NOT Logged In</div>}
