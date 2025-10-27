@@ -17,10 +17,6 @@ interface ProtectedFormProps<T extends FieldValues> {
   className?: string;
 }
 
-/**
- * ProtectedForm wrapper component that handles all spam protection logic
- * Reduces cognitive load by encapsulating spam protection in a reusable wrapper
- */
 export const ProtectedForm = <T extends FieldValues>({
   control,
   onSubmit,
@@ -38,7 +34,6 @@ export const ProtectedForm = <T extends FieldValues>({
     startFormFillTimeValidation,
   } = useSpamProtection();
 
-  // Start form timing when component mounts
   useEffect(() => {
     startFormFillTimeValidation();
   }, [startFormFillTimeValidation]);
@@ -47,7 +42,6 @@ export const ProtectedForm = <T extends FieldValues>({
     startSubmission();
 
     try {
-      // Validate submission with all spam protection layers
       const validation = await validateSubmission(data);
 
       if (!validation.isValid) {
@@ -55,7 +49,6 @@ export const ProtectedForm = <T extends FieldValues>({
         return;
       }
 
-      // Call the actual form submission handler
       await onSubmit(data);
     } catch (error) {
       console.error("Form submission error:", error);
@@ -70,16 +63,6 @@ export const ProtectedForm = <T extends FieldValues>({
       className={`flex flex-col gap-4 ${className}`}
       onSubmit={control.handleSubmit(handleSubmit)}
     >
-      {/* Honeypot field - automatically included */}
-      <HoneypotInput
-        control={control}
-        name={HONEYPOT_FIELD_NAME as FieldPath<T>}
-      />
-
-      {/* Form content */}
-      {children}
-
-      {/* Error displays */}
       <FormErrorDisplay error={submitError} type="error" />
       <FormErrorDisplay
         error={
@@ -89,6 +72,12 @@ export const ProtectedForm = <T extends FieldValues>({
         }
         type="warning"
       />
+      <HoneypotInput
+        control={control}
+        name={HONEYPOT_FIELD_NAME as FieldPath<T>}
+      />
+
+      {children}
     </form>
   );
 };

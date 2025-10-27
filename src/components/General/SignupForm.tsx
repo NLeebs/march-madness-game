@@ -17,6 +17,7 @@ import {
   signupFormDefaults,
   SignupFormData,
 } from "@/src/formSchemas/signupFormSchema";
+import { supabase } from "@/app/api/supabase";
 
 export const SignupForm = () => {
   const { isSubmitting, isRateLimited } = useSpamProtection();
@@ -28,14 +29,15 @@ export const SignupForm = () => {
   });
 
   const handleSignup: SubmitHandler<SignupFormData> = async (data) => {
-    console.log("Form submitted successfully:", {
+    console.log("You're Signed Up! 🎉");
+    const { data: signupData, error } = await supabase.auth.signUp({
       email: data.email,
-      passwordLength: data.password.length,
-      timestamp: new Date().toISOString(),
+      password: data.password,
     });
-
-    // TODO: Implement actual signup API call here
-    // await signupUser(data.email, data.password);
+    if (error) {
+      console.error("Error signing up:", error);
+    }
+    console.log("User signed up:", signupData);
   };
 
   const { control } = signupForm;
