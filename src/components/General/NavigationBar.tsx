@@ -1,10 +1,16 @@
 "use client";
+import { useState, useEffect } from "react";
 import { supabase } from "@/app/api/supabase";
+import { useAuth } from "@/src/hooks";
 import { Button, Dialog, UserAuthentication } from "@/src/components";
-import { useState } from "react";
 
 export const NavigationBar = () => {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) setIsLoginDialogOpen(false);
+  }, [user]);
 
   const handleLogin = () => {
     setIsLoginDialogOpen(true);

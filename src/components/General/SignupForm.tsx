@@ -8,7 +8,7 @@ import {
   signupFormSchema,
   signupFormDefaults,
   SignupFormData,
-} from "@/src/formSchemas/signupFormSchema";
+} from "@/src/formSchemas";
 import {
   Button,
   Card,
@@ -26,7 +26,7 @@ export const SignupForm = () => {
 
   const signupForm = useForm<SignupFormData>({
     resolver: zodResolver(signupFormSchema),
-    mode: "onChange",
+    mode: "onBlur",
     defaultValues: signupFormDefaults,
   });
 
