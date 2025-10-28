@@ -47,13 +47,10 @@ export const SignupForm = () => {
           display_name: data.userName,
         },
       });
-    dispatch(
-      userStateActions.setUser({
-        userName: updateData.user.user_metadata.display_name,
-        email: signupData.user.email,
-        isLoggedIn: true,
-      })
-    );
+    if (updateError) {
+      console.error("Error adding username:", updateError);
+      throw new Error(updateError.message);
+    }
   };
 
   const { control } = signupForm;
