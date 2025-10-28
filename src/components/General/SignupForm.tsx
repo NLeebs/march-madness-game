@@ -2,7 +2,6 @@
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { supabase } from "@/app/api/supabase";
-import { userStateActions } from "@/store/userSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSpamProtection } from "@/src/hooks";
 import {
