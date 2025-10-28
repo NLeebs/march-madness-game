@@ -1,4 +1,5 @@
 "use client";
+import { supabase } from "@/app/api/supabase";
 import { Button, Dialog, UserAuthentication } from "@/src/components";
 import { useState } from "react";
 
@@ -8,6 +9,15 @@ export const NavigationBar = () => {
   const handleLogin = () => {
     setIsLoginDialogOpen(true);
   };
+
+  const handleLogout = async () => {
+    const { error: logoutError } = await supabase.auth.signOut();
+    if (logoutError) {
+      console.error("Error logging out:", logoutError);
+      throw new Error(logoutError.message);
+    }
+  };
+
   return (
     <>
       <div className="w-full flex flex-row justify-between items-center bg-primary">
@@ -15,6 +25,11 @@ export const NavigationBar = () => {
           onClick={handleLogin}
           backgroundColor="bg-blue-500"
           text="Login"
+        />
+        <Button
+          onClick={handleLogout}
+          backgroundColor="bg-blue-500"
+          text="Logout"
         />
       </div>
       <Dialog
