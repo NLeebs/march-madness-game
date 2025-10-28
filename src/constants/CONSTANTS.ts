@@ -24,6 +24,9 @@ export const NON_CTA_BUTTON_COLOR = "#f8fafc";
 export const CONFIRMATION_GREEN = "#15803d";
 
 // Form Validation
+export const USERNAME_MIN_LENGTH = 3;
+export const USERNAME_MAX_LENGTH = 20;
+export const USERNAME_REGEX = /^[a-zA-Z0-9]+$/;
 export const PASSWORD_REGEX =
   /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 export const PASSWORD_MIN_LENGTH = 8;

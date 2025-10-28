@@ -84,7 +84,6 @@ function App() {
       dispatch(appStateActions.loadingComplete());
   }, [dispatch, teamScheduleObj.teamArray.length, authLoading]);
 
-  //https://www.youtube.com/watch?v=6XGvBBDtRfo @ 11:10
   return (
     <MotionConfig reducedMotion="user">
       <NavigationBar />

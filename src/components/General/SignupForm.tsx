@@ -1,6 +1,15 @@
 "use client";
+import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { supabase } from "@/app/api/supabase";
+import { userStateActions } from "@/store/userSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSpamProtection } from "@/src/hooks";
+import {
+  signupFormSchema,
+  signupFormDefaults,
+  SignupFormData,
+} from "@/src/formSchemas/signupFormSchema";
 import {
   Button,
   Card,
@@ -11,15 +20,9 @@ import {
   FormField,
   ProtectedForm,
 } from "@/src/components";
-import { useSpamProtection } from "@/src/hooks";
-import {
-  signupFormSchema,
-  signupFormDefaults,
-  SignupFormData,
-} from "@/src/formSchemas/signupFormSchema";
-import { supabase } from "@/app/api/supabase";
 
 export const SignupForm = () => {
+  const dispatch = useDispatch();
   const { isSubmitting, isRateLimited } = useSpamProtection();
 
   const signupForm = useForm<SignupFormData>({
@@ -36,8 +39,21 @@ export const SignupForm = () => {
     });
     if (error) {
       console.error("Error signing up:", error);
+      throw new Error(error.message);
     }
-    console.log("User signed up:", signupData);
+    const { data: updateData, error: updateError } =
+      await supabase.auth.updateUser({
+        data: {
+          display_name: data.userName,
+        },
+      });
+    dispatch(
+      userStateActions.setUser({
+        userName: updateData.user.user_metadata.display_name,
+        email: signupData.user.email,
+        isLoggedIn: true,
+      })
+    );
   };
 
   const { control } = signupForm;
@@ -53,6 +69,14 @@ export const SignupForm = () => {
         </CardHeader>
         <CardContent>
           <ProtectedForm control={control} onSubmit={handleSignup}>
+            <FormField
+              control={control}
+              name="userName"
+              label="Username"
+              type="text"
+              required
+            />
+
             <FormField
               control={control}
               name="email"
