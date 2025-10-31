@@ -2,11 +2,12 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { supabase } from "@/app/api/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useSpamProtection } from "@/src/hooks";
 import {
-  loginFormSchema,
-  loginFormDefaults,
-  LoginFormData,
+  passwordRecoveryFormSchema,
+  passwordRecoveryFormDefaults,
+  PasswordRecoveryFormData,
 } from "@/src/formSchemas";
 import {
   Button,
@@ -18,50 +19,44 @@ import {
   FormField,
   ProtectedForm,
 } from "@/src/components";
-import Link from "next/link";
 
-export const LoginForm = () => {
+export const PasswordRecoveryForm = () => {
   const { isSubmitting, isRateLimited } = useSpamProtection();
+  const router = useRouter();
 
-  const loginForm = useForm<LoginFormData>({
-    resolver: zodResolver(loginFormSchema),
+  const passwordRecoveryForm = useForm<PasswordRecoveryFormData>({
+    resolver: zodResolver(passwordRecoveryFormSchema),
     mode: "onBlur",
-    defaultValues: loginFormDefaults,
+    defaultValues: passwordRecoveryFormDefaults,
   });
 
-  const handleLogin: SubmitHandler<LoginFormData> = async (data) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
-    });
+  const handlePasswordRecovery: SubmitHandler<
+    PasswordRecoveryFormData
+  > = async (data) => {
+    const { data: passwordRecoveryData, error } =
+      await supabase.auth.updateUser({
+        password: data.password,
+      });
     if (error) {
-      console.error("Error logging in:", error);
+      console.error("Error password recovering:", error);
       throw new Error(error.message);
     }
-    console.log("You're Logged In! 🎉");
+    router.push("/");
   };
 
-  const { control } = loginForm;
+  const { control } = passwordRecoveryForm;
 
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Login</CardTitle>
+          <CardTitle>Reset Your Password</CardTitle>
           <CardDescription>
-            Enter your email and password to login.
+            Enter a new password to keep hoppin.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ProtectedForm control={control} onSubmit={handleLogin}>
-            <FormField
-              control={control}
-              name="email"
-              label="Email"
-              type="email"
-              required
-            />
-
+          <ProtectedForm control={control} onSubmit={handlePasswordRecovery}>
             <FormField
               control={control}
               name="password"
@@ -70,12 +65,18 @@ export const LoginForm = () => {
               required
             />
 
-            <Link href="/forgot-password">Forgot Password?</Link>
+            <FormField
+              control={control}
+              name="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              required
+            />
 
             <div className="pt-4 w-full flex justify-center">
               <Button
                 type="submit"
-                text={isSubmitting ? "Signing up..." : "Signup"}
+                text={isSubmitting ? "Resetting Password..." : "Reset Password"}
                 backgroundColor="#000"
                 disabled={isSubmitting || isRateLimited}
               />

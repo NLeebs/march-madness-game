@@ -4,19 +4,10 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_REGEX,
   HONEYPOT_FIELD_NAME,
-  USERNAME_MIN_LENGTH,
-  USERNAME_MAX_LENGTH,
-  USERNAME_REGEX,
 } from "@/src/constants/CONSTANTS";
 
-export const signupFormSchema = z
+export const passwordRecoveryFormSchema = z
   .object({
-    userName: z
-      .string()
-      .min(USERNAME_MIN_LENGTH, "Username is required")
-      .max(USERNAME_MAX_LENGTH, "Username must be less than 20 characters")
-      .regex(USERNAME_REGEX, "Username can only contain letters and numbers"),
-    email: z.string().email("Invalid email format"),
     password: z
       .string()
       .min(PASSWORD_MIN_LENGTH, "Password must be at least 8 characters")
@@ -40,11 +31,11 @@ export const signupFormSchema = z
     path: ["confirmPassword"],
   });
 
-export type SignupFormData = z.infer<typeof signupFormSchema>;
+export type PasswordRecoveryFormData = z.infer<
+  typeof passwordRecoveryFormSchema
+>;
 
-export const signupFormDefaults: SignupFormData = {
-  userName: "",
-  email: "",
+export const passwordRecoveryFormDefaults: PasswordRecoveryFormData = {
   password: "",
   confirmPassword: "",
   [HONEYPOT_FIELD_NAME]: "",

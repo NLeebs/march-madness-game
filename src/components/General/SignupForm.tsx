@@ -1,5 +1,4 @@
 "use client";
-import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { supabase } from "@/app/api/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +20,6 @@ import {
 } from "@/src/components";
 
 export const SignupForm = () => {
-  const dispatch = useDispatch();
   const { isSubmitting, isRateLimited } = useSpamProtection();
 
   const signupForm = useForm<SignupFormData>({

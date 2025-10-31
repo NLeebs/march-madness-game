@@ -1,8 +1,6 @@
 import { z } from "zod";
 import {
-  PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,
-  PASSWORD_REGEX,
   HONEYPOT_FIELD_NAME,
 } from "@/src/constants/CONSTANTS";
 
