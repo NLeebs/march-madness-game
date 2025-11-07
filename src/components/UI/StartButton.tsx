@@ -30,7 +30,6 @@ export const StartButton = () => {
   );
 
   useEffect(() => {
-    // Define Mose Move Handler
     const handleMouseMove = (e) => {
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
@@ -44,7 +43,6 @@ export const StartButton = () => {
       setElRotation(elAngleDegrees);
     };
 
-    // Set Event Listeners
     if (screenWidth >= LARGE_BREAK_POINT) {
       window.addEventListener("mousemove", handleMouseMove);
       return () => {

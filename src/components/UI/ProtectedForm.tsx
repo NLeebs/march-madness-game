@@ -6,7 +6,11 @@ import {
   SubmitHandler,
   FieldPath,
 } from "react-hook-form";
-import { HoneypotInput, FormErrorDisplay } from "@/src/components";
+import {
+  HoneypotInput,
+  FormErrorDisplay,
+  LoadingBasketball,
+} from "@/src/components";
 import { useSpamProtection } from "@/src/hooks";
 import { HONEYPOT_FIELD_NAME } from "@/src/constants/CONSTANTS";
 
@@ -52,7 +56,7 @@ export const ProtectedForm = <T extends FieldValues>({
       await onSubmit(data);
     } catch (error) {
       console.error("Form submission error:", error);
-      setError("An error occurred during submission. Please try again.");
+      setError(error.message);
     } finally {
       endSubmission();
     }
@@ -77,7 +81,7 @@ export const ProtectedForm = <T extends FieldValues>({
         name={HONEYPOT_FIELD_NAME as FieldPath<T>}
       />
 
-      {children}
+      {isSubmitting ? <LoadingBasketball /> : children}
     </form>
   );
 };
