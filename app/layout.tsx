@@ -22,7 +22,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description}></meta>
       </head>
-      <body suppressHydrationWarning={true} className={geologica.className}>
+      <body
+        suppressHydrationWarning={true}
+        className={`${geologica.className} bg-gradient-to-br from-blue-300 from-50% to-blue-50 to-80%`}
+      >
         <AuthProvider>{children}</AuthProvider>
         <div id="modal-root"></div>
       </body>

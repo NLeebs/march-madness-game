@@ -8,11 +8,17 @@ import {
   TabsTrigger,
 } from "@/src/components";
 
-export const UserAuthentication = () => {
+interface UserAuthenticationProps {
+  openedTab: "login" | "signup";
+}
+
+export const UserAuthentication: React.FC<UserAuthenticationProps> = ({
+  openedTab = "login",
+}) => {
   return (
     <Tabs
       className="flex flex-col items-center justify-center"
-      defaultValue="login"
+      defaultValue={openedTab}
     >
       <TabsList>
         <TabsTrigger value="login">Login</TabsTrigger>

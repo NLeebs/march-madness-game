@@ -20,18 +20,13 @@ import {
   RegularSeason,
   SeasonSchedule,
   TournamentRecapDialog,
-  NavigationBar,
 } from "@/src/components";
 import { getTeamStatData } from "@/src/functions";
 
 // TODO:
 // 5. Multiple year stats
 // 6. Slow down tourny playing
-// 6. Stop lazy load of team icons in regular season
-// 6. Authentication and user login
-// 6. Login and API error validation
 // 6. Select favorite team -> color changes
-// 6. Favorite team stat boost
 // 7. Send game data to database
 // 8. User Dashboard with Statistics
 // 9. Winner animations
@@ -78,7 +73,6 @@ function App() {
     });
   }, [dispatch]);
 
-  // Turn off loading app state once TeamStats populated
   useEffect(() => {
     if (teamScheduleObj.teamArray.length > 0 && !authLoading)
       dispatch(appStateActions.loadingComplete());
@@ -86,11 +80,7 @@ function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <NavigationBar />
       {/* <AddTeamStatsToFirebase /> */}
-      {authLoading && <div>Loading...</div>}
-      {user && <div>User Logged In</div>}
-      {!user && <div>User NOT Logged In</div>}
 
       {teamArray && (
         <SeasonSchedule

@@ -1,12 +1,16 @@
 "use client";
 import React from "react";
 import { PasswordRecoveryForm } from "@/src/components";
+import { NavigationBar } from "@/src/components/General/NavigationBar";
 
 const PasswordRecoveryPage = () => {
   return (
-    <div className="flex items-center justify-center min-w-full min-h-screen">
-      <PasswordRecoveryForm />
-    </div>
+    <>
+      <NavigationBar />
+      <div className="flex items-center justify-center min-w-full min-h-screen">
+        <PasswordRecoveryForm />
+      </div>
+    </>
   );
 };
 
