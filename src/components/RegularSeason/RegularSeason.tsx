@@ -15,7 +15,7 @@ import {
   PRIMARY_COLOR,
   POWER_CONFERENCE_LIST,
 } from "@/src/constants";
-import { ConferenceMap } from "@/schemas";
+import { ConferenceMap } from "@/models";
 
 interface RegularSeasonProps {
   teamStats: ConferenceMap;

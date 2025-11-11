@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { MotionConfig, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "@/src/hooks";
 import {
   appStateActions,
   uiStateActions,
@@ -22,20 +23,17 @@ import {
 } from "@/src/components";
 import { getTeamStatData } from "@/src/functions";
 
-// TODO:
+// TODO:7. Send game data to database
 // 5. Multiple year stats
 // 6. Slow down tourny playing
-// 6. Stop lazy load of team icons in regular season
-// 6. Authentication and user login
-// 6. Login and API error validation
 // 6. Select favorite team -> color changes
-// 6. Favorite team stat boost
-// 7. Send game data to database
 // 8. User Dashboard with Statistics
 // 9. Winner animations
 
 function App() {
   const dispatch = useDispatch();
+
+  const { user, authLoading } = useAuth();
 
   const appState = useSelector((state: RootState) => state.appState);
   const teamStatsObject = useSelector((state: RootState) => state.teamStats);
@@ -74,15 +72,15 @@ function App() {
     });
   }, [dispatch]);
 
-  // Turn off loading app state once TeamStats populated
   useEffect(() => {
-    if (teamScheduleObj.teamArray.length > 0)
+    if (teamScheduleObj.teamArray.length > 0 && !authLoading)
       dispatch(appStateActions.loadingComplete());
-  }, [dispatch, teamScheduleObj.teamArray.length]);
+  }, [dispatch, teamScheduleObj.teamArray.length, authLoading]);
 
   return (
     <MotionConfig reducedMotion="user">
       {/* <AddTeamStatsToFirebase /> */}
+
       {teamArray && (
         <SeasonSchedule
           teamStats={teamStatsObject.teamStats}

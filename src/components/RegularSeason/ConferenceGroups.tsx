@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { TeamBar } from "@/src/components";
-import { TeamMap } from "@/schemas";
+import { TeamMap } from "@/models";
 
 interface ConferenceGroupsProps {
   conferenceTeams: TeamMap;

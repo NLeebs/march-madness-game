@@ -1,6 +1,6 @@
 import { doc, getDoc, DocumentData } from "firebase/firestore";
 import db from "@/src/firebase/config";
-import { ConferenceMap } from "@/schemas";
+import { ConferenceMap } from "@/models";
 
 export const getTeamStatData = async (): Promise<ConferenceMap | null> => {
   const dateObj = new Date();
