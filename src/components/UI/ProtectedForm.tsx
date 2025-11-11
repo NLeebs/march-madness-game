@@ -13,6 +13,7 @@ import {
 } from "@/src/components";
 import { useSpamProtection } from "@/src/hooks";
 import { HONEYPOT_FIELD_NAME } from "@/src/constants/CONSTANTS";
+import { SpamProtectionContext } from "@/src/components/Context";
 
 interface ProtectedFormProps<T extends FieldValues> {
   control: Control<T>;
@@ -68,25 +69,33 @@ export const ProtectedForm = <T extends FieldValues>({
   };
 
   return (
-    <form
-      className={`flex flex-col gap-4 ${className}`}
-      onSubmit={control.handleSubmit(handleSubmit)}
+    <SpamProtectionContext.Provider
+      value={{
+        isSubmitting,
+        isRateLimited,
+        submitError,
+      }}
     >
-      <FormErrorDisplay error={submitError} type="error" />
-      <FormErrorDisplay
-        error={
-          isRateLimited
-            ? "Rate limit exceeded. Please wait before submitting again."
-            : undefined
-        }
-        type="warning"
-      />
-      <HoneypotInput
-        control={control}
-        name={HONEYPOT_FIELD_NAME as FieldPath<T>}
-      />
+      <form
+        className={`flex flex-col gap-4 ${className}`}
+        onSubmit={control.handleSubmit(handleSubmit)}
+      >
+        <FormErrorDisplay error={submitError} type="error" />
+        <FormErrorDisplay
+          error={
+            isRateLimited
+              ? "Rate limit exceeded. Please wait before submitting again."
+              : undefined
+          }
+          type="warning"
+        />
+        <HoneypotInput
+          control={control}
+          name={HONEYPOT_FIELD_NAME as FieldPath<T>}
+        />
 
-      {isSubmitting ? <LoadingBasketball /> : children}
-    </form>
+        {isSubmitting ? <LoadingBasketball /> : children}
+      </form>
+    </SpamProtectionContext.Provider>
   );
 };

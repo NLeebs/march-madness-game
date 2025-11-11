@@ -6,6 +6,7 @@ export * from "./PlayerPickBar";
 export * from "./PlayTournamentButton";
 export * from "./StartScreen";
 export * from "./StartButton";
+export * from "./SubmitButton";
 export * from "./TeamBar";
 export * from "./shadComponents";
 export * from "./HoneypotField";

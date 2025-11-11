@@ -2,14 +2,12 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { supabase } from "@/app/api/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSpamProtection } from "@/src/hooks";
 import {
   signupFormSchema,
   signupFormDefaults,
   SignupFormData,
 } from "@/src/formSchemas";
 import {
-  Button,
   Card,
   CardHeader,
   CardTitle,
@@ -17,11 +15,10 @@ import {
   CardContent,
   FormField,
   ProtectedForm,
+  SubmitButton,
 } from "@/src/components";
 
 export const SignupForm = () => {
-  const { isSubmitting, isRateLimited } = useSpamProtection();
-
   const signupForm = useForm<SignupFormData>({
     resolver: zodResolver(signupFormSchema),
     mode: "onBlur",
@@ -96,12 +93,7 @@ export const SignupForm = () => {
             />
 
             <div className="pt-4 w-full flex justify-center">
-              <Button
-                type="submit"
-                text={isSubmitting ? "Signing up..." : "Signup"}
-                backgroundColor="#000"
-                disabled={isSubmitting || isRateLimited}
-              />
+              <SubmitButton text="Signup" submittingText="Signing up..." />
             </div>
           </ProtectedForm>
         </CardContent>

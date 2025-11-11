@@ -3,14 +3,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { supabase } from "@/app/api/supabase";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSpamProtection } from "@/src/hooks";
 import {
   newPasswordRequestFormSchema,
   newPasswordRequestFormDefaults,
   NewPasswordRequestFormData,
 } from "@/src/formSchemas";
 import {
-  Button,
   Card,
   CardHeader,
   CardTitle,
@@ -18,12 +16,11 @@ import {
   CardContent,
   FormField,
   ProtectedForm,
+  SubmitButton,
 } from "@/src/components";
 
 export const NewPasswordRequestForm = () => {
   const router = useRouter();
-
-  const { isSubmitting, isRateLimited } = useSpamProtection();
 
   const newPasswordRequestForm = useForm<NewPasswordRequestFormData>({
     resolver: zodResolver(newPasswordRequestFormSchema),
@@ -68,15 +65,9 @@ export const NewPasswordRequestForm = () => {
             />
 
             <div className="pt-4 w-full flex justify-center">
-              <Button
-                type="submit"
-                text={
-                  isSubmitting
-                    ? "Requesting New Password..."
-                    : "Request New Password"
-                }
-                backgroundColor="#000"
-                disabled={isSubmitting || isRateLimited}
+              <SubmitButton
+                text="Request New Password"
+                submittingText="Requesting New Password..."
               />
             </div>
           </ProtectedForm>

@@ -1,19 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/src/hooks";
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
-  const [isRedirecting, setIsRedirecting] = useState(false);
+  const hasRedirected = useRef(false);
 
   useEffect(() => {
-    if (!authLoading && !user && !isRedirecting) {
-      setIsRedirecting(true);
+    if (!authLoading && !user && !hasRedirected.current) {
+      hasRedirected.current = true;
       router.push("/");
     }
-  }, [authLoading, user, router, isRedirecting]);
+  }, [authLoading, user, router]);
 
   if (authLoading) {
     return (
@@ -23,7 +23,7 @@ const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (isRedirecting || !user) {
+  if (!user) {
     return null;
   }
 

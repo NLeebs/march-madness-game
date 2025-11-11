@@ -2,14 +2,12 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { supabase } from "@/app/api/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSpamProtection } from "@/src/hooks";
 import {
   loginFormSchema,
   loginFormDefaults,
   LoginFormData,
 } from "@/src/formSchemas";
 import {
-  Button,
   Card,
   CardHeader,
   CardTitle,
@@ -17,12 +15,11 @@ import {
   CardContent,
   FormField,
   ProtectedForm,
+  SubmitButton,
 } from "@/src/components";
 import Link from "next/link";
 
 export const LoginForm = () => {
-  const { isSubmitting, isRateLimited } = useSpamProtection();
-
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
     mode: "onBlur",
@@ -73,12 +70,7 @@ export const LoginForm = () => {
             <Link href="/forgot-password">Forgot Password?</Link>
 
             <div className="pt-4 w-full flex justify-center">
-              <Button
-                type="submit"
-                text={isSubmitting ? "Logging In..." : "Login"}
-                backgroundColor="#000"
-                disabled={isSubmitting || isRateLimited}
-              />
+              <SubmitButton text="Login" submittingText="Logging In..." />
             </div>
           </ProtectedForm>
         </CardContent>

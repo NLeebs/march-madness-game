@@ -3,14 +3,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { supabase } from "@/app/api/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useSpamProtection } from "@/src/hooks";
 import {
   passwordRecoveryFormSchema,
   passwordRecoveryFormDefaults,
   PasswordRecoveryFormData,
 } from "@/src/formSchemas";
 import {
-  Button,
   Card,
   CardHeader,
   CardTitle,
@@ -18,10 +16,10 @@ import {
   CardContent,
   FormField,
   ProtectedForm,
+  SubmitButton,
 } from "@/src/components";
 
 export const PasswordRecoveryForm = () => {
-  const { isSubmitting, isRateLimited } = useSpamProtection();
   const router = useRouter();
 
   const passwordRecoveryForm = useForm<PasswordRecoveryFormData>({
@@ -74,11 +72,9 @@ export const PasswordRecoveryForm = () => {
             />
 
             <div className="pt-4 w-full flex justify-center">
-              <Button
-                type="submit"
-                text={isSubmitting ? "Resetting Password..." : "Reset Password"}
-                backgroundColor="#000"
-                disabled={isSubmitting || isRateLimited}
+              <SubmitButton
+                text="Reset Password"
+                submittingText="Resetting Password..."
               />
             </div>
           </ProtectedForm>
