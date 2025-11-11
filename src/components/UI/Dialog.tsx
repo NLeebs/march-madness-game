@@ -7,15 +7,21 @@ import { ACCENT_COLOR } from "@/src/constants";
 
 interface DialogProps {
   isOpen: boolean;
+  hasCloseButton?: boolean;
   onClose: () => void;
-  backgroundColor: string;
+  dialogBackgroundColor?: string;
+  dialogBorderColor?: string;
+  overlayOpacity?: number;
   children: React.ReactNode;
 }
 
 export const Dialog: React.FC<DialogProps> = ({
   isOpen,
+  hasCloseButton = true,
   onClose,
-  backgroundColor,
+  dialogBackgroundColor = "#FFF",
+  dialogBorderColor = ACCENT_COLOR,
+  overlayOpacity = 0.5,
   children,
 }) => {
   if (!isOpen) return null;
@@ -31,28 +37,30 @@ export const Dialog: React.FC<DialogProps> = ({
           opacity: 1,
         }}
         style={{
-          backgroundColor: backgroundColor,
-          borderColor: ACCENT_COLOR,
+          backgroundColor: dialogBackgroundColor,
+          borderColor: dialogBorderColor,
         }}
       >
-        <div className="w-full flex flex-row-reverse">
-          <button onClick={onClose}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill={ACCENT_COLOR}
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
+        {hasCloseButton && (
+          <div className="w-full flex flex-row-reverse">
+            <button onClick={onClose}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill={ACCENT_COLOR}
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
         <div className="flex flex-col justify-start items-center gap-8">
           {children}
         </div>
@@ -62,7 +70,7 @@ export const Dialog: React.FC<DialogProps> = ({
           opacity: 0,
         }}
         animate={{
-          opacity: 0.5,
+          opacity: overlayOpacity,
         }}
         onClick={onClose}
         className="fixed inset-0 z-10"

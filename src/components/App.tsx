@@ -23,11 +23,10 @@ import {
 } from "@/src/components";
 import { getTeamStatData } from "@/src/functions";
 
-// TODO:
+// TODO:7. Send game data to database
 // 5. Multiple year stats
 // 6. Slow down tourny playing
 // 6. Select favorite team -> color changes
-// 7. Send game data to database
 // 8. User Dashboard with Statistics
 // 9. Winner animations
 

@@ -92,7 +92,10 @@ export const NavigationBar = () => {
       <Dialog
         isOpen={isLoginDialogOpen}
         onClose={() => setIsLoginDialogOpen(false)}
-        backgroundColor="#FFF"
+        dialogBackgroundColor="transparent"
+        dialogBorderColor="transparent"
+        hasCloseButton={false}
+        overlayOpacity={0.8}
       >
         <UserAuthentication openedTab={openedTab} />
       </Dialog>
