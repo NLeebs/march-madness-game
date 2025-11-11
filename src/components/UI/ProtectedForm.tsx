@@ -32,6 +32,7 @@ export const ProtectedForm = <T extends FieldValues>({
     submitError,
     isRateLimited,
     validateSubmission,
+    recordSuccessfulSubmission,
     startSubmission,
     endSubmission,
     setError,
@@ -54,9 +55,13 @@ export const ProtectedForm = <T extends FieldValues>({
       }
 
       await onSubmit(data);
+
+      recordSuccessfulSubmission();
     } catch (error) {
       console.error("Form submission error:", error);
-      setError(error.message);
+      setError(
+        error instanceof Error ? error.message : "An unexpected error occurred"
+      );
     } finally {
       endSubmission();
     }

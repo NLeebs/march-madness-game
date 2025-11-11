@@ -18,6 +18,7 @@ interface SpamProtectionActions {
     isValid: boolean;
     error?: string;
   }>;
+  recordSuccessfulSubmission: () => void;
   startSubmission: () => void;
   endSubmission: () => void;
   setError: (error: string) => void;
@@ -65,16 +66,9 @@ export const useSpamProtection = (): SpamProtectionState &
         };
       }
 
-      recordFormSubmission();
-
       return { isValid: true };
     },
-    [
-      checkFormSubmissionRateLimit,
-      validateFormFillTime,
-      recordFormSubmission,
-      remainingAttempts,
-    ]
+    [checkFormSubmissionRateLimit, validateFormFillTime, remainingAttempts]
   );
 
   const startSubmission = useCallback(() => {
@@ -94,12 +88,17 @@ export const useSpamProtection = (): SpamProtectionState &
     setSubmitError("");
   }, []);
 
+  const recordSuccessfulSubmission = useCallback(() => {
+    recordFormSubmission();
+  }, [recordFormSubmission]);
+
   return {
     isSubmitting,
     submitError,
     isRateLimited,
     remainingAttempts,
     validateSubmission,
+    recordSuccessfulSubmission,
     startSubmission,
     endSubmission,
     setError,

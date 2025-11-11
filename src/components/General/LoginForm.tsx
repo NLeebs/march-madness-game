@@ -75,7 +75,7 @@ export const LoginForm = () => {
             <div className="pt-4 w-full flex justify-center">
               <Button
                 type="submit"
-                text={isSubmitting ? "Signing up..." : "Signup"}
+                text={isSubmitting ? "Logging In..." : "Login"}
                 backgroundColor="#000"
                 disabled={isSubmitting || isRateLimited}
               />

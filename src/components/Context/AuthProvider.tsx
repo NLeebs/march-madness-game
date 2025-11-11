@@ -9,10 +9,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(data?.session?.user || null);
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        setUser(data?.session?.user || null);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error getting session:", error);
+        setUser(null);
+        setLoading(false);
+      });
 
     const { data: listner } = supabase.auth.onAuthStateChange(
       (event, session) => {
