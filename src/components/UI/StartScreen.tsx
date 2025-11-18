@@ -8,7 +8,7 @@ export const StartScreen = () => {
   const appState = useSelector((state: RootState) => state.appState);
 
   return (
-    <div className="w-screen h-screen overflow-hidden flex flex-col justify-center items-center">
+    <div className="w-screen h-[calc(100vh-5rem)] overflow-hidden flex flex-col justify-center items-center">
       <div
         className={`flex flex-col items-center transition-opacity duration-500 ${
           appState.transition && "opacity-0"

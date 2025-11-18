@@ -5,7 +5,7 @@ import { cn } from "@/src/utils";
 interface ButtonProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   backgroundColor: string;
-  text: string;
+  text: React.ReactNode;
   disabled?: boolean;
   type?: "button" | "submit";
   className?: string;

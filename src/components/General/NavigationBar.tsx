@@ -44,6 +44,12 @@ export const NavigationBar = () => {
     }
   };
 
+  const homeButtonText = (
+    <span className="text-2xl">
+      Madness <span className="sm:inline hidden">the Game</span>
+    </span>
+  );
+
   const homeIcon = (
     <BasketballSVG
       size={36}
@@ -54,12 +60,12 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <nav className="w-full flex flex-row justify-between items-center px-4 bg-gradient-to-r from-blue-500 from-70% to-blue-400 to-100% py-1">
+      <nav className="w-full h-20 flex flex-row justify-between items-center px-4 bg-gradient-to-r from-blue-500 from-70% to-blue-400 to-100% py-1">
         <div className="flex flex-row items-center gap-2">
           <Button
             onClick={handleHomeClick}
             backgroundColor="transparent"
-            text="Madness the Game"
+            text={homeButtonText}
             className="pl-0 text-2xl hover:scale-none"
             icon={homeIcon}
           />
