@@ -25,6 +25,12 @@
       "*": ["types/*"]
     }
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "scripts/migrations/firebaseToSupabaseTeamMigration.js"
+  ],
   "exclude": ["node_modules"]
 }
