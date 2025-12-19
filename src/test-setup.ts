@@ -1,4 +1,33 @@
-import { beforeAll } from "vitest";
+import { beforeAll, vi } from "vitest";
+
+// Mock Supabase environment variables before any imports
+vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
+vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "test-anon-key");
+
+// Mock the Supabase client module to prevent actual API calls
+vi.mock("@/app/api/supabase", () => ({
+  supabase: {
+    auth: {
+      signUp: vi.fn(),
+      signInWithPassword: vi.fn(),
+      signOut: vi.fn(),
+      updateUser: vi.fn(),
+      resetPasswordForEmail: vi.fn(),
+      getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
+      onAuthStateChange: vi.fn().mockReturnValue({
+        data: { subscription: { unsubscribe: vi.fn() } },
+      }),
+    },
+    from: vi.fn().mockReturnValue({
+      select: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockReturnThis(),
+      update: vi.fn().mockReturnThis(),
+      delete: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      single: vi.fn(),
+    }),
+  },
+}));
 
 // Suppress React act() warnings globally
 beforeAll(() => {
