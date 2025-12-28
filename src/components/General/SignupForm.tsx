@@ -1,12 +1,12 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { supabase } from "@/app/api/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   signupFormSchema,
   signupFormDefaults,
   SignupFormData,
 } from "@/src/formSchemas";
+import { useSignUp } from "@/src/hooks";
 import {
   Card,
   CardHeader,
@@ -19,6 +19,7 @@ import {
 } from "@/src/components";
 
 export const SignupForm = () => {
+  const { addNewUserToDB } = useSignUp();
   const signupForm = useForm<SignupFormData>({
     resolver: zodResolver(signupFormSchema),
     mode: "onBlur",
@@ -26,25 +27,7 @@ export const SignupForm = () => {
   });
 
   const handleSignup: SubmitHandler<SignupFormData> = async (data) => {
-    console.log("You're Signed Up! 🎉");
-    const { data: signupData, error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-    });
-    if (error) {
-      console.error("Error signing up:", error);
-      throw new Error(error.message);
-    }
-    const { data: updateData, error: updateError } =
-      await supabase.auth.updateUser({
-        data: {
-          display_name: data.userName,
-        },
-      });
-    if (updateError) {
-      console.error("Error adding username:", updateError);
-      throw new Error(updateError.message);
-    }
+    addNewUserToDB(data);
   };
 
   const { control } = signupForm;
