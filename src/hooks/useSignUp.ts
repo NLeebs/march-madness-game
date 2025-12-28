@@ -3,11 +3,11 @@ import { useCallback } from "react";
 import { SignupFormData } from "@/src/formSchemas";
 import { supabase } from "@/app/api/supabase";
 
-interface SignUpState {
+interface IUseSignUp {
   addNewUserToDB: (formData: SignupFormData) => Promise<void>;
 }
 
-export const useSignUp = (): SignUpState => {
+export const useSignUp = (): IUseSignUp => {
   const addNewUserToDB = useCallback(async (formData: SignupFormData) => {
     const { data: signupData, error: signupError } = await supabase.auth.signUp(
       {
