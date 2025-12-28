@@ -7,12 +7,14 @@ interface SubmitButtonProps {
   text: string;
   submittingText: string;
   backgroundColor?: string;
+  disabled?: boolean;
 }
 
 export const SubmitButton = ({
   text,
   submittingText,
   backgroundColor = PRIMARY_COLOR,
+  disabled = false,
 }: SubmitButtonProps) => {
   const { isSubmitting, isRateLimited } = useSpamProtectionContext();
 
@@ -21,7 +23,7 @@ export const SubmitButton = ({
       type="submit"
       text={isSubmitting ? submittingText : text}
       backgroundColor={backgroundColor}
-      disabled={isSubmitting || isRateLimited}
+      disabled={disabled || isSubmitting || isRateLimited}
     />
   );
 };
