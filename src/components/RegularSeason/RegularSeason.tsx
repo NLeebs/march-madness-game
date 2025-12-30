@@ -44,10 +44,8 @@ export const RegularSeason: React.FC<RegularSeasonProps> = ({ teamStats }) => {
     dispatch(appStateActions.activateTournamentSelectionStage());
   };
 
-  // TODO: Add Regular Season Title
-  // TODO: Add Selection Sunday Title
   return (
-    <div className="h-screen overflow-y-scroll">
+    <div className="h-[calc(100vh-5rem)] overflow-y-scroll">
       <motion.div
         exit={{ opacity: 0 }}
         className="flex flex-col justify-center items-center p-8 gap-y-12"
