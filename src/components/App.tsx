@@ -42,7 +42,6 @@ function App() {
   );
   const teamScheduleObj = useSelector((state: RootState) => state.teamSchedule);
 
-  // Monitor resizing of the screen
   useEffect(() => {
     function handleResize() {
       const screenSizeObj = {
@@ -60,7 +59,6 @@ function App() {
     };
   }, [dispatch]);
 
-  // Add Team Stats to State and Config Schedules State
   useEffect(() => {
     getTeamStatData().then((teamStatsData) => {
       dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
