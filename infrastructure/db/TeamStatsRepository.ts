@@ -1,5 +1,6 @@
 import db from "@/src/firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { ConferenceMap } from "@/models";
 
 export class TeamStatsRepository {
   async getYears(): Promise<string[]> {
@@ -11,5 +12,18 @@ export class TeamStatsRepository {
     }
 
     return teamStatsSnapshot.docs.map((doc) => doc.id);
+  }
+
+  async getTeamStatsByYearId(year: number): Promise<ConferenceMap> {
+    const teamStatsRef = doc(db, "team-statistics", `${year}`);
+    const teamStatsSnapshot = await getDoc(teamStatsRef);
+
+    if (teamStatsSnapshot.exists()) {
+      return teamStatsSnapshot.data() as ConferenceMap;
+    } else {
+      throw new Error(
+        `Error fetching team statistics by year from Firebase: ${year}`
+      );
+    }
   }
 }

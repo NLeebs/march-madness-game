@@ -16,11 +16,13 @@ import {
 interface StartButtonProps {
   yearId: string;
   tournamentScoringRuleId: string;
+  isLoading?: boolean;
 }
 
 export const StartButton = ({
   yearId,
   tournamentScoringRuleId,
+  isLoading = false,
 }: StartButtonProps) => {
   const dispatch = useDispatch();
 
@@ -32,9 +34,6 @@ export const StartButton = ({
 
   const isTranstion = useSelector<RootState, boolean>(
     (state) => state.appState.transition
-  );
-  const isLoading = useSelector<RootState, boolean>(
-    (state) => state.appState.loading
   );
 
   useEffect(() => {

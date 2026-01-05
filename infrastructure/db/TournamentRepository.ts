@@ -26,6 +26,24 @@ export class TournamentRepository {
     return yearsData;
   }
 
+  async getYearById(yearId: string): Promise<YearSupabase> {
+    const { data: yearData, error: yearError } = await supabase
+      .from("years")
+      .select("*")
+      .eq("id", yearId)
+      .single();
+
+    if (yearError) {
+      throw new Error(`Failed to fetch year: ${yearError.message}`);
+    }
+
+    if (!yearData) {
+      throw new Error(`No year found for id: ${yearId}`);
+    }
+
+    return yearData as YearSupabase;
+  }
+
   async getBracketScoringRulesByYearId(
     yearId: string
   ): Promise<BracketScoringRuleSupabase> {
