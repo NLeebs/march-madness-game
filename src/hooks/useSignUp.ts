@@ -1,7 +1,7 @@
 "use client";
 import { useCallback } from "react";
 import { SignupFormData } from "@/src/formSchemas";
-import { supabase } from "@/app/api/supabase";
+import { supabase } from "@/infrastructure/db/supabaseClient";
 
 interface IUseSignUpReturn {
   success: boolean;

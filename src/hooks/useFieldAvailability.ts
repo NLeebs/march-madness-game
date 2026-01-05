@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
-import { supabase } from "@/app/api/supabase";
+import { supabase } from "@/infrastructure/db/supabaseClient";
 
 interface UseFieldAvailabilityReturn {
   checkUsernameAvailability: (value: string) => Promise<boolean>;

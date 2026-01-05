@@ -2,7 +2,7 @@ import { TournamentState } from "@/store/tournamentSlice";
 import { TournamentPlayerPicks, TournamentRound } from "@/types";
 import { mapTournamentToRows } from "@/application/mappers/mapTournamentToRows";
 import { TournamentRepository } from "@/infrastructure/db/TournamentRepository";
-import { supabase } from "@/app/api/supabase/supabaseClient";
+import { supabase } from "@/infrastructure/db/supabaseClient";
 import { BracketSupabase } from "@/models/appStatsData";
 
 interface PersistTournamentData {

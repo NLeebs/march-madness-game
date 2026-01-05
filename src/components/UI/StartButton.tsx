@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, appStateActions } from "@/store";
+import { RootState, appStateActions, tournamentActions } from "@/store";
 import { delay } from "@/src/functions";
 import { BasketballSVG } from "@/src/components/Graphics";
 import {
@@ -13,7 +13,15 @@ import {
   TIMER_BETWEEN_APP_STATES,
 } from "@/src/constants";
 
-export const StartButton = () => {
+interface StartButtonProps {
+  yearId: string;
+  tournamentScoringRuleId: string;
+}
+
+export const StartButton = ({
+  yearId,
+  tournamentScoringRuleId,
+}: StartButtonProps) => {
   const dispatch = useDispatch();
 
   const screenWidth = useSelector<RootState, number>(
@@ -54,6 +62,10 @@ export const StartButton = () => {
   const activateRegularSeason = async () => {
     dispatch(appStateActions.activateTransition());
     await Promise.all([delay(TIMER_BETWEEN_APP_STATES)]).then(() => {
+      dispatch(tournamentActions.setYearId(yearId));
+      dispatch(
+        tournamentActions.setTournamentScoringRulesId(tournamentScoringRuleId)
+      );
       dispatch(appStateActions.activateRegularSeason());
     });
   };

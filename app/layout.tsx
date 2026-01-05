@@ -1,6 +1,6 @@
 // Global CSS
 import "./globals.css";
-import { AuthProvider } from "@/src/components/Context/AuthProvider";
+import { Providers } from "@/src/app/Providers";
 import { Geologica } from "next/font/google";
 
 const geologica = Geologica({ subsets: ["latin"] });
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         suppressHydrationWarning={true}
         className={`${geologica.className} bg-gradient-to-br from-blue-300 from-50% to-blue-50 to-80%`}
       >
-        <AuthProvider>{children}</AuthProvider>
+        <Providers>{children}</Providers>
         <div id="modal-root"></div>
       </body>
     </html>

@@ -13,3 +13,4 @@ export * from "./HoneypotField";
 export * from "./FormField";
 export * from "./FormErrorDisplay";
 export * from "./ProtectedForm";
+export * from "./SelectField";

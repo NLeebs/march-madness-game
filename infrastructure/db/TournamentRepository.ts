@@ -1,4 +1,4 @@
-import { supabase } from "@/app/api/supabase/supabaseClient";
+import { supabase } from "@/infrastructure/db/supabaseClient";
 import {
   BracketSupabase,
   GameSupabase,
@@ -6,6 +6,7 @@ import {
   YearSupabase,
 } from "@/models/appStatsData";
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
+import { BracketScoringRuleSupabase } from "@/models/appStatsData/BracketScoringRuleSupabase";
 
 interface PersistTournamentData {
   bracket: BracketSupabase;
@@ -22,8 +23,32 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch years: ${yearsError.message}`);
     }
 
-    return yearsData?.map((year) => year.id) || [];
+    return yearsData;
   }
+
+  async getBracketScoringRulesByYearId(
+    yearId: string
+  ): Promise<BracketScoringRuleSupabase> {
+    const { data: bracketScoringRulesData, error: bracketScoringRulesError } =
+      await supabase
+        .from("tournament_scoring_rules")
+        .select("*")
+        .eq("year_id", yearId)
+        .single();
+
+    if (bracketScoringRulesError) {
+      throw new Error(
+        `Failed to fetch bracket scoring rules: ${bracketScoringRulesError.message}`
+      );
+    }
+
+    if (!bracketScoringRulesData) {
+      throw new Error(`No bracket scoring rules found for year_id: ${yearId}`);
+    }
+
+    return bracketScoringRulesData as BracketScoringRuleSupabase;
+  }
+
   async persistBracket(bracket: BracketSupabase): Promise<string> {
     const { data: bracketData, error: bracketError } = await supabase
       .from("brackets")
