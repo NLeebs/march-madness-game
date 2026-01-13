@@ -22,7 +22,12 @@ export const StartScreen = () => {
   const dispatch = useDispatch();
   const { authLoading } = useAuth();
 
-  const [selectedYearId, setSelectedYearId] = useState<string>("");
+  const tournamentYearId = useSelector(
+    (state: RootState) => state.tournament.yearId
+  );
+  const [selectedYearId, setSelectedYearId] = useState<string>(
+    tournamentYearId || ""
+  );
   const [selectedYearTeamStats, setSelectedYearTeamStats] =
     useState<ConferenceMap | null>(null);
 
@@ -36,8 +41,14 @@ export const StartScreen = () => {
     }
   }, [years, selectedYearId]);
 
+  useEffect(() => {
+    if (tournamentYearId && tournamentYearId !== selectedYearId) {
+      setSelectedYearId(tournamentYearId);
+    }
+  }, [tournamentYearId, selectedYearId]);
+
   const {
-    data: tournamentScoringRuleId,
+    data: tournamentScoringRuleData,
     isLoading: isLoadingTournamentScoringRuleId,
   } = useQuery({
     queryKey: ["tournamentScoringRuleId", selectedYearId],
@@ -45,12 +56,14 @@ export const StartScreen = () => {
       fetch(`/api/tournament-scoring-rules/${selectedYearId}`).then((res) =>
         res.json()
       ),
+    enabled: !!selectedYearId,
   });
 
   const { data: teamStats, isLoading: isLoadingTeamStats } = useQuery({
     queryKey: ["teamStats", selectedYearId],
     queryFn: () =>
       fetch(`/api/team-statistics/${selectedYearId}`).then((res) => res.json()),
+    enabled: !!selectedYearId,
   });
   useEffect(() => {
     if (teamStats) {
@@ -81,7 +94,7 @@ export const StartScreen = () => {
   }, [dispatch, teamScheduleObj.teamArray.length]);
 
   return (
-    <div className="w-screen h-[calc(100vh-5rem)] pb-4 overflow-y-auto flex flex-col justify-center items-center">
+    <div className="w-screen h-[calc(100vh-5rem)] pb-4 flex flex-col justify-center items-center">
       <div
         className={`flex flex-col items-center transition-opacity duration-500 ${
           appState.transition && "opacity-0"
@@ -104,7 +117,9 @@ export const StartScreen = () => {
       </div>
       <StartButton
         yearId={selectedYearId}
-        tournamentScoringRuleId={tournamentScoringRuleId}
+        tournamentScoringRuleId={
+          tournamentScoringRuleData?.tournamentScoringRuleId
+        }
         isLoading={
           isLoadingYears ||
           isLoadingTournamentScoringRuleId ||

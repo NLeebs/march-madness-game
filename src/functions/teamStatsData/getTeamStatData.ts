@@ -14,8 +14,6 @@ export const getTeamStatData = async (): Promise<ConferenceMap | null> => {
       const data = teamStatsSnapshot.data();
       return data as ConferenceMap;
     } else {
-      console.log("Revert to prior year");
-
       const fallbackTeamStatsRef = doc(
         db,
         "team-statistics",
@@ -27,7 +25,6 @@ export const getTeamStatData = async (): Promise<ConferenceMap | null> => {
         const fallbackData = fallbackTeamStatsSnapshot.data();
         return fallbackData as ConferenceMap;
       } else {
-        console.log("Data can't be pulled from DB");
         return null;
       }
     }

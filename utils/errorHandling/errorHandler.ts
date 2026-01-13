@@ -35,6 +35,14 @@ export function handleApiError(
     statusCode = error.statusCode;
     message = error.message;
     code = error.code;
+    if ((error as any).zodError instanceof ZodError) {
+      const zodError = (error as any).zodError as ZodError;
+      details = zodError.errors.map((err) => ({
+        field: err.path.join("."),
+        message: err.message,
+        code: err.code,
+      }));
+    }
   } else if (error instanceof ZodError) {
     statusCode = 400;
     message = "Validation error";

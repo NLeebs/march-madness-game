@@ -6,8 +6,10 @@ import {
   TournamentRound,
   RegionPicks,
   TournamentPickTeam,
+  TournamentRegion,
 } from "@/types";
 import { GameSupabase, PickSupabase } from "@/models/appStatsData";
+import { mapPicksRegionAndIndex } from "./mapPicksRegionandIndex";
 
 interface MapTournamentToRowsData {
   bracketId: string;
@@ -208,10 +210,27 @@ export function mapTournamentToRows({
             );
           });
         } else if (Array.isArray(matchups) && matchups.length > 0) {
-          const regionPicks: TournamentPickTeam[] = round.picks[region].flat();
-          const pick = regionPicks[matchupIndex];
+          const { picksRegion, pickIndex: regionBasedPickIndex } =
+            mapPicksRegionAndIndex(round.roundName, region as TournamentRegion);
 
-          matchups.forEach((matchup) => {
+          const picksForRegion = round.picks[picksRegion];
+          if (!picksForRegion) {
+            throw new Error(
+              `Picks not found for region: ${picksRegion} in round: ${round.roundName}`
+            );
+          }
+
+          const regionPicks: TournamentPickTeam[] = picksForRegion.flat();
+
+          matchups.forEach((matchup, matchupIndexInRegion) => {
+            const finalPickIndex =
+              round.roundName === "elite eight" ||
+              round.roundName === "final four" ||
+              round.roundName === "finals"
+                ? regionBasedPickIndex
+                : matchupIndexInRegion;
+
+            const pick = regionPicks[finalPickIndex];
             processMatchupAndPicksToRow(matchup, pick, round.roundName, false);
           });
         }

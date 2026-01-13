@@ -12,9 +12,10 @@ import {
   RegularSeason,
   SeasonSchedule,
   TournamentRecapDialog,
+  TournamentPersist,
 } from "@/src/components";
 
-// TODO:7. Send game data to database
+// TODO:7. Send game data to database - need to call persistTournament from the API
 // 5. Multiple year stats
 // 6. Slow down tourny playing
 // 6. Select favorite team -> color changes
@@ -71,6 +72,7 @@ function App() {
         appState.tournamentPlayGames &&
         !appState.tournamentRecap && <PlayTournamentGames />}
       {appState.tournamentRecap && <TournamentRecapDialog />}
+      {appState.tournamentRecap && <TournamentPersist />}
     </MotionConfig>
   );
 }

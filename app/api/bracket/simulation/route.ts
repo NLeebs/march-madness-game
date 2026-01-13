@@ -6,7 +6,7 @@ import { validateRequest } from "@/utils/errorHandling";
 import { TournamentState } from "@/store/tournamentSlice";
 import { TournamentPlayerPicks } from "@/types";
 
-interface SimulationRequestBody {
+export interface SimulationRequestBody {
   tournamentState: TournamentState;
   picksState: TournamentPlayerPicks;
   userId: string;

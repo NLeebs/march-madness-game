@@ -18,6 +18,10 @@ export const useRestartTheGame = () => {
   const teamStats = useSelector(
     (state: RootState) => state.teamStats.teamStats
   );
+  const yearId = useSelector((state: RootState) => state.tournament.yearId);
+  const tournamentScoringRulesId = useSelector(
+    (state: RootState) => state.tournament.tournamentScoringRulesId
+  );
 
   const restartTheGame = async () => {
     dispatch(appStateActions.restartGame());
@@ -26,6 +30,15 @@ export const useRestartTheGame = () => {
     dispatch(regularSeasonRecordActions.restartGame());
     dispatch(tounramentPlayersPicksActions.restartGame());
     dispatch(tournamentActions.restartGame());
+
+    if (yearId) {
+      dispatch(tournamentActions.setYearId(yearId));
+    }
+    if (tournamentScoringRulesId) {
+      dispatch(
+        tournamentActions.setTournamentScoringRulesId(tournamentScoringRulesId)
+      );
+    }
 
     await Promise.all([delay(TIMER_BETWEEN_APP_STATES)])
       .then(() => {
