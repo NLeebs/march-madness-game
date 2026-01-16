@@ -1,3 +1,4 @@
+import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
 import { createSupabaseServerClient } from "@/infrastructure/db/supabaseServer";
 import {
   BracketSupabase,
@@ -18,9 +19,11 @@ interface PersistTournamentData {
 
 export class TournamentRepository {
   private supabase: SupabaseClient;
+  private authClient: SupabaseClient;
 
   constructor() {
-    this.supabase = createSupabaseServerClient();
+    this.supabase = createSupabaseServiceRoleClient();
+    this.authClient = createSupabaseServerClient();
   }
 
   async getYears(): Promise<YearSupabase[]> {
@@ -102,17 +105,19 @@ export class TournamentRepository {
   }
 
   async persistBracket(bracket: BracketSupabase): Promise<string> {
-    const {
-      data: { user },
-      error,
-    } = await this.supabase.auth.getUser();
+    if (bracket.user_id) {
+      const {
+        data: { user },
+        error: authError,
+      } = await this.authClient.auth.getUser();
 
-    if (error || !user) {
-      throw new Error(
-        `Authentication failed: ${
-          error?.message || "User not authenticated to persist bracket"
-        }`
-      );
+      if (authError || !user || user.id !== bracket.user_id) {
+        throw new Error(
+          `Authentication failed: ${
+            authError?.message || "User not authenticated"
+          }`
+        );
+      }
     }
 
     const { data: bracketData, error: bracketError } = await this.supabase
@@ -122,6 +127,17 @@ export class TournamentRepository {
       .single();
 
     if (bracketError || !bracketData) {
+      if (
+        bracketError?.code === "42501" ||
+        bracketError?.message?.includes("row-level security")
+      ) {
+        throw new Error(
+          `RLS Policy Violation: Failed to create bracket. ` +
+            `Policy requires: user_id IS NULL AND anon_user_id IS NOT NULL. ` +
+            `Received: user_id=${bracket.user_id}, anon_user_id=${bracket.anon_user_id}. ` +
+            `Error: ${bracketError?.message}`
+        );
+      }
       throw new Error(`Failed to create bracket: ${bracketError?.message}`);
     }
 
@@ -138,17 +154,15 @@ export class TournamentRepository {
       );
     }
 
-    const {
-      data: { user },
-      error: authError,
-    } = await this.supabase.auth.getUser();
+    if (bracket.user_id) {
+      const {
+        data: { user },
+        error: authError,
+      } = await this.authClient.auth.getUser();
 
-    if (authError || !user) {
-      throw new Error(
-        `Authentication failed: ${
-          authError?.message || "User not authenticated to persist tournament"
-        }`
-      );
+      if (authError) {
+        throw new Error(`Authentication failed: ${authError?.message}`);
+      }
     }
 
     const persistGame = async (game: GameSupabase) => {

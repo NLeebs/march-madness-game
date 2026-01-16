@@ -9,11 +9,13 @@ import { TournamentPlayerPicks } from "@/types";
 export interface SimulationRequestBody {
   tournamentState: TournamentState;
   picksState: TournamentPlayerPicks;
-  userId: string;
+  userId?: string | null;
+  anonUserId?: string | null;
 }
 
 const SimulationRequestBodySchema = z.object({
-  userId: z.string().min(1, "User ID is required"),
+  userId: z.string().uuid().nullable().optional(),
+  anonUserId: z.string().uuid().nullable().optional(),
   tournamentState: z.object({
     yearId: z.string().min(1, "Year ID is required"),
     tournamentScoringRulesId: z

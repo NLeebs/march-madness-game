@@ -4,6 +4,7 @@ import { RootState, TournamentState } from "@/store";
 import { TournamentPlayerPicks } from "@/types";
 import { SimulationRequestBody } from "@/app/api/bracket/simulation/route";
 import { usePersistTournament, useAuth } from "@/src/hooks";
+import { getAnonUserId } from "@/src/utils/getAnonUserId";
 
 export const TournamentPersist = () => {
   const tournamentState: TournamentState = useSelector(
@@ -13,6 +14,7 @@ export const TournamentPersist = () => {
     (state: RootState) => state.tournamentPlayersPicks
   );
   const { user } = useAuth();
+  const anonUserId = user ? null : getAnonUserId();
 
   const { persistTournamentMutation } = usePersistTournament();
   const hasPersistedRef = useRef(false);
@@ -20,7 +22,6 @@ export const TournamentPersist = () => {
   useEffect(() => {
     if (
       hasPersistedRef.current ||
-      !user?.id ||
       !tournamentState.yearId ||
       !tournamentState.tournamentScoringRulesId
     )
@@ -29,12 +30,19 @@ export const TournamentPersist = () => {
     const simulationBody: SimulationRequestBody = {
       tournamentState,
       picksState,
-      userId: user.id,
+      userId: user?.id || null,
+      anonUserId,
     };
 
     persistTournamentMutation(simulationBody);
     hasPersistedRef.current = true;
-  }, [user?.id, persistTournamentMutation, tournamentState, picksState]);
+  }, [
+    user?.id,
+    persistTournamentMutation,
+    tournamentState,
+    picksState,
+    anonUserId,
+  ]);
 
   return null;
 };

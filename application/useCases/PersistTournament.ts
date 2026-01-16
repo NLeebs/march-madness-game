@@ -7,7 +7,8 @@ import { BracketSupabase } from "@/models/appStatsData";
 export interface PersistTournamentDto {
   tournamentState: TournamentState;
   picksState: TournamentPlayerPicks;
-  userId: string;
+  userId?: string | null;
+  anonUserId?: string | null;
 }
 
 export interface PersistTournamentResult {
@@ -19,6 +20,7 @@ export async function persistTournament({
   tournamentState,
   picksState,
   userId,
+  anonUserId,
 }: PersistTournamentDto): Promise<PersistTournamentResult> {
   const repository = new TournamentRepository();
 
@@ -28,11 +30,16 @@ export async function persistTournament({
   const tournamentScoringRulesId = tournamentState.tournamentScoringRulesId;
 
   const bracket: BracketSupabase = {
-    user_id: userId,
+    user_id: userId ?? null,
+    anon_user_id: userId ? null : anonUserId,
     year_id: yearId,
     tournament_scoring_rules_id: tournamentScoringRulesId,
     score: tournamentState.playerScore,
   };
+
+  if (!bracket.user_id && !bracket.anon_user_id) {
+    throw new Error("Anonymous brackets must have anon_user_id set.");
+  }
   const bracketId = await repository.persistBracket(bracket);
 
   const gamesAndPicks = mapTournamentToRows({
