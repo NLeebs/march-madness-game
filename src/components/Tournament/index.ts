@@ -9,3 +9,4 @@ export * from "./TournamentMatchup";
 export * from "./TournamentMatchupCard";
 export * from "./TournamentRecapDialog";
 export * from "./TournamentRound";
+export * from "./TournamentPersist";

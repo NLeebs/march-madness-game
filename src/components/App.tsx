@@ -2,15 +2,7 @@
 import React, { useEffect } from "react";
 import { MotionConfig, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "@/src/hooks";
-import {
-  appStateActions,
-  uiStateActions,
-  teamStatsActions,
-  teamScheduleActions,
-  regularSeasonRecordActions,
-  RootState,
-} from "@/store";
+import { uiStateActions, RootState } from "@/store";
 import {
   AddTeamStatsToFirebase,
   PlayPlayinGames,
@@ -20,10 +12,10 @@ import {
   RegularSeason,
   SeasonSchedule,
   TournamentRecapDialog,
+  TournamentPersist,
 } from "@/src/components";
-import { getTeamStatData } from "@/src/functions";
 
-// TODO:7. Send game data to database
+// TODO:7. Send game data to database - need to call persistTournament from the API
 // 5. Multiple year stats
 // 6. Slow down tourny playing
 // 6. Select favorite team -> color changes
@@ -33,16 +25,12 @@ import { getTeamStatData } from "@/src/functions";
 function App() {
   const dispatch = useDispatch();
 
-  const { user, authLoading } = useAuth();
-
   const appState = useSelector((state: RootState) => state.appState);
   const teamStatsObject = useSelector((state: RootState) => state.teamStats);
   const teamArray = useSelector(
     (state: RootState) => state.teamSchedule.teamArray
   );
-  const teamScheduleObj = useSelector((state: RootState) => state.teamSchedule);
 
-  // Monitor resizing of the screen
   useEffect(() => {
     function handleResize() {
       const screenSizeObj = {
@@ -59,23 +47,6 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, [dispatch]);
-
-  // Add Team Stats to State and Config Schedules State
-  useEffect(() => {
-    getTeamStatData().then((teamStatsData) => {
-      dispatch(teamStatsActions.addToStateFromDB(teamStatsData));
-      dispatch(teamStatsActions.addConferenceArrays(teamStatsData));
-      dispatch(teamScheduleActions.teamScheduleConfig(teamStatsData));
-      dispatch(
-        regularSeasonRecordActions.regularSeasonRecordConfig(teamStatsData)
-      );
-    });
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (teamScheduleObj.teamArray.length > 0 && !authLoading)
-      dispatch(appStateActions.loadingComplete());
-  }, [dispatch, teamScheduleObj.teamArray.length, authLoading]);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -101,6 +72,7 @@ function App() {
         appState.tournamentPlayGames &&
         !appState.tournamentRecap && <PlayTournamentGames />}
       {appState.tournamentRecap && <TournamentRecapDialog />}
+      {appState.tournamentRecap && <TournamentPersist />}
     </MotionConfig>
   );
 }

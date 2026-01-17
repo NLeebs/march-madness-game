@@ -1,6 +1,6 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { supabase } from "@/app/api/supabase";
+import { supabase } from "@/infrastructure/db/supabaseClient";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import {

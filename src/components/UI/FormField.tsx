@@ -32,7 +32,7 @@ export const FormField = <T extends FieldValues>({
 }: FormFieldProps<T>) => {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <Label>
+      <Label htmlFor={name}>
         {label}
         {required && <span className="ml-1">*</span>}
       </Label>

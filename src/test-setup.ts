@@ -5,7 +5,7 @@ vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
 vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "test-anon-key");
 
 // Mock the Supabase client module to prevent actual API calls
-vi.mock("@/app/api/supabase", () => ({
+vi.mock("@/infrastructure/db/supabaseClient", () => ({
   supabase: {
     auth: {
       signUp: vi.fn(),

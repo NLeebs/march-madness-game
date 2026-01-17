@@ -12,10 +12,12 @@ export function validateRequest<T>(
       return schema.parse(data);
     } catch (error) {
       if (error instanceof ZodError) {
-        throw new ValidationError(
+        const validationError = new ValidationError(
           "Request validation failed",
           "VALIDATION_ERROR"
         );
+        (validationError as any).zodError = error;
+        throw validationError;
       }
       throw error;
     }

@@ -1,6 +1,6 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { supabase } from "@/app/api/supabase";
+import { supabase } from "@/infrastructure/db/supabaseClient";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   loginFormSchema,
@@ -35,7 +35,6 @@ export const LoginForm = () => {
       console.error("Error logging in:", error);
       throw new Error(error.message);
     }
-    console.log("You're Logged In! 🎉");
   };
 
   const { control } = loginForm;

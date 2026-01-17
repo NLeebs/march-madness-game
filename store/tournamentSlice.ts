@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createMatchupsFromSeededArr } from "@/src/functions";
 import {
   TournamentRoundMatchups,
@@ -7,7 +7,9 @@ import {
 } from "@/types";
 import { HIGHEST_SEED } from "@/src/constants";
 
-interface TournamentState {
+export interface TournamentState {
+  yearId: string;
+  tournamentScoringRulesId: string;
   tournamentTeams: string[];
   tournamentSeeds: {
     [region in TournamentRegion]?: string[];
@@ -27,6 +29,8 @@ interface TournamentState {
 }
 
 const initalState: TournamentState = {
+  yearId: "",
+  tournamentScoringRulesId: "",
   tournamentTeams: [],
   tournamentSeeds: {
     west: [],
@@ -84,6 +88,12 @@ const tournamentSlice = createSlice({
   initialState: initalState,
   reducers: {
     restartGame: () => initalState,
+    setYearId(state, action: PayloadAction<string>) {
+      state.yearId = action.payload;
+    },
+    setTournamentScoringRulesId(state, action: PayloadAction<string>) {
+      state.tournamentScoringRulesId = action.payload;
+    },
     addTournamentTeams(state, action) {
       state.tournamentTeams = action.payload;
     },
@@ -161,7 +171,6 @@ const tournamentSlice = createSlice({
           state.roundOneMatchups.east[0][1].team = action.payload.winningTeam;
       }
 
-      // Fix Past Round Object with Game Data
       for (let i = 0; i <= 1; i++) {
         if (
           state.roundOneMatchups.playin[action.payload.seedType][
@@ -211,7 +220,6 @@ const tournamentSlice = createSlice({
         currentRoundKey = "roundFinalsMatchups";
       }
 
-      // Region correction for elite eight, final four, and finals
       let nextRegion = action.payload.results.region;
       if (action.payload.round === "elite eight")
         nextRegion === "east" || nextRegion === "west"
@@ -220,7 +228,6 @@ const tournamentSlice = createSlice({
       if (action.payload.round === "final four") nextRegion = "championship";
       if (action.payload.round === "finals") nextRegion = "champion";
 
-      // Add Winning Team to Next Round
       state[nextRoundKey][nextRegion][
         Math.floor(action.payload.results.gameIndex / 2)
       ].push({
@@ -228,7 +235,6 @@ const tournamentSlice = createSlice({
         seed: action.payload.results.seed,
       });
 
-      // Fix Past Round Object with Game Data
       for (let i = 0; i <= 1; i++) {
         if (
           state[currentRoundKey][action.payload.results.region][
@@ -278,7 +284,6 @@ const tournamentSlice = createSlice({
         nextRoundKey = "champion";
       }
 
-      // compare picks to winning teams
       Object.keys(state[nextRoundKey]).forEach((region) => {
         state[nextRoundKey][region].forEach((matchup, i) => {
           matchup.forEach((teamObj, j) => {

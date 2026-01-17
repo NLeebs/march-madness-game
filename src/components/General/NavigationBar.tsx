@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/app/api/supabase";
+import { supabase } from "@/infrastructure/db/supabaseClient";
 import { useAuth } from "@/src/hooks";
 import {
   BasketballSVG,

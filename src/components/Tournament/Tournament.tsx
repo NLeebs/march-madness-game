@@ -112,7 +112,7 @@ export const Tournament = () => {
                     ${
                       screenWidth > TOURNAMENT_BREAK_POINT
                         ? "grid-flow-col"
-                        : `${styles.tournamentGrid} w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container`
+                        : `${styles.tournamentGrid} w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12`
                     }
                 `}
       >

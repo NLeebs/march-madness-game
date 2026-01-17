@@ -3,3 +3,4 @@ export * from "./input";
 export * from "./label";
 export * from "./sonner";
 export * from "./tabs";
+export * from "./select";
