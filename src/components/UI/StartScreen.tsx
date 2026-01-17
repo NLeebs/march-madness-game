@@ -12,6 +12,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/src/hooks";
 import { ConferenceMap } from "@/models";
+import { AppError } from "@/utils/errorHandling";
 
 export const StartScreen = () => {
   const appState = useSelector((state: RootState) => state.appState);
@@ -33,7 +34,13 @@ export const StartScreen = () => {
 
   const { data: years, isLoading: isLoadingYears } = useQuery({
     queryKey: ["years"],
-    queryFn: () => fetch("/api/years").then((res) => res.json()),
+    queryFn: async () => {
+      const response = await fetch("/api/years");
+      if (!response.ok) {
+        throw new AppError("Failed to fetch years", response.status);
+      }
+      return response.json();
+    },
   });
   useEffect(() => {
     if (years?.length && !selectedYearId) {
@@ -52,17 +59,33 @@ export const StartScreen = () => {
     isLoading: isLoadingTournamentScoringRuleId,
   } = useQuery({
     queryKey: ["tournamentScoringRuleId", selectedYearId],
-    queryFn: () =>
-      fetch(`/api/tournament-scoring-rules/${selectedYearId}`).then((res) =>
-        res.json()
-      ),
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/tournament-scoring-rules/${selectedYearId}`
+      );
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch tournament scoring rules",
+          response.status
+        );
+      }
+      return response.json();
+    },
     enabled: !!selectedYearId,
   });
 
   const { data: teamStats, isLoading: isLoadingTeamStats } = useQuery({
     queryKey: ["teamStats", selectedYearId],
-    queryFn: () =>
-      fetch(`/api/team-statistics/${selectedYearId}`).then((res) => res.json()),
+    queryFn: async () => {
+      const response = await fetch(`/api/team-statistics/${selectedYearId}`);
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch team statistics",
+          response.status
+        );
+      }
+      return response.json();
+    },
     enabled: !!selectedYearId,
   });
   useEffect(() => {
