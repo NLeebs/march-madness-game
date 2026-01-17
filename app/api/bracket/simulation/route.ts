@@ -2,7 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { persistTournament } from "@/application/useCases/PersistTournament";
 import { handleApiError } from "@/utils/errorHandling/errorHandler";
-import { validateRequest } from "@/utils/errorHandling";
+import {
+  validateRequest,
+  validateMethod,
+  validateContentType,
+  rateLimit,
+  validateOrigin,
+  combineMiddleware,
+} from "@/utils/errorHandling";
+import { getAllowedOrigins } from "@/utils/api/allowedOrigins";
 import { TournamentState } from "@/store/tournamentSlice";
 import { TournamentPlayerPicks } from "@/types";
 
@@ -41,8 +49,17 @@ const SimulationRequestBodySchema = z.object({
   }),
 });
 
+const securityMiddleware = combineMiddleware(
+  validateMethod(["POST"]),
+  validateContentType(["application/json"]),
+  validateOrigin(getAllowedOrigins(), true),
+  rateLimit(20, 60000)
+);
+
 export async function POST(req: NextRequest) {
   try {
+    await securityMiddleware(req);
+
     const validatedBody = await validateRequest(SimulationRequestBodySchema)(
       req
     );
