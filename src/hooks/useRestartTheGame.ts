@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { useDispatch } from "react-redux";
 import {
   appStateActions,
   uiStateActions,
@@ -9,47 +8,38 @@ import {
   regularSeasonRecordActions,
   tounramentPlayersPicksActions,
   tournamentActions,
+  teamStatsActions,
 } from "@/store";
-import { delay } from "@/src/functions";
-import { TIMER_BETWEEN_APP_STATES } from "@/src/constants";
+import { AppError } from "@/utils/errorHandling";
 
 export const useRestartTheGame = () => {
   const dispatch = useDispatch();
-  const teamStats = useSelector(
-    (state: RootState) => state.teamStats.teamStats
-  );
-  const yearId = useSelector((state: RootState) => state.tournament.yearId);
-  const tournamentScoringRulesId = useSelector(
-    (state: RootState) => state.tournament.tournamentScoringRulesId
-  );
 
   const restartTheGame = async () => {
+    // Clear all game state
     dispatch(appStateActions.restartGame());
     dispatch(uiStateActions.restartGame());
     dispatch(teamScheduleActions.restartGame());
     dispatch(regularSeasonRecordActions.restartGame());
     dispatch(tounramentPlayersPicksActions.restartGame());
     dispatch(tournamentActions.restartGame());
+    dispatch(teamStatsActions.restartGame());
 
-    if (yearId) {
-      dispatch(tournamentActions.setYearId(yearId));
+    // Set default yearId to latest year to prevent empty state issues
+    try {
+      const response = await fetch("/api/years");
+      if (!response.ok) {
+        throw new AppError("Failed to fetch years", response.status);
+      }
+      const years = await response.json();
+      if (years?.length > 0) {
+        const latestYearId = years[years.length - 1].id;
+        dispatch(tournamentActions.setYearId(latestYearId));
+      }
+    } catch (error) {
+      console.error("Failed to set default year on restart:", error);
+      // Don't throw - allow restart to continue even if year fetch fails
     }
-    if (tournamentScoringRulesId) {
-      dispatch(
-        tournamentActions.setTournamentScoringRulesId(tournamentScoringRulesId)
-      );
-    }
-
-    await Promise.all([delay(TIMER_BETWEEN_APP_STATES)])
-      .then(() => {
-        dispatch(teamScheduleActions.teamScheduleConfig(teamStats));
-        dispatch(
-          regularSeasonRecordActions.regularSeasonRecordConfig(teamStats)
-        );
-      })
-      .catch((error) => {
-        console.error("Restart failed:", error);
-      });
   };
   return { restartTheGame };
 };

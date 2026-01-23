@@ -15,6 +15,7 @@ const teamStatsSlice = createSlice({
   name: "teamStats",
   initialState,
   reducers: {
+    restartGame: () => initialState,
     addToStateFromDB(state, action: PayloadAction<ConferenceMap>) {
       state.teamStats = { ...action.payload };
     },

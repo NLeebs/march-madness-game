@@ -43,16 +43,21 @@ export const StartScreen = () => {
     },
   });
   useEffect(() => {
-    if (years?.length && !selectedYearId) {
-      setSelectedYearId(years[years.length - 1].id);
+    if (years?.length && !selectedYearId && !tournamentYearId) {
+      const latestYearId = years[years.length - 1].id;
+      setSelectedYearId(latestYearId);
     }
-  }, [years, selectedYearId]);
+  }, [years, selectedYearId, tournamentYearId]);
 
   useEffect(() => {
-    if (tournamentYearId && tournamentYearId !== selectedYearId) {
+    if (tournamentYearId) {
       setSelectedYearId(tournamentYearId);
+    } else {
+      setSelectedYearId("");
+      setSelectedYearTeamStats(null);
+      dispatch(appStateActions.loadingStarted()); 
     }
-  }, [tournamentYearId, selectedYearId]);
+  }, [tournamentYearId, dispatch]); 
 
   const {
     data: tournamentScoringRuleData,
@@ -109,12 +114,13 @@ export const StartScreen = () => {
 
   const handleSelectYear = (year: string) => {
     setSelectedYearId(year);
+    dispatch(appStateActions.loadingStarted());
   };
 
   useEffect(() => {
     if (teamScheduleObj.teamArray.length > 0)
       dispatch(appStateActions.loadingComplete());
-  }, [dispatch, teamScheduleObj.teamArray.length]);
+  }, [dispatch, teamScheduleObj.teamArray]);
 
   return (
     <div className="w-screen h-[calc(100vh-5rem)] pb-4 flex flex-col justify-center items-center">
@@ -148,7 +154,7 @@ export const StartScreen = () => {
           isLoadingTournamentScoringRuleId ||
           isLoadingTeamStats ||
           authLoading ||
-          isAppLoading
+          isAppLoading 
         }
       />
     </div>

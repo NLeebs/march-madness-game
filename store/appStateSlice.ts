@@ -48,6 +48,9 @@ const appStateSlice = createSlice({
       Object.keys(state).forEach((key) => (state[key] = false));
       state.startScreen = true;
     },
+    loadingStarted(state) {
+      state.loading = true;
+    },
     loadingComplete(state) {
       state.loading = false;
     },
