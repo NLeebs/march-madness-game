@@ -33,7 +33,7 @@ export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 100;
 
 // Spam Protection
-export const MIN_FORM_FILL_TIME = 3000; // 3 seconds minimum form fill time
+export const MIN_FORM_FILL_TIME = 500; // 0.5 seconds minimum form fill time
 export const MAX_FORM_FILL_TIME = 300000; // 5 minutes maximum form fill time
 export const RATE_LIMIT_WINDOW = 60000; // 1 minute rate limit window
 export const MAX_SUBMISSIONS_PER_WINDOW = 3; // Max 3 submissions per minute
