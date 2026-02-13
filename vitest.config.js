@@ -4,7 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   test: {
     globals: true,
-    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx", "tests/**/*.test.ts", "tests/**/*.test.tsx"],
     exclude: [
       "node_modules",
       "dist",
@@ -19,7 +19,7 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html"],
       reportsDirectory: "./coverage",
-      include: ["app/**/*.tsx", "src/**/*.ts", "src/**/*.tsx"],
+      include: ["app/**/*.tsx", "application/**/*.ts", "src/**/*.ts", "src/**/*.tsx"],
       exclude: [
         "**/*.config.js",
         "**/*.config.ts",
