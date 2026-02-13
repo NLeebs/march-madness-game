@@ -3,91 +3,21 @@ import {
   mapTournamentToRows,
   MappedRowsResult,
 } from "@/application/mappers/mapTournamentToRows";
-import { TournamentState } from "@/store/tournamentSlice";
+import { TournamentRound, TournamentRoundMatchups } from "@/types";
 import {
-  TournamentPlayerPicks,
-  TournamentRound,
-  TournamentRoundMatchups,
-  TournamentTeam,
-} from "@/types";
-
-function makeTeam(
-  team: string,
-  seed: string,
-  overrides: Partial<TournamentTeam> = {},
-): TournamentTeam {
-  return { team, seed, ...overrides };
-}
-
-function makeMatchup(
-  team1: TournamentTeam,
-  team2: TournamentTeam,
-): TournamentTeam[] {
-  return [team1, team2];
-}
-
-function emptyRoundMatchups() {
-  return { east: [], west: [], south: [], midwest: [] };
-}
-
-function emptyRegionPicks() {
-  return { east: [], west: [], south: [], midwest: [] };
-}
+  buildTournamentTeam as makeTeam,
+  buildMatchup as makeMatchup,
+  buildEmptyRoundMatchups as emptyRoundMatchups,
+  buildEmptyRegionPicks as emptyRegionPicks,
+  buildTeamIdMap as makeTeamIdMap,
+  buildRoundIdMap,
+  buildTournamentState as makeEmptyTournamentState,
+  buildPicksState as makeEmptyPicksState,
+} from "@/tests/factories";
 
 const YEAR_ID = "year-uuid-1";
 const BRACKET_ID = "bracket-uuid-1";
-
-const ROUND_IDS = new Map<TournamentRound, string>([
-  [1, "round-1-uuid"],
-  [2, "round-2-uuid"],
-  ["sweet sixteen", "round-s16-uuid"],
-  ["elite eight", "round-e8-uuid"],
-  ["final four", "round-f4-uuid"],
-  ["finals", "round-finals-uuid"],
-]);
-
-function makeTeamIdMap(teamNames: string[]): Map<string, string> {
-  const map = new Map<string, string>();
-  teamNames.forEach((name) => map.set(name, `${name}-uuid`));
-  return map;
-}
-
-function makeEmptyTournamentState(
-  overrides: Partial<TournamentState> = {},
-): TournamentState {
-  return {
-    yearId: YEAR_ID,
-    tournamentScoringRulesId: "scoring-uuid",
-    tournamentTeams: [],
-    tournamentSeeds: {},
-    playinTeams: { elevenSeeds: [], sixteenSeeds: [] },
-    roundOneMatchups: emptyRoundMatchups(),
-    roundTwoMatchups: emptyRoundMatchups(),
-    roundSweetSixteenMatchups: emptyRoundMatchups(),
-    roundEliteEightMatchups: emptyRoundMatchups(),
-    roundFinalFourMatchups: {},
-    roundFinalsMatchups: {},
-    champion: {},
-    playerScore: 0,
-    ...overrides,
-  };
-}
-
-function makeEmptyPicksState(
-  overrides: Partial<TournamentPlayerPicks["picks"]> = {},
-): TournamentPlayerPicks {
-  return {
-    picks: {
-      roundTwoPicks: emptyRegionPicks(),
-      roundSweetSixteenPicks: emptyRegionPicks(),
-      roundEliteEightPicks: emptyRegionPicks(),
-      roundFinalFourPicks: {},
-      roundFinalsPicks: {},
-      champion: {},
-      ...overrides,
-    },
-  };
-}
+const ROUND_IDS = buildRoundIdMap();
 
 describe("mapTournamentToRows", () => {
   describe("round 1 matchups", () => {
