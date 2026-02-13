@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom";
 import React from "react";
-import { describe, it, expect, vi, beforeEach, beforeAll } from "vitest";
-import { render, fireEvent, waitFor, act } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, beforeAll, afterEach } from "vitest";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { RestartGameButton } from "../RestartGameButton";
-import { PRIMARY_COLOR, TIMER_BETWEEN_APP_STATES } from "@/src/constants";
+import { PRIMARY_COLOR } from "@/src/constants";
 import userEvent from "@testing-library/user-event";
 
 beforeAll(() => {
@@ -22,10 +22,6 @@ beforeAll(() => {
   };
 });
 
-vi.mock("@/src/functions", () => ({
-  delay: vi.fn(() => new Promise<void>((resolve) => resolve())),
-}));
-
 vi.mock("@/src/components", () => ({
   Button: ({ onClick, text, backgroundColor, disabled = false }: any) => (
     <button
@@ -41,21 +37,22 @@ vi.mock("@/src/components", () => ({
 }));
 
 const mockDispatch = vi.fn();
-const mockTeamStats = [
-  { id: "1", name: "Team A", conference: "acc" },
-  { id: "2", name: "Team B", conference: "bigTen" },
+
+const mockYears = [
+  { id: "year-2024-uuid" },
+  { id: "year-2025-uuid" },
 ];
 
 const createMockStore = (initialState = {}) => {
   return configureStore({
     reducer: {
-      teamStats: (state = { teamStats: mockTeamStats }, action: any) => state,
       appState: (state = {}, action: any) => state,
       uiState: (state = {}, action: any) => state,
       teamSchedule: (state = {}, action: any) => state,
       regularSeasonRecord: (state = {}, action: any) => state,
       tournamentPlayersPicks: (state = {}, action: any) => state,
       tournament: (state = {}, action: any) => state,
+      teamStats: (state = {}, action: any) => state,
     },
     preloadedState: initialState,
   });
@@ -66,18 +63,20 @@ vi.mock("react-redux", async () => {
   return {
     ...actual,
     useDispatch: () => mockDispatch,
-    useSelector: vi.fn((selector) => {
-      const state = {
-        teamStats: { teamStats: mockTeamStats },
-      };
-      return selector(state);
-    }),
   };
 });
 
 describe("RestartGameButton", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockYears),
+    });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   const renderWithProvider = (component: React.ReactElement) => {
@@ -119,13 +118,13 @@ describe("RestartGameButton", () => {
     });
   });
 
-  it("dispatches all restart actions when clicked", async () => {
+  it("dispatches all restart actions when clicked", () => {
     const { getByTestId } = renderWithProvider(<RestartGameButton />);
 
     const button = getByTestId("mock-button");
     fireEvent.click(button);
 
-    expect(mockDispatch).toHaveBeenCalledTimes(6);
+    expect(mockDispatch).toHaveBeenCalledTimes(7);
     expect(mockDispatch).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
@@ -162,93 +161,101 @@ describe("RestartGameButton", () => {
         type: expect.stringContaining("tournament/restartGame"),
       })
     );
-  });
-
-  it("calls delay function with correct timer value", async () => {
-    const { delay } = await import("@/src/functions");
-    const { getByTestId } = renderWithProvider(<RestartGameButton />);
-
-    const button = getByTestId("mock-button");
-    fireEvent.click(button);
-
-    expect(delay).toHaveBeenCalledWith(TIMER_BETWEEN_APP_STATES);
-  });
-
-  it("dispatches configuration actions after delay", async () => {
-    const { getByTestId } = renderWithProvider(<RestartGameButton />);
-
-    const button = getByTestId("mock-button");
-    fireEvent.click(button);
-
-    await waitFor(
-      () => {
-        expect(mockDispatch).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: expect.stringContaining("teamSchedule/teamScheduleConfig"),
-            payload: mockTeamStats,
-          })
-        );
-        expect(mockDispatch).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: expect.stringContaining(
-              "regularSeasonRecords/regularSeasonRecordConfig"
-            ),
-            payload: mockTeamStats,
-          })
-        );
-      },
-      { timeout: 1000 }
+    expect(mockDispatch).toHaveBeenNthCalledWith(
+      7,
+      expect.objectContaining({
+        type: expect.stringContaining("teamStats/restartGame"),
+      })
     );
+  });
+
+  it("fetches years from API after dispatching restart actions", async () => {
+    const { getByTestId } = renderWithProvider(<RestartGameButton />);
+
+    const button = getByTestId("mock-button");
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(globalThis.fetch).toHaveBeenCalledWith("/api/years");
+    });
+  });
+
+  it("dispatches setYearId with latest year after successful fetch", async () => {
+    const { getByTestId } = renderWithProvider(<RestartGameButton />);
+
+    const button = getByTestId("mock-button");
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: expect.stringContaining("tournament/setYearId"),
+          payload: "year-2025-uuid",
+        })
+      );
+    });
+
     expect(mockDispatch).toHaveBeenCalledTimes(8);
   });
 
   it("prevents multiple rapid clicks during restart", async () => {
-    const { delay } = await import("@/src/functions");
     const { getByTestId } = renderWithProvider(<RestartGameButton />);
 
     const button = getByTestId("mock-button");
 
-    await fireEvent.click(button);
-    expect(delay).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledTimes(6);
+    fireEvent.click(button);
+    expect(mockDispatch).toHaveBeenCalledTimes(7);
 
     userEvent.click(button);
-    expect(delay).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledTimes(6);
+    expect(mockDispatch).toHaveBeenCalledTimes(7);
   });
 
-  it("selects teamStats from Redux state correctly", async () => {
-    const { useSelector } = await import("react-redux");
+  it("does not dispatch setYearId when fetch returns empty years", async () => {
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve([]),
+    });
 
-    renderWithProvider(<RestartGameButton />);
-
-    expect(useSelector).toHaveBeenCalledWith(expect.any(Function));
-
-    const selector = (useSelector as any).mock.calls[0][0];
-    const mockState = { teamStats: { teamStats: mockTeamStats } };
-    const result = selector(mockState);
-    expect(result).toEqual(mockTeamStats);
-  });
-
-  it("handles delay rejection gracefully", async () => {
-    const { delay } = await import("@/src/functions");
-    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-    (delay as any).mockRejectedValueOnce(new Error("Delay failed"));
     const { getByTestId } = renderWithProvider(<RestartGameButton />);
 
     const button = getByTestId("mock-button");
     fireEvent.click(button);
 
-    expect(mockDispatch).toHaveBeenCalledTimes(6);
+    await waitFor(() => {
+      expect(globalThis.fetch).toHaveBeenCalledWith("/api/years");
+    });
+
+    expect(mockDispatch).toHaveBeenCalledTimes(7);
+    expect(mockDispatch).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: expect.stringContaining("tournament/setYearId"),
+      })
+    );
+  });
+
+  it("handles fetch failure gracefully", async () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
+      new Error("Network error")
+    );
+
+    const { getByTestId } = renderWithProvider(<RestartGameButton />);
+
+    const button = getByTestId("mock-button");
+    fireEvent.click(button);
+
+    expect(mockDispatch).toHaveBeenCalledTimes(7);
+
     await waitFor(() => {
       expect(button).toHaveTextContent("Play Again");
       expect(button).not.toBeDisabled();
     });
+
     expect(consoleSpy).toHaveBeenCalledWith(
-      "Restart failed:",
+      "Failed to set default year on restart:",
       expect.any(Error)
     );
-    expect(mockDispatch).toHaveBeenCalledTimes(6);
+    expect(mockDispatch).toHaveBeenCalledTimes(7);
 
     consoleSpy.mockRestore();
   });
