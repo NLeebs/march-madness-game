@@ -44,6 +44,10 @@ export const NavigationBar = () => {
     }
   };
 
+  const handleDashboard = () => {
+    router.push("/dashboard");
+  };
+
   const homeButtonText = (
     <span className="text-2xl">
       Madness <span className="sm:inline hidden">the Game</span>
@@ -73,9 +77,16 @@ export const NavigationBar = () => {
         {user ? (
           <div className="flex flex-row items-center gap-2">
             <Button
+              onClick={handleDashboard}
+              backgroundColor={PRIMARY_COLOR}
+              text="Dashboard"
+              className="p-4"
+            />
+            <Button
               onClick={handleLogout}
               backgroundColor="transparent"
               text="Logout"
+              className="shadow-none"
             />
           </div>
         ) : (
@@ -84,7 +95,7 @@ export const NavigationBar = () => {
               onClick={handleLogin}
               backgroundColor="transparent"
               text="Login"
-              className="p-4"
+              className="p-4 shadow-none"
             />
             <Button
               onClick={handleSignup}
