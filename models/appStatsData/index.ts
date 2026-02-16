@@ -1,5 +1,6 @@
 export * from "./BracketSupabase";
 export * from "./PickSupabase";
+export * from "./ProfileSupabase";
 export * from "./RoundSupabase";
 export * from "./TeamSupabase";
 export * from "./TournamentGameSupabase";

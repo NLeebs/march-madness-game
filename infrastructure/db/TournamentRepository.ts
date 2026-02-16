@@ -4,6 +4,7 @@ import {
   BracketSupabase,
   GameSupabase,
   PickSupabase,
+  ProfileSupabase,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
@@ -24,6 +25,27 @@ export class TournamentRepository {
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
     this.authClient = createSupabaseServerClient();
+  }
+
+  async getProfileByUserId(userId: string): Promise<ProfileSupabase> {
+    const { data: userProfileData, error: userProfileError } =
+      await this.supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .single();
+
+    if (userProfileError) {
+      throw new Error(
+        `Failed to fetch user profile: ${userProfileError.message}`,
+      );
+    }
+
+    if (!userProfileData) {
+      throw new Error(`No user profile found for id: ${userId}`);
+    }
+
+    return userProfileData as ProfileSupabase;
   }
 
   async getYears(): Promise<YearSupabase[]> {
@@ -57,7 +79,7 @@ export class TournamentRepository {
   }
 
   async getBracketScoringRulesByYearId(
-    yearId: string
+    yearId: string,
   ): Promise<BracketScoringRuleSupabase> {
     const { data: bracketScoringRulesData, error: bracketScoringRulesError } =
       await this.supabase
@@ -68,7 +90,7 @@ export class TournamentRepository {
 
     if (bracketScoringRulesError) {
       throw new Error(
-        `Failed to fetch bracket scoring rules: ${bracketScoringRulesError.message}`
+        `Failed to fetch bracket scoring rules: ${bracketScoringRulesError.message}`,
       );
     }
 
@@ -115,7 +137,7 @@ export class TournamentRepository {
         throw new Error(
           `Authentication failed: ${
             authError?.message || "User not authenticated"
-          }`
+          }`,
         );
       }
     }
@@ -135,7 +157,7 @@ export class TournamentRepository {
           `RLS Policy Violation: Failed to create bracket. ` +
             `Policy requires: user_id IS NULL AND anon_user_id IS NOT NULL. ` +
             `Received: user_id=${bracket.user_id}, anon_user_id=${bracket.anon_user_id}. ` +
-            `Error: ${bracketError?.message}`
+            `Error: ${bracketError?.message}`,
         );
       }
       throw new Error(`Failed to create bracket: ${bracketError?.message}`);
@@ -150,7 +172,7 @@ export class TournamentRepository {
   }: PersistTournamentData): Promise<void> {
     if (!bracket.id) {
       throw new Error(
-        "Bracket must have an ID before persisting games and picks"
+        "Bracket must have an ID before persisting games and picks",
       );
     }
 
@@ -201,7 +223,7 @@ export class TournamentRepository {
           };
           await persistPick(completePick);
         }
-      })
+      }),
     );
   }
 }
