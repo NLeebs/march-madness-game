@@ -6,7 +6,13 @@ import {
   useProfile,
   useYears,
 } from "@/src/hooks";
-import { LoadingBasketball, SelectField } from "@/src/components";
+import {
+  LineSpacer,
+  LoadingBasketball,
+  SelectField,
+  UserBracketChart,
+} from "@/src/components";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "@/src/constants";
 
 export const Dashboard = () => {
   const [selectedYearId, setSelectedYearId] = useState<string>("");
@@ -59,6 +65,14 @@ export const Dashboard = () => {
             containerClassName="mt-4"
             selectClassName="w-36 bg-white"
           />
+          <LineSpacer lineColor={SECONDARY_COLOR} />
+          {userBrackets ? (
+            <UserBracketChart data={userBrackets} lineColor={PRIMARY_COLOR} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <p>Play some games!</p>
+            </div>
+          )}
         </div>
       )}
     </div>
