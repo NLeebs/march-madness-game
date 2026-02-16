@@ -1,3 +1,4 @@
+export * from "./BracketScoringRuleSupabase";
 export * from "./BracketSupabase";
 export * from "./PickSupabase";
 export * from "./ProfileSupabase";

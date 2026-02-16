@@ -1,8 +1,8 @@
-import { TournamentRepository } from "@/infrastructure/db/TournamentRepository";
+import { UserRepository } from "@/infrastructure/db/UserRepository";
 import { ProfileSupabase } from "@/models/appStatsData";
 
 export async function getUserProfile(userId: string): Promise<ProfileSupabase> {
-  const tournamentRepository = new TournamentRepository();
-  const profile = await tournamentRepository.getProfileByUserId(userId);
+  const userRepository = new UserRepository();
+  const profile = await userRepository.getProfileByUserId(userId);
   return profile;
 }

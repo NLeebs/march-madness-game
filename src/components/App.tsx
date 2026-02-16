@@ -15,11 +15,9 @@ import {
   TournamentPersist,
 } from "@/src/components";
 
-// TODO:7. Send game data to database - need to call persistTournament from the API
-// 5. Multiple year stats
+// 8. User Dashboard with Statistics
 // 6. Slow down tourny playing
 // 6. Select favorite team -> color changes
-// 8. User Dashboard with Statistics
 // 9. Winner animations
 
 function App() {
@@ -28,7 +26,7 @@ function App() {
   const appState = useSelector((state: RootState) => state.appState);
   const teamStatsObject = useSelector((state: RootState) => state.teamStats);
   const teamArray = useSelector(
-    (state: RootState) => state.teamSchedule.teamArray
+    (state: RootState) => state.teamSchedule.teamArray,
   );
 
   useEffect(() => {

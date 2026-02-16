@@ -6,9 +6,9 @@ const DashboardPage = () => {
   return (
     <>
       <NavigationBar />
-      <div className="flex items-center justify-center min-w-full min-h-screen">
+      <main className="w-screen h-[calc(100vh-5rem)]">
         <Dashboard />
-      </div>
+      </main>
     </>
   );
 };

@@ -4,8 +4,8 @@ import { buildProfile } from "@/tests/factories";
 
 const mockGetProfileByUserId = vi.fn();
 
-vi.mock("@/infrastructure/db/TournamentRepository", () => ({
-  TournamentRepository: vi.fn().mockImplementation(() => ({
+vi.mock("@/infrastructure/db/UserRepository", () => ({
+  UserRepository: vi.fn().mockImplementation(() => ({
     getProfileByUserId: mockGetProfileByUserId,
   })),
 }));
@@ -59,21 +59,21 @@ describe("getUserProfile", () => {
 
   it("should propagate errors when the repository throws", async () => {
     mockGetProfileByUserId.mockRejectedValue(
-      new Error("Failed to fetch user profile: connection refused")
+      new Error("Failed to fetch user profile: connection refused"),
     );
 
     await expect(getUserProfile("user-uuid-123")).rejects.toThrow(
-      "Failed to fetch user profile: connection refused"
+      "Failed to fetch user profile: connection refused",
     );
   });
 
   it("should propagate errors when no profile is found", async () => {
     mockGetProfileByUserId.mockRejectedValue(
-      new Error("No user profile found for id: nonexistent-id")
+      new Error("No user profile found for id: nonexistent-id"),
     );
 
     await expect(getUserProfile("nonexistent-id")).rejects.toThrow(
-      "No user profile found for id: nonexistent-id"
+      "No user profile found for id: nonexistent-id",
     );
   });
 });

@@ -2,15 +2,14 @@ import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseSer
 import { createSupabaseServerClient } from "@/infrastructure/db/supabaseServer";
 import {
   BracketSupabase,
+  BracketScoringRuleSupabase,
   GameSupabase,
   PickSupabase,
-  ProfileSupabase,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
 } from "@/models/appStatsData";
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
-import { BracketScoringRuleSupabase } from "@/models/appStatsData/BracketScoringRuleSupabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface PersistTournamentData {
@@ -25,27 +24,6 @@ export class TournamentRepository {
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
     this.authClient = createSupabaseServerClient();
-  }
-
-  async getProfileByUserId(userId: string): Promise<ProfileSupabase> {
-    const { data: userProfileData, error: userProfileError } =
-      await this.supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", userId)
-        .single();
-
-    if (userProfileError) {
-      throw new Error(
-        `Failed to fetch user profile: ${userProfileError.message}`,
-      );
-    }
-
-    if (!userProfileData) {
-      throw new Error(`No user profile found for id: ${userId}`);
-    }
-
-    return userProfileData as ProfileSupabase;
   }
 
   async getYears(): Promise<YearSupabase[]> {
@@ -124,6 +102,23 @@ export class TournamentRepository {
     }
 
     return teamsData as TeamSupabase[];
+  }
+
+  async getBracketsByUserIdAndYearId(
+    userId: string,
+    yearId: string,
+  ): Promise<BracketSupabase[]> {
+    const { data: bracketsData, error } = await this.supabase
+      .from("user_brackets")
+      .select("score, created_at")
+      .eq("user_id", userId)
+      .eq("year_id", yearId);
+
+    if (error) {
+      throw new Error(`Failed to fetch brackets: ${error.message}`);
+    }
+
+    return bracketsData as BracketSupabase[];
   }
 
   async persistBracket(bracket: BracketSupabase): Promise<string> {
