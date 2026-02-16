@@ -1,9 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useAuth, useProfile, useYears } from "@/src/hooks";
+import {
+  useAuth,
+  useUserBracketsByYearId,
+  useProfile,
+  useYears,
+} from "@/src/hooks";
 import { LoadingBasketball, SelectField } from "@/src/components";
 
 export const Dashboard = () => {
+  const [selectedYearId, setSelectedYearId] = useState<string>("");
   const { user } = useAuth();
 
   const { data: profileData, isLoading: isLoadingProfile } = useProfile(
@@ -11,8 +17,9 @@ export const Dashboard = () => {
   );
 
   const { data: years, isLoading: isLoadingYears } = useYears();
-
-  const [selectedYearId, setSelectedYearId] = useState<string>("");
+  const { data: userBrackets, isLoading: isLoadingUserBracketsByYearId } =
+    useUserBracketsByYearId(user?.id, selectedYearId);
+  console.log(userBrackets);
 
   useEffect(() => {
     if (years?.length && !selectedYearId) {
@@ -25,7 +32,8 @@ export const Dashboard = () => {
     setSelectedYearId(year);
   };
 
-  const isLoading = isLoadingProfile || isLoadingYears;
+  const isLoading =
+    isLoadingProfile || isLoadingYears || isLoadingUserBracketsByYearId;
 
   return (
     <div className="w-full h-full py-4 px-8 overflow-y-scroll">

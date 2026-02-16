@@ -18,4 +18,5 @@ export {
   buildPicksState,
 } from "./tournament.factory";
 
+export { buildBracket } from "./bracket.factory";
 export { buildProfile } from "./profile.factory";

@@ -9,4 +9,5 @@ export * from "./useSignUp";
 export * from "./useSpamProtection";
 export * from "./useTeamStatistics";
 export * from "./useTournamentScoringRules";
+export * from "./useUserBracketsByYearId";
 export * from "./useYears";
