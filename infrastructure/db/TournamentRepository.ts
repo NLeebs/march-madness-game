@@ -8,6 +8,7 @@ import {
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
+  UserTotalStatsSupabase,
 } from "@/models/appStatsData";
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -119,6 +120,30 @@ export class TournamentRepository {
     }
 
     return bracketsData as BracketSupabase[];
+  }
+
+  async getUserTotalStatsByYearId(
+    userId: string,
+    yearId: string,
+  ): Promise<UserTotalStatsSupabase> {
+    const { data: userTotalStatsData, error } = await this.supabase
+      .from("user_total_stats")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("year_id", yearId)
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to fetch user total stats: ${error.message}`);
+    }
+
+    if (!userTotalStatsData) {
+      throw new Error(
+        `No user total stats found for user_id: ${userId} and year_id: ${yearId}`,
+      );
+    }
+
+    return userTotalStatsData as UserTotalStatsSupabase;
   }
 
   async persistBracket(bracket: BracketSupabase): Promise<string> {

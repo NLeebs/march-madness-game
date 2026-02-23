@@ -1,0 +1,47 @@
+import { UserTotalStatsSupabase } from "@/models/appStatsData/UserTotalStatsSupabase";
+
+export function buildUserTotalStats(
+  overrides: Partial<UserTotalStatsSupabase> = {}
+): UserTotalStatsSupabase {
+  return {
+    id: "stats-uuid-1",
+    user_id: "user-uuid-123",
+    year_id: "year-uuid-1",
+    total_brackets: 10,
+    total_picks: 630,
+    total_correct_picks: 378,
+    correct_pick_percentage: 60.0,
+    high_score: 120,
+    high_score_rank: 3,
+    low_score: 45,
+    average_score: 82.5,
+    last_three_average_score: 90.0,
+    last_ten_average_score: 85.0,
+    average_score_rank: 5,
+    total_first_round_upsets_picked: 40,
+    total_first_round_upsets_correct: 12,
+    first_round_upsets_correct_percentage: 30.0,
+    champions_guessed_correctly: 2,
+    champion_correct_percentage: 20.0,
+    champions_guessed_correctly_rank: 4,
+    top_picked_champion_id: "team-uuid-duke",
+    total_final_fours_picked: 40,
+    final_fours_guessed_correctly: 14,
+    final_four_correct_percentage: 35.0,
+    total_elite_eights_picked: 80,
+    elite_eights_guessed_correctly: 32,
+    elite_eight_correct_percentage: 40.0,
+    total_sweet_sixteens_picked: 160,
+    sweet_sixteens_guessed_correctly: 72,
+    sweet_sixteen_correct_percentage: 45.0,
+    total_round_twos_picked: 320,
+    rounds_two_guessed_correctly: 176,
+    round_two_correct_percentage: 55.0,
+    total_round_ones_picked: 320,
+    rounds_one_guessed_correctly: 224,
+    round_one_correct_percentage: 70.0,
+    created_at: "2025-03-20T10:00:00Z",
+    updated_at: "2025-03-20T12:00:00Z",
+    ...overrides,
+  };
+}
