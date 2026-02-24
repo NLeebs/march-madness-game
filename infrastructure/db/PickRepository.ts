@@ -15,8 +15,8 @@ export class PickRepository {
   ): Promise<TeamPickCountSupabase[]> {
     const { data: pickCountData, error: pickCountError } =
       await this.supabase.rpc("get_top_picked_teams_for_user_and_year", {
-        user_id: userId,
-        year_id: yearId,
+        p_user_id: userId,
+        p_year_id: yearId,
       });
 
     if (pickCountError) {

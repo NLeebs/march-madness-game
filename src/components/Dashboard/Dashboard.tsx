@@ -6,6 +6,7 @@ import {
   useUserBracketsByYearId,
   useProfile,
   useTeam,
+  useTopPickedTeamsByUser,
   useUserStatisticsByYearId,
   useYears,
 } from "@/src/hooks";
@@ -56,8 +57,12 @@ export const Dashboard = () => {
     topPickedConferenceId,
     totalTopPickedConferencePicks,
   } = useUserStatisticsByYearId(user?.id, selectedYearId);
+
   const { data: topPickedChampion, isLoading: isLoadingTopPickedChampion } =
     useTeam(topPickedChampionId);
+
+  const { data: topPickedTeams, isLoading: isLoadingTopPickedTeams } =
+    useTopPickedTeamsByUser(user?.id, selectedYearId);
 
   const { data: topPickedConference, isLoading: isLoadingTopPickedConference } =
     useConference(topPickedConferenceId);
@@ -212,7 +217,15 @@ export const Dashboard = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              {/* <StatList /> */}
+              <StatList
+                title="Top Picked Teams"
+                statLabel="Picks"
+                stats={topPickedTeams?.map((team) => ({
+                  team: team.team_name,
+                  teamLogoRoute: team.team_logo,
+                  stat: team.pick_count,
+                }))}
+              />
               <StatList
                 title="Top Picked Champion"
                 statLabel="Picks"

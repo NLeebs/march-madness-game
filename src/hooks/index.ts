@@ -11,6 +11,7 @@ export * from "./useSignUp";
 export * from "./useSpamProtection";
 export * from "./useTeam";
 export * from "./useTeamStatistics";
+export * from "./useTopPickedTeamsByUser";
 export * from "./useTournamentScoringRules";
 export * from "./useUserBracketsByYearId";
 export * from "./useUserStatisticsByYearId";
