@@ -4,6 +4,7 @@ import {
   useAuth,
   useUserBracketsByYearId,
   useProfile,
+  useTeam,
   useUserStatisticsByYearId,
   useYears,
 } from "@/src/hooks";
@@ -51,6 +52,8 @@ export const Dashboard = () => {
     roundOneCorrectPercentage,
     topPickedChampionId,
   } = useUserStatisticsByYearId(user?.id, selectedYearId);
+  const { data: topPickedChampion, isLoading: isLoadingTopPickedChampion } =
+    useTeam(topPickedChampionId);
 
   useEffect(() => {
     if (years?.length && !selectedYearId) {
@@ -67,7 +70,8 @@ export const Dashboard = () => {
     isLoadingProfile ||
     isLoadingYears ||
     isLoadingUserBracketsByYearId ||
-    isLoadingUserStatisticsByYearId;
+    isLoadingUserStatisticsByYearId ||
+    isLoadingTopPickedChampion;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -189,12 +193,12 @@ export const Dashboard = () => {
             </div>
             <div className="flex flex-col gap-4">
               <StatList
-                title="Top Picked Team"
+                title="Top Picked Champion"
                 statLabel="Picks"
                 stats={[
                   {
-                    team: "Ohio State",
-                    teamLogoRoute: "/team-logos/bigTen/OhioStLogo.png",
+                    team: topPickedChampion?.name,
+                    teamLogoRoute: topPickedChampion?.team_logo,
                     stat: 10,
                   },
                 ]}

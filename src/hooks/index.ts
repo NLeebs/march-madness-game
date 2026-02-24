@@ -8,6 +8,7 @@ export * from "./useProfile";
 export * from "./useRestartTheGame";
 export * from "./useSignUp";
 export * from "./useSpamProtection";
+export * from "./useTeam";
 export * from "./useTeamStatistics";
 export * from "./useTournamentScoringRules";
 export * from "./useUserBracketsByYearId";
