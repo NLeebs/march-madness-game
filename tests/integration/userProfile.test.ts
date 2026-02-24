@@ -2,11 +2,17 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
 import { GET } from "@/app/api/profile/[userId]/route";
 import { buildProfile } from "@/tests/factories";
+import { ForbiddenError, UnauthorizedError } from "@/utils/errorHandling";
 
 const mockGetUserProfile = vi.fn();
+const mockAuthorizeUserAccess = vi.fn();
 
 vi.mock("@/application/useCases/GetUserProfile", () => ({
   getUserProfile: (...args: unknown[]) => mockGetUserProfile(...args),
+}));
+
+vi.mock("@/utils/api/authorizeUserAccess", () => ({
+  authorizeUserAccess: (...args: unknown[]) => mockAuthorizeUserAccess(...args),
 }));
 
 function createRequest(userId: string): NextRequest {
@@ -23,6 +29,7 @@ async function parseResponse(response: Response) {
 describe("GET /api/profile/[userId]", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockAuthorizeUserAccess.mockResolvedValue(undefined);
   });
 
   describe("successful requests", () => {
@@ -86,6 +93,40 @@ describe("GET /api/profile/[userId]", () => {
   });
 
   describe("error handling", () => {
+    it("should return 401 when the user is unauthenticated", async () => {
+      mockAuthorizeUserAccess.mockRejectedValue(
+        new UnauthorizedError("Authentication required to access user data"),
+      );
+
+      const response = await GET(createRequest("user-uuid"), {
+        params: { userId: "user-uuid" },
+      });
+
+      expect(response.status).toBe(401);
+      const json = await parseResponse(response);
+      expect(json.error.message).toBe(
+        "Authentication required to access user data",
+      );
+      expect(mockGetUserProfile).not.toHaveBeenCalled();
+    });
+
+    it("should return 403 for cross-user profile access", async () => {
+      mockAuthorizeUserAccess.mockRejectedValue(
+        new ForbiddenError("You are not allowed to access another user's data"),
+      );
+
+      const response = await GET(createRequest("target-user-uuid"), {
+        params: { userId: "target-user-uuid" },
+      });
+
+      expect(response.status).toBe(403);
+      const json = await parseResponse(response);
+      expect(json.error.message).toBe(
+        "You are not allowed to access another user's data",
+      );
+      expect(mockGetUserProfile).not.toHaveBeenCalled();
+    });
+
     it("should return 500 when the use case throws a generic error", async () => {
       mockGetUserProfile.mockRejectedValue(
         new Error("Failed to fetch user profile: connection refused")

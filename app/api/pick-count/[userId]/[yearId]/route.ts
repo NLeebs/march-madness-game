@@ -1,6 +1,7 @@
 import { getTopPickedTeamsByUserIdAndYearId } from "@/application/useCases/GetTopPickedTeamsByUserIdAndYearId";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
+import { authorizeUserAccess } from "@/utils/api/authorizeUserAccess";
 
 export async function GET(
   req: NextRequest,
@@ -8,6 +9,7 @@ export async function GET(
 ) {
   try {
     const { userId, yearId } = params;
+    await authorizeUserAccess(userId);
     const topPickedTeams = await getTopPickedTeamsByUserIdAndYearId(
       userId,
       yearId,
