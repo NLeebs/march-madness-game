@@ -38,6 +38,9 @@ export function useUserStatisticsByYearId(userId: string, yearId: string) {
   const roundTwoCorrectPercentage = data?.round_two_correct_percentage;
   const roundOneCorrectPercentage = data?.round_one_correct_percentage;
   const topPickedChampionId = data?.top_picked_champion_id;
+  const totalTopPickedChampionPicks = data?.total_top_picked_champion_picks;
+  const topPickedConferenceId = data?.top_picked_conference_id;
+  const totalTopPickedConferencePicks = data?.total_top_picked_conference_picks;
 
   return {
     isLoadingUserStatisticsByYearId,
@@ -60,5 +63,8 @@ export function useUserStatisticsByYearId(userId: string, yearId: string) {
     roundTwoCorrectPercentage,
     roundOneCorrectPercentage,
     topPickedChampionId,
+    totalTopPickedChampionPicks,
+    topPickedConferenceId,
+    totalTopPickedConferencePicks,
   };
 }
