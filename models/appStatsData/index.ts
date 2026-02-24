@@ -4,6 +4,7 @@ export * from "./ConferenceSupabase";
 export * from "./PickSupabase";
 export * from "./ProfileSupabase";
 export * from "./RoundSupabase";
+export * from "./TeamPickCountSupabase";
 export * from "./TeamSupabase";
 export * from "./TournamentGameSupabase";
 export * from "./UserTotalStatsSupabase";
