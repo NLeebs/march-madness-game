@@ -5,4 +5,5 @@ export * from "./ProfileSupabase";
 export * from "./RoundSupabase";
 export * from "./TeamSupabase";
 export * from "./TournamentGameSupabase";
+export * from "./UserTotalStatsSupabase";
 export * from "./YearSupabase";

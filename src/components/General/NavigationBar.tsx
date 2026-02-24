@@ -80,13 +80,13 @@ export const NavigationBar = () => {
               onClick={handleDashboard}
               backgroundColor={PRIMARY_COLOR}
               text="Dashboard"
-              className="p-4"
+              className="p-3 sm:p-4"
             />
             <Button
               onClick={handleLogout}
               backgroundColor="transparent"
               text="Logout"
-              className="shadow-none"
+              className="p-2 sm:p-4 shadow-none"
             />
           </div>
         ) : (
@@ -95,13 +95,13 @@ export const NavigationBar = () => {
               onClick={handleLogin}
               backgroundColor="transparent"
               text="Login"
-              className="p-4 shadow-none"
+              className="p-2 sm:p-4 shadow-none"
             />
             <Button
               onClick={handleSignup}
               backgroundColor={PRIMARY_COLOR}
               text="Signup"
-              className="p-4"
+              className="p-3 sm:p-4"
             />
           </div>
         )}

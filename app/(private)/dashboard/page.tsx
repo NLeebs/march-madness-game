@@ -6,7 +6,7 @@ const DashboardPage = () => {
   return (
     <>
       <NavigationBar />
-      <main className="w-screen h-[calc(100vh-5rem)]">
+      <main className="w-full h-[calc(100vh-5rem)] overflow-y-scroll">
         <Dashboard />
       </main>
     </>

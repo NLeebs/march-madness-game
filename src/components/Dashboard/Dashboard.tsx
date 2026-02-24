@@ -1,15 +1,18 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   useAuth,
   useUserBracketsByYearId,
   useProfile,
+  useUserStatisticsByYearId,
   useYears,
 } from "@/src/hooks";
 import {
   LineSpacer,
   LoadingBasketball,
   SelectField,
+  StatBubble,
+  StatList,
   UserBracketChart,
 } from "@/src/components";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@/src/constants";
@@ -25,7 +28,29 @@ export const Dashboard = () => {
   const { data: years, isLoading: isLoadingYears } = useYears();
   const { data: userBrackets, isLoading: isLoadingUserBracketsByYearId } =
     useUserBracketsByYearId(user?.id, selectedYearId);
-  console.log(userBrackets);
+
+  const {
+    isLoadingUserStatisticsByYearId,
+    highScore,
+    lowScore,
+    averageScore,
+    totalBrackets,
+    totalPicks,
+    totalCorrectPicks,
+    correctPickPercentage,
+    totalFirstRoundUpsetsPicked,
+    totalFirstRoundUpsetsCorrect,
+    firstRoundUpsetsCorrectPercentage,
+    lastTenBracketAverage,
+    lastThreeBracketAverage,
+    championCorrectPercentage,
+    finalFourCorrectPercentage,
+    eliteEightCorrectPercentage,
+    sweetSixteenCorrectPercentage,
+    roundTwoCorrectPercentage,
+    roundOneCorrectPercentage,
+    topPickedChampionId,
+  } = useUserStatisticsByYearId(user?.id, selectedYearId);
 
   useEffect(() => {
     if (years?.length && !selectedYearId) {
@@ -39,14 +64,17 @@ export const Dashboard = () => {
   };
 
   const isLoading =
-    isLoadingProfile || isLoadingYears || isLoadingUserBracketsByYearId;
+    isLoadingProfile ||
+    isLoadingYears ||
+    isLoadingUserBracketsByYearId ||
+    isLoadingUserStatisticsByYearId;
 
   return (
-    <div className="w-full h-full py-4 px-8 overflow-y-scroll">
+    <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
       {isLoading ? (
         <LoadingBasketball size={150} />
       ) : (
-        <div className="flex flex-col justify-start items-start">
+        <div className="w-full flex flex-col justify-start items-start flex-wrap">
           <h1 className="text-2xl font-bold normal-case">
             Welcome {profileData?.username}
           </h1>
@@ -66,13 +94,115 @@ export const Dashboard = () => {
             selectClassName="w-36 bg-white"
           />
           <LineSpacer lineColor={SECONDARY_COLOR} />
-          {userBrackets ? (
-            <UserBracketChart data={userBrackets} lineColor={PRIMARY_COLOR} />
-          ) : (
-            <div className="w-full h-full flex justify-center items-center">
-              <p>Play some games!</p>
+          <div className="w-full flex sm:flex-row flex-col gap-4">
+            <div className="w-full flex flex-col gap-4">
+              {userBrackets ? (
+                <UserBracketChart
+                  data={userBrackets}
+                  lineColor={PRIMARY_COLOR}
+                />
+              ) : (
+                <div className="w-full h-full flex justify-center items-center">
+                  <p>Play some games!</p>
+                </div>
+              )}
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <StatBubble statLabel="High Score" stat={highScore} />
+                <StatBubble statLabel="Low Score" stat={lowScore} />
+                <StatBubble statLabel="Average Score" stat={averageScore} />
+                <StatBubble
+                  statLabel="Number of Brackets"
+                  stat={totalBrackets}
+                />
+                <StatBubble
+                  statLabel="Last Three Average"
+                  stat={
+                    lastThreeBracketAverage ? lastThreeBracketAverage : "--"
+                  }
+                  trend={lastThreeBracketAverage > averageScore ? "up" : "down"}
+                />
+                <StatBubble
+                  statLabel="Last Ten Average"
+                  stat={lastTenBracketAverage ? lastTenBracketAverage : "--"}
+                  trend={lastTenBracketAverage < averageScore ? "up" : "down"}
+                />
+                <StatBubble statLabel="Total Picks" stat={totalPicks} />
+                <StatBubble
+                  statLabel="Correct Picks"
+                  stat={totalCorrectPicks}
+                />
+                <StatBubble
+                  statLabel="Correct Pick %"
+                  stat={correctPickPercentage}
+                  percentage
+                />
+                <StatBubble
+                  statLabel="Picked 1st Round Upsets"
+                  stat={totalFirstRoundUpsetsPicked}
+                />
+                <StatBubble
+                  statLabel="Correct 1st Round Upsets"
+                  stat={totalFirstRoundUpsetsCorrect}
+                />
+                <StatBubble
+                  statLabel="Correct Upset %"
+                  stat={firstRoundUpsetsCorrectPercentage}
+                  percentage
+                />
+                <StatBubble
+                  statLabel="Champion Pick %"
+                  stat={championCorrectPercentage}
+                  percentage
+                  className="hidden sm:flex"
+                />
+                <StatBubble
+                  statLabel="Final Four Pick %"
+                  stat={finalFourCorrectPercentage}
+                  percentage
+                  className="hidden sm:flex"
+                />
+                <StatBubble
+                  statLabel="Elite Eight Pick %"
+                  stat={eliteEightCorrectPercentage}
+                  percentage
+                  className="hidden sm:flex"
+                />
+                <StatBubble
+                  statLabel="Sweet Sixteen Pick %"
+                  stat={sweetSixteenCorrectPercentage}
+                  percentage
+                  className="hidden sm:flex"
+                />
+                <StatBubble
+                  statLabel="Round Two Pick %"
+                  stat={roundTwoCorrectPercentage}
+                  percentage
+                  className="hidden sm:flex"
+                />
+                <StatBubble
+                  statLabel="Round One Pick %"
+                  stat={roundOneCorrectPercentage}
+                  percentage
+                  className="hidden sm:flex"
+                />
+              </div>
             </div>
-          )}
+            <div className="flex flex-col gap-4">
+              <StatList
+                title="Top Picked Team"
+                statLabel="Picks"
+                stats={[
+                  {
+                    team: "Ohio State",
+                    teamLogoRoute: "/team-logos/bigTen/OhioStLogo.png",
+                    stat: 10,
+                  },
+                ]}
+              />
+              {/* <StatList />
+              <StatList /> */}
+            </div>
+          </div>
         </div>
       )}
     </div>

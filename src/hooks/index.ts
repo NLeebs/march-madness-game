@@ -11,4 +11,5 @@ export * from "./useSpamProtection";
 export * from "./useTeamStatistics";
 export * from "./useTournamentScoringRules";
 export * from "./useUserBracketsByYearId";
+export * from "./useUserStatisticsByYearId";
 export * from "./useYears";
