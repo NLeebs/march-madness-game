@@ -84,7 +84,8 @@ export const Dashboard = () => {
     isLoadingUserBracketsByYearId ||
     isLoadingUserStatisticsByYearId ||
     isLoadingTopPickedChampion ||
-    isLoadingTopPickedConference;
+    isLoadingTopPickedConference ||
+    isLoadingTopPickedTeams;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -140,13 +141,15 @@ export const Dashboard = () => {
                       lastThreeBracketAverage ? lastThreeBracketAverage : "--"
                     }
                     trend={
-                      lastThreeBracketAverage > averageScore ? "up" : "down"
+                      lastThreeBracketAverage >= averageScore ? "up" : "down"
                     }
                   />
                   <StatBubble
                     statLabel="Last Ten Average"
                     stat={lastTenBracketAverage ? lastTenBracketAverage : "--"}
-                    trend={lastTenBracketAverage < averageScore ? "up" : "down"}
+                    trend={
+                      lastTenBracketAverage >= averageScore ? "up" : "down"
+                    }
                   />
                 </div>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-blue-50 rounded-md">
