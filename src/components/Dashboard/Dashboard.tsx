@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import {
   useAuth,
+  useConference,
   useUserBracketsByYearId,
   useProfile,
   useTeam,
@@ -51,9 +52,15 @@ export const Dashboard = () => {
     roundTwoCorrectPercentage,
     roundOneCorrectPercentage,
     topPickedChampionId,
+    totalTopPickedChampionPicks,
+    topPickedConferenceId,
+    totalTopPickedConferencePicks,
   } = useUserStatisticsByYearId(user?.id, selectedYearId);
   const { data: topPickedChampion, isLoading: isLoadingTopPickedChampion } =
     useTeam(topPickedChampionId);
+
+  const { data: topPickedConference, isLoading: isLoadingTopPickedConference } =
+    useConference(topPickedConferenceId);
 
   useEffect(() => {
     if (years?.length && !selectedYearId) {
@@ -71,7 +78,8 @@ export const Dashboard = () => {
     isLoadingYears ||
     isLoadingUserBracketsByYearId ||
     isLoadingUserStatisticsByYearId ||
-    isLoadingTopPickedChampion;
+    isLoadingTopPickedChampion ||
+    isLoadingTopPickedConference;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -110,88 +118,101 @@ export const Dashboard = () => {
                   <p>Play some games!</p>
                 </div>
               )}
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <StatBubble statLabel="High Score" stat={highScore} />
-                <StatBubble statLabel="Low Score" stat={lowScore} />
-                <StatBubble statLabel="Average Score" stat={averageScore} />
-                <StatBubble
-                  statLabel="Number of Brackets"
-                  stat={totalBrackets}
-                />
-                <StatBubble
-                  statLabel="Last Three Average"
-                  stat={
-                    lastThreeBracketAverage ? lastThreeBracketAverage : "--"
-                  }
-                  trend={lastThreeBracketAverage > averageScore ? "up" : "down"}
-                />
-                <StatBubble
-                  statLabel="Last Ten Average"
-                  stat={lastTenBracketAverage ? lastTenBracketAverage : "--"}
-                  trend={lastTenBracketAverage < averageScore ? "up" : "down"}
-                />
-                <StatBubble statLabel="Total Picks" stat={totalPicks} />
-                <StatBubble
-                  statLabel="Correct Picks"
-                  stat={totalCorrectPicks}
-                />
-                <StatBubble
-                  statLabel="Correct Pick %"
-                  stat={correctPickPercentage}
-                  percentage
-                />
-                <StatBubble
-                  statLabel="Picked 1st Round Upsets"
-                  stat={totalFirstRoundUpsetsPicked}
-                />
-                <StatBubble
-                  statLabel="Correct 1st Round Upsets"
-                  stat={totalFirstRoundUpsetsCorrect}
-                />
-                <StatBubble
-                  statLabel="Correct Upset %"
-                  stat={firstRoundUpsetsCorrectPercentage}
-                  percentage
-                />
-                <StatBubble
-                  statLabel="Champion Pick %"
-                  stat={championCorrectPercentage}
-                  percentage
-                  className="hidden sm:flex"
-                />
-                <StatBubble
-                  statLabel="Final Four Pick %"
-                  stat={finalFourCorrectPercentage}
-                  percentage
-                  className="hidden sm:flex"
-                />
-                <StatBubble
-                  statLabel="Elite Eight Pick %"
-                  stat={eliteEightCorrectPercentage}
-                  percentage
-                  className="hidden sm:flex"
-                />
-                <StatBubble
-                  statLabel="Sweet Sixteen Pick %"
-                  stat={sweetSixteenCorrectPercentage}
-                  percentage
-                  className="hidden sm:flex"
-                />
-                <StatBubble
-                  statLabel="Round Two Pick %"
-                  stat={roundTwoCorrectPercentage}
-                  percentage
-                  className="hidden sm:flex"
-                />
-                <StatBubble
-                  statLabel="Round One Pick %"
-                  stat={roundOneCorrectPercentage}
-                  percentage
-                  className="hidden sm:flex"
-                />
+              <div className="w-full flex flex-col gap-4">
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-blue-50 rounded-md">
+                  <StatBubble statLabel="High Score" stat={highScore} />
+                  <StatBubble statLabel="Low Score" stat={lowScore} />
+                  <StatBubble statLabel="Average Score" stat={averageScore} />
+                </div>
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-blue-50 rounded-md">
+                  <StatBubble
+                    statLabel="Number of Brackets"
+                    stat={totalBrackets}
+                  />
+                  <StatBubble
+                    statLabel="Last Three Average"
+                    stat={
+                      lastThreeBracketAverage ? lastThreeBracketAverage : "--"
+                    }
+                    trend={
+                      lastThreeBracketAverage > averageScore ? "up" : "down"
+                    }
+                  />
+                  <StatBubble
+                    statLabel="Last Ten Average"
+                    stat={lastTenBracketAverage ? lastTenBracketAverage : "--"}
+                    trend={lastTenBracketAverage < averageScore ? "up" : "down"}
+                  />
+                </div>
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-blue-50 rounded-md">
+                  <StatBubble statLabel="Total Picks" stat={totalPicks} />
+                  <StatBubble
+                    statLabel="Correct Picks"
+                    stat={totalCorrectPicks}
+                  />
+                  <StatBubble
+                    statLabel="Correct Pick %"
+                    stat={correctPickPercentage}
+                    percentage
+                  />
+                </div>
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-blue-50 rounded-md">
+                  <StatBubble
+                    statLabel="Picked 1st Round Upsets"
+                    stat={totalFirstRoundUpsetsPicked}
+                  />
+                  <StatBubble
+                    statLabel="Correct 1st Round Upsets"
+                    stat={totalFirstRoundUpsetsCorrect}
+                  />
+                  <StatBubble
+                    statLabel="Correct Upset %"
+                    stat={firstRoundUpsetsCorrectPercentage}
+                    percentage
+                  />
+                </div>
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-blue-50 rounded-md">
+                  <StatBubble
+                    statLabel="Champion Pick %"
+                    stat={championCorrectPercentage}
+                    percentage
+                    className="hidden sm:flex"
+                  />
+                  <StatBubble
+                    statLabel="Final Four Pick %"
+                    stat={finalFourCorrectPercentage}
+                    percentage
+                    className="hidden sm:flex"
+                  />
+                  <StatBubble
+                    statLabel="Elite Eight Pick %"
+                    stat={eliteEightCorrectPercentage}
+                    percentage
+                    className="hidden sm:flex"
+                  />
+                  <StatBubble
+                    statLabel="Sweet Sixteen Pick %"
+                    stat={sweetSixteenCorrectPercentage}
+                    percentage
+                    className="hidden sm:flex"
+                  />
+                  <StatBubble
+                    statLabel="Round Two Pick %"
+                    stat={roundTwoCorrectPercentage}
+                    percentage
+                    className="hidden sm:flex"
+                  />
+                  <StatBubble
+                    statLabel="Round One Pick %"
+                    stat={roundOneCorrectPercentage}
+                    percentage
+                    className="hidden sm:flex"
+                  />
+                </div>
               </div>
             </div>
             <div className="flex flex-col gap-4">
+              {/* <StatList /> */}
               <StatList
                 title="Top Picked Champion"
                 statLabel="Picks"
@@ -199,12 +220,21 @@ export const Dashboard = () => {
                   {
                     team: topPickedChampion?.name,
                     teamLogoRoute: topPickedChampion?.team_logo,
-                    stat: 10,
+                    stat: totalTopPickedChampionPicks ?? 0,
                   },
                 ]}
               />
-              {/* <StatList />
-              <StatList /> */}
+              <StatList
+                title="Top Picked Conference"
+                statLabel="Picks"
+                stats={[
+                  {
+                    team: topPickedConference?.conference,
+                    teamLogoRoute: topPickedConference?.conference_logo,
+                    stat: totalTopPickedConferencePicks ?? 0,
+                  },
+                ]}
+              />
             </div>
           </div>
         </div>

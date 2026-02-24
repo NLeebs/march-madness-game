@@ -27,18 +27,18 @@ export const StatBubble: React.FC<StatBubbleProps> = ({
   return (
     <div
       className={cn(
-        "w-full px-4 py-4 flex flex-col justify-center items-center gap-2 bg-blue-50 rounded-md",
+        "px-4 py-4 flex flex-col justify-center items-center gap-2",
         className,
       )}
     >
       <p className="text-center">{statLabel}</p>
       <div
         className={cn(
-          "w-24 h-24 rounded-full flex items-center justify-center",
+          "w-32 h-32 rounded-full flex items-center justify-center",
           trendColor,
         )}
       >
-        <p>{percentage ? `${stat}%` : stat}</p>
+        <p className="text-xl">{percentage ? `${stat}%` : stat}</p>
       </div>
     </div>
   );

@@ -80,7 +80,7 @@ export const NavigationBar = () => {
               onClick={handleDashboard}
               backgroundColor={PRIMARY_COLOR}
               text="Dashboard"
-              className="p-3 sm:p-4"
+              className="py-3 px-4"
             />
             <Button
               onClick={handleLogout}
@@ -101,7 +101,7 @@ export const NavigationBar = () => {
               onClick={handleSignup}
               backgroundColor={PRIMARY_COLOR}
               text="Signup"
-              className="p-3 sm:p-4"
+              className="py-3 px-4"
             />
           </div>
         )}

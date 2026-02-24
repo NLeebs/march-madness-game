@@ -26,8 +26,8 @@ export const TopStatListItem: React.FC<StatListItemProps> = ({
         width={isMobile ? 150 : 250}
         height={isMobile ? 150 : 250}
       />
-      <p>{team}</p>
-      <div className="w-full flex flex-row justify-around items-center">
+      <p className="text-xl">{team}</p>
+      <div className="w-full flex flex-row justify-center items-center gap-4">
         <p>{statLabel}:</p>
         <p>{stat}</p>
       </div>
