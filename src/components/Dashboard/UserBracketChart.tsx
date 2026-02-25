@@ -10,8 +10,13 @@ import {
   CartesianGrid,
 } from "recharts";
 
+export type BracketData = {
+  score: number;
+  created_at: string;
+};
+
 interface UserBracketChartProps {
-  data: { score: number; created_at: string }[];
+  bracketData: BracketData[];
   lineColor: string;
 }
 
@@ -21,7 +26,7 @@ const formatShortDate = (str: string) => {
 };
 
 export const UserBracketChart = ({
-  data,
+  bracketData,
   lineColor,
 }: UserBracketChartProps) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
@@ -33,7 +38,7 @@ export const UserBracketChart = ({
       </h2>
       <ResponsiveContainer width="100%" height={isMobile ? 220 : 300}>
         <LineChart
-          data={data}
+          data={bracketData}
           margin={
             isMobile
               ? { top: 5, right: 10, bottom: 20, left: -10 }
@@ -47,11 +52,7 @@ export const UserBracketChart = ({
             angle={isMobile ? -45 : 0}
             textAnchor={isMobile ? "end" : "middle"}
           />
-          <YAxis
-            hide={isMobile}
-            tick={{ fontSize: 12 }}
-            width={40}
-          />
+          <YAxis hide={isMobile} tick={{ fontSize: 12 }} width={40} />
           <Tooltip
             labelFormatter={(label) =>
               new Date(label).toLocaleDateString(undefined, {

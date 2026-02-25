@@ -111,7 +111,7 @@ export class TournamentRepository {
   ): Promise<BracketSupabase[]> {
     const { data: bracketsData, error } = await this.supabase
       .from("user_brackets")
-      .select("score, created_at")
+      .select("*")
       .eq("user_id", userId)
       .eq("year_id", yearId);
 

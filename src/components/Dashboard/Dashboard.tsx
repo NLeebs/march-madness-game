@@ -32,6 +32,13 @@ export const Dashboard = () => {
   const { data: userBrackets, isLoading: isLoadingUserBracketsByYearId } =
     useUserBracketsByYearId(user?.id, selectedYearId);
 
+  const userBracketChartData = useMemo(() => {
+    return userBrackets?.map((bracket) => ({
+      score: bracket.score,
+      created_at: bracket.created_at,
+    }));
+  }, [userBrackets]);
+
   const {
     isLoadingUserStatisticsByYearId,
     highScore,
@@ -116,7 +123,7 @@ export const Dashboard = () => {
             <div className="w-full flex flex-col gap-4">
               {userBrackets ? (
                 <UserBracketChart
-                  data={userBrackets}
+                  bracketData={userBracketChartData}
                   lineColor={PRIMARY_COLOR}
                 />
               ) : (
