@@ -5,6 +5,7 @@ export const TeamSupabaseSchema = z.object({
   name: z.string(),
   year_id: z.string().uuid(),
   conference_id: z.string().uuid(),
+  team_logo: z.string(),
   created_at: z.string().optional(),
 });
 

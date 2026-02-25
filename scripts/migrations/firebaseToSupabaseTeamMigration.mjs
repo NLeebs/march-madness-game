@@ -24,14 +24,14 @@ const requiredFirebaseEnvVars = [
 ];
 
 const missingFirebaseVars = requiredFirebaseEnvVars.filter(
-  (varName) => !process.env[varName]
+  (varName) => !process.env[varName],
 );
 
 if (missingFirebaseVars.length > 0) {
   throw new Error(
     `Missing required Firebase environment variables: ${missingFirebaseVars.join(
-      ", "
-    )}`
+      ", ",
+    )}`,
   );
 }
 
@@ -99,7 +99,7 @@ const getSupabaseConference = async (firebaseConferenceName) => {
 
   if (!supabaseConferenceName) {
     console.warn(
-      `  ⚠️  No mapping found for Firebase conference: ${firebaseConferenceName}`
+      `  ⚠️  No mapping found for Firebase conference: ${firebaseConferenceName}`,
     );
     return null;
   }
@@ -113,7 +113,7 @@ const getSupabaseConference = async (firebaseConferenceName) => {
   if (error || !data) {
     console.error(
       `  ❌ Error fetching conference "${supabaseConferenceName}":`,
-      error?.message || "Not found"
+      error?.message || "Not found",
     );
     return null;
   }
@@ -149,41 +149,42 @@ const migrateTeamData = async () => {
 
       const yearData = yearDoc.data();
       console.log(
-        `Processing year ${supabaseYearData.year}... ${supabaseYearData.id}`
+        `Processing year ${supabaseYearData.year}... ${supabaseYearData.id}`,
       );
 
       for (const [firebaseConferenceName, conferenceData] of Object.entries(
-        yearData
+        yearData,
       )) {
         console.log(`  Processing conference: ${firebaseConferenceName}`);
 
         const supabaseConference = await getSupabaseConference(
-          firebaseConferenceName
+          firebaseConferenceName,
         );
 
         if (!supabaseConference) {
           console.warn(
-            `  ⚠️  Skipping conference ${firebaseConferenceName} - could not find in Supabase`
+            `  ⚠️  Skipping conference ${firebaseConferenceName} - could not find in Supabase`,
           );
           continue;
         }
 
         for (const [firebaseTeamName, teamData] of Object.entries(
-          conferenceData
+          conferenceData,
         )) {
           const { data, error } = await supabase.from("teams").upsert(
             {
               conference_id: supabaseConference.id,
               year_id: supabaseYearData.id,
               name: firebaseTeamName,
+              team_logo: teamData.logo,
             },
-            { onConflict: ["name", "conference_id", "year_id"] }
+            { onConflict: ["name", "conference_id", "year_id"] },
           );
 
           if (error) {
             console.error(
               `    ❌ Error upserting team "${firebaseTeamName}":`,
-              error.message
+              error.message,
             );
           }
         }

@@ -2,14 +2,15 @@ import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseSer
 import { createSupabaseServerClient } from "@/infrastructure/db/supabaseServer";
 import {
   BracketSupabase,
+  BracketScoringRuleSupabase,
   GameSupabase,
   PickSupabase,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
+  UserTotalStatsSupabase,
 } from "@/models/appStatsData";
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
-import { BracketScoringRuleSupabase } from "@/models/appStatsData/BracketScoringRuleSupabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface PersistTournamentData {
@@ -57,7 +58,7 @@ export class TournamentRepository {
   }
 
   async getBracketScoringRulesByYearId(
-    yearId: string
+    yearId: string,
   ): Promise<BracketScoringRuleSupabase> {
     const { data: bracketScoringRulesData, error: bracketScoringRulesError } =
       await this.supabase
@@ -68,7 +69,7 @@ export class TournamentRepository {
 
     if (bracketScoringRulesError) {
       throw new Error(
-        `Failed to fetch bracket scoring rules: ${bracketScoringRulesError.message}`
+        `Failed to fetch bracket scoring rules: ${bracketScoringRulesError.message}`,
       );
     }
 
@@ -104,6 +105,47 @@ export class TournamentRepository {
     return teamsData as TeamSupabase[];
   }
 
+  async getBracketsByUserIdAndYearId(
+    userId: string,
+    yearId: string,
+  ): Promise<BracketSupabase[]> {
+    const { data: bracketsData, error } = await this.supabase
+      .from("user_brackets")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("year_id", yearId);
+
+    if (error) {
+      throw new Error(`Failed to fetch brackets: ${error.message}`);
+    }
+
+    return bracketsData as BracketSupabase[];
+  }
+
+  async getUserTotalStatsByYearId(
+    userId: string,
+    yearId: string,
+  ): Promise<UserTotalStatsSupabase> {
+    const { data: userTotalStatsData, error } = await this.supabase
+      .from("user_total_stats")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("year_id", yearId)
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to fetch user total stats: ${error.message}`);
+    }
+
+    if (!userTotalStatsData) {
+      throw new Error(
+        `No user total stats found for user_id: ${userId} and year_id: ${yearId}`,
+      );
+    }
+
+    return userTotalStatsData as UserTotalStatsSupabase;
+  }
+
   async persistBracket(bracket: BracketSupabase): Promise<string> {
     if (bracket.user_id) {
       const {
@@ -115,7 +157,7 @@ export class TournamentRepository {
         throw new Error(
           `Authentication failed: ${
             authError?.message || "User not authenticated"
-          }`
+          }`,
         );
       }
     }
@@ -135,7 +177,7 @@ export class TournamentRepository {
           `RLS Policy Violation: Failed to create bracket. ` +
             `Policy requires: user_id IS NULL AND anon_user_id IS NOT NULL. ` +
             `Received: user_id=${bracket.user_id}, anon_user_id=${bracket.anon_user_id}. ` +
-            `Error: ${bracketError?.message}`
+            `Error: ${bracketError?.message}`,
         );
       }
       throw new Error(`Failed to create bracket: ${bracketError?.message}`);
@@ -150,7 +192,7 @@ export class TournamentRepository {
   }: PersistTournamentData): Promise<void> {
     if (!bracket.id) {
       throw new Error(
-        "Bracket must have an ID before persisting games and picks"
+        "Bracket must have an ID before persisting games and picks",
       );
     }
 
@@ -201,7 +243,7 @@ export class TournamentRepository {
           };
           await persistPick(completePick);
         }
-      })
+      }),
     );
   }
 }

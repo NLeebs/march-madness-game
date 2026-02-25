@@ -9,10 +9,13 @@ import {
   teamStatsActions,
   appStateActions,
 } from "@/store";
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/src/hooks";
+import {
+  useAuth,
+  useYears,
+  useTeamStatistics,
+  useTournamentScoringRules,
+} from "@/src/hooks";
 import { ConferenceMap } from "@/models";
-import { AppError } from "@/utils/errorHandling";
 
 export const StartScreen = () => {
   const appState = useSelector((state: RootState) => state.appState);
@@ -32,16 +35,16 @@ export const StartScreen = () => {
   const [selectedYearTeamStats, setSelectedYearTeamStats] =
     useState<ConferenceMap | null>(null);
 
-  const { data: years, isLoading: isLoadingYears } = useQuery({
-    queryKey: ["years"],
-    queryFn: async () => {
-      const response = await fetch("/api/years");
-      if (!response.ok) {
-        throw new AppError("Failed to fetch years", response.status);
-      }
-      return response.json();
-    },
-  });
+  const { data: years, isLoading: isLoadingYears } = useYears();
+
+  const {
+    data: tournamentScoringRuleData,
+    isLoading: isLoadingTournamentScoringRuleId,
+  } = useTournamentScoringRules(selectedYearId);
+
+  const { data: teamStats, isLoading: isLoadingTeamStats } =
+    useTeamStatistics(selectedYearId);
+
   useEffect(() => {
     if (years?.length && !selectedYearId && !tournamentYearId) {
       const latestYearId = years[years.length - 1].id;
@@ -55,44 +58,10 @@ export const StartScreen = () => {
     } else {
       setSelectedYearId("");
       setSelectedYearTeamStats(null);
-      dispatch(appStateActions.loadingStarted()); 
+      dispatch(appStateActions.loadingStarted());
     }
-  }, [tournamentYearId, dispatch]); 
+  }, [tournamentYearId, dispatch]);
 
-  const {
-    data: tournamentScoringRuleData,
-    isLoading: isLoadingTournamentScoringRuleId,
-  } = useQuery({
-    queryKey: ["tournamentScoringRuleId", selectedYearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/tournament-scoring-rules/${selectedYearId}`
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch tournament scoring rules",
-          response.status
-        );
-      }
-      return response.json();
-    },
-    enabled: !!selectedYearId,
-  });
-
-  const { data: teamStats, isLoading: isLoadingTeamStats } = useQuery({
-    queryKey: ["teamStats", selectedYearId],
-    queryFn: async () => {
-      const response = await fetch(`/api/team-statistics/${selectedYearId}`);
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch team statistics",
-          response.status
-        );
-      }
-      return response.json();
-    },
-    enabled: !!selectedYearId,
-  });
   useEffect(() => {
     if (teamStats) {
       setSelectedYearTeamStats(teamStats);
