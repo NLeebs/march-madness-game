@@ -22,7 +22,7 @@ import { PRIMARY_COLOR, SECONDARY_COLOR } from "@/src/constants";
 
 export const Dashboard = () => {
   const [selectedYearId, setSelectedYearId] = useState<string>("");
-  const { user } = useAuth();
+  const { user, isLoading: isLoadingAuth } = useAuth();
 
   const { data: profileData, isLoading: isLoadingProfile } = useProfile(
     user?.id,
@@ -86,6 +86,7 @@ export const Dashboard = () => {
   };
 
   const isLoading =
+    isLoadingAuth ||
     isLoadingProfile ||
     isLoadingYears ||
     isLoadingUserBracketsByYearId ||
