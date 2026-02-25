@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { UserTotalStatsSupabase } from "@/models/appStatsData";
 import { AppError } from "@/utils/errorHandling";
 
 export function useUserStatisticsByYearId(userId: string, yearId: string) {
-  const { data, isLoading: isLoadingUserStatisticsByYearId } = useQuery({
+  const { data, isLoading: isLoadingUserStatisticsByYearId } =
+    useQuery<UserTotalStatsSupabase>({
     queryKey: ["userStatisticsByYearId", userId, yearId],
     queryFn: async () => {
       const response = await fetch(`/api/user-statistics/${userId}/${yearId}`);
@@ -13,7 +14,7 @@ export function useUserStatisticsByYearId(userId: string, yearId: string) {
           response.status,
         );
       }
-      return response.json();
+      return (await response.json()) as UserTotalStatsSupabase;
     },
     enabled: !!userId && !!yearId,
   });

@@ -22,6 +22,7 @@ export const UserTotalStatsSupabaseSchema = z.object({
   champion_correct_percentage: z.number(),
   champions_guessed_correctly_rank: z.number(),
   top_picked_champion_id: z.string().uuid(),
+  total_top_picked_champion_picks: z.number(),
   total_final_fours_picked: z.number(),
   final_fours_guessed_correctly: z.number(),
   final_four_correct_percentage: z.number(),
@@ -38,6 +39,7 @@ export const UserTotalStatsSupabaseSchema = z.object({
   rounds_one_guessed_correctly: z.number(),
   round_one_correct_percentage: z.number(),
   top_picked_conference_id: z.string().uuid(),
+  total_top_picked_conference_picks: z.number(),
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
 });
@@ -45,6 +47,3 @@ export const UserTotalStatsSupabaseSchema = z.object({
 export type UserTotalStatsSupabase = z.infer<
   typeof UserTotalStatsSupabaseSchema
 >;
-
-// Need top three picked teams and top three conferneces plus their picks
-// Need to update supabase too plus total stats for user script

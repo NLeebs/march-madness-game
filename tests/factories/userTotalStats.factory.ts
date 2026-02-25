@@ -1,7 +1,7 @@
 import { UserTotalStatsSupabase } from "@/models/appStatsData/UserTotalStatsSupabase";
 
 export function buildUserTotalStats(
-  overrides: Partial<UserTotalStatsSupabase> = {}
+  overrides: Partial<UserTotalStatsSupabase> = {},
 ): UserTotalStatsSupabase {
   return {
     id: "stats-uuid-1",
@@ -25,6 +25,7 @@ export function buildUserTotalStats(
     champion_correct_percentage: 20.0,
     champions_guessed_correctly_rank: 4,
     top_picked_champion_id: "team-uuid-duke",
+    total_top_picked_champion_picks: 4,
     total_final_fours_picked: 40,
     final_fours_guessed_correctly: 14,
     final_four_correct_percentage: 35.0,
@@ -40,6 +41,8 @@ export function buildUserTotalStats(
     total_round_ones_picked: 320,
     rounds_one_guessed_correctly: 224,
     round_one_correct_percentage: 70.0,
+    top_picked_conference_id: "conference-uuid-acc",
+    total_top_picked_conference_picks: 16,
     created_at: "2025-03-20T10:00:00Z",
     updated_at: "2025-03-20T12:00:00Z",
     ...overrides,
