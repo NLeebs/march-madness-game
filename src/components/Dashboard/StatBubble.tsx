@@ -17,6 +17,14 @@ export const StatBubble: React.FC<StatBubbleProps> = ({
   trend,
   className,
 }) => {
+  const shownStat = stat
+    ? percentage
+      ? `${stat}%`
+      : stat
+    : percentage
+      ? "0%"
+      : "--";
+
   const trendColor =
     trend === "up"
       ? "bg-green-200"
@@ -38,7 +46,7 @@ export const StatBubble: React.FC<StatBubbleProps> = ({
           trendColor,
         )}
       >
-        <p className="text-xl">{percentage ? `${stat}%` : stat}</p>
+        <p className="text-xl">{shownStat}</p>
       </div>
     </div>
   );

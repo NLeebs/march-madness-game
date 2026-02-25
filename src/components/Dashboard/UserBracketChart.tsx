@@ -31,6 +31,19 @@ export const UserBracketChart = ({
 }: UserBracketChartProps) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
 
+  if (bracketData.length === 0) {
+    return (
+      <div className="w-full bg-blue-50 px-2 py-3 sm:p-4 rounded-md">
+        <h2 className="text-base sm:text-lg text-center font-bold normal-case mb-2">
+          Your Bracket Scores
+        </h2>
+        <p className="text-xl text-center text-gray-600">
+          Play some tournaments to see your stats!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full bg-blue-50 px-2 py-3 sm:p-4 rounded-md">
       <h2 className="text-base sm:text-lg text-center font-bold normal-case mb-2">

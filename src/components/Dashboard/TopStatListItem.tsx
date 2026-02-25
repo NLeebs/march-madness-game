@@ -22,7 +22,7 @@ export const TopStatListItem: React.FC<StatListItemProps> = ({
     <div className="flex flex-col justify-start items-center gap-4">
       <Image
         src={teamLogoRoute}
-        alt={team}
+        alt={team ?? ""}
         width={isMobile ? 150 : 250}
         height={isMobile ? 150 : 250}
       />

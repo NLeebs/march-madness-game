@@ -5,7 +5,7 @@ import { TopStatListItem, StatListItem } from "@/src/components";
 interface StatListProps {
   title: string;
   statLabel: string;
-  stats: {
+  stats?: {
     team: string;
     teamLogoRoute: string;
     stat: number | string;
@@ -13,8 +13,20 @@ interface StatListProps {
 }
 
 export const StatList = ({ title, statLabel, stats }: StatListProps) => {
-  const topStat = stats[0];
-  const otherStats = stats.slice(1) ?? [];
+  const safeStats = stats ?? [];
+  const topStat = safeStats[0];
+  const otherStats = safeStats.slice(1);
+
+  if (!topStat?.team) {
+    return (
+      <div className="w-full bg-blue-50 px-8 py-4 rounded-md flex flex-col justify-start items-center gap-4">
+        <h3 className="text-2xl text-center font-bold">{title}</h3>
+        <p className="text-xl text-center text-gray-600">
+          No stats available yet.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-blue-50 px-8 py-4 rounded-md flex flex-col justify-start items-center gap-4">

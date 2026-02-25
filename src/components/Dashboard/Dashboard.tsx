@@ -144,16 +144,14 @@ export const Dashboard = () => {
                   />
                   <StatBubble
                     statLabel="Last Three Average"
-                    stat={
-                      lastThreeBracketAverage ? lastThreeBracketAverage : "--"
-                    }
+                    stat={lastThreeBracketAverage}
                     trend={
                       lastThreeBracketAverage >= averageScore ? "up" : "down"
                     }
                   />
                   <StatBubble
                     statLabel="Last Ten Average"
-                    stat={lastTenBracketAverage ? lastTenBracketAverage : "--"}
+                    stat={lastTenBracketAverage}
                     trend={
                       lastTenBracketAverage >= averageScore ? "up" : "down"
                     }
