@@ -169,6 +169,26 @@ export function useMadnessPrep(yearId: string) {
     enabled: !!yearId,
   });
 
+  const {
+    data: teamsInMostEliteEights,
+    isLoading: isLoadingTeamsInMostEliteEights,
+  } = useQuery({
+    queryKey: ["teamsInMostEliteEights", yearId],
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/teams/appearances/elite-eights/${yearId}`,
+      );
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch teams in most elite eights",
+          response.status,
+        );
+      }
+      return response.json() as Promise<TeamPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
   return {
     topPerformingTeams,
     topPerformingNonPowerConferenceTeams,
@@ -179,6 +199,7 @@ export function useMadnessPrep(yearId: string) {
     teamsWithMostChampionships,
     teamsInMostFinals,
     teamsInMostFinalFours,
+    teamsInMostEliteEights,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -188,5 +209,6 @@ export function useMadnessPrep(yearId: string) {
     isLoadingTeamsWithMostChampionships,
     isLoadingTeamsInMostFinals,
     isLoadingTeamsInMostFinalFours,
+    isLoadingTeamsInMostEliteEights,
   };
 }
