@@ -1,5 +1,6 @@
 export * from "./useAuth";
 export * from "./useConference";
+export * from "./useMadnessPrep";
 export * from "./useMediaQuery";
 export * from "./useFieldAvailability";
 export * from "./useFormSubmissionRateLimit";

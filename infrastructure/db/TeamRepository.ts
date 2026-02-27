@@ -31,7 +31,7 @@ export class TeamRepository {
     yearId: string,
   ): Promise<TeamPerformanceSupabase[]> {
     const { data: teamPerformanceData, error: teamPerformanceError } =
-      await this.supabase.rpc("get_top_picked_teams_for_user_and_year", {
+      await this.supabase.rpc("get_top_performing_teams_by_year", {
         p_year_id: yearId,
       });
 
