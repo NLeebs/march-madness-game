@@ -18,6 +18,7 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     teamsMostUpsetProne,
     firstRoundSeedMatchupUpsetPercentages,
     teamsWithMostChampionships,
+    teamsInMostFinalFours,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -25,6 +26,7 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     isLoadingTeamsMostUpsetProne,
     isLoadingFirstRoundSeedMatchupUpsetPercentages,
     isLoadingTeamsWithMostChampionships,
+    isLoadingTeamsInMostFinalFours,
   } = useMadnessPrep(yearId);
 
   const topPerformingTeamsStats = topPerformingTeams?.map((team) => ({
@@ -74,6 +76,12 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     }),
   );
 
+  const teamsInMostFinalFoursStats = teamsInMostFinalFours?.map((team) => ({
+    team: team.team_name ?? "",
+    teamLogoRoute: team.team_logo ?? "",
+    stat: team.final_fours ?? 0,
+  }));
+
   const isLoading =
     !yearId ||
     isLoadingMadnessPrep ||
@@ -82,7 +90,8 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     isLoadingTeamsThatCausedMostUpsets ||
     isLoadingTeamsMostUpsetProne ||
     isLoadingFirstRoundSeedMatchupUpsetPercentages ||
-    isLoadingTeamsWithMostChampionships;
+    isLoadingTeamsWithMostChampionships ||
+    isLoadingTeamsInMostFinalFours;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -129,7 +138,7 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
             <StatList
               title="Most Final Four Appearances"
               statLabel="Final Fours"
-              stats={[]}
+              stats={teamsInMostFinalFoursStats}
             />
             <StatList
               title="Most Elite Eight Appearances"

@@ -149,6 +149,26 @@ export function useMadnessPrep(yearId: string) {
       enabled: !!yearId,
     });
 
+  const {
+    data: teamsInMostFinalFours,
+    isLoading: isLoadingTeamsInMostFinalFours,
+  } = useQuery({
+    queryKey: ["teamsInMostFinalFours", yearId],
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/teams/appearances/final-fours/${yearId}`,
+      );
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch teams in most final fours",
+          response.status,
+        );
+      }
+      return response.json() as Promise<TeamPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
   return {
     topPerformingTeams,
     topPerformingNonPowerConferenceTeams,
@@ -158,6 +178,7 @@ export function useMadnessPrep(yearId: string) {
     firstRoundSeedMatchupUpsetPercentages,
     teamsWithMostChampionships,
     teamsInMostFinals,
+    teamsInMostFinalFours,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -166,5 +187,6 @@ export function useMadnessPrep(yearId: string) {
     isLoadingFirstRoundSeedMatchupUpsetPercentages,
     isLoadingTeamsWithMostChampionships,
     isLoadingTeamsInMostFinals,
+    isLoadingTeamsInMostFinalFours,
   };
 }
