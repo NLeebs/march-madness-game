@@ -39,10 +39,49 @@ export function useMadnessPrep(yearId: string) {
     enabled: !!yearId,
   });
 
+  const { data: topPickedTeams, isLoading: isLoadingTopPickedTeams } = useQuery(
+    {
+      queryKey: ["topPickedTeams", yearId],
+      queryFn: async () => {
+        const response = await fetch(`/api/teams/most-picked/${yearId}`);
+        if (!response.ok) {
+          throw new AppError(
+            "Failed to fetch top picked teams",
+            response.status,
+          );
+        }
+        return response.json() as Promise<TeamPerformanceSupabase[]>;
+      },
+      enabled: !!yearId,
+    },
+  );
+
+  const {
+    data: teamsThatCausedMostUpsets,
+    isLoading: isLoadingTeamsThatCausedMostUpsets,
+  } = useQuery({
+    queryKey: ["teamsThatCausedMostUpsets", yearId],
+    queryFn: async () => {
+      const response = await fetch(`/api/teams/upsets/caused/${yearId}`);
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch teams that caused most upsets",
+          response.status,
+        );
+      }
+      return response.json() as Promise<TeamPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
   return {
     topPerformingTeams,
     topPerformingNonPowerConferenceTeams,
+    topPickedTeams,
+    teamsThatCausedMostUpsets,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
+    isLoadingTopPickedTeams,
+    isLoadingTeamsThatCausedMostUpsets,
   };
 }
