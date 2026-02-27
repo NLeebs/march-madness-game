@@ -133,6 +133,22 @@ export function useMadnessPrep(yearId: string) {
     enabled: !!yearId,
   });
 
+  const { data: teamsInMostFinals, isLoading: isLoadingTeamsInMostFinals } =
+    useQuery({
+      queryKey: ["teamsInMostFinals", yearId],
+      queryFn: async () => {
+        const response = await fetch(`/api/teams/appearances/finals/${yearId}`);
+        if (!response.ok) {
+          throw new AppError(
+            "Failed to fetch teams in most finals",
+            response.status,
+          );
+        }
+        return response.json() as Promise<TeamPerformanceSupabase[]>;
+      },
+      enabled: !!yearId,
+    });
+
   return {
     topPerformingTeams,
     topPerformingNonPowerConferenceTeams,
@@ -141,6 +157,7 @@ export function useMadnessPrep(yearId: string) {
     teamsMostUpsetProne,
     firstRoundSeedMatchupUpsetPercentages,
     teamsWithMostChampionships,
+    teamsInMostFinals,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -148,5 +165,6 @@ export function useMadnessPrep(yearId: string) {
     isLoadingTeamsMostUpsetProne,
     isLoadingFirstRoundSeedMatchupUpsetPercentages,
     isLoadingTeamsWithMostChampionships,
+    isLoadingTeamsInMostFinals,
   };
 }

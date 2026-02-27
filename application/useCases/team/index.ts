@@ -3,6 +3,7 @@ export * from "./GetTeamsMostUpsetProneByYearId";
 export * from "./GetTeamsThatCausedMostUpsetsByYearId";
 export * from "./GetTeamStatisticsByYearId";
 export * from "./GetTeamsWithMostChampionshipsByYear";
+export * from "./GetTeamsInMostFinalsByYear";
 export * from "./GetTopPerformingTeamsByYear";
 export * from "./GetTopPerformingNonPowerConferenceTeamsByYear";
 export * from "./GetTopPickedTeamsByUserIdAndYearId";
