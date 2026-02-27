@@ -10,7 +10,12 @@ interface MadnessPrepDashboardProps {
 export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
   yearId,
 }) => {
-  const { topPerformingTeams, isLoadingMadnessPrep } = useMadnessPrep(yearId);
+  const {
+    topPerformingTeams,
+    topPerformingNonPowerConferenceTeams,
+    isLoadingMadnessPrep,
+    isLoadingTopPerformingNonPowerConferenceTeams,
+  } = useMadnessPrep(yearId);
 
   const topPerformingTeamsStats = topPerformingTeams?.map((team) => ({
     team: team.team_name ?? "",
@@ -18,7 +23,17 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     stat: team.tournament_points_scored ?? 0,
   }));
 
-  const isLoading = !yearId || isLoadingMadnessPrep;
+  const topPerformingNonPowerConferenceTeamsStats =
+    topPerformingNonPowerConferenceTeams?.map((team) => ({
+      team: team.team_name ?? "",
+      teamLogoRoute: team.team_logo ?? "",
+      stat: team.tournament_points_scored ?? 0,
+    }));
+
+  const isLoading =
+    !yearId ||
+    isLoadingMadnessPrep ||
+    isLoadingTopPerformingNonPowerConferenceTeams;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -29,13 +44,13 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <StatList
               title="Top Performers"
-              statLabel="Tourny Points Scored"
+              statLabel="Tournament Points Scored"
               stats={topPerformingTeamsStats}
             />
             <StatList
               title="Top Non Power 5 Performers"
-              statLabel="Upsets"
-              stats={[]}
+              statLabel="Tournament Points Scored"
+              stats={topPerformingNonPowerConferenceTeamsStats}
             />
             <StatList title="Most Picked Teams" statLabel="Picks" stats={[]} />
             <StatList title="Most Upsets" statLabel="Upsets" stats={[]} />
