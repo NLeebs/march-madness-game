@@ -21,6 +21,8 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     teamsInMostFinalFours,
     teamsInMostEliteEights,
     teamsInMostSweetSixteens,
+    teamsInMostSecondRounds,
+    teamsWithMostTournamentAppearances,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -31,6 +33,8 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     isLoadingTeamsInMostFinalFours,
     isLoadingTeamsInMostEliteEights,
     isLoadingTeamsInMostSweetSixteens,
+    isLoadingTeamsInMostSecondRounds,
+    isLoadingTeamsWithMostTournamentAppearances,
   } = useMadnessPrep(yearId);
 
   const topPerformingTeamsStats = topPerformingTeams?.map((team) => ({
@@ -100,6 +104,19 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     }),
   );
 
+  const teamsInMostSecondRoundsStats = teamsInMostSecondRounds?.map((team) => ({
+    team: team.team_name ?? "",
+    teamLogoRoute: team.team_logo ?? "",
+    stat: team.second_rounds ?? 0,
+  }));
+
+  const teamsWithMostTournamentAppearancesStats =
+    teamsWithMostTournamentAppearances?.map((team) => ({
+      team: team.team_name ?? "",
+      teamLogoRoute: team.team_logo ?? "",
+      stat: team.tournament_appearances ?? 0,
+    }));
+
   const isLoading =
     !yearId ||
     isLoadingMadnessPrep ||
@@ -111,7 +128,9 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     isLoadingTeamsWithMostChampionships ||
     isLoadingTeamsInMostFinalFours ||
     isLoadingTeamsInMostEliteEights ||
-    isLoadingTeamsInMostSweetSixteens;
+    isLoadingTeamsInMostSweetSixteens ||
+    isLoadingTeamsInMostSecondRounds ||
+    isLoadingTeamsWithMostTournamentAppearances;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -171,14 +190,14 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
               stats={teamsInMostSweetSixteensStats}
             />
             <StatList
-              title="Most Round Two Appearances"
-              statLabel="Round Two Appearances"
-              stats={[]}
+              title="Most Second Rounds"
+              statLabel="Second Rounds"
+              stats={teamsInMostSecondRoundsStats}
             />
             <StatList
               title="Most Tournament Appearances"
-              statLabel="Tournament Appearances"
-              stats={[]}
+              statLabel="Appearances"
+              stats={teamsWithMostTournamentAppearancesStats}
             />
           </div>
         </>

@@ -209,6 +209,44 @@ export function useMadnessPrep(yearId: string) {
     enabled: !!yearId,
   });
 
+  const {
+    data: teamsInMostSecondRounds,
+    isLoading: isLoadingTeamsInMostSecondRounds,
+  } = useQuery({
+    queryKey: ["teamsInMostSecondRounds", yearId],
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/teams/appearances/second-rounds/${yearId}`,
+      );
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch teams in most second rounds",
+          response.status,
+        );
+      }
+      return response.json() as Promise<TeamPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
+  const {
+    data: teamsWithMostTournamentAppearances,
+    isLoading: isLoadingTeamsWithMostTournamentAppearances,
+  } = useQuery({
+    queryKey: ["teamsWithMostTournamentAppearances", yearId],
+    queryFn: async () => {
+      const response = await fetch(`/api/teams/appearances/${yearId}`);
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch teams with most tournament appearances",
+          response.status,
+        );
+      }
+      return response.json() as Promise<TeamPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
   return {
     topPerformingTeams,
     topPerformingNonPowerConferenceTeams,
@@ -221,6 +259,8 @@ export function useMadnessPrep(yearId: string) {
     teamsInMostFinalFours,
     teamsInMostEliteEights,
     teamsInMostSweetSixteens,
+    teamsInMostSecondRounds,
+    teamsWithMostTournamentAppearances,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -232,5 +272,7 @@ export function useMadnessPrep(yearId: string) {
     isLoadingTeamsInMostFinalFours,
     isLoadingTeamsInMostEliteEights,
     isLoadingTeamsInMostSweetSixteens,
+    isLoadingTeamsInMostSecondRounds,
+    isLoadingTeamsWithMostTournamentAppearances,
   };
 }
