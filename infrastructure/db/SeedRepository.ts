@@ -17,7 +17,7 @@ export class SeedRepository {
         "get_seed_matchup_upset_percentages_by_year_and_round",
         {
           p_year_id: yearId,
-          p_round_id: "1",
+          p_round_name: "1",
         },
       );
 

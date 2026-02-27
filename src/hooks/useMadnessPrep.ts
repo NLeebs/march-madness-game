@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { AppError } from "@/utils/errorHandling";
-import { TeamPerformanceSupabase } from "@/models/appStatsData";
+import {
+  SeedPerformanceSupabase,
+  TeamPerformanceSupabase,
+} from "@/models/appStatsData";
 
 export function useMadnessPrep(yearId: string) {
   const { data: topPerformingTeams, isLoading: isLoadingMadnessPrep } =
@@ -74,14 +77,76 @@ export function useMadnessPrep(yearId: string) {
     enabled: !!yearId,
   });
 
+  const { data: teamsMostUpsetProne, isLoading: isLoadingTeamsMostUpsetProne } =
+    useQuery({
+      queryKey: ["teamsMostUpsetProne", yearId],
+      queryFn: async () => {
+        const response = await fetch(`/api/teams/upsets/prone/${yearId}`);
+        if (!response.ok) {
+          throw new AppError(
+            "Failed to fetch teams most upset prone",
+            response.status,
+          );
+        }
+        return response.json() as Promise<TeamPerformanceSupabase[]>;
+      },
+      enabled: !!yearId,
+    });
+
+  const {
+    data: firstRoundSeedMatchupUpsetPercentages,
+    isLoading: isLoadingFirstRoundSeedMatchupUpsetPercentages,
+  } = useQuery({
+    queryKey: ["firstRoundSeedMatchupUpsetPercentages", yearId],
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/seeds/first-round/upset-percentage/${yearId}`,
+      );
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch first round seed matchup upset percentages",
+          response.status,
+        );
+      }
+      return response.json() as Promise<SeedPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
+  const {
+    data: teamsWithMostChampionships,
+    isLoading: isLoadingTeamsWithMostChampionships,
+  } = useQuery({
+    queryKey: ["teamsWithMostChampionships", yearId],
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/teams/appearances/championships/${yearId}`,
+      );
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch teams with most championships",
+          response.status,
+        );
+      }
+      return response.json() as Promise<TeamPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
   return {
     topPerformingTeams,
     topPerformingNonPowerConferenceTeams,
     topPickedTeams,
     teamsThatCausedMostUpsets,
+    teamsMostUpsetProne,
+    firstRoundSeedMatchupUpsetPercentages,
+    teamsWithMostChampionships,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
     isLoadingTeamsThatCausedMostUpsets,
+    isLoadingTeamsMostUpsetProne,
+    isLoadingFirstRoundSeedMatchupUpsetPercentages,
+    isLoadingTeamsWithMostChampionships,
   };
 }

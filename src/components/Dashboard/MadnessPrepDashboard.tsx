@@ -15,10 +15,16 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     topPerformingNonPowerConferenceTeams,
     topPickedTeams,
     teamsThatCausedMostUpsets,
+    teamsMostUpsetProne,
+    firstRoundSeedMatchupUpsetPercentages,
+    teamsWithMostChampionships,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
     isLoadingTeamsThatCausedMostUpsets,
+    isLoadingTeamsMostUpsetProne,
+    isLoadingFirstRoundSeedMatchupUpsetPercentages,
+    isLoadingTeamsWithMostChampionships,
   } = useMadnessPrep(yearId);
 
   const topPerformingTeamsStats = topPerformingTeams?.map((team) => ({
@@ -48,12 +54,35 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     }),
   );
 
+  const teamsMostUpsetProneStats = teamsMostUpsetProne?.map((team) => ({
+    team: team.team_name ?? "",
+    teamLogoRoute: team.team_logo ?? "",
+    stat: team.times_upset ?? 0,
+  }));
+
+  const firstRoundSeedMatchupUpsetPercentagesStats =
+    firstRoundSeedMatchupUpsetPercentages?.map((seed) => ({
+      team: `${seed.higher_seed ?? 0} vs ${seed.lower_seed ?? 0}`,
+      stat: `${seed.upset_percentage ?? 0}%`,
+    }));
+
+  const teamsWithMostChampionshipsStats = teamsWithMostChampionships?.map(
+    (team) => ({
+      team: team.team_name ?? "",
+      teamLogoRoute: team.team_logo ?? "",
+      stat: team.championships ?? 0,
+    }),
+  );
+
   const isLoading =
     !yearId ||
     isLoadingMadnessPrep ||
     isLoadingTopPerformingNonPowerConferenceTeams ||
     isLoadingTopPickedTeams ||
-    isLoadingTeamsThatCausedMostUpsets;
+    isLoadingTeamsThatCausedMostUpsets ||
+    isLoadingTeamsMostUpsetProne ||
+    isLoadingFirstRoundSeedMatchupUpsetPercentages ||
+    isLoadingTeamsWithMostChampionships;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -85,17 +114,17 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
             <StatList
               title="Most Upset Prone"
               statLabel="Been Upset"
-              stats={[]}
+              stats={teamsMostUpsetProneStats}
             />
             <StatList
-              title="Worst Seed Matchups"
+              title="Upsets By Seeds"
               statLabel="Upsets"
-              stats={[]}
+              stats={firstRoundSeedMatchupUpsetPercentagesStats}
             />
             <StatList
               title="Most Championships"
               statLabel="Championships"
-              stats={[]}
+              stats={teamsWithMostChampionshipsStats}
             />
             <StatList
               title="Most Final Four Appearances"
