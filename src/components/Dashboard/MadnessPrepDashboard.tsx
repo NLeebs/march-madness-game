@@ -20,6 +20,7 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     teamsWithMostChampionships,
     teamsInMostFinalFours,
     teamsInMostEliteEights,
+    teamsInMostSweetSixteens,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -29,6 +30,7 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     isLoadingTeamsWithMostChampionships,
     isLoadingTeamsInMostFinalFours,
     isLoadingTeamsInMostEliteEights,
+    isLoadingTeamsInMostSweetSixteens,
   } = useMadnessPrep(yearId);
 
   const topPerformingTeamsStats = topPerformingTeams?.map((team) => ({
@@ -90,6 +92,14 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     stat: team.elite_eights ?? 0,
   }));
 
+  const teamsInMostSweetSixteensStats = teamsInMostSweetSixteens?.map(
+    (team) => ({
+      team: team.team_name ?? "",
+      teamLogoRoute: team.team_logo ?? "",
+      stat: team.sweet_sixteens ?? 0,
+    }),
+  );
+
   const isLoading =
     !yearId ||
     isLoadingMadnessPrep ||
@@ -100,7 +110,8 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
     isLoadingFirstRoundSeedMatchupUpsetPercentages ||
     isLoadingTeamsWithMostChampionships ||
     isLoadingTeamsInMostFinalFours ||
-    isLoadingTeamsInMostEliteEights;
+    isLoadingTeamsInMostEliteEights ||
+    isLoadingTeamsInMostSweetSixteens;
 
   return (
     <div className="w-full py-4 px-8 max-w-screen-2xl mx-auto">
@@ -140,24 +151,24 @@ export const MadnessPrepDashboard: React.FC<MadnessPrepDashboardProps> = ({
               stats={firstRoundSeedMatchupUpsetPercentagesStats}
             />
             <StatList
-              title="Most Championships"
+              title="Most Titles"
               statLabel="Championships"
               stats={teamsWithMostChampionshipsStats}
             />
             <StatList
-              title="Most Final Four Appearances"
+              title="Most Final Fours"
               statLabel="Final Fours"
               stats={teamsInMostFinalFoursStats}
             />
             <StatList
-              title="Most Elite Eight Appearances"
+              title="Most Elite Eights"
               statLabel="Elite Eights"
               stats={teamsInMostEliteEightsStats}
             />
             <StatList
-              title="Most Sweet Sixteen Appearances"
+              title="Most Sweet Sixteens"
               statLabel="Sweet Sixteens"
-              stats={[]}
+              stats={teamsInMostSweetSixteensStats}
             />
             <StatList
               title="Most Round Two Appearances"

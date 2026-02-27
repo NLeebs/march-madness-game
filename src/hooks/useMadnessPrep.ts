@@ -189,6 +189,26 @@ export function useMadnessPrep(yearId: string) {
     enabled: !!yearId,
   });
 
+  const {
+    data: teamsInMostSweetSixteens,
+    isLoading: isLoadingTeamsInMostSweetSixteens,
+  } = useQuery({
+    queryKey: ["teamsInMostSweetSixteens", yearId],
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/teams/appearances/sweet-sixteens/${yearId}`,
+      );
+      if (!response.ok) {
+        throw new AppError(
+          "Failed to fetch teams in most sweet sixteens",
+          response.status,
+        );
+      }
+      return response.json() as Promise<TeamPerformanceSupabase[]>;
+    },
+    enabled: !!yearId,
+  });
+
   return {
     topPerformingTeams,
     topPerformingNonPowerConferenceTeams,
@@ -200,6 +220,7 @@ export function useMadnessPrep(yearId: string) {
     teamsInMostFinals,
     teamsInMostFinalFours,
     teamsInMostEliteEights,
+    teamsInMostSweetSixteens,
     isLoadingMadnessPrep,
     isLoadingTopPerformingNonPowerConferenceTeams,
     isLoadingTopPickedTeams,
@@ -210,5 +231,6 @@ export function useMadnessPrep(yearId: string) {
     isLoadingTeamsInMostFinals,
     isLoadingTeamsInMostFinalFours,
     isLoadingTeamsInMostEliteEights,
+    isLoadingTeamsInMostSweetSixteens,
   };
 }

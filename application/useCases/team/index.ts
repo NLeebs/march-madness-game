@@ -6,6 +6,7 @@ export * from "./GetTeamsWithMostChampionshipsByYear";
 export * from "./GetTeamsInMostFinalsByYear";
 export * from "./GetTeamsInMostFinalFoursByYear";
 export * from "./GetTeamsInMostEliteEightsByYear";
+export * from "./GetTeamsInMostSweetSixteensByYear";
 export * from "./GetTopPerformingTeamsByYear";
 export * from "./GetTopPerformingNonPowerConferenceTeamsByYear";
 export * from "./GetTopPickedTeamsByUserIdAndYearId";
