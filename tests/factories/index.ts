@@ -22,4 +22,5 @@ export { buildBracket } from "./bracket.factory";
 export { buildProfile } from "./profile.factory";
 export { buildUserTotalStats } from "./userTotalStats.factory";
 export { buildTeam } from "./team.factory";
+export { buildTeamPerformance } from "./teamPerformance.factory";
 export { buildRound } from "./round.factory";
