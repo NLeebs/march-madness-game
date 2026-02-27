@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
-import { GET } from "@/app/api/teams/appearances/route";
+import { GET } from "@/app/api/teams/appearances/[yearId]/route";
 import { buildTeamPerformance } from "@/tests/factories";
 
 const mockGetTeamsWithMostTournamentAppearancesByYear = vi.fn();
