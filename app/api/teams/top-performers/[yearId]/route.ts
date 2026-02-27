@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getTopPerformingTeamsByYear } from "@/application/useCases/GetTopPerformingTeamsByYear";
+import { getTopPerformingTeamsByYear } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 
 export async function GET(

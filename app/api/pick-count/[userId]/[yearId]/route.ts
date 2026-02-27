@@ -1,4 +1,4 @@
-import { getTopPickedTeamsByUserIdAndYearId } from "@/application/useCases/GetTopPickedTeamsByUserIdAndYearId";
+import { getTopPickedTeamsByUserIdAndYearId } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
 import { authorizeUserAccess } from "@/utils/api/authorizeUserAccess";

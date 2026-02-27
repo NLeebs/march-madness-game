@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getUserBracketsByYearId } from "@/application/useCases/GetUserBracketsByYearId";
+import { getUserBracketsByYearId } from "@/application/useCases";
 import { buildBracket } from "@/tests/factories";
 
 const mockGetBracketsByUserIdAndYearId = vi.fn();
@@ -19,7 +19,10 @@ describe("getUserBracketsByYearId", () => {
     const expectedBrackets = [buildBracket(), buildBracket({ score: 85 })];
     mockGetBracketsByUserIdAndYearId.mockResolvedValue(expectedBrackets);
 
-    const result = await getUserBracketsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserBracketsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result).toEqual(expectedBrackets);
   });
@@ -31,7 +34,7 @@ describe("getUserBracketsByYearId", () => {
 
     expect(mockGetBracketsByUserIdAndYearId).toHaveBeenCalledWith(
       "specific-user-id",
-      "specific-year-id"
+      "specific-year-id",
     );
     expect(mockGetBracketsByUserIdAndYearId).toHaveBeenCalledTimes(1);
   });
@@ -39,7 +42,10 @@ describe("getUserBracketsByYearId", () => {
   it("should return an empty array when no brackets exist", async () => {
     mockGetBracketsByUserIdAndYearId.mockResolvedValue([]);
 
-    const result = await getUserBracketsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserBracketsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result).toEqual([]);
     expect(result).toHaveLength(0);
@@ -53,7 +59,10 @@ describe("getUserBracketsByYearId", () => {
     });
     mockGetBracketsByUserIdAndYearId.mockResolvedValue([bracket]);
 
-    const result = await getUserBracketsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserBracketsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe("bracket-abc");
@@ -69,7 +78,10 @@ describe("getUserBracketsByYearId", () => {
     ];
     mockGetBracketsByUserIdAndYearId.mockResolvedValue(brackets);
 
-    const result = await getUserBracketsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserBracketsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result).toHaveLength(3);
     expect(result.map((b) => b.score)).toEqual([42, 67, 91]);
@@ -77,21 +89,21 @@ describe("getUserBracketsByYearId", () => {
 
   it("should propagate errors when the repository throws", async () => {
     mockGetBracketsByUserIdAndYearId.mockRejectedValue(
-      new Error("Failed to fetch brackets: connection refused")
+      new Error("Failed to fetch brackets: connection refused"),
     );
 
     await expect(
-      getUserBracketsByYearId("user-uuid-123", "year-uuid-1")
+      getUserBracketsByYearId("user-uuid-123", "year-uuid-1"),
     ).rejects.toThrow("Failed to fetch brackets: connection refused");
   });
 
   it("should propagate database errors from the repository", async () => {
     mockGetBracketsByUserIdAndYearId.mockRejectedValue(
-      new Error("Failed to fetch brackets: PGRST116")
+      new Error("Failed to fetch brackets: PGRST116"),
     );
 
     await expect(
-      getUserBracketsByYearId("user-uuid-123", "year-uuid-1")
+      getUserBracketsByYearId("user-uuid-123", "year-uuid-1"),
     ).rejects.toThrow("Failed to fetch brackets: PGRST116");
   });
 });

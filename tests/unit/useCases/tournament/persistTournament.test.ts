@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   persistTournament,
   PersistTournamentDto,
-} from "@/application/useCases/PersistTournament";
+} from "@/application/useCases";
 import { buildTournamentState, buildPicksState } from "@/tests/factories";
 
 const mockGetTeamsByYearId = vi.fn();

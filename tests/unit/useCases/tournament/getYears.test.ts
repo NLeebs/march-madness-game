@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getYears } from "@/application/useCases/GetYears";
+import { getYears } from "@/application/useCases";
 import { buildYear } from "@/tests/factories";
 
 const mockGetYears = vi.fn();
@@ -71,9 +71,7 @@ describe("getYears", () => {
   });
 
   it("should return an empty array when team stats years is empty", async () => {
-    mockGetYears.mockResolvedValue([
-      buildYear({ year: 2024 }),
-    ]);
+    mockGetYears.mockResolvedValue([buildYear({ year: 2024 })]);
     mockGetTeamStatsYears.mockResolvedValue([]);
 
     const result = await getYears();
@@ -103,7 +101,7 @@ describe("getYears", () => {
 
   it("should propagate errors from TournamentRepository", async () => {
     mockGetYears.mockRejectedValue(
-      new Error("Failed to fetch years: connection refused")
+      new Error("Failed to fetch years: connection refused"),
     );
 
     await expect(getYears()).rejects.toThrow("Failed to fetch years");
@@ -112,11 +110,11 @@ describe("getYears", () => {
   it("should propagate errors from TeamStatsRepository", async () => {
     mockGetYears.mockResolvedValue([]);
     mockGetTeamStatsYears.mockRejectedValue(
-      new Error("Error fetching team statistics years from Firebase")
+      new Error("Error fetching team statistics years from Firebase"),
     );
 
     await expect(getYears()).rejects.toThrow(
-      "Error fetching team statistics years from Firebase"
+      "Error fetching team statistics years from Firebase",
     );
   });
 });

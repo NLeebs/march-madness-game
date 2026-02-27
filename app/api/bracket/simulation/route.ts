@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { persistTournament } from "@/application/useCases/PersistTournament";
+import { persistTournament } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling/errorHandler";
 import {
   validateRequest,
@@ -53,7 +53,7 @@ const securityMiddleware = combineMiddleware(
   validateMethod(["POST"]),
   validateContentType(["application/json"]),
   validateOrigin(getAllowedOrigins(), true),
-  rateLimit(20, 60000)
+  rateLimit(20, 60000),
 );
 
 export async function POST(req: NextRequest) {
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     await securityMiddleware(req);
 
     const validatedBody = await validateRequest(SimulationRequestBodySchema)(
-      req
+      req,
     );
     const body: SimulationRequestBody = validatedBody as SimulationRequestBody;
 

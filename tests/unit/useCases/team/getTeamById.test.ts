@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getTeamById } from "@/application/useCases/GetTeamById";
+import { getTeamById } from "@/application/useCases";
 import { buildTeam } from "@/tests/factories";
 
 const mockGetTeamById = vi.fn();

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getUserProfile } from "@/application/useCases/GetUserProfile";
+import { getUserProfile } from "@/application/useCases";
 import { buildProfile } from "@/tests/factories";
 
 const mockGetProfileByUserId = vi.fn();

@@ -5,7 +5,7 @@ import { buildConferenceMap } from "@/tests/factories";
 
 const mockGetTeamStatisticsByYearId = vi.fn();
 
-vi.mock("@/application/useCases/GetTeamStatisticsByYearId", () => ({
+vi.mock("@/application/useCases", () => ({
   getTeamStatisticsByYearId: (...args: unknown[]) =>
     mockGetTeamStatisticsByYearId(...args),
 }));

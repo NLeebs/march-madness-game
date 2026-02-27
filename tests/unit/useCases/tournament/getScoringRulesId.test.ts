@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getScoringRuleIdByYearId } from "@/application/useCases/GetScoringRulesId";
+import { getScoringRuleIdByYearId } from "@/application/useCases";
 import { BracketScoringRuleSupabase } from "@/models/appStatsData/BracketScoringRuleSupabase";
 
 const mockGetBracketScoringRulesByYearId = vi.fn();
@@ -29,7 +29,7 @@ describe("getScoringRuleIdByYearId", () => {
 
     expect(result).toBe("scoring-rule-uuid-123");
     expect(mockGetBracketScoringRulesByYearId).toHaveBeenCalledWith(
-      "year-uuid-456"
+      "year-uuid-456",
     );
     expect(mockGetBracketScoringRulesByYearId).toHaveBeenCalledTimes(1);
   });
@@ -64,24 +64,22 @@ describe("getScoringRuleIdByYearId", () => {
 
   it("should propagate errors from the repository", async () => {
     mockGetBracketScoringRulesByYearId.mockRejectedValue(
-      new Error("Failed to fetch bracket scoring rules: connection refused")
+      new Error("Failed to fetch bracket scoring rules: connection refused"),
     );
 
-    await expect(
-      getScoringRuleIdByYearId("bad-year-id")
-    ).rejects.toThrow("Failed to fetch bracket scoring rules");
+    await expect(getScoringRuleIdByYearId("bad-year-id")).rejects.toThrow(
+      "Failed to fetch bracket scoring rules",
+    );
   });
 
   it("should propagate not-found errors from the repository", async () => {
     mockGetBracketScoringRulesByYearId.mockRejectedValue(
-      new Error(
-        "No bracket scoring rules found for year_id: nonexistent-year"
-      )
+      new Error("No bracket scoring rules found for year_id: nonexistent-year"),
     );
 
-    await expect(
-      getScoringRuleIdByYearId("nonexistent-year")
-    ).rejects.toThrow("No bracket scoring rules found");
+    await expect(getScoringRuleIdByYearId("nonexistent-year")).rejects.toThrow(
+      "No bracket scoring rules found",
+    );
   });
 
   it("should return undefined when the scoring rule has no id", async () => {

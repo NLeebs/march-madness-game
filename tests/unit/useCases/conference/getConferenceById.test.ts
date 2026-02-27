@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getConferenceById } from "@/application/useCases/GetConferenceById";
+import { getConferenceById } from "@/application/useCases";
 import { ConferenceSupabase } from "@/models/appStatsData";
 
 const mockGetConferenceById = vi.fn();
@@ -43,7 +43,9 @@ describe("getConferenceById", () => {
 
     await getConferenceById("specific-conference-id");
 
-    expect(mockGetConferenceById).toHaveBeenCalledWith("specific-conference-id");
+    expect(mockGetConferenceById).toHaveBeenCalledWith(
+      "specific-conference-id",
+    );
     expect(mockGetConferenceById).toHaveBeenCalledTimes(1);
   });
 

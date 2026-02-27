@@ -1,4 +1,4 @@
-import { getConferenceById } from "@/application/useCases/GetConferenceById";
+import { getConferenceById } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
 

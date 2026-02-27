@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getTopPickedTeamsByUserIdAndYearId } from "@/application/useCases/GetTopPickedTeamsByUserIdAndYearId";
+import { getTopPickedTeamsByUserIdAndYearId } from "@/application/useCases";
 import { TeamPickCountSupabase } from "@/models/appStatsData/TeamPickCountSupabase";
 
 const mockGetTopPickedTeamsByUserIdAndYearId = vi.fn();
@@ -39,7 +39,9 @@ describe("getTopPickedTeamsByUserIdAndYearId", () => {
         pick_count: 38,
       }),
     ];
-    mockGetTopPickedTeamsByUserIdAndYearId.mockResolvedValue(expectedTeamCounts);
+    mockGetTopPickedTeamsByUserIdAndYearId.mockResolvedValue(
+      expectedTeamCounts,
+    );
 
     const result = await getTopPickedTeamsByUserIdAndYearId(
       "user-uuid-123",
@@ -52,7 +54,10 @@ describe("getTopPickedTeamsByUserIdAndYearId", () => {
   it("should forward userId and yearId to the repository", async () => {
     mockGetTopPickedTeamsByUserIdAndYearId.mockResolvedValue([]);
 
-    await getTopPickedTeamsByUserIdAndYearId("specific-user-id", "specific-year-id");
+    await getTopPickedTeamsByUserIdAndYearId(
+      "specific-user-id",
+      "specific-year-id",
+    );
 
     expect(mockGetTopPickedTeamsByUserIdAndYearId).toHaveBeenCalledWith(
       "specific-user-id",
@@ -92,7 +97,9 @@ describe("getTopPickedTeamsByUserIdAndYearId", () => {
     expect(result[0].team_id).toBe("55555555-5555-5555-5555-555555555555");
     expect(result[0].team_name).toBe("UConn");
     expect(result[0].team_logo).toBe("/team-logos/big-east/uconn.png");
-    expect(result[0].conference_id).toBe("66666666-6666-6666-6666-666666666666");
+    expect(result[0].conference_id).toBe(
+      "66666666-6666-6666-6666-666666666666",
+    );
     expect(result[0].pick_count).toBe(77);
   });
 

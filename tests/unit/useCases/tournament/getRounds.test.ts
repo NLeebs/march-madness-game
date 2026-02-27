@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getRounds } from "@/application/useCases/GetRounds";
+import { getRounds } from "@/application/useCases";
 import { buildRound } from "@/tests/factories";
 
 const mockGetRounds = vi.fn();

@@ -4,7 +4,7 @@ import { GET } from "@/app/api/tournament-scoring-rules/[yearId]/route";
 
 const mockGetScoringRuleIdByYearId = vi.fn();
 
-vi.mock("@/application/useCases/GetScoringRulesId", () => ({
+vi.mock("@/application/useCases", () => ({
   getScoringRuleIdByYearId: (...args: unknown[]) =>
     mockGetScoringRuleIdByYearId(...args),
 }));

@@ -5,7 +5,7 @@ import { buildTeam } from "@/tests/factories";
 
 const mockGetTeamById = vi.fn();
 
-vi.mock("@/application/useCases/GetTeamById", () => ({
+vi.mock("@/application/useCases", () => ({
   getTeamById: (...args: unknown[]) => mockGetTeamById(...args),
 }));
 

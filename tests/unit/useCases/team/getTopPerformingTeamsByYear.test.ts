@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getTopPerformingTeamsByYear } from "@/application/useCases/GetTopPerformingTeamsByYear";
+import { getTopPerformingTeamsByYear } from "@/application/useCases";
 import { buildTeamPerformance } from "@/tests/factories";
 
 const mockGetTopPerformingTeamsByYear = vi.fn();
@@ -70,7 +70,9 @@ describe("getTopPerformingTeamsByYear", () => {
     expect(result[0].team_id).toBe("55555555-5555-5555-5555-555555555555");
     expect(result[0].team_name).toBe("Arizona");
     expect(result[0].team_logo).toBe("/team-logos/pac-12/arizona.png");
-    expect(result[0].conference_id).toBe("66666666-6666-6666-6666-666666666666");
+    expect(result[0].conference_id).toBe(
+      "66666666-6666-6666-6666-666666666666",
+    );
     expect(result[0].championships).toBe(1);
     expect(result[0].finals).toBe(2);
   });

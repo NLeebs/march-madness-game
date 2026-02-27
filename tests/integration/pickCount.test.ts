@@ -7,7 +7,7 @@ import { ForbiddenError, UnauthorizedError } from "@/utils/errorHandling";
 const mockGetTopPickedTeamsByUserIdAndYearId = vi.fn();
 const mockAuthorizeUserAccess = vi.fn();
 
-vi.mock("@/application/useCases/GetTopPickedTeamsByUserIdAndYearId", () => ({
+vi.mock("@/application/useCases", () => ({
   getTopPickedTeamsByUserIdAndYearId: (...args: unknown[]) =>
     mockGetTopPickedTeamsByUserIdAndYearId(...args),
 }));

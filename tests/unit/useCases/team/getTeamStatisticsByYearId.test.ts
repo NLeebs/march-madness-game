@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getTeamStatisticsByYearId } from "@/application/useCases/GetTeamStatisticsByYearId";
+import { getTeamStatisticsByYearId } from "@/application/useCases";
 import { buildYear, buildConferenceMap } from "@/tests/factories";
 
 const mockGetYearById = vi.fn();
@@ -77,24 +77,24 @@ describe("getTeamStatisticsByYearId", () => {
 
   it("should propagate errors when getYearById fails", async () => {
     mockGetYearById.mockRejectedValue(
-      new Error("Failed to fetch year: connection refused")
+      new Error("Failed to fetch year: connection refused"),
     );
 
-    await expect(
-      getTeamStatisticsByYearId("bad-uuid")
-    ).rejects.toThrow("Failed to fetch year");
+    await expect(getTeamStatisticsByYearId("bad-uuid")).rejects.toThrow(
+      "Failed to fetch year",
+    );
 
     expect(mockGetTeamStatsByYearId).not.toHaveBeenCalled();
   });
 
   it("should propagate errors when year is not found", async () => {
     mockGetYearById.mockRejectedValue(
-      new Error("No year found for id: nonexistent-uuid")
+      new Error("No year found for id: nonexistent-uuid"),
     );
 
-    await expect(
-      getTeamStatisticsByYearId("nonexistent-uuid")
-    ).rejects.toThrow("No year found for id");
+    await expect(getTeamStatisticsByYearId("nonexistent-uuid")).rejects.toThrow(
+      "No year found for id",
+    );
 
     expect(mockGetTeamStatsByYearId).not.toHaveBeenCalled();
   });
@@ -102,20 +102,18 @@ describe("getTeamStatisticsByYearId", () => {
   it("should propagate errors when getTeamStatsByYearId fails", async () => {
     mockGetYearById.mockResolvedValue(mockYear);
     mockGetTeamStatsByYearId.mockRejectedValue(
-      new Error("Error fetching team statistics by year from Firebase: 2025")
+      new Error("Error fetching team statistics by year from Firebase: 2025"),
     );
 
-    await expect(
-      getTeamStatisticsByYearId("year-uuid-123")
-    ).rejects.toThrow("Error fetching team statistics by year from Firebase");
+    await expect(getTeamStatisticsByYearId("year-uuid-123")).rejects.toThrow(
+      "Error fetching team statistics by year from Firebase",
+    );
   });
 
   it("should not call getTeamStatsByYearId when getYearById throws", async () => {
     mockGetYearById.mockRejectedValue(new Error("Year lookup failed"));
 
-    await expect(
-      getTeamStatisticsByYearId("year-uuid-123")
-    ).rejects.toThrow();
+    await expect(getTeamStatisticsByYearId("year-uuid-123")).rejects.toThrow();
 
     expect(mockGetTeamStatsByYearId).not.toHaveBeenCalled();
   });

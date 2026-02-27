@@ -1,4 +1,4 @@
-import { getRounds } from "@/application/useCases/GetRounds";
+import { getRounds } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
 

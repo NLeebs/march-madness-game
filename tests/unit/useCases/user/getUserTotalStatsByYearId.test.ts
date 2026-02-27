@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getUserTotalStatsByYearId } from "@/application/useCases/GetUserTotalStatsByYearId";
+import { getUserTotalStatsByYearId } from "@/application/useCases";
 import { buildUserTotalStats } from "@/tests/factories";
 
 const mockGetUserTotalStatsByYearId = vi.fn();
@@ -19,7 +19,10 @@ describe("getUserTotalStatsByYearId", () => {
     const expectedStats = buildUserTotalStats();
     mockGetUserTotalStatsByYearId.mockResolvedValue(expectedStats);
 
-    const result = await getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserTotalStatsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result).toEqual(expectedStats);
   });
@@ -31,7 +34,7 @@ describe("getUserTotalStatsByYearId", () => {
 
     expect(mockGetUserTotalStatsByYearId).toHaveBeenCalledWith(
       "specific-user-id",
-      "specific-year-id"
+      "specific-year-id",
     );
     expect(mockGetUserTotalStatsByYearId).toHaveBeenCalledTimes(1);
   });
@@ -45,7 +48,10 @@ describe("getUserTotalStatsByYearId", () => {
     });
     mockGetUserTotalStatsByYearId.mockResolvedValue(stats);
 
-    const result = await getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserTotalStatsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result.high_score).toBe(150);
     expect(result.low_score).toBe(30);
@@ -62,7 +68,10 @@ describe("getUserTotalStatsByYearId", () => {
     });
     mockGetUserTotalStatsByYearId.mockResolvedValue(stats);
 
-    const result = await getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserTotalStatsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result.total_brackets).toBe(25);
     expect(result.total_picks).toBe(1575);
@@ -81,7 +90,10 @@ describe("getUserTotalStatsByYearId", () => {
     });
     mockGetUserTotalStatsByYearId.mockResolvedValue(stats);
 
-    const result = await getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1");
+    const result = await getUserTotalStatsByYearId(
+      "user-uuid-123",
+      "year-uuid-1",
+    );
 
     expect(result.round_one_correct_percentage).toBe(75.0);
     expect(result.round_two_correct_percentage).toBe(60.0);
@@ -93,23 +105,23 @@ describe("getUserTotalStatsByYearId", () => {
 
   it("should propagate errors when the repository throws", async () => {
     mockGetUserTotalStatsByYearId.mockRejectedValue(
-      new Error("Failed to fetch user total stats: connection refused")
+      new Error("Failed to fetch user total stats: connection refused"),
     );
 
     await expect(
-      getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1")
+      getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1"),
     ).rejects.toThrow("Failed to fetch user total stats: connection refused");
   });
 
   it("should propagate not-found errors from the repository", async () => {
     mockGetUserTotalStatsByYearId.mockRejectedValue(
       new Error(
-        "No user total stats found for user_id: user-uuid-123 and year_id: year-uuid-1"
-      )
+        "No user total stats found for user_id: user-uuid-123 and year_id: year-uuid-1",
+      ),
     );
 
     await expect(
-      getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1")
+      getUserTotalStatsByYearId("user-uuid-123", "year-uuid-1"),
     ).rejects.toThrow("No user total stats found for user_id");
   });
 });

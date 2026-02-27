@@ -5,7 +5,7 @@ import { buildYear } from "@/tests/factories";
 
 const mockGetYears = vi.fn();
 
-vi.mock("@/application/useCases/GetYears", () => ({
+vi.mock("@/application/useCases", () => ({
   getYears: (...args: unknown[]) => mockGetYears(...args),
 }));
 

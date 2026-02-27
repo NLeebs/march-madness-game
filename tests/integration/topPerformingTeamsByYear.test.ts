@@ -5,7 +5,7 @@ import { buildTeamPerformance } from "@/tests/factories";
 
 const mockGetTopPerformingTeamsByYear = vi.fn();
 
-vi.mock("@/application/useCases/GetTopPerformingTeamsByYear", () => ({
+vi.mock("@/application/useCases", () => ({
   getTopPerformingTeamsByYear: (...args: unknown[]) =>
     mockGetTopPerformingTeamsByYear(...args),
 }));
