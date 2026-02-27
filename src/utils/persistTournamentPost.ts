@@ -1,11 +1,11 @@
 import {
   PersistTournamentDto,
   PersistTournamentResult,
-} from "@/application/useCases/PersistTournament";
+} from "@/application/useCases";
 import { AppError } from "@/utils/errorHandling";
 
 export const persistTournamentPost = async (
-  payload: PersistTournamentDto
+  payload: PersistTournamentDto,
 ): Promise<PersistTournamentResult> => {
   const response = await fetch("/api/bracket/simulation", {
     method: "POST",

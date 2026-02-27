@@ -7,7 +7,7 @@ import { ForbiddenError, UnauthorizedError } from "@/utils/errorHandling";
 const mockGetUserProfile = vi.fn();
 const mockAuthorizeUserAccess = vi.fn();
 
-vi.mock("@/application/useCases/GetUserProfile", () => ({
+vi.mock("@/application/useCases", () => ({
   getUserProfile: (...args: unknown[]) => mockGetUserProfile(...args),
 }));
 

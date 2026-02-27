@@ -1,10 +1,10 @@
-import { getTeamStatisticsByYearId } from "@/application/useCases/GetTeamStatisticsByYearId";
+import { getTeamStatisticsByYearId } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { yearId: string } }
+  { params }: { params: { yearId: string } },
 ) {
   try {
     const { yearId } = params;

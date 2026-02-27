@@ -5,7 +5,7 @@ import { useMediaQuery } from "@/src/hooks";
 
 export interface StatListItemProps {
   team: string;
-  teamLogoRoute: string;
+  teamLogoRoute?: string;
   statLabel: string;
   stat: number | string;
 }
@@ -20,13 +20,18 @@ export const TopStatListItem: React.FC<StatListItemProps> = ({
 
   return (
     <div className="flex flex-col justify-start items-center gap-4">
-      <Image
-        src={teamLogoRoute}
-        alt={team ?? ""}
-        width={isMobile ? 150 : 250}
-        height={isMobile ? 150 : 250}
-      />
-      <p className="text-xl">{team}</p>
+      {teamLogoRoute && (
+        <>
+          <Image
+            src={teamLogoRoute}
+            alt={team ?? ""}
+            width={isMobile ? 150 : 250}
+            height={isMobile ? 150 : 250}
+          />
+          <p className="text-xl">{team}</p>
+        </>
+      )}
+      {!teamLogoRoute && <p className="text-5xl">{team}</p>}
       <div className="w-full flex flex-row justify-center items-center gap-4">
         <p>{statLabel}:</p>
         <p>{stat}</p>

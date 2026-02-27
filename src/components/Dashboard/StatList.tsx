@@ -7,7 +7,7 @@ interface StatListProps {
   statLabel: string;
   stats?: {
     team: string;
-    teamLogoRoute: string;
+    teamLogoRoute?: string;
     stat: number | string;
   }[];
 }

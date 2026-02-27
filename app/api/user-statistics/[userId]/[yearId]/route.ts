@@ -1,4 +1,4 @@
-import { getUserTotalStatsByYearId } from "@/application/useCases/GetUserTotalStatsByYearId";
+import { getUserTotalStatsByYearId } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
 import { authorizeUserAccess } from "@/utils/api/authorizeUserAccess";

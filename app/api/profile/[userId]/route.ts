@@ -1,6 +1,6 @@
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
-import { getUserProfile } from "@/application/useCases/GetUserProfile";
+import { getUserProfile } from "@/application/useCases";
 import { authorizeUserAccess } from "@/utils/api/authorizeUserAccess";
 
 export async function GET(

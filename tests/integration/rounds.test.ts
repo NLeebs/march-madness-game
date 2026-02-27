@@ -5,7 +5,7 @@ import { buildRound } from "@/tests/factories";
 
 const mockGetRounds = vi.fn();
 
-vi.mock("@/application/useCases/GetRounds", () => ({
+vi.mock("@/application/useCases", () => ({
   getRounds: (...args: unknown[]) => mockGetRounds(...args),
 }));
 

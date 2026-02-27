@@ -7,7 +7,7 @@ import { ForbiddenError, UnauthorizedError } from "@/utils/errorHandling";
 const mockGetUserBracketsByYearId = vi.fn();
 const mockAuthorizeUserAccess = vi.fn();
 
-vi.mock("@/application/useCases/GetUserBracketsByYearId", () => ({
+vi.mock("@/application/useCases", () => ({
   getUserBracketsByYearId: (...args: unknown[]) =>
     mockGetUserBracketsByYearId(...args),
 }));

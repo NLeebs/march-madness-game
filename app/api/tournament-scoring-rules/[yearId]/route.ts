@@ -1,10 +1,10 @@
-import { getScoringRuleIdByYearId } from "@/application/useCases/GetScoringRulesId";
+import { getScoringRuleIdByYearId } from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { yearId: string } }
+  { params }: { params: { yearId: string } },
 ) {
   try {
     const { yearId } = params;
@@ -15,12 +15,12 @@ export async function GET(
         tournamentScoringRuleId,
         message: "Tournament scoring rules ID received",
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return handleApiError(
       error,
-      `/api/tournament_scoring_rules/${params.yearId}`
+      `/api/tournament_scoring_rules/${params.yearId}`,
     );
   }
 }

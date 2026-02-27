@@ -5,7 +5,7 @@ import { buildTournamentState, buildPicksState } from "@/tests/factories";
 
 const mockPersistTournament = vi.fn();
 
-vi.mock("@/application/useCases/PersistTournament", () => ({
+vi.mock("@/application/useCases", () => ({
   persistTournament: (...args: unknown[]) => mockPersistTournament(...args),
 }));
 

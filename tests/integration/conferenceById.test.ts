@@ -5,7 +5,7 @@ import { ConferenceSupabase } from "@/models/appStatsData";
 
 const mockGetConferenceById = vi.fn();
 
-vi.mock("@/application/useCases/GetConferenceById", () => ({
+vi.mock("@/application/useCases", () => ({
   getConferenceById: (...args: unknown[]) => mockGetConferenceById(...args),
 }));
 
