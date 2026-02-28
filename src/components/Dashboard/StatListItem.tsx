@@ -12,7 +12,7 @@ export const StatListItem: React.FC<StatListItemProps> = ({
   return (
     <div className="w-full px-4 py-2 flex flex-col gap-2 border-t border-gray-300">
       {teamLogoRoute && (
-        <div className="grid grid-cols-2 justify-center items-center gap-4">
+        <div className="flex flex-row justify-center items-center gap-4">
           <Image src={teamLogoRoute} alt={team ?? ""} width={64} height={64} />
           <p className="text-wrap text-center">{team}</p>
         </div>
