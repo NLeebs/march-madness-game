@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appStateActions, regularSeasonRecordActions } from "@/store";
-import { delay, playGame } from "@/src/functions";
+import { delay } from "@/src/functions";
+import { usePlayGame } from "@/src/hooks";
 import {
   AMOUNT_SEASON_GAMES,
   TIMER_PER_REGULAR_SEASON_GAME,
@@ -21,11 +22,12 @@ export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = ({
   const [seasonPlayed, setSeasonPlayed] = useState<boolean>(false);
 
   const teamSchedules = useSelector(
-    (state: RootState) => state.teamSchedule.teamSchedules
+    (state: RootState) => state.teamSchedule.teamSchedules,
   ) as TeamSchedules;
   const weeksPlayed = useSelector(
-    (state: RootState) => state.regularSeasonRecords.weeksPlayed
+    (state: RootState) => state.regularSeasonRecords.weeksPlayed,
   );
+  const { playGame } = usePlayGame();
 
   const playRegularSeasonGames = useCallback(() => {
     if (seasonPlayed) return;
@@ -36,10 +38,10 @@ export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = ({
           teamSchedules[week].forEach((game: TeamSchedule[]) => {
             const gameResult = playGame(
               teamStats[game[0].conference][game[0].team],
-              teamStats[game[1].conference][game[1].team]
+              teamStats[game[1].conference][game[1].team],
             );
             dispatch(
-              regularSeasonRecordActions.addRegularSeasonGameResult(gameResult)
+              regularSeasonRecordActions.addRegularSeasonGameResult(gameResult),
             );
           });
         })
@@ -47,7 +49,7 @@ export const PlayRegularSeasonGames: React.FC<PlayRegularSeasonGamesProps> = ({
       dispatch(regularSeasonRecordActions.addWeekPlayedToTotal());
       setSeasonPlayed(true);
     });
-  }, [seasonPlayed, teamSchedules, teamStats, dispatch]);
+  }, [seasonPlayed, teamSchedules, teamStats, dispatch, playGame]);
 
   useEffect(() => {
     if (!teamSchedules || !teamStats) return;

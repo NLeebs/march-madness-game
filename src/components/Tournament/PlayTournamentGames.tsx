@@ -6,10 +6,10 @@ import {
   uiStateActions,
   tournamentActions,
 } from "@/store";
+import { usePlayGame } from "@/src/hooks";
 import {
   getTournamentGameResultObj,
   findTeamConference,
-  playGame,
 } from "@/src/functions";
 import {
   TournamentMatchup,
@@ -23,13 +23,13 @@ export const PlayTournamentGames = () => {
 
   const appState = useSelector((state: RootState) => state.appState);
   const teamStats = useSelector(
-    (state: RootState) => state.teamStats.teamStats
+    (state: RootState) => state.teamStats.teamStats,
   );
   const confArrs = useSelector(
-    (state: RootState) => state.teamStats.conferenceArrays
+    (state: RootState) => state.teamStats.conferenceArrays,
   );
   const playersPicks = useSelector(
-    (state: RootState) => state.tournamentPlayersPicks.picks
+    (state: RootState) => state.tournamentPlayersPicks.picks,
   );
   const {
     roundOneMatchups,
@@ -39,6 +39,8 @@ export const PlayTournamentGames = () => {
     roundFinalFourMatchups,
     roundFinalsMatchups,
   } = useSelector((state: RootState) => state.tournament);
+
+  const { playGame } = usePlayGame();
 
   const playTournamentRound = useCallback(
     (round: TournamentRound, roundMatchups: TournamentRoundMatchups) => {
@@ -55,12 +57,12 @@ export const PlayTournamentGames = () => {
               ],
               teamStats[findTeamConference(matchup[1].team, confArrs)][
                 matchup[1].team
-              ]
+              ],
             );
             const gameDispatchObj = getTournamentGameResultObj(
               gameResults,
               i,
-              region
+              region,
             );
             gameDispatchObj.seed =
               gameDispatchObj.winningTeam === matchup[0].team
@@ -72,15 +74,15 @@ export const PlayTournamentGames = () => {
               tournamentActions.setTournamentGameResults({
                 results: gameDispatchObj,
                 round,
-              })
+              }),
             );
-          }
+          },
         );
       });
 
       return winningTeamsArr;
     },
-    [dispatch, teamStats, confArrs]
+    [dispatch, teamStats, confArrs, playGame],
   );
 
   // Play round 1
@@ -93,7 +95,7 @@ export const PlayTournamentGames = () => {
         round: 1,
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundTwoPicks,
-      })
+      }),
     );
     dispatch(appStateActions.activateTournamentRoundTwo());
   }, [dispatch, playTournamentRound, appState, roundOneMatchups, playersPicks]);
@@ -111,7 +113,7 @@ export const PlayTournamentGames = () => {
         round: 2,
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundSweetSixteenPicks,
-      })
+      }),
     );
     // Switch app to round Sweet Sixteen
     dispatch(appStateActions.activateTournamentSweetSixteen());
@@ -128,7 +130,7 @@ export const PlayTournamentGames = () => {
     // Play Round and send winners
     const winningTeamsArr = playTournamentRound(
       "sweet sixteen",
-      roundSweetSixteenMatchups
+      roundSweetSixteenMatchups,
     );
     // Compare to picks
     dispatch(
@@ -136,7 +138,7 @@ export const PlayTournamentGames = () => {
         round: "sweet sixteen",
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundEliteEightPicks,
-      })
+      }),
     );
     // Switch app to round Elite Eight
     dispatch(appStateActions.activateTournamentEliteEight());
@@ -156,7 +158,7 @@ export const PlayTournamentGames = () => {
     // Play Round and send winners
     const winningTeamsArr = playTournamentRound(
       "elite eight",
-      roundEliteEightMatchups
+      roundEliteEightMatchups,
     );
     // Compare to picks
     dispatch(
@@ -164,7 +166,7 @@ export const PlayTournamentGames = () => {
         round: "elite eight",
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundFinalFourPicks,
-      })
+      }),
     );
     // Switch app to round Final Four
     dispatch(appStateActions.activateTournamentFinalFour());
@@ -184,7 +186,7 @@ export const PlayTournamentGames = () => {
     // Play Round and send winners
     const winningTeamsArr = playTournamentRound(
       "final four",
-      roundFinalFourMatchups
+      roundFinalFourMatchups,
     );
     // Compare to picks
     dispatch(
@@ -192,7 +194,7 @@ export const PlayTournamentGames = () => {
         round: "final four",
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundFinalsPicks,
-      })
+      }),
     );
     // Switch app to round Finals
     dispatch(appStateActions.activateTournamentFinals());
@@ -216,7 +218,7 @@ export const PlayTournamentGames = () => {
         round: "finals",
         winningTeams: winningTeamsArr,
         picks: playersPicks.champion,
-      })
+      }),
     );
     // Switch app to round Finals
     dispatch(appStateActions.activateTournamentRecap());

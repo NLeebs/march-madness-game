@@ -7,9 +7,9 @@ import {
   tounramentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
+import { usePlayGame } from "@/src/hooks";
 import {
   findTeamConference,
-  playGame,
   getTournamentGameResultObj,
 } from "@/src/functions";
 import { PlayInGameWinner } from "@/types";
@@ -18,14 +18,16 @@ export const PlayPlayinGames = () => {
   const dispatch = useDispatch();
 
   const teamStats = useSelector(
-    (state: RootState) => state.teamStats.teamStats
+    (state: RootState) => state.teamStats.teamStats,
   );
   const confArrs = useSelector(
-    (state: RootState) => state.teamStats.conferenceArrays
+    (state: RootState) => state.teamStats.conferenceArrays,
   );
   const playinMatchups = useSelector(
-    (state: RootState) => state.tournament.roundOneMatchups.playin
+    (state: RootState) => state.tournament.roundOneMatchups.playin,
   );
+
+  const { playGame } = usePlayGame();
 
   useEffect(() => {
     Object.keys(playinMatchups).forEach((seeds) => {
@@ -36,11 +38,11 @@ export const PlayPlayinGames = () => {
           ],
           teamStats[findTeamConference(matchup[1].team, confArrs)][
             matchup[1].team
-          ]
+          ],
         );
         const { gameIndex, winningTeam } = getTournamentGameResultObj(
           gameResults,
-          i
+          i,
         );
         const gameDispatchObj: PlayInGameWinner = {
           gameIndex,
@@ -50,14 +52,14 @@ export const PlayPlayinGames = () => {
 
         dispatch(
           tounramentPlayersPicksActions.replacePlayinPicksWithWinner(
-            gameDispatchObj
-          )
+            gameDispatchObj,
+          ),
         );
         dispatch(tournamentActions.setPlayinGameResults(gameDispatchObj));
       });
     });
     dispatch(appStateActions.activateTournamentStandardGames());
-  }, [dispatch, playinMatchups, teamStats, confArrs]);
+  }, [dispatch, playinMatchups, teamStats, confArrs, playGame]);
 
   return null;
 };
