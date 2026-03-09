@@ -84,6 +84,14 @@ const macStatURLs: ConferenceStatsScraper = {
       "https://www.teamrankings.com/ncaa-basketball/team/toledo-rockets/stats",
     "team-logo-URL": "/team-logos/mac/ToledoLogo.png",
   },
+  UMass: {
+    "team-colors-URL":
+      "https://teamcolorcodes.com/university-of-massachusetts-minutemen-color-codes/",
+    "team-stats-URL":
+      "https://www.teamrankings.com/ncaa-basketball/team/massachusetts-minutemen/stats",
+    "team-logo-URL": "/team-logos/atlantic10/UMassLogo.png",
+    "mascot-name": "Minutemen",
+  },
   "Western Michigan": {
     "team-colors-URL":
       "https://teamcolorcodes.com/western-michigan-broncos-color-codes/",

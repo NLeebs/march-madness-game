@@ -46,15 +46,6 @@ const missouriValleyStatURLs: ConferenceStatsScraper = {
     "list-name": "Indiana St",
     "mascot-name": "Sycamores",
   },
-  "Missouri State": {
-    "team-colors-URL":
-      "https://teamcolorcodes.com/missouri-state-bears-color-codes/",
-    "team-stats-URL":
-      "https://www.teamrankings.com/ncaa-basketball/team/missouri-st-bears/stats",
-    "team-logo-URL": "/team-logos/missouriValley/MissouriStLogo.png",
-    "list-name": "Missouri St",
-    "mascot-name": "Bears",
-  },
   "Murray State": {
     "team-colors-URL": "https://teamcolorcodes.com/murray-state-racers-colors/",
     "team-stats-URL":

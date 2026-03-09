@@ -96,14 +96,6 @@ const atlantic10StatURLs: ConferenceStatsScraper = {
       "https://www.teamrankings.com/ncaa-basketball/team/saint-louis-billikens/stats",
     "team-logo-URL": "/team-logos/atlantic10/StLouisLogo.png",
   },
-  UMass: {
-    "team-colors-URL":
-      "https://teamcolorcodes.com/university-of-massachusetts-minutemen-color-codes/",
-    "team-stats-URL":
-      "https://www.teamrankings.com/ncaa-basketball/team/massachusetts-minutemen/stats",
-    "team-logo-URL": "/team-logos/atlantic10/UMassLogo.png",
-    "mascot-name": "Minutemen",
-  },
   VCU: {
     "team-colors-URL":
       "https://teamcolorcodes.com/virginia-commonwealth-rams-color-codes/",

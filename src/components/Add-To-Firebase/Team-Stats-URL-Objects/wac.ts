@@ -17,19 +17,6 @@ const wacStatURLs: ConferenceStatsScraper = {
     "team-logo-URL": "/team-logos/wac/CaliforniaBaptistLogo.png",
     "list-name": "Cal Baptist",
   },
-  "Grand Canyon": {
-    "team-colors-URL": "https://teamcolorcodes.com/gcu-antelopes-color-codes/",
-    "team-stats-URL":
-      "https://www.teamrankings.com/ncaa-basketball/team/grand-canyon-lopes/stats",
-    "team-logo-URL": "/team-logos/wac/GrandCanyonLogo.png",
-  },
-  Seattle: {
-    "team-colors-URL":
-      "https://teamcolorcodes.com/seattle-university-redhawks-color-codes/",
-    "team-stats-URL":
-      "https://www.teamrankings.com/ncaa-basketball/team/seattle-redhawks/stats",
-    "team-logo-URL": "/team-logos/wac/SeattleLogo.png",
-  },
   "Southern Utah": {
     "team-colors-URL":
       "https://teamcolorcodes.com/southern-utah-thunderbirds-colors/",

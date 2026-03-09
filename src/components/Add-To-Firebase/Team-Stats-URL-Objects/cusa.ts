@@ -1,6 +1,12 @@
 import { ConferenceStatsScraper } from "@/types/team-stats/ConferenceStatsScraper";
 
 const cusaStatURLs: ConferenceStatsScraper = {
+  Delaware: {
+    "team-colors-URL": "https://teamcolorcodes.com/delaware-blue-hens-colors/",
+    "team-stats-URL":
+      "https://www.teamrankings.com/ncaa-basketball/team/delaware-blue-hens/stats",
+    "team-logo-URL": "/team-logos/caa/DelawareLogo.png",
+  },
   "Florida International": {
     "team-colors-URL":
       "https://teamcolorcodes.com/florida-international-panthers-color-codes/",
@@ -51,6 +57,15 @@ const cusaStatURLs: ConferenceStatsScraper = {
     "mascot-name": "Blue Raiders",
     "primary-color": "#000000",
     "secondary-color": "#0066CC",
+  },
+  "Missouri State": {
+    "team-colors-URL":
+      "https://teamcolorcodes.com/missouri-state-bears-color-codes/",
+    "team-stats-URL":
+      "https://www.teamrankings.com/ncaa-basketball/team/missouri-st-bears/stats",
+    "team-logo-URL": "/team-logos/missouriValley/MissouriStLogo.png",
+    "list-name": "Missouri St",
+    "mascot-name": "Bears",
   },
   "New Mexico State": {
     "team-colors-URL":

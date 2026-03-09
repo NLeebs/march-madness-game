@@ -15,12 +15,6 @@ const caaStatURLs: ConferenceStatsScraper = {
     "team-logo-URL": "/team-logos/caa/CharlestonLogo.png",
     "mascot-name": "Cougars",
   },
-  Delaware: {
-    "team-colors-URL": "https://teamcolorcodes.com/delaware-blue-hens-colors/",
-    "team-stats-URL":
-      "https://www.teamrankings.com/ncaa-basketball/team/delaware-blue-hens/stats",
-    "team-logo-URL": "/team-logos/caa/DelawareLogo.png",
-  },
   Drexel: {
     "team-colors-URL": "https://teamcolorcodes.com/drexel-dragons-colors/",
     "team-stats-URL":

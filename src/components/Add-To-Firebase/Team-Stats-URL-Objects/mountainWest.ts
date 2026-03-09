@@ -35,6 +35,12 @@ const mountainWestStatURLs: ConferenceStatsScraper = {
     "list-name": "Fresno St",
     "mascot-name": "Bulldogs",
   },
+  "Grand Canyon": {
+    "team-colors-URL": "https://teamcolorcodes.com/gcu-antelopes-color-codes/",
+    "team-stats-URL":
+      "https://www.teamrankings.com/ncaa-basketball/team/grand-canyon-lopes/stats",
+    "team-logo-URL": "/team-logos/wac/GrandCanyonLogo.png",
+  },
   Nevada: {
     "team-colors-URL":
       "https://teamcolorcodes.com/nevada-wolfpack-color-codes/",

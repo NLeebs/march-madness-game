@@ -71,6 +71,13 @@ const wccStatURLs: ConferenceStatsScraper = {
     "primary-color": "#862633",
     "secondary-color": "#FFFFFF",
   },
+  Seattle: {
+    "team-colors-URL":
+      "https://teamcolorcodes.com/seattle-university-redhawks-color-codes/",
+    "team-stats-URL":
+      "https://www.teamrankings.com/ncaa-basketball/team/seattle-redhawks/stats",
+    "team-logo-URL": "/team-logos/wac/SeattleLogo.png",
+  },
   "Washington State": {
     "team-colors-URL":
       "https://teamcolorcodes.com/washington-state-cougars-color-codes/",
