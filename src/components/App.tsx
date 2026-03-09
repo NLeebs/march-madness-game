@@ -4,7 +4,6 @@ import { MotionConfig, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { uiStateActions, RootState } from "@/store";
 import {
-  AddTeamStatsToFirebase,
   PlayPlayinGames,
   StartScreen,
   Tournament,
@@ -15,8 +14,8 @@ import {
   TournamentPersist,
 } from "@/src/components";
 
-// 8. User Dashboard with Statistics
 // 6. Slow down tourny playing
+// 7. Add Banner announcing new stats for year
 // 6. Select favorite team -> color changes
 // 9. Winner animations
 
@@ -48,8 +47,6 @@ function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      {/* <AddTeamStatsToFirebase /> */}
-
       {teamArray && (
         <SeasonSchedule
           teamStats={teamStatsObject.teamStats}
