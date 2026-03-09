@@ -10,6 +10,7 @@ const sunBeltStatURLs: ConferenceStatsScraper = {
     "list-name": "App State",
     "mascot-name": "Mountaineers",
     "primary-color": "#222222",
+    "secondary-color": "#ffcc00",
   },
   "Arkansas State": {
     "team-colors-URL": "https://teamcolorcodes.com/arkansas-state-red-wolves/",

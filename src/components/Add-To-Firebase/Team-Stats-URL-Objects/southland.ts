@@ -82,7 +82,7 @@ const southlandStatURLs: ConferenceStatsScraper = {
   "East Texas A&M": {
     "team-colors-URL": "",
     "team-stats-URL":
-      "https://www.teamrankings.com/ncaa-basketball/team/texas-am-commerce-lions/stats",
+      "https://www.teamrankings.com/ncaa-basketball/team/east-texas-am-lions/stats",
     "team-logo-URL": "/team-logos/southland/TexasAnMCommerceLogo.png",
     "list-name": "E Texas A&M",
     "primary-color": "#1D2953",

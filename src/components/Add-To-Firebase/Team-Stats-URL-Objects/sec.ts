@@ -63,6 +63,7 @@ const secStatURLs: ConferenceStatsScraper = {
       "https://www.teamrankings.com/ncaa-basketball/team/missouri-tigers/stats",
     "team-logo-URL": "/team-logos/sec/MissouriLogo.png",
     "primary-color": "#000000",
+    "secondary-color": "#F1B82D",
   },
   Oklahoma: {
     "team-colors-URL":
@@ -116,6 +117,7 @@ const secStatURLs: ConferenceStatsScraper = {
       "https://www.teamrankings.com/ncaa-basketball/team/vanderbilt-commodores/stats",
     "team-logo-URL": "/team-logos/sec/VanderbiltLogo.png",
     "primary-color": "#000000",
+    "secondary-color": "#866d4b",
   },
 };
 
