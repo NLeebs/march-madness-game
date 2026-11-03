@@ -59,9 +59,9 @@ Note: `README-API-Error-Handling.md` documents an `apiHandler` wrapper, but no r
 
 ## Database (Supabase / Postgres)
 
-Schema is **not** in this repo yet (lives only in the hosted project). Tables used: `years`, `teams`, `conferences`, `rounds`, `tournament_scoring_rules`, `user_brackets`, `tournament_games`, `user_picks`, `user_total_stats`, `profiles`. Most dashboard stats come from Postgres RPC functions (`get_top_performing_teams_by_year`, `get_top_picked_teams_by_year`, etc.) called via `supabase.rpc(...)`. All repositories currently use the **service-role** client (bypasses RLS); the cookie-based `supabaseServer` client is used only to verify the logged-in user.
+Baseline schema (tables, RPC functions, RLS policies, grants) is in `supabase/migrations/20261103195820_remote_schema.sql`, dumped from the hosted project - keep it an exact mirror; put changes in new migrations. Tables: `years`, `teams`, `conferences`, `rounds`, `tournament_scoring_rules`, `tournament_round_scoring`, `user_brackets`, `tournament_games`, `user_picks`, `user_bracket_stats`, `user_total_stats`, `global_team_stats`, `global_conference_stats`, `seed_matchup_stats`, `profiles`. Most dashboard stats come from Postgres RPC functions (`get_top_performing_teams_by_year`, `get_top_picked_teams_by_year`, etc.) called via `supabase.rpc(...)`. All repositories currently use the **service-role** client (bypasses RLS); the cookie-based `supabaseServer` client is used only to verify the logged-in user.
 
-Never run writes, migrations, or destructive SQL against the hosted project without explicit confirmation.
+Never run writes, migrations, or destructive SQL against the hosted project without explicit confirmation. Claude's Supabase MCP server (`.mcp.json`) is read-only. To refresh the schema snapshot use `npx supabase db dump --remote=<ref> -p "$SUPABASE_DB_PASSWORD"` (read-only; password lives in `.env.local`) - not `db pull --remote`, which in CLI v3 also writes to the hosted migration history.
 
 ## Conventions
 
@@ -71,6 +71,12 @@ Never run writes, migrations, or destructive SQL against the hosted project with
 - UI: Tailwind + shadcn/ui primitives in `src/components/UI/shadComponents/`, framer-motion for animation, `sonner` toasts, react-hook-form + zod schemas in `src/formSchemas/`.
 - Commits: conventional prefixes (`feat:`, `fix:`, `refactor:`). Branch off `main` and open a PR; `main` auto-deploys.
 - Preserve current gameplay behavior. Simulation output is random (`Math.random`), so test game logic by stubbing `Math.random` or asserting invariants, not exact scores.
+
+## Workflow
+
+- **Spec -> plan -> build with the superpowers skills.** For any new feature, behavior change or multi-step refactor, start with `superpowers:brainstorming` to agree a written spec, then `superpowers:writing-plans` for a step-by-step plan, then execute it (`superpowers:subagent-driven-development` or `superpowers:executing-plans`). Specs and plans are committed under `docs/superpowers/` (the skills' default location). Skip this only for trivial fixes, typos and docs-only changes.
+- **Test-driven development.** Follow `superpowers:test-driven-development`: write a failing test, watch it fail for the right reason, write the minimal code to pass, then refactor. This applies to app code (vitest), database changes (pgTAP: write the failing policy/RPC test before the migration) and bug fixes (reproduce with a test first). For refactors of untested code, add characterization tests first (see `docs/DIAGNOSIS.md` step 6).
+- Debug with `superpowers:systematic-debugging`; run `superpowers:verification-before-completion` (tests, lint, `tsc`) before claiming work is done or opening a PR.
 
 ## Legacy / ignore
 
