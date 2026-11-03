@@ -12,7 +12,7 @@ A first-pass health check of the March Madness game, written while setting up Cl
 | `npx tsc --noEmit --strict` | **296 errors** - the type-safety backlog |
 | CI | None (no `.github/workflows`). Vercel deploys `main` with no gate. |
 | E2E tests | None |
-| DB schema / migrations in repo | None. 10 tables and ~10 RPC functions exist only in hosted Supabase. |
+| DB schema / migrations in repo | None at time of diagnosis. **Update:** baseline schema dumped to `supabase/migrations/20261103195820_remote_schema.sql` (15 tables, 20 functions, 29 RLS policies). |
 
 ## What's working well
 
@@ -33,6 +33,14 @@ Severity: **High** = correctness/security risk, **Med** = maintainability or rel
 3. **Med - Bracket persistence isn't atomic.** `persistBracket` inserts the bracket, then `persistTournament` fires one insert per game and one per pick, all in parallel (`Promise.all`). Any failure leaves a partial bracket. *Fix:* move into one Postgres function (`persist_bracket(jsonb)`) called via `rpc` - one transaction, one round trip.
 4. **Med - Rate limiter is in-memory.** `rateLimit()` uses a module-level `Map`; on Vercel serverless each instance has its own map, so the limit barely applies. *Fix:* Upstash/Vercel KV, or a Postgres-backed counter.
 5. **Low - Inconsistent auth check in `TournamentRepository.persistTournament`** - fetches the user but never compares the id (the earlier `persistBracket` does).
+
+#### Added after the schema dump (step 3)
+
+21. **High - Two RLS insert policies are open to any logged-in user** (found in the baseline schema dump; live in production). The app doesn't hit them today (it writes with service-role), but any signed-in user can call PostgREST directly with the public anon key + their JWT:
+    - `user_picks_insert_authenticated` - `WITH CHECK (true)`: insert picks into *anyone's* bracket. The matching update/delete policies are already scoped to own brackets. *Fix:* `WITH CHECK (bracket_id IN (SELECT id FROM user_brackets WHERE user_id = auth.uid()))`.
+    - `tournament_games_insert_authenticated` - `WITH CHECK (true)`: insert fake game results that feed dashboard stats. *Fix:* drop the policy (service-role only) and revoke insert from `anon`/`authenticated`.
+    - Related: `user_brackets_insert_anon` lets anyone insert a bracket with an arbitrary `score` - covered by finding 1 / step 9.
+22. **Low - Schema housekeeping.** `debug_auth_context()` is a leftover debug RPC granted to `anon` (harmless - returns only the caller's own claims - but should be dropped). The baseline migration is not recorded in the hosted project's migration history; run `supabase migration repair --status applied 20261103195820` (a write to hosted - confirm first) before ever using `supabase db push`.
 
 ### Game logic
 
@@ -72,9 +80,9 @@ Each step is a separate branch + PR, small enough to review in one sitting. Orde
 |---|---|---|
 | **1** | `CLAUDE.md` + this diagnosis | Done in this PR. |
 | **2** | **GitHub Actions CI**: `npm ci`, lint, `tsc --noEmit`, `vitest run` on PRs and `main` | Cheapest, highest-leverage safety net. Commit `next-env.d.ts` or generate it in CI. |
-| **3** | **Connect Supabase**: Supabase MCP server for Claude (read-only first) + Supabase CLI; `supabase db pull` the schema into `supabase/migrations/` | Gets schema and RPCs under version control. Prereq for 4, 5, 9. |
+| **3** | **Connect Supabase**: Supabase MCP server for Claude (read-only first) + Supabase CLI; schema into `supabase/migrations/` | Done. Used read-only `supabase db dump --remote` rather than `db pull`, which in CLI v3 also writes to the hosted migration-history table. Prereq for 4, 5, 9. |
 | **4** | **Generated DB types** (`supabase gen types`) wired into repositories | Type safety against the real schema. |
-| **5** | **Database tests** with pgTAP (`supabase test db`) on a local Supabase (Docker): RLS policies, RPC outputs on seeded fixtures | Tests the logic that currently has zero coverage. Add to CI. |
+| **5** | **Database tests + RLS policy fixes** with pgTAP (`supabase test db`) on a local Supabase (Docker): RLS policies, RPC outputs on seeded fixtures. Write failing tests for finding 21 first, then a fix migration; also drop `debug_auth_context` and repair migration history (finding 22) | Tests the logic that currently has zero coverage. Add to CI. Applying the fix migration to hosted needs explicit confirmation. Don't let this slip far - finding 21 is live. |
 | **6** | **Characterization tests for the game engine**: seeded-RNG `playGame`, seeding, tournament reducers, scoring | Must exist before refactoring 7-8. |
 | **7** | **Playwright**: smoke E2E (start -> regular season -> picks -> tournament -> recap) with persistence mocked via route interception; add to CI | Locks in end-to-end behavior before UI refactors. |
 | **8** | **Game-logic extraction**: `ROUND_CONFIG`, pure `scoreBracket`, injectable RNG in `playGame`, typed reducers | Tests from 6 must stay green. |
