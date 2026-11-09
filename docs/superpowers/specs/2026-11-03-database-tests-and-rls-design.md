@@ -127,7 +127,9 @@ from running the function.
   `supabase test db`.
 - On PRs that change `supabase/migrations/`, also print what would be applied to production
   (`supabase db push --dry-run` against the hosted project, which needs the deploy secrets).
-  It must not apply anything.
+  It must not apply anything. The repo is public and GitHub withholds secrets from fork PRs, so
+  the dry-run step runs only when the deploy secrets are available and is skipped (not failed)
+  otherwise - fork PRs still run the full `supabase test db` suite.
 
 ## Automatic deploys
 
