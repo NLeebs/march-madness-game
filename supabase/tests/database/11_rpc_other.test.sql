@@ -1,5 +1,5 @@
 begin;
-select plan(5);
+select plan(6);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -164,6 +164,12 @@ select results_eq(
     ((select id from fx where name = 'T3'), 'T3', 'logo-T3', (select id from fx where name = 'P1'), 3::bigint),
     ((select id from fx where name = 'T4'), 'T4', 'logo-T4', (select id from fx where name = 'P1'), 2::bigint)$$,
   'get_top_picked_teams_for_user_and_year counts only that user and year');
+
+-- SECURITY INVOKER: RLS on user_picks/user_brackets hides A's picks from B
+select tests.authenticate_as((select id from fx where name = 'user_b'));
+select is_empty(
+  $$select * from public.get_top_picked_teams_for_user_and_year((select id from fx where name = 'user_a'), (select id from fx where name = 'ya'))$$,
+  'user B calling get_top_picked_teams_for_user_and_year for user A gets no rows');
 
 select tests.clear_authentication();
 select * from finish();

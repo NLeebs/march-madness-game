@@ -1,5 +1,5 @@
 begin;
-select plan(8);
+select plan(10);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -24,6 +24,10 @@ select throws_ok($$delete from public.tournament_games where id = (select id fro
 select tests.authenticate_as_anon();
 select throws_ok($$insert into public.tournament_games (year_id, round_id) values ((select id from fx where name = 'year'), (select id from fx where name = 'round'))$$,
   '42501', null, 'anon cannot insert a game');
+select throws_ok($$update public.tournament_games set winning_team_id = null where id = (select id from fx where name = 'game')$$,
+  '42501', null, 'anon cannot update a game');
+select throws_ok($$delete from public.tournament_games where id = (select id from fx where name = 'game')$$,
+  '42501', null, 'anon cannot delete a game');
 
 -- reads stay public
 select is((select count(*) from public.tournament_games where id = (select id from fx where name = 'game')), 1::bigint, 'anon can read the game');

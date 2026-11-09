@@ -38,7 +38,7 @@ select lives_ok($$insert into public.user_brackets (user_id, year_id, tournament
 select is((select max(score) from public.user_brackets where user_id = (select id from fx where name = 'user_a')), 0,
   'bracket inserted without a score defaults to 0');
 
--- failing until fixed
+-- security fix (c)
 select throws_ok($$insert into public.user_brackets (user_id, year_id, tournament_scoring_rules_id, score) values ((select id from fx where name = 'user_a'), (select id from fx where name = 'y1'), (select id from fx where name = 'rules'), 999)$$,
   '42501', null, 'user A cannot insert a bracket with a score');
 select throws_ok($$update public.user_brackets set score = 999 where id = (select id from fx where name = 'ba')$$,

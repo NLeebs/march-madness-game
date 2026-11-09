@@ -1,5 +1,5 @@
 begin;
-select plan(28);
+select plan(32);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -53,6 +53,11 @@ select throws_ok($$insert into public.tournament_scoring_rules (year_id, descrip
   '42501', null, 'anon cannot insert tournament_scoring_rules');
 select throws_ok($$insert into public.seed_matchup_stats (year_id, round_id) values ((select id from fx where name = 'year'), (select id from fx where name = 'round'))$$,
   '42501', null, 'anon cannot insert seed_matchup_stats');
+select throws_ok($$insert into public.years (year) values (2092)$$, '42501', null, 'anon cannot insert years');
+select throws_ok($$insert into public.teams (name, year_id) values ('x', (select id from fx where name = 'year'))$$,
+  '42501', null, 'anon cannot insert teams');
+select throws_ok($$insert into public.conferences (conference) values ('x')$$, '42501', null, 'anon cannot insert conferences');
+select throws_ok($$insert into public.rounds (round_name) values ('x')$$, '42501', null, 'anon cannot insert rounds');
 
 -- tournament_round_scoring: role-claim based select
 select is((select count(*) from public.tournament_round_scoring), 0::bigint, 'anon sees no tournament_round_scoring');

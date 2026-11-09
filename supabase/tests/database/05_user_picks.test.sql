@@ -36,7 +36,7 @@ select tests.authenticate_as_anon();
 select throws_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'ba'), (select id from fx where name = 'g1'))$$,
   '42501', null, 'anon cannot insert a pick');
 
--- failing until fixed
+-- security fix (a)
 select tests.authenticate_as((select id from fx where name = 'user_a'));
 select throws_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'bb'), (select id from fx where name = 'g2'))$$,
   '42501', null, 'user A cannot insert a pick into user B bracket');

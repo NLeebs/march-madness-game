@@ -1,5 +1,5 @@
 begin;
-select plan(14);
+select plan(18);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -47,6 +47,17 @@ select throws_ok($$insert into public.user_bracket_stats (user_id, bracket_id, y
   '42501', null, 'authenticated cannot insert user_bracket_stats');
 select throws_ok($$insert into public.user_total_stats (user_id, year_id, total_brackets, total_picks, high_score, low_score, average_score, champions_guessed_correctly) values (gen_random_uuid(), (select id from fx where name = 'year'), 1, 1, 1, 1, 1, 0)$$,
   '42501', null, 'authenticated cannot insert user_total_stats');
+
+select tests.authenticate_as_anon();
+select throws_ok($$insert into public.global_team_stats (year_id, team_id) values ((select id from fx where name = 'year'), gen_random_uuid())$$,
+  '42501', null, 'anon cannot insert global_team_stats');
+select throws_ok($$insert into public.global_conference_stats (year_id, conference_id) values ((select id from fx where name = 'year'), gen_random_uuid())$$,
+  '42501', null, 'anon cannot insert global_conference_stats');
+select throws_ok($$insert into public.user_bracket_stats (user_id, bracket_id, year_id) values ((select id from fx where name = 'user_a'), gen_random_uuid(), (select id from fx where name = 'year'))$$,
+  '42501', null, 'anon cannot insert user_bracket_stats');
+select throws_ok($$insert into public.user_total_stats (user_id, year_id, total_brackets, total_picks, high_score, low_score, average_score, champions_guessed_correctly) values (gen_random_uuid(), (select id from fx where name = 'year'), 1, 1, 1, 1, 1, 0)$$,
+  '42501', null, 'anon cannot insert user_total_stats');
+select tests.clear_authentication();
 
 select * from finish();
 rollback;
