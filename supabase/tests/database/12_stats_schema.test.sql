@@ -1,5 +1,5 @@
 begin;
-select plan(11);
+select plan(12);
 
 select tests.clear_authentication();
 select has_schema('stats', 'stats schema exists');
@@ -11,9 +11,12 @@ select ok(not has_schema_privilege('service_role', 'stats', 'usage'), 'service_r
 -- Fixture rows are created below; on a fresh DB the fingerprint starts at zero
 select is(stats.inputs_fingerprint()->>'brackets', '0', 'empty DB has zero brackets');
 
-select is(stats.inputs_changed('t'), true, 'changed when no log row');
-select stats.record_refresh('t');
-select is(stats.inputs_changed('t'), false, 'unchanged right after record_refresh');
+select is(stats.inputs_changed('t', stats.inputs_fingerprint()), true, 'changed when no log row');
+select stats.record_refresh('t', stats.inputs_fingerprint());
+select is(stats.inputs_changed('t', stats.inputs_fingerprint()), false, 'unchanged right after record_refresh');
+
+create temp table cap (fp jsonb);
+insert into cap values (stats.inputs_fingerprint());
 
 create temp table fx (name text primary key, id uuid);
 insert into fx values
@@ -28,16 +31,19 @@ insert into fx values
   ('b', tests.create_bracket((select id from fx where name = 'u'), (select id from fx where name = 'y'))),
   ('g', tests.create_game((select id from fx where name = 'y'), (select id from fx where name = 'round')));
 
-select is(stats.inputs_changed('t'), true, 'changed after a bracket is created');
-select stats.record_refresh('t');
+select is(stats.inputs_changed('t', stats.inputs_fingerprint()), true, 'changed after a bracket is created');
+-- race fix: a fingerprint captured before the bracket existed must not mark it processed
+select stats.record_refresh('race', (select fp from cap));
+select is(stats.inputs_changed('race', stats.inputs_fingerprint()), true, 'rows inserted after fingerprint capture are not considered processed');
+select stats.record_refresh('t', stats.inputs_fingerprint());
 select tests.create_pick(
   (select id from fx where name = 'b'), (select id from fx where name = 'g'),
   (select id from fx where name = 't1'), 1);
-select is(stats.inputs_changed('t'), true, 'changed after a pick is created');
-select stats.record_refresh('t');
+select is(stats.inputs_changed('t', stats.inputs_fingerprint()), true, 'changed after a pick is created');
+select stats.record_refresh('t', stats.inputs_fingerprint());
 delete from public.user_picks;
 delete from public.user_brackets;
-select is(stats.inputs_changed('t'), true, 'changed after rows are deleted');
+select is(stats.inputs_changed('t', stats.inputs_fingerprint()), true, 'changed after rows are deleted');
 
 select * from finish();
 rollback;

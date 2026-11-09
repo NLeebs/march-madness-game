@@ -26,18 +26,18 @@ language sql stable security invoker set search_path = '' as $$
   );
 $$;
 
-create function stats.inputs_changed(p_job text) returns boolean
+create function stats.inputs_changed(p_job text, p_fingerprint jsonb) returns boolean
 language sql stable security invoker set search_path = '' as $$
   select coalesce(
-    (select l.fingerprint is distinct from stats.inputs_fingerprint()
+    (select l.fingerprint is distinct from p_fingerprint
        from stats.refresh_log l where l.job = p_job),
     true);
 $$;
 
-create function stats.record_refresh(p_job text) returns void
+create function stats.record_refresh(p_job text, p_fingerprint jsonb) returns void
 language sql security invoker set search_path = '' as $$
   insert into stats.refresh_log (job, fingerprint, refreshed_at)
-  values (p_job, stats.inputs_fingerprint(), clock_timestamp())
+  values (p_job, p_fingerprint, clock_timestamp())
   on conflict (job) do update
     set fingerprint = excluded.fingerprint, refreshed_at = excluded.refreshed_at;
 $$;

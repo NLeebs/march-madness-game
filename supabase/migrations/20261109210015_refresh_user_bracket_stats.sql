@@ -3,8 +3,10 @@
 -- user_bracket_stats for every non-anonymous bracket and returns true.
 create function stats.refresh_user_bracket_stats() returns boolean
 language plpgsql security invoker set search_path = '' as $$
+declare
+  v_fp jsonb := stats.inputs_fingerprint();
 begin
-  if not stats.inputs_changed('user_bracket_stats') then
+  if not stats.inputs_changed('user_bracket_stats', v_fp) then
     return false;
   end if;
 
@@ -77,7 +79,7 @@ begin
     select 1 from public.user_brackets b
     where b.id = s.bracket_id and b.user_id is not null);
 
-  perform stats.record_refresh('user_bracket_stats');
+  perform stats.record_refresh('user_bracket_stats', v_fp);
   return true;
 end $$;
 

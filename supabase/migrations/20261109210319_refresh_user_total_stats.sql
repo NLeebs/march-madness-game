@@ -4,8 +4,10 @@
 -- returns true. Averages use the newest brackets first; ranks are per year.
 create function stats.refresh_user_total_stats() returns boolean
 language plpgsql security invoker set search_path = '' as $$
+declare
+  v_fp jsonb := stats.inputs_fingerprint();
 begin
-  if not stats.inputs_changed('user_total_stats') then
+  if not stats.inputs_changed('user_total_stats', v_fp) then
     return false;
   end if;
 
@@ -213,7 +215,7 @@ begin
     select 1 from public.user_brackets b
     where b.user_id = s.user_id and b.year_id = s.year_id);
 
-  perform stats.record_refresh('user_total_stats');
+  perform stats.record_refresh('user_total_stats', v_fp);
   return true;
 end $$;
 

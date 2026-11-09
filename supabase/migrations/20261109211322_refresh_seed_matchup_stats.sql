@@ -12,7 +12,9 @@ begin
            (count(*) filter (where g.winning_team_id = g.underdog_team_id))::int as lower_seed_wins
     from public.tournament_games g
     where g.winning_team_id is not null
-      and not g.is_play_in
+      and g.is_play_in is not true
+      and g.favored_team_seed is not null
+      and g.underdog_team_seed is not null
     group by g.year_id, g.round_id, g.favored_team_seed, g.underdog_team_seed
   ),
   computed as (
