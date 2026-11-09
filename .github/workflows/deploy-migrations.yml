@@ -1,0 +1,35 @@
+name: Deploy migrations
+
+on:
+  push:
+    branches: [main]
+    paths: ['supabase/migrations/**']
+
+concurrency:
+  group: deploy-migrations
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Apply migrations to production
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_YES: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Link production project
+        run: npx supabase link --project-ref mowmxsorkncjycsomqpn
+
+      - name: Apply pending migrations
+        run: npx supabase db push --remote -p "$SUPABASE_DB_PASSWORD"
