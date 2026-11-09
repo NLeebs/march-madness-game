@@ -32,7 +32,12 @@ jobs:
       - name: Link production project
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-        run: npx supabase link --project-ref mowmxsorkncjycsomqpn
+        run: |
+          npx supabase link --project-ref mowmxsorkncjycsomqpn
+          if [ ! -s supabase/.temp/pooler-url ]; then
+            echo "::error::supabase link did not save the connection pooler URL (supabase/.temp/pooler-url). GitHub runners cannot reach the direct IPv6 database host, so db push would fail. Check that SUPABASE_ACCESS_TOKEN can read the project database settings (Database: Read)."
+            exit 1
+          fi
 
       - name: Apply pending migrations
         env:
