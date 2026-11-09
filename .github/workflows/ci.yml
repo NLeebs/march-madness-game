@@ -86,7 +86,12 @@ jobs:
           fi
           npx supabase link --project-ref mowmxsorkncjycsomqpn
           if [ ! -s supabase/.temp/pooler-url ]; then
-            echo "::error::supabase link did not save the connection pooler URL (supabase/.temp/pooler-url). GitHub runners cannot reach the direct IPv6 database host, so db push would fail. Check that SUPABASE_ACCESS_TOKEN can read the project database settings (Database: Read)."
+            echo "::error::supabase link did not save the connection pooler URL (supabase/.temp/pooler-url). GitHub runners cannot reach the direct IPv6 database host, so db push would fail."
+            for path in config/storage config/database/pooler; do
+              status=$(curl -s -o /tmp/probe.json -w '%{http_code}' -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" "https://api.supabase.com/v1/projects/mowmxsorkncjycsomqpn/$path")
+              echo "Management API GET $path -> HTTP $status"
+              if [ "$status" != "200" ]; then cat /tmp/probe.json; echo; fi
+            done
             exit 1
           fi
           npx supabase db push --dry-run --remote -p "$SUPABASE_DB_PASSWORD"
