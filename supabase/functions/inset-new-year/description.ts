@@ -1,0 +1,3 @@
+export const rulesDescription = "This bracket is calculated based off of a 64 team bracket with four playin games. Players are awared points for each correct guess of a team reaching the next round. An increasing number of points is rewarded as the rounds progress. Correct picks for the first round are awarded 10pts. 20pts for the second round. 40pts for the sweet sixteen. 80pts for the elite eight. 160pts for the final four. 320pts for the finals.";
+
+export const rulesVersion = "1.0.0";
