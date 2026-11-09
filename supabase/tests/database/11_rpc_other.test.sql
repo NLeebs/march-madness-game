@@ -45,6 +45,7 @@ insert into public.seed_matchup_stats (year_id, round_id, higher_seed, lower_see
   ((select id from fx where name = 'yb'), (select id from fx where name = 'r1'), 1, 16, 0.98);
 
 -- teams, games, brackets, picks
+-- scoring rules are required by user_brackets.tournament_scoring_rules_id
 select tests.create_scoring_rules((select id from fx where name = 'ya'));
 select tests.create_scoring_rules((select id from fx where name = 'yb'));
 insert into fx values
@@ -61,15 +62,20 @@ insert into fx values
   ('G5', tests.create_game((select id from fx where name = 'ya'), (select id from fx where name = 'r1'))),
   ('G6', tests.create_game((select id from fx where name = 'ya'), (select id from fx where name = 'r1'))),
   ('G7', tests.create_game((select id from fx where name = 'ya'), (select id from fx where name = 'r1'))),
-  ('GY', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
-  ('TY', tests.create_team('TY', (select id from fx where name = 'yb'), (select id from fx where name = 'P1'), 'logo-TY')),
+  ('GY1', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
+  ('GY2', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
+  ('GY3', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
+  ('GY4', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
+  ('GY5', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
+  ('GY6', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
+  ('GY7', tests.create_game((select id from fx where name = 'yb'), (select id from fx where name = 'r1'))),
   ('BA1', tests.create_bracket((select id from fx where name = 'user_a'), (select id from fx where name = 'ya'))),
   ('BA2', tests.create_bracket((select id from fx where name = 'user_a'), (select id from fx where name = 'ya'))),
   ('BA3', tests.create_bracket((select id from fx where name = 'user_a'), (select id from fx where name = 'ya'))),
   ('BB', tests.create_bracket((select id from fx where name = 'user_b'), (select id from fx where name = 'ya'))),
   ('BAY', tests.create_bracket((select id from fx where name = 'user_a'), (select id from fx where name = 'yb')));
 
--- A: 3 YA brackets x 7 games = T0 x6, T1 x5, T2 x4, T3 x3, T4 x2, T5 x1; B: 7 picks of T5; A YB: 1 pick (decoy)
+-- A: 3 YA brackets x 7 games = T0 x6, T1 x5, T2 x4, T3 x3, T4 x2, T5 x1; B: 7 picks of T5; A YB: 7 picks of T5 on 7 YB games (decoy; without the year filter T5 would reach 8 and top the list)
 insert into public.user_picks (bracket_id, game_id, picked_team_id) values
   ((select id from fx where name = 'BA1'), (select id from fx where name = 'G1'), (select id from fx where name = 'T0')),
   ((select id from fx where name = 'BA1'), (select id from fx where name = 'G2'), (select id from fx where name = 'T0')),
@@ -99,7 +105,13 @@ insert into public.user_picks (bracket_id, game_id, picked_team_id) values
   ((select id from fx where name = 'BB'), (select id from fx where name = 'G5'), (select id from fx where name = 'T5')),
   ((select id from fx where name = 'BB'), (select id from fx where name = 'G6'), (select id from fx where name = 'T5')),
   ((select id from fx where name = 'BB'), (select id from fx where name = 'G7'), (select id from fx where name = 'T5')),
-  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY'), (select id from fx where name = 'TY'));
+  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY1'), (select id from fx where name = 'T5')),
+  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY2'), (select id from fx where name = 'T5')),
+  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY3'), (select id from fx where name = 'T5')),
+  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY4'), (select id from fx where name = 'T5')),
+  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY5'), (select id from fx where name = 'T5')),
+  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY6'), (select id from fx where name = 'T5')),
+  ((select id from fx where name = 'BAY'), (select id from fx where name = 'GY7'), (select id from fx where name = 'T5'));
 
 select tests.authenticate_as_service_role();
 
