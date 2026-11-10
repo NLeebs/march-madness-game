@@ -38,20 +38,12 @@ select stats.refresh_global_team_stats()
 select stats.refresh_seed_matchup_stats()
 ```
 
-## Calculate User Bracket Stats
+## Calculate User Stats
 
 - Schedule: `*/30 * * * *`
 - Active: true
+- Replaces the old `Calculate User Bracket Stats` and `Calculate User Total Stats` jobs. It computes the input fingerprint once and then runs `stats.refresh_user_bracket_stats` and `stats.refresh_user_total_stats` one after the other. Each one skips its work when the fingerprint matches its last run.
 
 ```sql
-select stats.refresh_user_bracket_stats()
-```
-
-## Calculate User Total Stats
-
-- Schedule: `*/30 * * * *`
-- Active: true
-
-```sql
-select stats.refresh_user_total_stats()
+select stats.refresh_user_stats()
 ```

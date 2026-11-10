@@ -1,7 +1,8 @@
 begin;
-select plan(13);
+select plan(15);
 
 select tests.clear_authentication();
+delete from stats.refresh_log where job = 'user_total_stats';
 
 create temp table fx (name text primary key, id uuid);
 insert into fx values
@@ -114,14 +115,27 @@ select results_eq(
   $q$select 1::numeric$q$,
   'U1/Y2 ranked within its own year');
 
-select is((select count(*) from public.user_total_stats), 4::bigint, 'one row per user and year');
+create function pg_temp.fixture_rows() returns bigint language sql as $$
+  select count(*) from public.user_total_stats
+  where user_id in (pg_temp.fx('u1'), pg_temp.fx('u2'), pg_temp.fx('u3')) $$;
+select is(pg_temp.fixture_rows(), 4::bigint, 'one row per user and year');
 
 select is(stats.refresh_user_total_stats(), false, 'second call returns false when inputs unchanged');
+
+-- A forced refresh must not rewrite rows whose values did not change
+create temp table before_ctid as
+  select id, ctid::text as old_ctid from public.user_total_stats
+  where user_id in (pg_temp.fx('u1'), pg_temp.fx('u2'), pg_temp.fx('u3'));
+delete from stats.refresh_log where job = 'user_total_stats';
+select is(stats.refresh_user_total_stats(), true, 'forced refresh runs');
+select is_empty(
+  $q$select b.id from before_ctid b join public.user_total_stats s using (id) where s.ctid::text <> b.old_ctid$q$,
+  'unchanged rows are not rewritten');
 
 delete from public.user_brackets where user_id = pg_temp.fx('u2');
 select is(stats.refresh_user_total_stats(), true, 'returns true after brackets deleted');
 select is((select count(*) from pg_temp.uts('u2', 'y')), 0::bigint, 'U2/Y row removed when no brackets left');
-select is((select count(*) from public.user_total_stats), 3::bigint, 'other rows kept');
+select is(pg_temp.fixture_rows(), 3::bigint, 'other rows kept');
 
 select * from finish();
 rollback;

@@ -2,7 +2,8 @@
 -- global_team_stats row per team from all games and picks (anonymous brackets
 -- included). No skip check: always runs. Points, upsets and championships only
 -- count resolved games (winning_team_id not null); appearance counts and picks
--- do not need a resolved game.
+-- do not need a resolved game. Rows whose values did not change are not
+-- rewritten.
 create function stats.refresh_global_team_stats() returns void
 language plpgsql security invoker set search_path = '' as $$
 begin
@@ -57,7 +58,7 @@ begin
     where picked_team_id is not null
     group by picked_team_id
   )
-  insert into public.global_team_stats
+  insert into public.global_team_stats as s
     (year_id, team_id, picks, tournament_points_scored, championships, finals,
      final_fours, elite_eights, sweet_sixteens, second_rounds,
      tournament_appearances, upsets_caused, times_upset)
@@ -87,7 +88,15 @@ begin
     second_rounds = excluded.second_rounds,
     tournament_appearances = excluded.tournament_appearances,
     upsets_caused = excluded.upsets_caused,
-    times_upset = excluded.times_upset;
+    times_upset = excluded.times_upset
+  where (s.picks, s.tournament_points_scored, s.championships, s.finals, s.final_fours,
+         s.elite_eights, s.sweet_sixteens, s.second_rounds, s.tournament_appearances,
+         s.upsets_caused, s.times_upset)
+        is distinct from
+        (excluded.picks, excluded.tournament_points_scored, excluded.championships,
+         excluded.finals, excluded.final_fours, excluded.elite_eights, excluded.sweet_sixteens,
+         excluded.second_rounds, excluded.tournament_appearances, excluded.upsets_caused,
+         excluded.times_upset);
 end $$;
 
 revoke execute on function stats.refresh_global_team_stats()

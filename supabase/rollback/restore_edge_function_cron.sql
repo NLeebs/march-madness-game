@@ -1,6 +1,9 @@
 -- Rollback: restore the Edge Function cron jobs. NOT a migration; never auto-applied.
 -- Apply only with the owner's OK (e.g. as a new migration) if the SQL stats jobs misbehave.
 
+-- The SQL setup runs both per-user refreshes from one job; the Edge Function setup had two.
+select cron.unschedule(jobname) from cron.job where jobname = 'Calculate User Stats';
+
 select cron.schedule('Add New Year Cron Job', '0 6 1 1 *', $cmd$
 select
   net.http_post(

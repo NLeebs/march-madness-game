@@ -2,10 +2,12 @@
 -- writing) when inputs are unchanged since the last refresh, otherwise rebuilds
 -- user_total_stats (one row per non-anonymous user and year with brackets) and
 -- returns true. Averages use the newest brackets first; ranks are per year.
-create function stats.refresh_user_total_stats() returns boolean
+-- Rows whose values did not change are not rewritten. p_fp: see
+-- stats.refresh_user_bracket_stats.
+create function stats.refresh_user_total_stats(p_fp jsonb default null) returns boolean
 language plpgsql security invoker set search_path = '' as $$
 declare
-  v_fp jsonb := stats.inputs_fingerprint();
+  v_fp jsonb := coalesce(p_fp, stats.inputs_fingerprint());
 begin
   if not stats.inputs_changed('user_total_stats', v_fp) then
     return false;
@@ -38,10 +40,8 @@ begin
            r.round_name,
            (p.picked_team_id = g.winning_team_id) is true as is_correct,
            (r.round_name = '1' and g.is_play_in is not true) as is_round_one,
-           (g.is_play_in is not true
-            and r.round_name = '1'
-            and g.favored_team_seed <> g.underdog_team_seed
-            and p.picked_team_seed = greatest(g.favored_team_seed, g.underdog_team_seed)) as is_upset_pick
+           stats.is_first_round_upset_pick(g.is_play_in, r.round_name, g.favored_team_seed,
+                                           g.underdog_team_seed, p.picked_team_seed) as is_upset_pick
     from public.user_picks p
     join brackets b on b.id = p.bracket_id
     join public.tournament_games g on g.id = p.game_id
@@ -128,7 +128,7 @@ begin
            rank() over (partition by year_id order by champions_correct desc) as champions_rank
     from combined c
   )
-  insert into public.user_total_stats
+  insert into public.user_total_stats as s
     (user_id, year_id, total_brackets, high_score, high_score_rank, low_score,
      average_score, average_score_rank, last_three_average_score, last_ten_average_score,
      total_picks, total_correct_picks, correct_pick_percentage,
@@ -208,7 +208,11 @@ begin
     top_picked_champion_id = excluded.top_picked_champion_id,
     total_top_picked_champion_picks = excluded.total_top_picked_champion_picks,
     top_picked_conference_id = excluded.top_picked_conference_id,
-    total_top_picked_conference_picks = excluded.total_top_picked_conference_picks;
+    total_top_picked_conference_picks = excluded.total_top_picked_conference_picks
+  -- skip rows whose stat columns are unchanged (keys and timestamps excluded)
+  where to_jsonb(s) - '{id,user_id,year_id,created_at,updated_at}'::text[]
+        is distinct from
+        to_jsonb(excluded) - '{id,user_id,year_id,created_at,updated_at}'::text[];
 
   delete from public.user_total_stats s
   where not exists (
@@ -219,5 +223,5 @@ begin
   return true;
 end $$;
 
-revoke execute on function stats.refresh_user_total_stats()
+revoke execute on function stats.refresh_user_total_stats(jsonb)
   from public, anon, authenticated, service_role;

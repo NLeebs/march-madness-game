@@ -1,6 +1,7 @@
 -- Replaces the calculate_seed_matchup_stats Edge Function. Rebuilds
 -- seed_matchup_stats per (year, round, higher seed, lower seed) from resolved,
--- non-play-in games. Combinations with no games are deleted.
+-- non-play-in games. Combinations with no games are deleted. Rows whose values
+-- did not change are not rewritten.
 create function stats.refresh_seed_matchup_stats() returns void
 language plpgsql security invoker set search_path = '' as $$
 begin
@@ -26,7 +27,7 @@ begin
     from matchups
   ),
   upserted as (
-    insert into public.seed_matchup_stats
+    insert into public.seed_matchup_stats as s
       (year_id, round_id, higher_seed, lower_seed, higher_seed_wins, lower_seed_wins, total_games, upset_percentage)
     select year_id, round_id, higher_seed, lower_seed, higher_seed_wins, lower_seed_wins, total_games, upset_percentage
     from computed
@@ -35,6 +36,10 @@ begin
       lower_seed_wins = excluded.lower_seed_wins,
       total_games = excluded.total_games,
       upset_percentage = excluded.upset_percentage
+    where (s.higher_seed_wins, s.lower_seed_wins, s.total_games, s.upset_percentage)
+          is distinct from
+          (excluded.higher_seed_wins, excluded.lower_seed_wins, excluded.total_games,
+           excluded.upset_percentage)
     returning id
   )
   delete from public.seed_matchup_stats s

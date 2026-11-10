@@ -1,5 +1,5 @@
 begin;
-select plan(8);
+select plan(9);
 
 select tests.clear_authentication();
 
@@ -57,11 +57,16 @@ create function pg_temp.row_of(p text) returns text language sql as $$
 select is(pg_temp.row_of('cb'), '(3,4,0)', 'Mid: play-in counts; losses to null-conference team count');
 select is(pg_temp.row_of('ca'), '(2,2,3)', 'Power: unresolved game gives no win/loss, picks still count');
 select is(pg_temp.row_of('cz'), null, 'row for conference without activity is deleted');
-select is((select count(*) from public.global_conference_stats), 2::bigint, 'only Power and Mid rows');
+select is((select count(*) from public.global_conference_stats where year_id = pg_temp.fx('y')), 2::bigint, 'only Power and Mid rows');
 select is((select count(*) from public.global_conference_stats where conference_id is null), 0::bigint, 'no null-conference row');
 
+create temp table before_ctid as
+  select id, ctid::text as old_ctid from public.global_conference_stats where year_id = pg_temp.fx('y');
 select lives_ok($$select stats.refresh_global_conference_stats()$$, 'second refresh upserts without error');
-select is((select count(*) from public.global_conference_stats), 2::bigint, 'still two rows after rerun');
+select is((select count(*) from public.global_conference_stats where year_id = pg_temp.fx('y')), 2::bigint, 'still two rows after rerun');
+select is_empty(
+  $q$select b.id from before_ctid b join public.global_conference_stats s using (id) where s.ctid::text <> b.old_ctid$q$,
+  'rerun with unchanged inputs rewrites no rows');
 
 select * from finish();
 rollback;

@@ -1,5 +1,5 @@
 begin;
-select plan(10);
+select plan(11);
 
 select tests.clear_authentication();
 
@@ -50,10 +50,15 @@ select is(pg_temp.row_of('c_'), '(2,320,1,1,0,1,1,0,0)', 'C: only the finals win
 select is(pg_temp.row_of('e'),  '(0,10,0,1,0,0,1,1,0)',  'E: play-in excluded from points, not double-counted');
 select is(pg_temp.row_of('f'),  '(0,0,0,0,0,0,1,0,0)',   'F: play-in loser still made the field');
 select is(pg_temp.row_of('g'),  '(0,0,0,0,0,0,0,0,0)',   'G: no activity gives zeros');
-select is((select count(*) from public.global_team_stats), 6::bigint, 'one row per team');
+select is((select count(*) from public.global_team_stats where year_id = pg_temp.fx('y')), 6::bigint, 'one row per team');
 
+create temp table before_ctid as
+  select id, ctid::text as old_ctid from public.global_team_stats where year_id = pg_temp.fx('y');
 select lives_ok($$select stats.refresh_global_team_stats()$$, 'second refresh upserts without error');
-select is((select count(*) from public.global_team_stats), 6::bigint, 'still one row per team after rerun');
+select is((select count(*) from public.global_team_stats where year_id = pg_temp.fx('y')), 6::bigint, 'still one row per team after rerun');
+select is_empty(
+  $q$select b.id from before_ctid b join public.global_team_stats s using (id) where s.ctid::text <> b.old_ctid$q$,
+  'rerun with unchanged inputs rewrites no rows');
 
 select * from finish();
 rollback;

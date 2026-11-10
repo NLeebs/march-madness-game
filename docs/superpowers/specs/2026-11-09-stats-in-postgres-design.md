@@ -58,6 +58,8 @@ One function per job, each one transaction:
 | `calculate_seed_matchup_stats` | `stats.refresh_seed_matchup_stats()` | `0 0 * * *` | `seed_matchup_stats` |
 | `inset-new-year` | `stats.add_current_year()` | `0 6 1 1 *` | `years`, `tournament_scoring_rules` |
 
+*(Code review update, 2026-11-10: the two 30-minute jobs became one cron job, `Calculate User Stats` -> `stats.refresh_user_stats()`. It computes the fingerprint once and runs both refreshes. Upserts skip unchanged rows with an `IS DISTINCT FROM` guard rather than always rewriting them.)*
+
 Each refresh is `INSERT ... SELECT ... ON CONFLICT (<existing unique key>) DO UPDATE`, setting `updated_at = now()`, followed by deleting stats rows whose source no longer exists (e.g. a `user_bracket_stats` row whose bracket was deleted). Unique keys used: `user_bracket_stats(bracket_id)`, `user_total_stats(user_id, year_id)`, `global_team_stats(year_id, team_id)`, `global_conference_stats(year_id, conference_id)`, `seed_matchup_stats(year_id, round_id, higher_seed, lower_seed)`.
 
 `add_current_year()` inserts the current UTC year into `years` and a `tournament_scoring_rules` row for it, both `ON CONFLICT DO NOTHING`, with the description and version text copied verbatim from `supabase/functions/inset-new-year/description.ts` (version `1.0.0`).
@@ -68,11 +70,13 @@ The two 30-minute jobs exit early when no `user_brackets` or `tournament_games` 
 
 The check also compares the `user_brackets` row count with the count at the last run, so a deleted bracket triggers a refresh too. `user_bracket_stats` rows already go via `ON DELETE CASCADE`, but `user_total_stats` would otherwise wait for the next new bracket. *(Builder's call, from the review.)*
 
-Known gap, accepted: a pick **edited** after its bracket was saved (possible only by calling the API directly, finding 26) won't be reflected until the next new bracket or game triggers a run. The app never edits picks.
+Known gap, accepted: a pick **edited** after its bracket was saved (possible only by calling the API directly) won't be reflected until the next new bracket or game triggers a run. The app never edits picks.
+
+*(Code review update, 2026-11-10: as built, the check is `stats.inputs_fingerprint()`, compared with the value stored in `stats.refresh_log` by each job. Each part is a count plus a sum of hashes of `(id, xmin, ctid)` over non-anonymous brackets, their picks and those picks' games, and `teams`. That closes the edited-pick gap above, plus deletes combined with backdated inserts and conference changes. Anonymous saves no longer trigger a refresh. Remaining cost follow-ups are DIAGNOSIS findings 26-29.)*
 
 ### Cron jobs
 
-A migration re-points each existing pg_cron job, by its existing name, to `select stats.<fn>();`, using `cron.schedule(job_name, schedule, command)`, which updates a job with the same name. The names are the headings in `supabase/cron/jobs.md` (e.g. `Calculate User Bracket Stats`). Schedules are unchanged. The jobs no longer use pg_net. `supabase/cron/jobs.md` is updated to match and notes that the jobs are now managed by migration.
+*(Code review update: the two per-user jobs were then merged into `Calculate User Stats`; see `supabase/cron/jobs.md`.)* A migration re-points each existing pg_cron job, by its existing name, to `select stats.<fn>();`, using `cron.schedule(job_name, schedule, command)`, which updates a job with the same name. The names are the headings in `supabase/cron/jobs.md` (e.g. `Calculate User Bracket Stats`). Schedules are unchanged. The jobs no longer use pg_net. `supabase/cron/jobs.md` is updated to match and notes that the jobs are now managed by migration.
 
 Before merging, confirm read-only (Supabase MCP) that the hosted `cron.job` rows belong to `username = 'postgres'`. `cron.schedule` only replaces a same-named job owned by the same user; otherwise it adds a second job and both run. If they belong to another user, the migration unschedules by `jobid` first.
 

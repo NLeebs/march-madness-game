@@ -1,5 +1,5 @@
 begin;
-select plan(7);
+select plan(8);
 
 select tests.clear_authentication();
 
@@ -37,10 +37,15 @@ create function pg_temp.row_of(p_round text, p_hi int, p_lo int) returns text la
 select is(pg_temp.row_of('r1', 1, 16), '(1,1,2,50.0)', '1 vs 16: one win each, 50.0 upset');
 select is(pg_temp.row_of('r1', 8, 8), '(0,1,1,100.0)', '8 vs 8 underdog win, 100.0 upset');
 select is(pg_temp.row_of('r2', 2, 15), null, 'stale row deleted');
-select is((select count(*) from public.seed_matchup_stats), 2::bigint, 'play-in and unresolved excluded: exactly two rows');
+select is((select count(*) from public.seed_matchup_stats where year_id = pg_temp.fx('y')), 2::bigint, 'play-in and unresolved excluded: exactly two rows');
 
+create temp table before_ctid as
+  select id, ctid::text as old_ctid from public.seed_matchup_stats where year_id = pg_temp.fx('y');
 select lives_ok($$select stats.refresh_seed_matchup_stats()$$, 'second refresh upserts without error');
-select is((select count(*) from public.seed_matchup_stats), 2::bigint, 'still two rows after rerun');
+select is((select count(*) from public.seed_matchup_stats where year_id = pg_temp.fx('y')), 2::bigint, 'still two rows after rerun');
+select is_empty(
+  $q$select b.id from before_ctid b join public.seed_matchup_stats s using (id) where s.ctid::text <> b.old_ctid$q$,
+  'rerun with unchanged inputs rewrites no rows');
 
 select * from finish();
 rollback;

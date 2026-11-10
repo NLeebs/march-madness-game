@@ -1,10 +1,12 @@
 -- Replaces the calculate_bracket_stats Edge Function. Returns false (without
 -- writing) when inputs are unchanged since the last refresh, otherwise rebuilds
--- user_bracket_stats for every non-anonymous bracket and returns true.
-create function stats.refresh_user_bracket_stats() returns boolean
+-- user_bracket_stats for every non-anonymous bracket and returns true. Rows whose
+-- values did not change are not rewritten. p_fp lets stats.refresh_user_stats()
+-- pass one fingerprint to both per-user jobs; null means compute it here.
+create function stats.refresh_user_bracket_stats(p_fp jsonb default null) returns boolean
 language plpgsql security invoker set search_path = '' as $$
 declare
-  v_fp jsonb := stats.inputs_fingerprint();
+  v_fp jsonb := coalesce(p_fp, stats.inputs_fingerprint());
 begin
   if not stats.inputs_changed('user_bracket_stats', v_fp) then
     return false;
@@ -13,18 +15,17 @@ begin
   with resolved as (
     select p.bracket_id,
            p.picked_team_id,
-           p.picked_team_seed,
            p.created_at,
            g.winning_team_id,
            r.round_name,
-           (g.is_play_in is not true
-            and r.round_name = '1'
-            and g.favored_team_seed <> g.underdog_team_seed
-            and p.picked_team_seed = greatest(g.favored_team_seed, g.underdog_team_seed)) as is_upset_pick
+           stats.is_first_round_upset_pick(g.is_play_in, r.round_name, g.favored_team_seed,
+                                           g.underdog_team_seed, p.picked_team_seed) as is_upset_pick
     from public.user_picks p
+    join public.user_brackets b on b.id = p.bracket_id
     join public.tournament_games g on g.id = p.game_id
     join public.rounds r on r.id = g.round_id
     where g.winning_team_id is not null
+      and b.user_id is not null
   ),
   agg as (
     select bracket_id,
@@ -47,7 +48,7 @@ begin
     where round_name = 'finals'
     order by bracket_id, created_at desc nulls last
   )
-  insert into public.user_bracket_stats
+  insert into public.user_bracket_stats as s
     (bracket_id, user_id, year_id, games_played, correct_picks, incorrect_picks,
      first_round_upsets_picked, first_round_upsets_correct,
      champion_picked_team_id, champion_correct)
@@ -72,7 +73,15 @@ begin
     first_round_upsets_picked = excluded.first_round_upsets_picked,
     first_round_upsets_correct = excluded.first_round_upsets_correct,
     champion_picked_team_id = excluded.champion_picked_team_id,
-    champion_correct = excluded.champion_correct;
+    champion_correct = excluded.champion_correct
+  where (s.user_id, s.year_id, s.games_played, s.correct_picks, s.incorrect_picks,
+         s.first_round_upsets_picked, s.first_round_upsets_correct,
+         s.champion_picked_team_id, s.champion_correct)
+        is distinct from
+        (excluded.user_id, excluded.year_id, excluded.games_played, excluded.correct_picks,
+         excluded.incorrect_picks, excluded.first_round_upsets_picked,
+         excluded.first_round_upsets_correct, excluded.champion_picked_team_id,
+         excluded.champion_correct);
 
   delete from public.user_bracket_stats s
   where not exists (
@@ -83,5 +92,5 @@ begin
   return true;
 end $$;
 
-revoke execute on function stats.refresh_user_bracket_stats()
+revoke execute on function stats.refresh_user_bracket_stats(jsonb)
   from public, anon, authenticated, service_role;

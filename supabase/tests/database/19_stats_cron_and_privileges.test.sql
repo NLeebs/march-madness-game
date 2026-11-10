@@ -8,8 +8,7 @@ select results_eq(
     ('Calculate Global Conference Stats', '0 0 * * *', 'select stats.refresh_global_conference_stats()'),
     ('Calculate Global Team Stats', '0 */12 * * *', 'select stats.refresh_global_team_stats()'),
     ('Calculate Seed Matchup Stats', '0 0 * * *', 'select stats.refresh_seed_matchup_stats()'),
-    ('Calculate User Bracket Stats', '*/30 * * * *', 'select stats.refresh_user_bracket_stats()'),
-    ('Calculate User Total Stats', '*/30 * * * *', 'select stats.refresh_user_total_stats()')$$,
+    ('Calculate User Stats', '*/30 * * * *', 'select stats.refresh_user_stats()')$$,
   'cron jobs call stats functions'
 );
 

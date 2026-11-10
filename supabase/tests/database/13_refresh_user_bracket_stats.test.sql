@@ -1,11 +1,11 @@
 begin;
-select plan(10);
+select plan(12);
 
 select tests.clear_authentication();
 
--- Empty DB: first call refreshes (no log row) and leaves the table empty
-select is(stats.refresh_user_bracket_stats(), true, 'first call on empty DB returns true');
-select is((select count(*) from public.user_bracket_stats), 0::bigint, 'empty DB produces no stats rows');
+-- No log row: the first call always refreshes (the DB may already hold data)
+delete from stats.refresh_log where job = 'user_bracket_stats';
+select is(stats.refresh_user_bracket_stats(), true, 'first call with no log row returns true');
 
 create temp table fx (name text primary key, id uuid);
 insert into fx values
@@ -64,9 +64,20 @@ select results_eq(
 
 select is((select count(*) from public.user_bracket_stats where bracket_id = pg_temp.fx('ba')),
   0::bigint, 'anonymous bracket has no stats row');
-select is((select count(*) from public.user_bracket_stats), 2::bigint, 'one row per user bracket');
+select is((select count(*) from public.user_bracket_stats where year_id = pg_temp.fx('y')),
+  2::bigint, 'one row per user bracket');
 
 select is(stats.refresh_user_bracket_stats(), false, 'second call returns false when inputs unchanged');
+
+-- A forced refresh must not rewrite rows whose values did not change
+create temp table before_ctid as
+  select bracket_id, ctid::text as old_ctid from public.user_bracket_stats where year_id = pg_temp.fx('y');
+delete from stats.refresh_log where job = 'user_bracket_stats';
+select is(stats.refresh_user_bracket_stats(), true, 'forced refresh runs');
+select is_empty(
+  $q$select b.bracket_id from before_ctid b join public.user_bracket_stats s using (bracket_id)
+     where s.ctid::text <> b.old_ctid$q$,
+  'unchanged rows are not rewritten');
 
 select tests.create_pick(pg_temp.fx('b2'), pg_temp.fx('g5'), pg_temp.fx('b'), 16);
 select is(stats.refresh_user_bracket_stats(), true, 'returns true after a new pick');
@@ -77,6 +88,9 @@ select results_eq(
     from public.user_bracket_stats where bracket_id = %L$q$, pg_temp.fx('b2')),
   format('select 1, 0, 1, 0, 0, %L::uuid, false', pg_temp.fx('b')),
   'b2 stats reflect the new champion pick');
+
+select is((select ctid::text from public.user_bracket_stats where bracket_id = pg_temp.fx('b1')),
+  (select old_ctid from before_ctid where bracket_id = pg_temp.fx('b1')), 'b1 row untouched when only b2 changed');
 
 select * from finish();
 rollback;
