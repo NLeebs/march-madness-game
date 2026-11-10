@@ -5,6 +5,7 @@ import { SeasonSchedule } from "@/src/components/RegularSeason/SeasonSchedule";
 import { PlayRegularSeasonGames } from "@/src/components/RegularSeason/PlayRegularSeasonGames";
 import type { AppStore } from "@/store/store";
 import type { League } from "@/tests/factories";
+import type { RegularSeasonTeam } from "@/types";
 import { renderWithStore } from "./renderWithStore";
 
 const SEASON_WEEKS = 30;
@@ -50,6 +51,26 @@ export async function playSeason(store: AppStore, league: League): Promise<void>
       return;
   }
   throw new Error("playSeason: season did not finish");
+}
+
+/**
+ * Hand-built season records for the league: one entry per team, inserted in
+ * league order (conference by conference), so Object.keys(records) order is
+ * the league order. `index` is the team's position in that order.
+ */
+export function buildRecords(
+  league: League,
+  scoreFor: (team: string, index: number) => { wins: number; score: number },
+): Record<string, RegularSeasonTeam> {
+  const records: Record<string, RegularSeasonTeam> = {};
+  let index = 0;
+  for (const teams of Object.values(league.conferenceArrays))
+    for (const team of teams) {
+      const { wins, score } = scoreFor(team, index);
+      records[team] = { wins, losses: 30 - wins, tournamentSelectionScore: score };
+      index++;
+    }
+  return records;
 }
 
 /** RPI rank (1 = best) per team name, from the league fixture. */
