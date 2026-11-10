@@ -2,6 +2,7 @@ import { describe, it, expect, afterEach } from "vitest";
 import { playGame } from "@/src/functions";
 import { buildLeague } from "@/tests/factories";
 import { seedMathRandom } from "../helpers/rng";
+import { GAME_TEST_TIMEOUT } from "../helpers/timeout";
 
 const PAIRS: ReadonlyArray<readonly [number, number]> = [
   [1, 360],
@@ -41,5 +42,5 @@ describe("playGame draw order", () => {
     );
 
     expect(pins).toMatchSnapshot();
-  });
+  }, GAME_TEST_TIMEOUT);
 });

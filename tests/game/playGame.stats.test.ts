@@ -4,6 +4,7 @@ import { TeamStats } from "@/models";
 import { buildLeague } from "@/tests/factories";
 import { mulberry32, seedMathRandom } from "./helpers/rng";
 import { measureGames, GameSample, GameMetrics } from "./helpers/stats";
+import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
 /*
  * Expected values were measured on 2026-11-10 against the unchanged playGame:
@@ -78,5 +79,5 @@ describe("playGame statistics", () => {
     near(m.meanMargin, EXPECTED.meanMargin, TOLERANCE.points);
     near(m.sdMargin, EXPECTED.sdMargin, TOLERANCE.points);
     near(m.oneScoreMarginRate, EXPECTED.oneScoreMarginRate, TOLERANCE.oneScoreMarginRate);
-  });
+  }, GAME_TEST_TIMEOUT);
 });

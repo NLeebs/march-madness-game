@@ -5,6 +5,7 @@ import { seedMathRandom } from "./helpers/rng";
 import { playSeason, rpiByTeam } from "./helpers/runGame";
 import { measureSeason } from "./helpers/stats";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
+import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
 /*
  * Expected values were measured on 2026-11-10 against the unchanged season code:
@@ -50,5 +51,5 @@ describe("regular season statistics", () => {
     near(m.sdWins, EXPECTED.sdWins, TOLERANCE.sdWins);
     near(m.rankWinsCorrelation, EXPECTED.rankWinsCorrelation, TOLERANCE.rankWinsCorrelation);
     expect(m.rankWinsCorrelation).toBeLessThan(-0.8);
-  }, 30000);
+  }, GAME_TEST_TIMEOUT);
 });

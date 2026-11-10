@@ -12,6 +12,7 @@ import {
 import type { League } from "@/tests/factories";
 import { renderWithStore } from "./helpers/renderWithStore";
 import { seedMathRandom } from "./helpers/rng";
+import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
 const NON_CONF_WEEKS = 15;
 const SEASON_WEEKS = 30;
@@ -139,7 +140,7 @@ describe("SeasonSchedule", () => {
       leagueFromSizes([5, 4, 7, 3, 6, 5]),
       Array.from({ length: 20 }, (_, i) => i + 1),
     );
-  }, 30000);
+  }, GAME_TEST_TIMEOUT);
 
   it("holds schedule invariants across 20 seeds on the 360-team league", () => {
     const league = buildLeague();
@@ -148,7 +149,7 @@ describe("SeasonSchedule", () => {
       league,
       Array.from({ length: 20 }, (_, i) => i + 1),
     );
-  }, 30000);
+  }, GAME_TEST_TIMEOUT);
 
   it("does nothing when the team array is empty", () => {
     const store = createFastStore();

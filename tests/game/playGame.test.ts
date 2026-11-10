@@ -3,6 +3,7 @@ import { playGame } from "@/src/functions";
 import { TeamStats } from "@/models";
 import { buildLeague } from "@/tests/factories";
 import { mulberry32, seedMathRandom } from "./helpers/rng";
+import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
 const allTeams = (): TeamStats[] =>
   Object.values(buildLeague().teamStats).flatMap((conf) => Object.values(conf));
@@ -53,7 +54,7 @@ describe("playGame invariants", () => {
       seeded.restore();
       restore = undefined;
     }
-  });
+  }, GAME_TEST_TIMEOUT);
 
   it("equal RPI: team1 is favored", () => {
     const teamArray = allTeams();

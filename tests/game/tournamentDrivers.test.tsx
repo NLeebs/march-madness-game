@@ -9,6 +9,7 @@ import { buildRecords, pickChalk, playTournament } from "./helpers/runGame";
 import { seedMathRandom } from "./helpers/rng";
 import { tournamentActions } from "@/store";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
+import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
 afterEach(() => cleanup());
 
@@ -91,7 +92,7 @@ describe("pickChalk", () => {
     expect(PICK_KEYS.map((k) => filled(k).length)).toEqual([32, 16, 8, 4, 2, 1]);
     // the 16-seed placeholder never beats a 1 seed under chalk
     expect(PLACEHOLDERS.slice(0, 2)).not.toContain(picks.champion.champion[0][0].team);
-  });
+  }, GAME_TEST_TIMEOUT);
 });
 
 describe("playTournament invariants", () => {
@@ -191,5 +192,5 @@ describe("playTournament invariants", () => {
     } finally {
       seeded.restore();
     }
-  });
+  }, GAME_TEST_TIMEOUT);
 });

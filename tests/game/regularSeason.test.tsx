@@ -7,6 +7,7 @@ import { seedMathRandom } from "./helpers/rng";
 import { playSeason } from "./helpers/runGame";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
 import type { GameResult } from "@/types";
+import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
 const result = (over: Partial<GameResult>): GameResult => ({
   favoredTeam: "fav",
@@ -139,5 +140,5 @@ describe("PlayRegularSeasonGames season invariants", () => {
     }
     expect(wins).toBe(totalGames);
     expect(losses).toBe(totalGames);
-  }, 30000);
+  }, GAME_TEST_TIMEOUT);
 });

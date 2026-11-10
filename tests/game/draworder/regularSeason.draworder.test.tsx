@@ -4,6 +4,7 @@ import { createFastStore } from "../helpers/fastStore";
 import { seedMathRandom } from "../helpers/rng";
 import { playSeason } from "../helpers/runGame";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
+import { GAME_TEST_TIMEOUT } from "../helpers/timeout";
 
 describe("regular season draw order", () => {
   afterEach(() => {
@@ -30,5 +31,5 @@ describe("regular season draw order", () => {
       ]),
     );
     expect({ records, draws }).toMatchSnapshot();
-  }, 30000);
+  }, GAME_TEST_TIMEOUT);
 });
