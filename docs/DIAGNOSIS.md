@@ -49,6 +49,7 @@ Severity: **High** = correctness/security risk, **Med** = maintainability or rel
 23. **Med - All 6 Edge Functions have `verify_jwt: false`**, so anyone who knows the URL can trigger stats recomputation (cost and load). It is also an information disclosure: `supabase/functions/calculate_bracket_stats/index.ts` returns `err.message` and `err.stack` in its 500 response to unauthenticated callers; return a generic error and keep details in the server log. All 6 cron jobs call the functions with no auth header, which is why `verify_jwt: false` is currently required - locking it down needs the cron jobs updated too. Sources are in `supabase/functions/`, jobs documented in `supabase/cron/jobs.md`.
 24. **Low (suspected bug) - `get_top_picked_conferences_by_year` filters `is_power_conference = false`**, but the dashboard labels it "Top Picked Conference" and its sibling RPCs don't filter. Confirm intent; either rename the label or drop the filter.
 25. **Low - Bracket insert policies don't check that `tournament_scoring_rules_id` belongs to the bracket's `year_id`** (the update policy does since step 5). A client inserting directly can create a bracket with another year's rules. Low impact: score isn't client-writable and the app inserts via service-role. *Fix:* add the same rules-year check to `user_brackets_insert_anon` / `user_brackets_insert_authenticated` WITH CHECK.
+26. **Low - Picks aren't checked for timing or validity.** A signed-in user can still insert or update their own picks after the game has a result, and `user_picks.picked_team_id` isn't required to be one of that game's two teams. This was already possible before step 5, and step 5 narrowed it (picks must be in an own bracket with a same-year game). It only affects the user's own bracket and stats. *Fix (step 9):* once the server computes the score, reject pick writes for games that already have a winner, and require `picked_team_id` to be one of the game's two teams (in the policy `WITH CHECK` or the `persist_bracket` RPC).
 
 ### Game logic
 
@@ -95,7 +96,7 @@ Each step is a separate branch + PR, small enough to review in one sitting. Orde
 | **6** | **Characterization tests for the game engine**: seeded-RNG `playGame`, seeding, tournament reducers, scoring | Must exist before refactoring 7-8. |
 | **7** | **Playwright**: smoke E2E (start -> regular season -> picks -> tournament -> recap) with persistence mocked via route interception; add to CI | Locks in end-to-end behavior before UI refactors. |
 | **8** | **Game-logic extraction**: `ROUND_CONFIG`, pure `scoreBracket`, injectable RNG in `playGame`, typed reducers | Tests from 6 must stay green. |
-| **9** | **Server-side score + atomic persistence** (`persist_bracket` RPC, full zod schema) | Fixes findings 1, 3, 6. |
+| **9** | **Server-side score + atomic persistence** (`persist_bracket` RPC, full zod schema) | Fixes findings 1, 3, 6. Also close the pick timing/validity gap (finding 26). |
 | **10** | **Component decomposition**: `Tournament.tsx` first (`getRoundLayout` + `<BracketColumn>`), then `TournamentRound`, `RoundSelectButton`, `PlayTournamentGames` | Playwright from 7 guards behavior. |
 | **11** | **`apiGet` / `useApiQuery`** helper, typed responses | Quick win, mechanical. |
 | **12** | **Incremental `strict`** folder by folder | Ongoing; CI keeps the ratchet. |
