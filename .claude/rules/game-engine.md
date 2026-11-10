@@ -47,7 +47,7 @@ Changing the order or number of random draws without changing the game (e.g. col
 ## Helpers and fixture
 
 - `tests/factories/league.factory.ts`:
-  - `buildLeague()` builds a deterministic 360-team league with `numberOfConferences` conferences, rank-string RPI 1..360 and quality-skewed stats;
+  - `buildLeague()` builds a deterministic 360-team league with 31 conferences (hard-coded, matching real data; don't derive it from the legacy scraping config), rank-string RPI 1..360 and quality-skewed stats;
   - `configureStoreForLeague(store, league)` dispatches the same setup as `StartScreen`.
 - `store/store.ts` `createAppStore({ preloadedState, extraMiddleware, devChecks })` gives a fresh store per test.
   - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which make 5,400-dispatch seasons very slow.
@@ -55,8 +55,8 @@ Changing the order or number of random draws without changing the game (e.g. col
 - `tests/game/helpers/runGame.ts`:
   - `playSeason` uses fake timers for `delay`;
   - `buildRecords`;
-  - `pickChalk` mirrors `TournamentMatchup`'s next-round mapping;
-  - `playTournament` mounts the drivers under `App.tsx`'s conditions.
+  - `pickChalk` uses `getNextRoundInfo`, exported from `TournamentMatchup.tsx`;
+  - `playTournament` mounts the drivers under a hand-copy of `App.tsx`'s conditions (finding 41: keep the two in sync until they share a component).
 - `tests/game/helpers/fullRun.ts` `playFullGame(seed)` runs one seeded stream from schedule to champion.
 - Heavy tests (360-team schedules, seasons, tournaments) pass `GAME_TEST_TIMEOUT` (`tests/game/helpers/timeout.ts`). Vitest's 5 s default fails under load. `npx vitest run tests/game` should stay under about 40 s.
 

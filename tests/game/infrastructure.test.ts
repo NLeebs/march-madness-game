@@ -5,7 +5,7 @@ import { teamScheduleActions } from "@/store";
 import { mulberry32, seedMathRandom } from "./helpers/rng";
 import { recordActions } from "./helpers/renderWithStore";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories/league.factory";
-import { createAppStore } from "@/store/store";
+import { createAppStore } from "@/store";
 
 describe("rng helpers", () => {
   let restore: (() => void) | undefined;

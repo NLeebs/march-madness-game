@@ -1,5 +1,5 @@
-import { createAppStore } from "@/store/store";
-import type { AppStore, CreateAppStoreOptions } from "@/store/store";
+import { createAppStore } from "@/store";
+import type { AppStore, CreateAppStoreOptions } from "@/store";
 
 /**
  * createAppStore without Redux Toolkit's dev-only immutability/serializability

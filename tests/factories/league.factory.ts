@@ -1,11 +1,11 @@
-import { ConferenceMap } from "@/models";
-import { TeamStats } from "@/models/teamData/TeamStats";
+import { ConferenceMap, TeamStats } from "@/models";
 import { ConferenceArrays, TeamSchedule } from "@/types";
-import { numberOfConferences } from "@/src/components/Add-To-Firebase/teamStatURLUtils";
-import { teamStatsActions } from "@/store/teamStatsSlice";
-import { teamScheduleActions } from "@/store/teamScheduleSlice";
-import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
-import type { AppStore } from "@/store/store";
+import {
+  regularSeasonRecordActions,
+  teamScheduleActions,
+  teamStatsActions,
+} from "@/store";
+import type { AppStore } from "@/store";
 import { mulberry32 } from "@/tests/game/helpers/rng";
 import { buildTeamStats } from "./teamStats.factory";
 
@@ -16,6 +16,11 @@ export interface League {
 }
 
 const TOTAL_TEAMS = 360;
+/**
+ * Fixed so the fixture (and every pin built on it) does not depend on the
+ * legacy scraping config. Matches the real data's conference count.
+ */
+const NUMBER_OF_CONFERENCES = 31;
 const LEAGUE_SEED = 20240311;
 
 const pad = (n: number, width: number) => String(n).padStart(width, "0");
@@ -60,7 +65,7 @@ export function buildLeague(): League {
   const rpiRanks = shuffledRanks(rand);
   const sosRanks = shuffledRanks(rand);
 
-  const sizes = conferenceSizes(numberOfConferences);
+  const sizes = conferenceSizes(NUMBER_OF_CONFERENCES);
   const teamStats: ConferenceMap = {};
   const conferenceArrays: ConferenceArrays = {};
   const teamArray: TeamSchedule[] = [];

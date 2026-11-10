@@ -18,8 +18,11 @@ export type TournamentFieldSelection = {
 
 /**
  * Picks the tournament field from the final regular season records.
- * Pure: does not mutate its inputs. Ties resolve by stable sort over
- * Object.keys(records) order.
+ * Pure: does not mutate its inputs. Ties resolve by stable sort: conference
+ * champions over conferenceArrays[conference] order, everything else over
+ * Object.keys(records) order. Assumes every conference has at least two
+ * teams, every team has a record, and there are enough non-champions for
+ * the at-large spots (see DIAGNOSIS findings 34 and 39).
  */
 export function selectTournamentField(
   records: Record<string, RegularSeasonTeam>,

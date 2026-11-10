@@ -9,11 +9,12 @@ import {
 } from "@/store";
 import { PlayPlayinGames } from "@/src/components/Tournament/PlayPlayinGames";
 import { PlayTournamentGames } from "@/src/components/Tournament/PlayTournamentGames";
+import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
 import { SeasonSchedule } from "@/src/components/RegularSeason/SeasonSchedule";
 import { PlayRegularSeasonGames } from "@/src/components/RegularSeason/PlayRegularSeasonGames";
-import type { AppStore, RootState } from "@/store/store";
+import type { AppStore, RootState } from "@/store";
 import type { League } from "@/tests/factories";
-import type { RegularSeasonTeam } from "@/types";
+import type { RegularSeasonTeam, TournamentRegion } from "@/types";
 import { renderWithStore } from "./renderWithStore";
 
 const SEASON_WEEKS = 30;
@@ -93,24 +94,6 @@ type Slot = { team: string; seed: string | number };
 
 const REGIONS = ["west", "east", "south", "midwest"] as const;
 
-/** Mirrors getNextRoundInfo in TournamentMatchup.tsx. */
-function nextRoundInfo(
-  round: string | number,
-  region: string,
-  index: number,
-): { nextRoundRegion: string; teamIndex: number } {
-  const mapping: Record<string, { nextRoundRegion: string; teamIndex: number }> = {
-    "elite eight-west": { nextRoundRegion: "eastWest", teamIndex: 0 },
-    "elite eight-east": { nextRoundRegion: "eastWest", teamIndex: 1 },
-    "elite eight-south": { nextRoundRegion: "southMidwest", teamIndex: 0 },
-    "elite eight-midwest": { nextRoundRegion: "southMidwest", teamIndex: 1 },
-    "final four-eastWest": { nextRoundRegion: "championship", teamIndex: 0 },
-    "final four-southMidwest": { nextRoundRegion: "championship", teamIndex: 1 },
-    "finals-championship": { nextRoundRegion: "champion", teamIndex: 0 },
-  };
-  return mapping[`${round}-${region}`] ?? { nextRoundRegion: region, teamIndex: index };
-}
-
 /**
  * Picks the better seed (team index 0 on a tie) in every game of every round,
  * as clicking it in each TournamentMatchup would. Round one is read from the
@@ -128,12 +111,12 @@ export function pickChalk(store: AppStore): void {
     { round: "finals", source: () => store.getState().tournamentPlayersPicks.picks.roundFinalsPicks },
   ] as const;
   for (const { round, source } of rounds) {
-    const matchupsByRegion = source() as unknown as Record<string, Slot[][]>;
-    for (const region of Object.keys(matchupsByRegion)) {
+    const matchupsByRegion = source() as unknown as Record<TournamentRegion | "playin", Slot[][]>;
+    for (const region of Object.keys(matchupsByRegion) as (TournamentRegion | "playin")[]) {
       if (region === "playin") continue;
       matchupsByRegion[region].forEach((matchup, index) => {
         const better = Number(matchup[1].seed) < Number(matchup[0].seed) ? 1 : 0;
-        const { nextRoundRegion, teamIndex } = nextRoundInfo(round, region, index);
+        const { nextRoundRegion, teamIndex } = getNextRoundInfo(round, region, index);
         store.dispatch(
           tounramentPlayersPicksActions.setPick({
             round,

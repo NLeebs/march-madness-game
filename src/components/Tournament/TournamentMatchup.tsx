@@ -27,7 +27,8 @@ interface NextRoundInfo {
   teamIndex: number;
 }
 
-const getNextRoundInfo = (
+/** Where the winner of this game goes in the next round. */
+export const getNextRoundInfo = (
   round: TournamentRound | "playin",
   region: TournamentRegion,
   index: number

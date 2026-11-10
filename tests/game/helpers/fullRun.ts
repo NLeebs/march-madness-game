@@ -2,7 +2,7 @@ import React from "react";
 import type { AnyAction } from "@reduxjs/toolkit";
 import { appStateActions } from "@/store";
 import { SelectionSunday } from "@/src/components/RegularSeason/SelectionSunday";
-import type { AppStore } from "@/store/store";
+import type { AppStore } from "@/store";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
 import type { League } from "@/tests/factories";
 import { createFastStore } from "./fastStore";
