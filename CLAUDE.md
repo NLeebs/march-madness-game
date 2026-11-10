@@ -75,6 +75,7 @@ Rules load automatically when you touch matching files. Before designing or plan
 | Topic | Rule file | Loads when you touch |
 |---|---|---|
 | Database: schema, migrations, generated types, DB tests, stats schema, hosted-project safety | `.claude/rules/database.md` | `supabase/**`, `infrastructure/db/**`, `models/**`, `types/database.ts`, `scripts/db/**` |
+| Game engine: seeded RNG, characterization tests (fixed contract, statistical checks, draw-order pins), pin regeneration | `.claude/rules/game-engine.md` | `src/functions/**`, `store/**`, `src/components/RegularSeason/**`, `src/components/Tournament/**`, `tests/factories/league*`, `tests/game/**` |
 
 ## Conventions
 
@@ -83,7 +84,7 @@ Rules load automatically when you touch matching files. Before designing or plan
 - Barrel `index.ts` files everywhere - export new modules from them and import from the barrel.
 - UI: Tailwind + shadcn/ui primitives in `src/components/UI/shadComponents/`, framer-motion for animation, `sonner` toasts, react-hook-form + zod schemas in `src/formSchemas/`.
 - Commits: conventional prefixes (`feat:`, `fix:`, `refactor:`). Branch off `main` and open a PR; `main` auto-deploys.
-- Preserve current gameplay behavior. Simulation output is random (`Math.random`), so test game logic by stubbing `Math.random` or asserting invariants, not exact scores.
+- Preserve current gameplay behavior. The game engine is under characterization tests; how they work and when pins may change is in `.claude/rules/game-engine.md`.
 
 ## Workflow
 
