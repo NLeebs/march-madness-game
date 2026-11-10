@@ -95,3 +95,11 @@ describe("configureStoreForLeague", () => {
     }
   });
 });
+
+describe("createAppStore devChecks", () => {
+  it("devChecks: false builds the same state shape", () => {
+    expect(Object.keys(createAppStore({ devChecks: false }).getState())).toEqual(
+      Object.keys(createAppStore().getState())
+    );
+  });
+});

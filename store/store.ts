@@ -24,15 +24,23 @@ type BaseState = {
 export interface CreateAppStoreOptions {
   preloadedState?: Partial<BaseState>;
   extraMiddleware?: Middleware[];
+  /** Redux Toolkit dev-only immutability/serializability checks. Default true. */
+  devChecks?: boolean;
 }
 
 export function createAppStore(options: CreateAppStoreOptions = {}) {
-  const { preloadedState, extraMiddleware = [] } = options;
+  const { preloadedState, extraMiddleware = [], devChecks = true } = options;
   return configureStore({
     reducer,
     preloadedState,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(extraMiddleware),
+      (devChecks
+        ? getDefaultMiddleware()
+        : getDefaultMiddleware({
+            immutableCheck: false,
+            serializableCheck: false,
+          })
+      ).concat(extraMiddleware),
   });
 }
 
