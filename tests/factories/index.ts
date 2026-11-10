@@ -25,3 +25,6 @@ export { buildTeam } from "./team.factory";
 export { buildTeamPerformance } from "./teamPerformance.factory";
 export { buildSeedPerformance } from "./seedPerformance.factory";
 export { buildRound } from "./round.factory";
+
+export { buildLeague, configureStoreForLeague } from "./league.factory";
+export type { League } from "./league.factory";
