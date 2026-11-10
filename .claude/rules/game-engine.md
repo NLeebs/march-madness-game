@@ -32,7 +32,7 @@ Every part of it is under characterization tests in `tests/game/`. Preserve game
 | Kind | Where | Changes when |
 |---|---|---|
 | Fixed contract: schedule rules, record-keeping, selection, seeding, pairings, advancement, picks cascade, scoring. Explicit expected values from hand-built inputs, never snapshots. | `tests/game/*.test.ts(x)`, `tests/unit/functions/*` | Only with a deliberate gameplay change, called out in the PR. |
-| Statistical checks: favored win rate (overall and by RPI gap), score means and spreads, one-point-game rate, season win spread, rank/wins correlation. Seeded, so never flaky; tolerances ~3-4 standard errors. | `tests/game/*.stats.test.ts(x)`, helpers in `tests/game/helpers/stats.ts` | Only with a deliberate gameplay change. Re-measure using the comment block at the top of each file (date, seeds, sample size, fixture, how pairs are drawn). |
+| Statistical checks: favored win rate (overall and by RPI gap), score means and spreads, one-point-game rate, season win spread, rank/wins correlation. Seeded, so never flaky. `playGame` checks use 30,000 games per seed with tolerances of ~4 standard errors; 300 simulated draw reorders produced no failures. Small real changes (e.g. +0.03 free-throw %) are only partly caught. | `tests/game/*.stats.test.ts(x)`, helpers in `tests/game/helpers/stats.ts` | Only with a deliberate gameplay change. Re-measure using the comment block at the top of each file (date, seeds, sample size, fixture, how pairs are drawn). |
 | Draw-order pins: exact results that depend on the order of random draws (`playGame` outputs, schedule, season records, a full seeded game) plus draw counts. | `tests/game/draworder/` + `__snapshots__/` | Regenerated on purpose only (below). |
 
 ## Regenerating draw-order pins
