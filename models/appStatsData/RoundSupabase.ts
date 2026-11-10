@@ -1,9 +1,3 @@
-import { z } from "zod";
+import type { Tables } from "@/types/database";
 
-export const RoundSupabaseSchema = z.object({
-  id: z.string().uuid().optional(),
-  round_name: z.string(),
-  created_at: z.string().optional(),
-});
-
-export type RoundSupabase = z.infer<typeof RoundSupabaseSchema>;
+export type RoundSupabase = Tables<"rounds">;

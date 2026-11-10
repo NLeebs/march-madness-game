@@ -1,14 +1,3 @@
-import { z } from "zod";
+import type { Tables } from "@/types/database";
 
-export const BracketScoringRuleSupabaseSchema = z.object({
-  id: z.string().uuid().optional(),
-  year_id: z.string().uuid(),
-  description: z.string(),
-  version: z.number(),
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
-});
-
-export type BracketScoringRuleSupabase = z.infer<
-  typeof BracketScoringRuleSupabaseSchema
->;
+export type BracketScoringRuleSupabase = Tables<"tournament_scoring_rules">;

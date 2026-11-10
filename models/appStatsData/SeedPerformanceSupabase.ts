@@ -1,12 +1,4 @@
-import { z } from "zod";
+import type { RpcRow } from "./rpc";
 
-export const SeedPerformanceSupabaseSchema = z.object({
-  upset_percentage: z.number(),
-  higher_seed: z.number(),
-  lower_seed: z.number(),
-  round_id: z.string().uuid(),
-});
-
-export type SeedPerformanceSupabase = z.infer<
-  typeof SeedPerformanceSupabaseSchema
->;
+export type SeedPerformanceSupabase =
+  RpcRow<"get_seed_matchup_upset_percentages_by_year_and_round">;

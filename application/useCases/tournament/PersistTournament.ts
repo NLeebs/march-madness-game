@@ -2,7 +2,7 @@ import { TournamentState } from "@/store/tournamentSlice";
 import { TournamentPlayerPicks, TournamentRound } from "@/types";
 import { mapTournamentToRows } from "@/application/mappers/mapTournamentToRows";
 import { TournamentRepository } from "@/infrastructure/db/TournamentRepository";
-import { BracketSupabase } from "@/models/appStatsData";
+import { BracketInsertSupabase } from "@/models/appStatsData";
 
 export interface PersistTournamentDto {
   tournamentState: TournamentState;
@@ -29,7 +29,7 @@ export async function persistTournament({
   const yearId = tournamentState.yearId;
   const tournamentScoringRulesId = tournamentState.tournamentScoringRulesId;
 
-  const bracket: BracketSupabase = {
+  const bracket: BracketInsertSupabase = {
     user_id: userId ?? null,
     anon_user_id: userId ? null : anonUserId,
     year_id: yearId,

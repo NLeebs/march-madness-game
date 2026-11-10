@@ -1,13 +1,13 @@
-import { z } from "zod";
+import type { RpcRow } from "./rpc";
 
-export const ConferencePerformanceSupabaseSchema = z.object({
-  conference_id: z.string().uuid(),
-  conference_name: z.string(),
-  conference_logo: z.string(),
-  wins: z.number().optional(),
-  picks: z.number().optional(),
-});
-
-export type ConferencePerformanceSupabase = z.infer<
-  typeof ConferencePerformanceSupabaseSchema
+type ConferencePerformanceBase = Pick<
+  RpcRow<"get_top_performing_conferences_by_year">,
+  "conference_id" | "conference_name" | "conference_logo"
 >;
+
+// Each conference RPC returns the base columns plus one metric column.
+export type ConferencePerformanceSupabase = ConferencePerformanceBase &
+  Partial<
+    Pick<RpcRow<"get_top_performing_conferences_by_year">, "wins"> &
+      Pick<RpcRow<"get_top_picked_conferences_by_year">, "picks">
+  >;
