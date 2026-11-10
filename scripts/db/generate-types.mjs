@@ -11,16 +11,16 @@ const check = process.argv.includes("--check");
 const hint =
   "Is the local database running? Start it with `npx supabase db start`.";
 
-function fail(message) {
+function fail(message, withHint = true) {
   console.error(message);
-  console.error(hint);
+  if (withHint) console.error(hint);
   process.exit(1);
 }
 
 let output = "";
 try {
   // stdout only is captured; stderr (npm notices, CLI errors) is kept separate.
-  output = execSync("npx supabase gen types typescript --local", {
+  output = execSync("npx supabase gen types typescript --local --schema public", {
     cwd: root,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -31,7 +31,7 @@ try {
 }
 
 if (!output || !output.trim()) {
-  fail("Type generation produced no output.");
+  fail("Type generation produced empty output.", false);
 }
 
 const normalize = (s) => s.replace(/\r\n/g, "\n");
