@@ -2,6 +2,10 @@ import { describe, it, expectTypeOf } from "vitest";
 import type { Tables, TablesInsert } from "@/types/database";
 import type { RpcRow } from "@/models/appStatsData/rpc";
 import type * as M from "@/models/appStatsData";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database";
+import { supabase } from "@/infrastructure/db/supabaseClient";
+import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
 
 describe("models match the generated database types", () => {
   it("table models are the generated Row types", () => {
@@ -43,5 +47,9 @@ describe("models match the generated database types", () => {
     expectTypeOf<RpcRow<"get_top_picked_teams_for_user_and_year">>().toMatchTypeOf<M.TeamPickCountSupabase>();
     // SeedRepository -> SeedPerformanceSupabase
     expectTypeOf<RpcRow<"get_seed_matchup_upset_percentages_by_year_and_round">>().toMatchTypeOf<M.SeedPerformanceSupabase>();
+  });
+  it("Supabase clients are typed with Database", () => {
+    expectTypeOf<ReturnType<typeof createSupabaseServiceRoleClient>>().toEqualTypeOf<SupabaseClient<Database>>();
+    expectTypeOf(supabase).toEqualTypeOf<SupabaseClient<Database>>();
   });
 });

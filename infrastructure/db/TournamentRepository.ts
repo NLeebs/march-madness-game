@@ -13,6 +13,7 @@ import {
 } from "@/models/appStatsData";
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database";
 
 interface PersistTournamentData {
   bracket: BracketInsertSupabase;
@@ -20,15 +21,15 @@ interface PersistTournamentData {
 }
 
 export class TournamentRepository {
-  private supabase: SupabaseClient;
-  private authClient: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
+  private authClient: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
     this.authClient = createSupabaseServerClient();
   }
 
-  async getYears(): Promise<YearSupabase[]> {
+  async getYears(): Promise<Pick<YearSupabase, "id" | "year">[]> {
     const { data: yearsData, error: yearsError } = await this.supabase
       .from("years")
       .select("id, year");
@@ -37,7 +38,7 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch years: ${yearsError.message}`);
     }
 
-    return yearsData as YearSupabase[];
+    return yearsData;
   }
 
   async getYearById(yearId: string): Promise<YearSupabase> {
@@ -55,7 +56,7 @@ export class TournamentRepository {
       throw new Error(`No year found for id: ${yearId}`);
     }
 
-    return yearData as YearSupabase;
+    return yearData;
   }
 
   async getBracketScoringRulesByYearId(
@@ -78,7 +79,7 @@ export class TournamentRepository {
       throw new Error(`No bracket scoring rules found for year_id: ${yearId}`);
     }
 
-    return bracketScoringRulesData as BracketScoringRuleSupabase;
+    return bracketScoringRulesData;
   }
 
   async getRounds(): Promise<RoundSupabase[]> {
@@ -90,10 +91,13 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch rounds: ${error.message}`);
     }
 
+    // cast: query selects only "id, round_name"; the RoundSupabase contract (and getRounds use-case test) includes created_at
     return roundData as RoundSupabase[];
   }
 
-  async getTeamsByYearId(yearId: string): Promise<TeamSupabase[]> {
+  async getTeamsByYearId(
+    yearId: string
+  ): Promise<Pick<TeamSupabase, "id" | "name">[]> {
     const { data: teamsData, error } = await this.supabase
       .from("teams")
       .select("id, name")
@@ -103,7 +107,7 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch teams: ${error.message}`);
     }
 
-    return teamsData as TeamSupabase[];
+    return teamsData;
   }
 
   async getBracketsByUserIdAndYearId(
@@ -120,7 +124,7 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch brackets: ${error.message}`);
     }
 
-    return bracketsData as BracketSupabase[];
+    return bracketsData;
   }
 
   async getUserTotalStatsByYearId(
@@ -144,7 +148,7 @@ export class TournamentRepository {
       );
     }
 
-    return userTotalStatsData as UserTotalStatsSupabase;
+    return userTotalStatsData;
   }
 
   async persistBracket(bracket: BracketInsertSupabase): Promise<string> {

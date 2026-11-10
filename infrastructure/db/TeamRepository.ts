@@ -1,9 +1,10 @@
 import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
 import { TeamPerformanceSupabase, TeamSupabase } from "@/models/appStatsData";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database";
 
 export class TeamRepository {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
@@ -24,7 +25,7 @@ export class TeamRepository {
       throw new Error(`No team found for id: ${id}`);
     }
 
-    return teamData as TeamSupabase;
+    return teamData;
   }
 
   async getTopPerformingTeamsByYear(
@@ -45,7 +46,7 @@ export class TeamRepository {
       throw new Error(`No top performing teams found for year_id: ${yearId}`);
     }
 
-    return teamPerformanceData as TeamPerformanceSupabase[];
+    return teamPerformanceData;
   }
 
   async getTopPerformingNonPowerConferenceTeamsByYear(
@@ -69,7 +70,7 @@ export class TeamRepository {
       throw new Error(`No top performing teams found for year_id: ${yearId}`);
     }
 
-    return teamPerformanceData as TeamPerformanceSupabase[];
+    return teamPerformanceData;
   }
 
   async getMostPickedTeamsByYear(
@@ -90,7 +91,7 @@ export class TeamRepository {
       throw new Error(`No most picked teams found for year_id: ${yearId}`);
     }
 
-    return teamPickData as TeamPerformanceSupabase[];
+    return teamPickData;
   }
 
   async getTeamsWithMostUpsetsCausedByYear(
@@ -113,7 +114,7 @@ export class TeamRepository {
       );
     }
 
-    return teamUpsetsData as TeamPerformanceSupabase[];
+    return teamUpsetsData;
   }
 
   async getTeamsMostUpsetByYear(
@@ -134,7 +135,7 @@ export class TeamRepository {
       throw new Error(`No teams with most upsets found for year_id: ${yearId}`);
     }
 
-    return teamUpsetsData as TeamPerformanceSupabase[];
+    return teamUpsetsData;
   }
 
   async getTeamsWithMostChampionshipsByYear(
@@ -157,7 +158,7 @@ export class TeamRepository {
       );
     }
 
-    return appearanceData as TeamPerformanceSupabase[];
+    return appearanceData;
   }
 
   async getTeamsWithMostFinalsByYear(
@@ -181,7 +182,7 @@ export class TeamRepository {
       throw new Error(`No teams with most finals found for year_id: ${yearId}`);
     }
 
-    return appearanceData as TeamPerformanceSupabase[];
+    return appearanceData;
   }
 
   async getTeamsWithMostFinalFoursByYear(
@@ -207,7 +208,7 @@ export class TeamRepository {
       );
     }
 
-    return appearanceData as TeamPerformanceSupabase[];
+    return appearanceData;
   }
 
   async getTeamsWithMostEliteEightsByYear(
@@ -233,7 +234,7 @@ export class TeamRepository {
       );
     }
 
-    return appearanceData as TeamPerformanceSupabase[];
+    return appearanceData;
   }
 
   async getTeamsWithMostSweetSixteensByYear(
@@ -259,7 +260,7 @@ export class TeamRepository {
       );
     }
 
-    return appearanceData as TeamPerformanceSupabase[];
+    return appearanceData;
   }
 
   async getTeamsWithMostSecondRoundsByYear(
@@ -285,7 +286,7 @@ export class TeamRepository {
       );
     }
 
-    return appearanceData as TeamPerformanceSupabase[];
+    return appearanceData;
   }
 
   async getTeamsWithMostTournamentAppearancesByYear(
@@ -311,6 +312,6 @@ export class TeamRepository {
       );
     }
 
-    return appearanceData as TeamPerformanceSupabase[];
+    return appearanceData;
   }
 }

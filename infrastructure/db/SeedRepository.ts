@@ -1,9 +1,10 @@
 import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
 import { SeedPerformanceSupabase } from "@/models/appStatsData";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database";
 
 export class SeedRepository {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
@@ -31,6 +32,6 @@ export class SeedRepository {
       throw new Error(`No seed performance found for year_id: ${yearId}`);
     }
 
-    return seedPerformanceData as SeedPerformanceSupabase[];
+    return seedPerformanceData;
   }
 }

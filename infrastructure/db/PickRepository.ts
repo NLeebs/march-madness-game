@@ -1,9 +1,10 @@
 import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
 import { TeamPickCountSupabase } from "@/models/appStatsData/TeamPickCountSupabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database";
 
 export class PickRepository {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
@@ -31,6 +32,6 @@ export class PickRepository {
       );
     }
 
-    return pickCountData as TeamPickCountSupabase[];
+    return pickCountData;
   }
 }
