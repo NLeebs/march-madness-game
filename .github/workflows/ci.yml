@@ -41,6 +41,11 @@ jobs:
       - name: Type-check
         run: npx tsc --noEmit
 
+      # The repo runs with strict: false, which hides nullability drift between
+      # the models and types/database.ts. Check the drift test with strictNullChecks.
+      - name: Type-check DB type drift test (strictNullChecks)
+        run: npm run typecheck:db-types
+
       - name: Test
         run: npx vitest run
 
@@ -66,13 +71,15 @@ jobs:
       # Starts the local Postgres with all migrations applied, then runs pgTAP.
       # No secrets needed, so this runs for fork PRs too.
       - name: Start local database
+        id: db-start
         run: npx supabase db start
 
       - name: Run pgTAP tests
         run: npx supabase test db
 
+      # Runs even when pgTAP fails, but only if the database actually started.
       - name: Check generated database types are current
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.db-start.outcome == 'success' }}
         run: npm run db:types:check
 
       # Read-only: prints pending production migrations, never applies them.

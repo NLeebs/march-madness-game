@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "incremental": false
+  },
+  "include": ["next-env.d.ts", "tests/unit/models/databaseTypes.test.ts"]
+}

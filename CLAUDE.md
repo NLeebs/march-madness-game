@@ -16,6 +16,7 @@ npx vitest run tests/unit/useCases/team/getTeamById.test.ts   # one file
 npx tsc --noEmit       # type-check (2 CSS-module errors are expected until next-env.d.ts exists; run `npm run build` once)
 npm run db:types         # regenerate types/database.ts (local DB must be running)
 npm run db:types:check   # fail if types/database.ts is stale (runs in CI)
+npm run typecheck:db-types  # model drift test under strictNullChecks (runs in CI)
 ```
 
 Always use `npx vitest` / `npx tsc` *after* `npm ci` - if `node_modules` is missing, `npx tsc` silently installs an unrelated package named `tsc`.

@@ -5,7 +5,6 @@ import {
   BracketInsertSupabase,
   BracketScoringRuleSupabase,
   GameInsertSupabase,
-  PickInsertSupabase,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
@@ -13,7 +12,7 @@ import {
 } from "@/models/appStatsData";
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "@/types/database";
+import type { Database, TablesInsert } from "@/types/database";
 
 interface PersistTournamentData {
   bracket: BracketInsertSupabase;
@@ -82,7 +81,7 @@ export class TournamentRepository {
     return bracketScoringRulesData;
   }
 
-  async getRounds(): Promise<RoundSupabase[]> {
+  async getRounds(): Promise<Pick<RoundSupabase, "id" | "round_name">[]> {
     const { data: roundData, error } = await this.supabase
       .from("rounds")
       .select("id, round_name");
@@ -91,8 +90,7 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch rounds: ${error.message}`);
     }
 
-    // cast: query selects only "id, round_name"; the RoundSupabase contract (and getRounds use-case test) includes created_at
-    return roundData as RoundSupabase[];
+    return roundData;
   }
 
   async getTeamsByYearId(
@@ -226,7 +224,7 @@ export class TournamentRepository {
       return gameData.id;
     };
 
-    const persistPick = async (pick: PickInsertSupabase & { game_id: string }) => {
+    const persistPick = async (pick: TablesInsert<"user_picks">) => {
       const { error: pickError } = await this.supabase
         .from("user_picks")
         .insert(pick);
@@ -241,12 +239,8 @@ export class TournamentRepository {
         const { game, pick } = gameAndPick;
         const gameId = await persistGame(game);
 
-        if (pick && pick.bracket_id) {
-          const completePick: PickInsertSupabase & { game_id: string } = {
-            ...pick,
-            game_id: gameId,
-          };
-          await persistPick(completePick);
+        if (pick) {
+          await persistPick({ ...pick, game_id: gameId });
         }
       }),
     );

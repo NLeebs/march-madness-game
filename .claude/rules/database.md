@@ -20,7 +20,7 @@ paths:
 ## Generated types
 
 - `types/database.ts` is generated from the local database by `npm run db:types` (`scripts/db/generate-types.mjs`, which runs `npx supabase gen types typescript --local --schema public`). Never edit it by hand. It is committed with LF endings (`.gitattributes`).
-- After adding or changing a migration: `npx supabase db start` (or `npx supabase db reset` if the DB is already running), then `npm run db:types`, and commit `types/database.ts` in the same PR. CI's `db-tests` job runs `npm run db:types:check` and fails if the committed file is stale.
+- After adding or changing a migration: `npx supabase db start` (or `npx supabase db reset` if the DB is already running), then `npm run db:types`, and commit `types/database.ts` in the same PR. CI's `db-tests` job runs `npm run db:types:check` and fails if the committed file is stale. `tests/unit/models/databaseTypes.test.ts` asserts the models match the generated types. CI type-checks it with `strictNullChecks` (`npm run typecheck:db-types`), because the repo-wide `strict: false` hides `| null` differences. If you add a model, add it to that test.
 - A failed generation (DB not running) exits non-zero and leaves the committed file untouched.
 - The three Supabase clients (`supabaseClient.ts`, `supabaseServer.ts`, `supabaseServiceRole.ts`) and every repository are typed with `Database`, so a misspelled table, column, RPC name or RPC argument fails `tsc`.
 - `models/appStatsData` types are aliases of the generated types, not hand-written shapes:
