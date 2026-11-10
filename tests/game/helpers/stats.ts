@@ -47,3 +47,24 @@ export function measureGames(results: GameSample[]): GameMetrics {
     oneScoreMarginRate: mean(margins.map((m) => (m === 1 ? 1 : 0))),
   };
 }
+
+export type SeasonMetrics = {
+  meanWins: number;
+  sdWins: number;
+  /** Pearson correlation of RPI rank (1 = best) with wins; strongly negative. */
+  rankWinsCorrelation: number;
+};
+
+/** teams: one entry per team with its RPI rank and season wins. */
+export function measureSeason(teams: { rpi: number; wins: number }[]): SeasonMetrics {
+  const wins = teams.map((t) => t.wins);
+  const ranks = teams.map((t) => t.rpi);
+  const mw = mean(wins);
+  const mr = mean(ranks);
+  const cov = mean(teams.map((t) => (t.rpi - mr) * (t.wins - mw)));
+  return {
+    meanWins: mw,
+    sdWins: sd(wins),
+    rankWinsCorrelation: cov / (sd(ranks) * sd(wins)),
+  };
+}
