@@ -1,9 +1,10 @@
 import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
 import { ProfileSupabase } from "@/models/appStatsData";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database";
 
 export class UserRepository {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
@@ -27,6 +28,6 @@ export class UserRepository {
       throw new Error(`No user profile found for id: ${userId}`);
     }
 
-    return userProfileData as ProfileSupabase;
+    return userProfileData;
   }
 }

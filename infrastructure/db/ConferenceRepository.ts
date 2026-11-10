@@ -4,9 +4,10 @@ import {
   ConferencePerformanceSupabase,
 } from "@/models/appStatsData";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database";
 
 export class ConferenceRepository {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
@@ -27,7 +28,7 @@ export class ConferenceRepository {
       throw new Error(`No conference found for id: ${id}`);
     }
 
-    return conferenceData as ConferenceSupabase;
+    return conferenceData;
   }
 
   async getTopPerformingConferencesByYear(
@@ -49,7 +50,7 @@ export class ConferenceRepository {
         `No top performing conferences found for year_id: ${yearId}`,
       );
     }
-    return conferencePerformanceData as ConferencePerformanceSupabase[];
+    return conferencePerformanceData;
   }
 
   async getTopPerformingNonPowerConferencesByYear(
@@ -74,7 +75,7 @@ export class ConferenceRepository {
         `No top performing conferences found for year_id: ${yearId}`,
       );
     }
-    return conferencePerformanceData as ConferencePerformanceSupabase[];
+    return conferencePerformanceData;
   }
 
   async getTopPickedConferencesByYear(
@@ -93,6 +94,6 @@ export class ConferenceRepository {
     if (!conferencePickData) {
       throw new Error(`No top picked conferences found for year_id: ${yearId}`);
     }
-    return conferencePickData as ConferencePerformanceSupabase[];
+    return conferencePickData;
   }
 }

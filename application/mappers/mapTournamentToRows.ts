@@ -8,7 +8,7 @@ import {
   TournamentPickTeam,
   TournamentRegion,
 } from "@/types";
-import { GameSupabase, PickSupabase } from "@/models/appStatsData";
+import { GameInsertSupabase, PickInsertSupabase } from "@/models/appStatsData";
 import { mapPicksRegionAndIndex } from "./mapPicksRegionandIndex";
 
 interface MapTournamentToRowsData {
@@ -20,8 +20,8 @@ interface MapTournamentToRowsData {
 }
 
 export type MappedRowsResult = {
-  game: GameSupabase;
-  pick: PickSupabase;
+  game: GameInsertSupabase;
+  pick: PickInsertSupabase | undefined;
 }[];
 
 type RoundMapping = {
@@ -69,7 +69,7 @@ export function mapTournamentToRows({
   ) => {
     const gameRow = processMatchup(matchup, roundName, isPlayIn);
 
-    let pickRow: PickSupabase | undefined;
+    let pickRow: PickInsertSupabase | undefined;
     if (!isPlayIn && pick) {
       pickRow = processPick(pick);
     }
@@ -117,7 +117,7 @@ export function mapTournamentToRows({
     const favoredScore = favored.score ? parseInt(favored.score) : 0;
     const underdogScore = underdog.score ? parseInt(underdog.score) : 0;
 
-    const gameRow: GameSupabase = {
+    const gameRow: GameInsertSupabase = {
       year_id: yearId,
       round_id: roundId,
       is_play_in: isPlayIn,
@@ -143,7 +143,7 @@ export function mapTournamentToRows({
       throw new Error(`Team ID not found for pick team: ${pick.team}`);
     }
 
-    const pickRow: PickSupabase = {
+    const pickRow: PickInsertSupabase = {
       bracket_id: bracketId,
       picked_team_id: pickTeamId,
       picked_team_seed: parseInt(pick.seed),

@@ -2,9 +2,9 @@ import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseSer
 import { createSupabaseServerClient } from "@/infrastructure/db/supabaseServer";
 import {
   BracketSupabase,
+  BracketInsertSupabase,
   BracketScoringRuleSupabase,
-  GameSupabase,
-  PickSupabase,
+  GameInsertSupabase,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
@@ -12,22 +12,23 @@ import {
 } from "@/models/appStatsData";
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database, TablesInsert } from "@/types/database";
 
 interface PersistTournamentData {
-  bracket: BracketSupabase;
+  bracket: BracketInsertSupabase;
   gamesAndPicks: MappedRowsResult;
 }
 
 export class TournamentRepository {
-  private supabase: SupabaseClient;
-  private authClient: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
+  private authClient: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
     this.authClient = createSupabaseServerClient();
   }
 
-  async getYears(): Promise<YearSupabase[]> {
+  async getYears(): Promise<Pick<YearSupabase, "id" | "year">[]> {
     const { data: yearsData, error: yearsError } = await this.supabase
       .from("years")
       .select("id, year");
@@ -54,7 +55,7 @@ export class TournamentRepository {
       throw new Error(`No year found for id: ${yearId}`);
     }
 
-    return yearData as YearSupabase;
+    return yearData;
   }
 
   async getBracketScoringRulesByYearId(
@@ -77,10 +78,10 @@ export class TournamentRepository {
       throw new Error(`No bracket scoring rules found for year_id: ${yearId}`);
     }
 
-    return bracketScoringRulesData as BracketScoringRuleSupabase;
+    return bracketScoringRulesData;
   }
 
-  async getRounds(): Promise<RoundSupabase[]> {
+  async getRounds(): Promise<Pick<RoundSupabase, "id" | "round_name">[]> {
     const { data: roundData, error } = await this.supabase
       .from("rounds")
       .select("id, round_name");
@@ -89,10 +90,12 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch rounds: ${error.message}`);
     }
 
-    return roundData as RoundSupabase[];
+    return roundData;
   }
 
-  async getTeamsByYearId(yearId: string): Promise<TeamSupabase[]> {
+  async getTeamsByYearId(
+    yearId: string
+  ): Promise<Pick<TeamSupabase, "id" | "name">[]> {
     const { data: teamsData, error } = await this.supabase
       .from("teams")
       .select("id, name")
@@ -102,7 +105,7 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch teams: ${error.message}`);
     }
 
-    return teamsData as TeamSupabase[];
+    return teamsData;
   }
 
   async getBracketsByUserIdAndYearId(
@@ -119,7 +122,7 @@ export class TournamentRepository {
       throw new Error(`Failed to fetch brackets: ${error.message}`);
     }
 
-    return bracketsData as BracketSupabase[];
+    return bracketsData;
   }
 
   async getUserTotalStatsByYearId(
@@ -143,10 +146,10 @@ export class TournamentRepository {
       );
     }
 
-    return userTotalStatsData as UserTotalStatsSupabase;
+    return userTotalStatsData;
   }
 
-  async persistBracket(bracket: BracketSupabase): Promise<string> {
+  async persistBracket(bracket: BracketInsertSupabase): Promise<string> {
     if (bracket.user_id) {
       const {
         data: { user },
@@ -207,7 +210,7 @@ export class TournamentRepository {
       }
     }
 
-    const persistGame = async (game: GameSupabase) => {
+    const persistGame = async (game: GameInsertSupabase) => {
       const { data: gameData, error: gameError } = await this.supabase
         .from("tournament_games")
         .insert(game)
@@ -221,7 +224,7 @@ export class TournamentRepository {
       return gameData.id;
     };
 
-    const persistPick = async (pick: PickSupabase) => {
+    const persistPick = async (pick: TablesInsert<"user_picks">) => {
       const { error: pickError } = await this.supabase
         .from("user_picks")
         .insert(pick);
@@ -236,12 +239,8 @@ export class TournamentRepository {
         const { game, pick } = gameAndPick;
         const gameId = await persistGame(game);
 
-        if (pick && pick.bracket_id) {
-          const completePick: PickSupabase = {
-            ...pick,
-            game_id: gameId,
-          };
-          await persistPick(completePick);
+        if (pick) {
+          await persistPick({ ...pick, game_id: gameId });
         }
       }),
     );

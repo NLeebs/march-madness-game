@@ -18,6 +18,7 @@ function buildConference(
     conference: "Big East",
     conference_logo: "/conference-logos/big-east.png",
     created_at: "2025-03-20T10:00:00Z",
+    is_power_conference: true,
     ...overrides,
   };
 }

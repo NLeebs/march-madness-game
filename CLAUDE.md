@@ -14,6 +14,9 @@ npm test               # vitest in watch mode
 npx vitest run         # single run - use this from Claude / CI
 npx vitest run tests/unit/useCases/team/getTeamById.test.ts   # one file
 npx tsc --noEmit       # type-check (2 CSS-module errors are expected until next-env.d.ts exists; run `npm run build` once)
+npm run db:types         # regenerate types/database.ts (local DB must be running)
+npm run db:types:check   # fail if types/database.ts is stale (runs in CI)
+npm run typecheck:db-types  # model drift test under strictNullChecks (runs in CI)
 ```
 
 Always use `npx vitest` / `npx tsc` *after* `npm ci` - if `node_modules` is missing, `npx tsc` silently installs an unrelated package named `tsc`.
@@ -30,8 +33,8 @@ Layered, roughly clean-architecture. Dependencies point downward only:
 app/                 Next.js routes. app/page.tsx = the game. app/(private)/ = auth-gated pages. app/api/** = route handlers.
   -> application/    useCases/<domain>/<Verb><Noun>.ts (one exported fn per file, re-exported from index.ts) + mappers/
     -> infrastructure/db/   <Domain>Repository classes wrapping Supabase queries/RPCs
-      -> models/     DB row shapes (models/appStatsData/*Supabase.ts) and team-stat shapes
-types/               Game/domain types (tournament, regular season). tsconfig maps bare imports "*" -> types/*
+      -> models/     DB row types (models/appStatsData/*Supabase.ts, aliases of generated types/database.ts) and team-stat shapes
+types/               Game/domain types (tournament, regular season) + generated database.ts (import as @/types/database). tsconfig maps bare imports "*" -> types/*
 store/               Redux Toolkit slices for the in-browser game state machine
 src/components/      React UI, grouped by game phase (RegularSeason, Tournament, Dashboard, General, UI)
 src/hooks/           TanStack Query hooks (one per API endpoint) + form/auth hooks
@@ -59,11 +62,19 @@ Note: `README-API-Error-Handling.md` documents an `apiHandler` wrapper, but no r
 
 ## Database (Supabase / Postgres)
 
-Baseline schema (tables, RPC functions, RLS policies, grants) is in `supabase/migrations/20261103195820_remote_schema.sql`, dumped from the hosted project - keep it an exact mirror; put changes in new migrations. Tables: `years`, `teams`, `conferences`, `rounds`, `tournament_scoring_rules`, `tournament_round_scoring`, `user_brackets`, `tournament_games`, `user_picks`, `user_bracket_stats`, `user_total_stats`, `global_team_stats`, `global_conference_stats`, `seed_matchup_stats`, `profiles`. Most dashboard stats come from Postgres RPC functions (`get_top_performing_teams_by_year`, `get_top_picked_teams_by_year`, etc.) called via `supabase.rpc(...)`. All repositories currently use the **service-role** client (bypasses RLS); the cookie-based `supabaseServer` client is used only to verify the logged-in user.
+Schema, migrations, generated types, DB tests and the stats schema are in `.claude/rules/database.md`. Never break these:
 
-Migrations auto-apply to production on merge to `main` via `.github/workflows/deploy-migrations.yml`, so each one must work with the currently deployed app code. The CI secret `SUPABASE_ACCESS_TOKEN` is a scoped personal access token for this project only. It needs connection-pooling config read (`database_pooling_config_read`) and storage config read on top of the database permissions; without pooling read, `supabase link` silently skips the pooler URL and `db push` then fails with a misleading IPv6 error. The token expires within a year, and its replacement needs the same permissions. DB tests live in `supabase/tests/database/`: run `npx supabase db start` first, then `npx supabase test db` (local only). Files 01-11 depend on the helpers that `00_helpers.test.sql` commits, so run the whole suite rather than a single file on a fresh DB. Clients write `user_brackets` through column-level grants, so a new `user_brackets` column needs an explicit column grant before client inserts/updates can set it. Stats computation runs as SQL functions in the private `stats` schema (not exposed to the Data API; no EXECUTE for anon/authenticated/service_role), scheduled by pg_cron jobs created in migration `20261109211628_schedule_stats_jobs_in_sql.sql` (documented in `supabase/cron/jobs.md`). Every new `stats.*` function needs its own `revoke execute ... from public, anon, authenticated, service_role` (a per-schema default can't do it; test 19 enforces it), and stats upserts use an `IS DISTINCT FROM` guard so unchanged rows aren't rewritten. Open stats cost follow-ups: `docs/DIAGNOSIS.md` findings 27-30. `supabase/functions/` (the old stats Edge Functions) is retired and pending deletion; `supabase/rollback/restore_edge_function_cron.sql` is a manual, never-auto-applied rollback.
+- Never run writes, migrations, or destructive SQL against the hosted project without explicit confirmation. → `.claude/rules/database.md`
+- Migrations auto-apply to production on merge to `main`, so each must work with the currently deployed app code. → `.claude/rules/database.md`
+- After every migration, regenerate `types/database.ts` with `npm run db:types` and commit it; CI fails otherwise. → `.claude/rules/database.md`
 
-Never run writes, migrations, or destructive SQL against the hosted project without explicit confirmation. Claude's Supabase MCP server (`.mcp.json`) is read-only. To refresh the schema snapshot use `npx supabase db dump --remote=<ref> -p "$SUPABASE_DB_PASSWORD"` (read-only; password lives in `.env.local`) - not `db pull --remote`, which in CLI v3 also writes to the hosted migration history.
+## Rule index
+
+Rules load automatically when you touch matching files. Before designing or planning a change, read the rule files for every topic it touches.
+
+| Topic | Rule file | Loads when you touch |
+|---|---|---|
+| Database: schema, migrations, generated types, DB tests, stats schema, hosted-project safety | `.claude/rules/database.md` | `supabase/**`, `infrastructure/db/**`, `models/**`, `types/database.ts`, `scripts/db/**` |
 
 ## Conventions
 

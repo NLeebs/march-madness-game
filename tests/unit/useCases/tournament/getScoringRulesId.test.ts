@@ -20,7 +20,9 @@ describe("getScoringRuleIdByYearId", () => {
       id: "scoring-rule-uuid-123",
       year_id: "year-uuid-456",
       description: "Standard bracket scoring",
-      version: 1,
+      version: "1",
+      created_at: "2025-01-01T00:00:00Z",
+      updated_at: "2025-01-01T00:00:00Z",
     };
 
     mockGetBracketScoringRulesByYearId.mockResolvedValue(mockScoringRule);

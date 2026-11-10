@@ -1,9 +1,3 @@
-import { z } from "zod";
+import type { Tables } from "@/types/database";
 
-export const YearSupabaseSchema = z.object({
-  id: z.string().uuid().optional(),
-  year: z.number(),
-  created_at: z.string().optional(),
-});
-
-export type YearSupabase = z.infer<typeof YearSupabaseSchema>;
+export type YearSupabase = Tables<"years">;

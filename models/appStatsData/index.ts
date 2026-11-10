@@ -12,3 +12,4 @@ export * from "./TeamSupabase";
 export * from "./TournamentGameSupabase";
 export * from "./UserTotalStatsSupabase";
 export * from "./YearSupabase";
+export * from "./rpc";

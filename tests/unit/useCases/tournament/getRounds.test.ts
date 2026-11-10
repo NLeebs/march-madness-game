@@ -1,6 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, expectTypeOf, vi, beforeEach } from "vitest";
 import { getRounds } from "@/application/useCases";
+import type { RoundSupabase } from "@/models/appStatsData";
 import { buildRound } from "@/tests/factories";
+
+// getRounds selects only "id, round_name", so the type must not promise created_at.
+const buildSelectedRound = ({ id, round_name }: RoundSupabase = buildRound()) => ({ id, round_name });
 
 const mockGetRounds = vi.fn();
 
@@ -15,13 +19,21 @@ describe("getRounds", () => {
     vi.clearAllMocks();
   });
 
+  it("returns only the selected columns in its type", () => {
+    expectTypeOf(getRounds).returns.resolves.toEqualTypeOf<
+      Pick<RoundSupabase, "id" | "round_name">[]
+    >();
+  });
+
   it("should return rounds from the repository", async () => {
     const expectedRounds = [
-      buildRound({ round_name: "First Round" }),
-      buildRound({
-        id: "22222222-2222-2222-2222-222222222222",
-        round_name: "Second Round",
-      }),
+      buildSelectedRound(buildRound({ round_name: "First Round" })),
+      buildSelectedRound(
+        buildRound({
+          id: "22222222-2222-2222-2222-222222222222",
+          round_name: "Second Round",
+        }),
+      ),
     ];
     mockGetRounds.mockResolvedValue(expectedRounds);
 
@@ -48,11 +60,12 @@ describe("getRounds", () => {
 
   it("should return rounds with expected fields", async () => {
     const rounds = [
-      buildRound({
-        id: "33333333-3333-3333-3333-333333333333",
-        round_name: "Elite Eight",
-        created_at: "2025-02-01T00:00:00Z",
-      }),
+      buildSelectedRound(
+        buildRound({
+          id: "33333333-3333-3333-3333-333333333333",
+          round_name: "Elite Eight",
+        }),
+      ),
     ];
     mockGetRounds.mockResolvedValue(rounds);
 
@@ -60,7 +73,7 @@ describe("getRounds", () => {
 
     expect(result[0].id).toBe("33333333-3333-3333-3333-333333333333");
     expect(result[0].round_name).toBe("Elite Eight");
-    expect(result[0].created_at).toBe("2025-02-01T00:00:00Z");
+    expect(result[0]).not.toHaveProperty("created_at");
   });
 
   it("should propagate errors when the repository throws", async () => {

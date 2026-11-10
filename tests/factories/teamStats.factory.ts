@@ -76,6 +76,7 @@ export function buildYear(
   return {
     id: "year-uuid-123",
     year: 2025,
+    created_at: "2025-01-01T00:00:00Z",
     ...overrides,
   };
 }
