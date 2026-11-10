@@ -70,9 +70,9 @@ The two 30-minute jobs exit early when no `user_brackets` or `tournament_games` 
 
 The check also compares the `user_brackets` row count with the count at the last run, so a deleted bracket triggers a refresh too. `user_bracket_stats` rows already go via `ON DELETE CASCADE`, but `user_total_stats` would otherwise wait for the next new bracket. *(Builder's call, from the review.)*
 
-Known gap, accepted: a pick **edited** after its bracket was saved (possible only by calling the API directly) won't be reflected until the next new bracket or game triggers a run. The app never edits picks.
+Known gap, accepted: a pick **edited** after its bracket was saved (possible only by calling the API directly, finding 26) won't be reflected until the next new bracket or game triggers a run. The app never edits picks.
 
-*(Code review update, 2026-11-10: as built, the check is `stats.inputs_fingerprint()`, compared with the value stored in `stats.refresh_log` by each job. Each part is a count plus a sum of hashes of `(id, xmin, ctid)` over non-anonymous brackets, their picks and those picks' games, and `teams`. That closes the edited-pick gap above, plus deletes combined with backdated inserts and conference changes. Anonymous saves no longer trigger a refresh. Remaining cost follow-ups are DIAGNOSIS findings 26-29.)*
+*(Code review update, 2026-11-10: as built, the check is `stats.inputs_fingerprint()`, compared with the value stored in `stats.refresh_log` by each job. Each part is a count plus a sum of hashes of `(id, xmin, ctid)` over non-anonymous brackets, their picks and those picks' games, and `teams`. That closes the edited-pick gap above, plus deletes combined with backdated inserts and conference changes. Anonymous saves no longer trigger a refresh. Remaining cost follow-ups are DIAGNOSIS findings 27-30.)*
 
 ### Cron jobs
 
