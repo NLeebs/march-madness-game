@@ -71,6 +71,9 @@ jobs:
       - name: Run pgTAP tests
         run: npx supabase test db
 
+      - name: Check generated database types are current
+        run: npm run db:types:check
+
       # Read-only: prints pending production migrations, never applies them.
       # Skipped (not failed) when the deploy secrets are unavailable (fork PRs, or not yet configured).
       - name: Preview production migrations
