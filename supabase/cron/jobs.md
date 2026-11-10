@@ -1,8 +1,6 @@
-# Cron jobs (pg_cron) on the hosted project
+# Cron jobs (pg_cron)
 
-Documentation only - not applied by any workflow. Captured read-only on 2026-11-09 from `cron.job`. The hosted project is the source of truth until these are managed by a migration.
-
-No job sends any headers (`headers:=jsonb_build_object()`), so there is no secret to redact. Every job calls its Edge Function with no auth header, which is why the functions currently need `verify_jwt: false` (see `docs/DIAGNOSIS.md` finding 23).
+These jobs are managed by migration `supabase/migrations/20261109211628_schedule_stats_jobs_in_sql.sql`. They call SQL functions in the private `stats` schema; they no longer call Edge Functions. The old Edge Function definitions are kept in `supabase/rollback/restore_edge_function_cron.sql` (not a migration, never auto-applied) in case a rollback is needed.
 
 ## Add New Year Cron Job
 
@@ -10,12 +8,7 @@ No job sends any headers (`headers:=jsonb_build_object()`), so there is no secre
 - Active: true
 
 ```sql
-select
-  net.http_post(
-      url:='https://mowmxsorkncjycsomqpn.supabase.co/functions/v1/inset-new-year',
-      headers:=jsonb_build_object(),
-      timeout_milliseconds:=1000
-  );
+select stats.add_current_year()
 ```
 
 ## Calculate Global Conference Stats
@@ -24,12 +17,7 @@ select
 - Active: true
 
 ```sql
-select
-  net.http_post(
-      url:='https://mowmxsorkncjycsomqpn.supabase.co/functions/v1/calculate_global_conference_stats',
-      headers:=jsonb_build_object(),
-      timeout_milliseconds:=1000
-  );
+select stats.refresh_global_conference_stats()
 ```
 
 ## Calculate Global Team Stats
@@ -38,12 +26,7 @@ select
 - Active: true
 
 ```sql
-select
-  net.http_post(
-      url:='https://mowmxsorkncjycsomqpn.supabase.co/functions/v1/calculate_global_team_stats',
-      headers:=jsonb_build_object(),
-      timeout_milliseconds:=1000
-  );
+select stats.refresh_global_team_stats()
 ```
 
 ## Calculate Seed Matchup Stats
@@ -52,38 +35,15 @@ select
 - Active: true
 
 ```sql
-select
-  net.http_post(
-      url:='https://mowmxsorkncjycsomqpn.supabase.co/functions/v1/calculate_seed_matchup_stats',
-      headers:=jsonb_build_object(),
-      timeout_milliseconds:=1000
-  );
+select stats.refresh_seed_matchup_stats()
 ```
 
-## Calculate User Bracket Stats
+## Calculate User Stats
 
 - Schedule: `*/30 * * * *`
 - Active: true
+- Replaces the old `Calculate User Bracket Stats` and `Calculate User Total Stats` jobs. It computes the input fingerprint once and then runs `stats.refresh_user_bracket_stats` and `stats.refresh_user_total_stats` one after the other. Each one skips its work when the fingerprint matches its last run.
 
 ```sql
-select
-  net.http_post(
-      url:='https://mowmxsorkncjycsomqpn.supabase.co/functions/v1/calculate_bracket_stats',
-      headers:=jsonb_build_object(),
-      timeout_milliseconds:=1000
-  );
-```
-
-## Calculate User Total Stats
-
-- Schedule: `*/30 * * * *`
-- Active: true
-
-```sql
-select
-  net.http_post(
-      url:='https://mowmxsorkncjycsomqpn.supabase.co/functions/v1/calculate_user_total_stats',
-      headers:=jsonb_build_object(),
-      timeout_milliseconds:=1000
-  );
+select stats.refresh_user_stats()
 ```

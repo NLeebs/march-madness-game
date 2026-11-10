@@ -115,9 +115,53 @@ begin
   return v_id;
 end $$;
 
-select plan(3);
+create or replace function tests.create_played_game(
+  p_year_id uuid, p_round_id uuid,
+  p_favored uuid, p_favored_seed int,
+  p_underdog uuid, p_underdog_seed int,
+  p_winner uuid, p_is_play_in boolean default false) returns uuid
+language plpgsql security invoker as $$
+declare v_id uuid;
+begin
+  insert into public.tournament_games
+    (year_id, round_id, is_play_in, favored_team_id, favored_team_seed,
+     underdog_team_id, underdog_team_seed, winning_team_id)
+  values (p_year_id, p_round_id, p_is_play_in, p_favored, p_favored_seed,
+     p_underdog, p_underdog_seed, p_winner)
+  returning id into v_id;
+  return v_id;
+end $$;
+
+create or replace function tests.create_pick(p_bracket_id uuid, p_game_id uuid, p_team_id uuid, p_seed int)
+returns uuid language plpgsql security invoker as $$
+declare v_id uuid;
+begin
+  insert into public.user_picks (bracket_id, game_id, picked_team_id, picked_team_seed)
+  values (p_bracket_id, p_game_id, p_team_id, p_seed) returning id into v_id;
+  return v_id;
+end $$;
+
+create or replace function tests.create_bracket_with_score(
+  p_user_id uuid, p_year_id uuid, p_score int, p_created_at timestamptz) returns uuid
+language plpgsql security invoker as $$
+declare v_id uuid;
+begin
+  insert into public.user_brackets (user_id, year_id, tournament_scoring_rules_id, score, created_at)
+  values (p_user_id, p_year_id,
+    (select id from public.tournament_scoring_rules where year_id = p_year_id limit 1),
+    p_score, p_created_at)
+  returning id into v_id;
+  return v_id;
+end $$;
+
+select plan(6);
 select has_table('public', 'user_brackets', 'baseline schema is loaded');
 select has_function('tests', 'authenticate_as', array['uuid','jsonb'], 'helpers installed');
+select has_function('tests', 'create_played_game',
+  array['uuid','uuid','uuid','integer','uuid','integer','uuid','boolean'], 'create_played_game installed');
+select has_function('tests', 'create_pick', array['uuid','uuid','uuid','integer'], 'create_pick installed');
+select has_function('tests', 'create_bracket_with_score',
+  array['uuid','uuid','integer','timestamp with time zone'], 'create_bracket_with_score installed');
 select is(
   (select tests.create_user('smoke-' || gen_random_uuid() || '@test.dev') is not null), true, 'can create auth users');
 select * from finish();
