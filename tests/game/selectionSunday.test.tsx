@@ -140,20 +140,21 @@ describe("Selection Sunday", () => {
   });
 
   it("resolves selection-score ties by Object.keys(records) order", () => {
-    // Every champion scores 800, every non-champion 500.
+    // Every champion scores 800 (all tied) and every non-champion scores 500 (all tied).
     const records = buildRecords(league, (team) => ({
       wins: champions.includes(team) ? 20 : 10,
       score: champions.includes(team) ? 800 : 500,
     }));
     const { store, actions } = run(records);
-    // Play-in boundary: the stable sort keeps conference order, last 4 popped.
+    // current behaviour: ties resolve by the stable sort over Object.keys(records) order.
+    // Play-in boundary: conference order is kept, last 4 popped.
     expect(playins(actions, 16)).toEqual([
       champions[N - 1],
       champions[N - 2],
       champions[N - 3],
       champions[N - 4],
     ]);
-    // At-large cutoff: the first 68-N non-champions in key order.
+    // current behaviour: at-large cutoff among tied scores takes the first 68-N non-champions in key order.
     const atLarge = nonChampions.slice(0, 68 - N);
     expect(playins(actions, 11)).toEqual(atLarge.slice(-4));
     expect(store.getState().tournament.tournamentTeams).toEqual([
@@ -180,5 +181,52 @@ describe("Selection Sunday", () => {
   it("dispatches nothing when tournamentTeams is already set", () => {
     const { actions } = run(baseRecords(), [allTeams[0]]);
     expect(actions).toEqual([]);
+  });
+
+  it("picks the most-wins team even when it is not first or top-scoring, and orders by score, not league order", () => {
+    const K = NUMBER_OF_AT_LARGE_TEAMS;
+    const t1 = league.conferenceArrays[confs[0]];
+    // conf1: t1[5] is the sole 20-win team but has the lowest score of all (100).
+    // t1[0] is now a non-champion with a bottom score (1), so it misses the cut.
+    const sole = t1[5];
+    const champs = [sole, ...champions.slice(1)];
+    const lowMid = champions[10]; // a middle champion with the second-lowest score (200)
+    const [late1, late2, late3] = [allTeams[359], allTeams[358], allTeams[357]];
+    // Non-champions in league order, minus t1[0] (demoted) and the late teams.
+    const m = allTeams.filter(
+      (t) => !champs.includes(t) && t !== t1[0] && ![late1, late2, late3].includes(t),
+    );
+    const special: Record<string, number> = {
+      [sole]: 100,
+      [lowMid]: 200,
+      [t1[0]]: 1,
+      [late1]: 5000, // top two scores displace early teams from the at-large cut
+      [late2]: 4900,
+      // just below m[K-4]: lands in the last at-large slot (an 11-seed play-in)
+      [late3]: 1000 - idx(m[K - 4]) - 0.5,
+    };
+    const records = buildRecords(league, (team, i) => ({
+      wins: champs.includes(team) ? 20 : 10,
+      score: team in special ? special[team] : 1000 - i,
+    }));
+    const { store, actions } = run(records);
+
+    expect(champActions(actions)).toEqual(champs);
+
+    // Lowest-scoring champions first: sole (100), lowMid (200), then the two
+    // last conference champions (their scores 1000 - index are the next lowest).
+    const sixteen = [sole, lowMid, champions[N - 1], champions[N - 2]];
+    expect(playins(actions, 16)).toEqual(sixteen);
+
+    // At-large, descending score: late1, late2, m[0..K-4], late3.
+    expect(playins(actions, 11)).toEqual([m[K - 6], m[K - 5], m[K - 4], late3]);
+
+    const restChamps = champs.filter((t) => !sixteen.includes(t));
+    const others = [...restChamps, ...m.slice(0, K - 6)].sort((a, b) => idx(a) - idx(b));
+    expect(store.getState().tournament.tournamentTeams).toEqual([
+      late1,
+      late2,
+      ...others,
+    ]);
   });
 });
