@@ -68,3 +68,25 @@ export function measureSeason(teams: { rpi: number; wins: number }[]): SeasonMet
     rankWinsCorrelation: cov / (sd(ranks) * sd(wins)),
   };
 }
+
+type MetricTree = { [key: string]: number | MetricTree };
+
+/**
+ * Compares every metric in `actual` with `expected` and returns one line per metric whose
+ * deviation exceeds its tolerance (empty when all are within). `tolerance` has the same shape.
+ */
+export function outOfTolerance<T extends object>(actual: T, expected: T, tolerance: T): string[] {
+  const walk = (a: MetricTree, e: MetricTree, t: MetricTree, path: string): string[] =>
+    Object.keys(e).flatMap((key) => {
+      const name = path ? `${path}.${key}` : key;
+      const [av, ev, tv] = [a[key], e[key], t[key]];
+      if (typeof ev !== "number") {
+        return walk(av as MetricTree, ev, tv as MetricTree, name);
+      }
+      const deviation = Math.abs((av as number) - ev);
+      return deviation <= (tv as number)
+        ? []
+        : [`${name}: expected ${ev} ± ${tv}, actual ${(av as number).toFixed(4)} (off by ${deviation.toFixed(4)})`];
+    });
+  return walk(actual as unknown as MetricTree, expected as unknown as MetricTree, tolerance as unknown as MetricTree, "");
+}
