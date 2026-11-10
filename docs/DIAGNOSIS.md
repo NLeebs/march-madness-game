@@ -90,14 +90,14 @@ The review also confirmed findings 3 (non-atomic bracket persistence; the most s
 9. **Med - No tests on the core game.** Coverage is strong on the API but near zero on `playGame`, seeding, `tournamentSlice`, `tournamentPlayersPicksSlice` - the parts most likely to break during refactoring. These need characterization tests *before* any refactor. **Fixed in step 6:** `tests/game/` characterizes the whole loop (schedule, season, `playGame`, Selection Sunday, seeding, bracket advancement, picks and scoring, the tournament driver components, and a seeded full game) on a 360-team fixture. Schedule creation and field selection moved out of components into `createSeasonSchedule` and `selectTournamentField` under that net. See `.claude/rules/game-engine.md`.
 10. **Low - `appStateSlice` is a bag of 17 booleans** representing what is really a single phase plus a current round. Invalid combinations are representable. Long-term: `phase: "start" | "regularSeason" | ...` + `currentRound`.
 
-#### Added during step 6 (pinned as current behaviour in `tests/game`, not fixed)
+#### Found during step 6 (not fixed; most are pinned as current behaviour in `tests/game`)
 
 33. **Low - `PlayRegularSeasonGames` calls `setSeasonPlayed(true)` inside the per-week loop.** It runs once per week instead of once per season. Harmless today because the effect only plays when `weeksPlayed === 0`, but it reads like a bug.
-34. **Low - A one-team conference would crash Selection Sunday.** The champion check compares `sortedWins[0]` with `sortedWins[1]`, which is undefined for a single team. Real data never has one; a guard would make it safe.
+34. **Low - A one-team conference would crash Selection Sunday.** The champion check compares `sortedWins[0]` with `sortedWins[1]`, which is undefined for a single team. Real data never has one; a guard would make it safe. Not pinned by a test.
 35. **Low - An odd total team count leaves a team without a game.** With an odd league, one team sits out each non-conference week, and one leftover sits out each conference week. Real data has an even count today.
 36. **Low - `setPick` with an empty `team` but a non-empty `opponent` still clears the opponent from later rounds.** The empty-team guard only skips the write.
 37. **Low - Ties are settled by key order.** Equal RPI makes `team1` the favored team (strict `>`), and equal selection scores or wins resolve by the stable sort over `Object.keys(records)` order, including at the at-large cutoff. Deterministic, but arbitrary.
-38. **Low - `setTournamentSeeds` is not idempotent.** It pushes onto the region arrays, so dispatching it twice doubles them. `SelectionSunday`'s guard prevents that today. Also, `comparePicksAndGames` scores by walking the next round's matchups, so it must run after the results are recorded (it does).
+38. **Low - `setTournamentSeeds` is not idempotent.** It pushes onto the region arrays, so dispatching it twice doubles them. `SelectionSunday`'s guard prevents that today. Also, `comparePicksAndGames` scores by walking the next round's matchups, so it must run after the results are recorded (it does). Not pinned by a test.
 
 ### React components
 
@@ -135,7 +135,7 @@ Each step is a separate branch + PR, small enough to review in one sitting. Orde
 | **5b** | **In progress: replace the 6 stats Edge Functions with `stats.*` SQL functions** (pgTAP-tested) and re-point the cron jobs (finding 23); Edge Functions to be deleted after a soak period | Superseded the original plan (tests plus JWT lockdown). Rollback: `supabase/rollback/restore_edge_function_cron.sql`. Code-review fixes are in the same PR; cost follow-ups are findings 27-30 (27 and 28 belong with step 9). |
 | **6** | Done. **Characterization tests for the game engine**: seeded-RNG `playGame`, seeding, tournament reducers, scoring | Also moved schedule creation and field selection out of components. Later refactors may change the order of random draws if the statistical checks still pass (procedure in `.claude/rules/game-engine.md`). Oddities found are findings 33-38. |
 | **7** | **Playwright**: smoke E2E (start -> regular season -> picks -> tournament -> recap) with persistence mocked via route interception; add to CI | Locks in end-to-end behavior before UI refactors. |
-| **8** | **Game-logic extraction**: `ROUND_CONFIG`, pure `scoreBracket`, injectable RNG in `playGame`, typed reducers | Tests from 6 must stay green. |
+| **8** | **Game-logic extraction**: `ROUND_CONFIG`, pure `scoreBracket`, collapse `playGame`'s duplicated favored/underdog code, typed reducers (injectable RNG in `playGame` was done in step 6) | Tests from 6 must stay green. |
 | **9** | **Server-side score + atomic persistence** (`persist_bracket` RPC, full zod schema) | Fixes findings 1, 3, 6. Also close the pick timing/validity gap (finding 26), remove or fix the unused auth check (finding 5), replace the per-row inserts (finding 31) and run the ID-map lookups in parallel (finding 32). Unblocks incremental stats (findings 27, 28). |
 | **10** | **Component decomposition**: `Tournament.tsx` first (`getRoundLayout` + `<BracketColumn>`), then `TournamentRound`, `RoundSelectButton`, `PlayTournamentGames` | Playwright from 7 guards behavior. |
 | **11** | **`apiGet` / `useApiQuery`** helper, typed responses | Quick win, mechanical. Also parallelize `GetYears` (finding 32). |
