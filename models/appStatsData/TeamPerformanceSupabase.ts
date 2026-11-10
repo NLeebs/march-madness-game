@@ -9,6 +9,7 @@ type TeamPerformanceBase = Pick<
 export type TeamPerformanceSupabase = TeamPerformanceBase &
   Partial<
     Pick<RpcRow<"get_top_performing_teams_by_year">, "tournament_points_scored"> &
+      Pick<RpcRow<"get_top_performing_non_power_conference_teams_by_year">, "tournament_points_scored"> &
       Pick<RpcRow<"get_top_picked_teams_by_year">, "picks"> &
       Pick<RpcRow<"get_most_upset_teams_by_year">, "times_upset"> &
       Pick<RpcRow<"get_teams_that_caused_most_upsets_by_year">, "upsets_caused"> &

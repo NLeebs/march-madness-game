@@ -9,5 +9,6 @@ type ConferencePerformanceBase = Pick<
 export type ConferencePerformanceSupabase = ConferencePerformanceBase &
   Partial<
     Pick<RpcRow<"get_top_performing_conferences_by_year">, "wins"> &
+      Pick<RpcRow<"get_top_performing_non_power_conferences_by_year">, "wins"> &
       Pick<RpcRow<"get_top_picked_conferences_by_year">, "picks">
   >;

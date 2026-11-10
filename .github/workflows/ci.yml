@@ -72,6 +72,7 @@ jobs:
         run: npx supabase test db
 
       - name: Check generated database types are current
+        if: success() || failure()
         run: npm run db:types:check
 
       # Read-only: prints pending production migrations, never applies them.
