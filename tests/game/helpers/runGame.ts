@@ -1,9 +1,17 @@
 import React from "react";
 import { act } from "@testing-library/react";
 import { vi } from "vitest";
+import { useSelector } from "react-redux";
+import {
+  appStateActions,
+  tounramentPlayersPicksActions,
+  tournamentActions,
+} from "@/store";
+import { PlayPlayinGames } from "@/src/components/Tournament/PlayPlayinGames";
+import { PlayTournamentGames } from "@/src/components/Tournament/PlayTournamentGames";
 import { SeasonSchedule } from "@/src/components/RegularSeason/SeasonSchedule";
 import { PlayRegularSeasonGames } from "@/src/components/RegularSeason/PlayRegularSeasonGames";
-import type { AppStore } from "@/store/store";
+import type { AppStore, RootState } from "@/store/store";
 import type { League } from "@/tests/factories";
 import type { RegularSeasonTeam } from "@/types";
 import { renderWithStore } from "./renderWithStore";
@@ -79,4 +87,100 @@ export function rpiByTeam(league: League): Record<string, number> {
   for (const teams of Object.values(league.teamStats))
     for (const [name, stats] of Object.entries(teams)) rpi[name] = Number(stats.rpi);
   return rpi;
+}
+
+type Slot = { team: string; seed: string | number };
+
+const REGIONS = ["west", "east", "south", "midwest"] as const;
+
+/** Mirrors getNextRoundInfo in TournamentMatchup.tsx. */
+function nextRoundInfo(
+  round: string | number,
+  region: string,
+  index: number,
+): { nextRoundRegion: string; teamIndex: number } {
+  const mapping: Record<string, { nextRoundRegion: string; teamIndex: number }> = {
+    "elite eight-west": { nextRoundRegion: "eastWest", teamIndex: 0 },
+    "elite eight-east": { nextRoundRegion: "eastWest", teamIndex: 1 },
+    "elite eight-south": { nextRoundRegion: "southMidwest", teamIndex: 0 },
+    "elite eight-midwest": { nextRoundRegion: "southMidwest", teamIndex: 1 },
+    "final four-eastWest": { nextRoundRegion: "championship", teamIndex: 0 },
+    "final four-southMidwest": { nextRoundRegion: "championship", teamIndex: 1 },
+    "finals-championship": { nextRoundRegion: "champion", teamIndex: 0 },
+  };
+  return mapping[`${round}-${region}`] ?? { nextRoundRegion: region, teamIndex: index };
+}
+
+/**
+ * Picks the better seed (team index 0 on a tie) in every game of every round,
+ * as clicking it in each TournamentMatchup would. Round one is read from the
+ * round-one matchups; later rounds from the picks made in the round before.
+ * Needs setRoundOneMatchups to have been dispatched. Play-in placeholders are
+ * picked like any other team.
+ */
+export function pickChalk(store: AppStore): void {
+  const rounds = [
+    { round: 1, source: () => store.getState().tournament.roundOneMatchups },
+    { round: 2, source: () => store.getState().tournamentPlayersPicks.picks.roundTwoPicks },
+    { round: "sweet sixteen", source: () => store.getState().tournamentPlayersPicks.picks.roundSweetSixteenPicks },
+    { round: "elite eight", source: () => store.getState().tournamentPlayersPicks.picks.roundEliteEightPicks },
+    { round: "final four", source: () => store.getState().tournamentPlayersPicks.picks.roundFinalFourPicks },
+    { round: "finals", source: () => store.getState().tournamentPlayersPicks.picks.roundFinalsPicks },
+  ] as const;
+  for (const { round, source } of rounds) {
+    const matchupsByRegion = source() as unknown as Record<string, Slot[][]>;
+    for (const region of Object.keys(matchupsByRegion)) {
+      if (region === "playin") continue;
+      matchupsByRegion[region].forEach((matchup, index) => {
+        const better = Number(matchup[1].seed) < Number(matchup[0].seed) ? 1 : 0;
+        const { nextRoundRegion, teamIndex } = nextRoundInfo(round, region, index);
+        store.dispatch(
+          tounramentPlayersPicksActions.setPick({
+            round,
+            region: nextRoundRegion,
+            roundIndex: teamIndex,
+            team: matchup[better].team,
+            seed: String(matchup[better].seed),
+            opponent: matchup[1 - better].team,
+          }),
+        );
+      });
+    }
+  }
+}
+
+/** Renders the two drivers under the same conditions App.tsx mounts them. */
+function TournamentDrivers() {
+  const appState = useSelector((state: RootState) => state.appState);
+  return React.createElement(
+    React.Fragment,
+    null,
+    appState.tournament && appState.tournamentPlayPlayinGames
+      ? React.createElement(PlayPlayinGames)
+      : null,
+    appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap
+      ? React.createElement(PlayTournamentGames)
+      : null,
+  );
+}
+
+/**
+ * Plays a whole tournament on a store that already holds a field (Selection
+ * Sunday has run): activates the tournament, builds round one, picks chalk,
+ * starts the play-in games and renders the drivers until tournamentRecap.
+ *
+ * Contract with the caller (same as playSeason): Math.random is seeded by the
+ * caller; rendered components stay mounted, so the caller calls cleanup().
+ */
+export async function playTournament(store: AppStore): Promise<void> {
+  store.dispatch(appStateActions.activateTournament());
+  store.dispatch(appStateActions.activateTournamentSelectionStage());
+  store.dispatch(tournamentActions.setRoundOneMatchups());
+  pickChalk(store);
+  store.dispatch(appStateActions.activateTournamentPlayinGamesState());
+  await act(async () => {
+    renderWithStore(React.createElement(TournamentDrivers), store);
+  });
+  if (!store.getState().appState.tournamentRecap)
+    throw new Error("playTournament: tournament did not finish");
 }
