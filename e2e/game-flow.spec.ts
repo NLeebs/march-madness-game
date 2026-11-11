@@ -1,6 +1,8 @@
+import type { Page } from "@playwright/test";
 import { test, expect } from "./support/test";
 import { readState } from "./support/state";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
+import { checkGameCounts, checkConferenceChampions } from "./checks/season";
 import type { GamePage } from "./support/game";
 
 /** Every phase of one game at its limit, plus the pick-making budget. */
@@ -22,7 +24,7 @@ function pickedTeams(node: unknown, found: string[] = []): string[] {
 }
 
 /** Plays through to the recap and logs how long each phase took. */
-async function playToRecap(game: GamePage, label: string): Promise<void> {
+async function playToRecap(game: GamePage, page: Page, label: string): Promise<void> {
   const times: string[] = [];
   const timed = async (phase: string, fn: () => Promise<unknown>) => {
     const started = Date.now();
@@ -31,6 +33,8 @@ async function playToRecap(game: GamePage, label: string): Promise<void> {
   };
   await timed("toSeason", () => game.start());
   await timed("season", () => game.finishSeason());
+  await checkGameCounts(page);
+  await checkConferenceChampions(page);
   await timed("toSelection", () => game.goToTournament());
   await timed("picks", () => game.makePicks(1));
   await timed("tournament", () => game.playTournament());
@@ -44,7 +48,7 @@ test("plays a full game and restarts into a clean second game @every-size", asyn
   test.setTimeout(2 * GAME_BUDGET_MS + 60_000);
 
   await game.open();
-  await playToRecap(game, "game 1");
+  await playToRecap(game, page, "game 1");
   const recap = await game.openRecap();
   await expect(recap).toBeVisible();
   const started = Date.now();
@@ -63,7 +67,7 @@ test("plays a full game and restarts into a clean second game @every-size", asyn
   expect(records.filter((r) => r.wins !== 0 || r.losses !== 0 || r.tournamentSelectionScore !== 0)).toEqual([]);
   expect(state.regularSeasonRecords.weeksPlayed).toBe(0);
 
-  await playToRecap(game, "game 2");
+  await playToRecap(game, page, "game 2");
   await game.openRecap();
 });
 
@@ -102,4 +106,12 @@ test("reload mid-tournament returns to a clean start", async ({ page, game }) =>
   await expect(page.getByTestId("regular-season")).toHaveCount(0);
   await page.unroute("**/api/bracket/simulation");
   await game.start();
+});
+
+test("double-clicking Start plays the season once", async ({ page, game }) => {
+  test.setTimeout(PHASE_TIMEOUTS.toSeason + PHASE_TIMEOUTS.season + 60_000);
+  await game.open();
+  await page.getByRole("button", { name: "Start the game" }).dblclick();
+  await game.finishSeason();
+  await checkGameCounts(page);
 });
