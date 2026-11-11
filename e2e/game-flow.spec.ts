@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test";
 import { test, expect } from "./support/test";
 import { readState } from "./support/state";
-import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
+import { GAME_BUDGET_MS, PHASE_TIMEOUTS } from "./support/timeouts";
 import { checkGameCounts, checkConferenceChampions } from "./checks/season";
 import { checkCascadeClears } from "./checks/picks";
 import { checkHighlights, checkScore, checkRecap, checkPersistPayload } from "./checks/results";
@@ -12,11 +12,6 @@ import { assertRoundUnclipped } from "./support/layout";
 async function checkShownRoundUnclipped(page: Page): Promise<void> {
   await assertRoundUnclipped(page, (await readState(page)).uiState.selectedRound);
 }
-
-/** Every phase of one game at its limit, plus the pick-making budget. */
-const GAME_BUDGET_MS =
-  Object.values(PHASE_TIMEOUTS).reduce((sum, ms) => sum + ms, 0) +
-  70 * PICK_ACTION_TIMEOUT_MS;
 
 /** Collects every `team` string in the (nested) picks tree. */
 function pickedTeams(node: unknown, found: string[] = []): string[] {

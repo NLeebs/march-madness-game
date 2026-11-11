@@ -1,5 +1,5 @@
 import { test, expect } from "./support/test";
-import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
+import { GAME_BUDGET_MS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
 import { BRACKET_ROUNDS } from "./support/bracketMap";
 import { layoutSignature } from "./support/layout";
 import { checkHighlights, checkScore } from "./checks/results";
@@ -8,9 +8,7 @@ test("wide screen shows every round at once and plays without banner navigation 
   page,
   game,
 }) => {
-  test.setTimeout(
-    Object.values(PHASE_TIMEOUTS).reduce((sum, ms) => sum + ms, 0) + 70 * PICK_ACTION_TIMEOUT_MS + 60_000,
-  );
+  test.setTimeout(GAME_BUDGET_MS + 60_000);
   // 2560 is above TOURNAMENT_BREAK_POINT (2350): no round banner, all columns showing.
   expect(page.viewportSize()?.width, "wide project width").toBeGreaterThan(2350);
 

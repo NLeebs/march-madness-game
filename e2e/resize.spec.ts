@@ -3,7 +3,7 @@ import type { TournamentRound } from "@/types";
 import type { RootState } from "@/store/store";
 import { test, expect } from "./support/test";
 import { readState } from "./support/state";
-import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
+import { GAME_BUDGET_MS, PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
 import { BRACKET_ROUNDS } from "./support/bracketMap";
 import {
   assertNoHorizontalScroll,
@@ -335,9 +335,6 @@ async function sweep(page: Page, options: { seasonFrozen?: boolean } = {}): Prom
     await resizeAndCompare(page, width, options);
   }
 }
-
-const GAME_BUDGET_MS =
-  Object.values(PHASE_TIMEOUTS).reduce((sum, ms) => sum + ms, 0) + 70 * PICK_ACTION_TIMEOUT_MS;
 
 if (process.env.E2E_MEASURE_SIGNATURES) {
   // Measurement mode: prints the EXPECTED_SIGNATURES table instead of asserting against it.

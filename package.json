@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "e2e": "playwright test",
+    "e2e:build": "tsx scripts/e2e/build.mts",
     "e2e:ui": "playwright test --ui",
     "lint": "next lint",
     "test": "vitest",

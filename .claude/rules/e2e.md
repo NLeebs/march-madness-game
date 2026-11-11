@@ -5,19 +5,22 @@ paths:
 ---
 # End-to-end tests (Playwright)
 
-The suite in `e2e/` plays whole games in a real browser against a production build (`npm run build && next start -p 3100`, started by `playwright.config.ts`). Everything the app fetches from `/api` or Supabase auth is faked in the browser, so no test touches a database. CI runs it as the job "End-to-end tests".
+The suite in `e2e/` plays whole games in a real browser against a production build served by `next start -p 3100` (started by `playwright.config.ts`). Everything the app fetches from `/api` or Supabase auth is faked in the browser, so no test touches a database. CI runs it as the job "End-to-end tests".
+
+**Build.** The app is built with the e2e environment (`E2E_ENV` in `e2e/support/env.ts`, shared by the build and the web server) via `npm run e2e:build` (`scripts/e2e/build.mts`). Locally `playwright.config.ts` runs build + start itself. In CI (`process.env.CI`) it only runs `next start`: the workflow builds in its own step, with the Playwright browser cache and the `.next/cache` cache around it. Local builds read `.env`/`.env.local` while CI has none, so don't rely on local env values in prerendered routes.
 
 ## Commands
 
 ```bash
-npm run e2e                                   # all projects (first run builds the app, ~30-40 s)
+npm run e2e                                   # all projects (builds the app first, ~30-40 s)
+npm run e2e:build                             # just the e2e build
 npx playwright test e2e/start.spec.ts         # one file
 npx playwright test --project=laptop          # one project
 npx playwright test --repeat-each 3           # flake check: zero failures allowed
 npm run e2e:ui                                # Playwright UI mode
 ```
 
-Full local run is ~4 min (the resize test alone is ~2.2 min).
+Full run is ~5.8 min with 2 workers including the build (local 14-core machine); the resize test alone is ~2.2 min. Global limits: 120 s per test, 10 s per `expect` (tests that call `test.setTimeout` keep theirs).
 
 **Stale server hazard.** `reuseExistingServer` is on locally, so a server left on port 3100 is reused even if the app code changed. Before running after changing app code, make sure nothing listens on 3100, and stop any server you started. (CI never reuses.)
 
@@ -58,7 +61,7 @@ An untagged test runs on laptop only. `@every-size` (a full game, navigation) ru
 ## Phase timeouts
 
 - `PHASE_TIMEOUTS` in `e2e/support/timeouts.ts` bounds each phase of a game (toSeason, season, toSelection, picks, tournament, toStart). A phase over its bound fails with the phase named, long before the test's own limit.
-- Bounds are 2.5x the slowest of 9 samples measured under load (6 games in parallel), with a 15 s floor for phases under ~3 s.
+- Bounds are ~2.5x the slowest of 9 samples measured under load (6 games in parallel), with a 15 s floor for phases under ~3 s. The exception is `picks`, a deliberately generous 150 s stall detector (each click has its own 15 s limit). `GAME_BUDGET_MS` is the sum of all bounds plus the pick-action budget, for `test.setTimeout`.
 - **Re-measure** when the app gets slower or faster: temporarily log each phase's duration (wrap the phases in `GamePage`), run a full game on several projects in parallel, take the slowest per phase, multiply by 2.5, update the numbers and the date in the comment above `PHASE_TIMEOUTS`.
 - Never use `waitForTimeout`; wait on a condition. Flakiness counts as a failure.
 

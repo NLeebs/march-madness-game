@@ -5,7 +5,7 @@ export type ErrorWatch = {
   assertClean(): void;
 };
 
-const ERROR_TOAST = '[data-sonner-toaster] [data-type="error"]';
+export const ERROR_TOAST = '[data-sonner-toaster] [data-type="error"]';
 
 /** Collects console errors and uncaught page errors. */
 export function watchForErrors(page: Page): ErrorWatch {

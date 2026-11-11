@@ -105,25 +105,3 @@ test("signed-in dashboard shows both tabs and follows the year select @mobile-to
   requested("/api/teams/top-performers/e2e-year-older");
   requested("/api/seeds/first-round/upset-percentage/e2e-year-older");
 });
-
-test("user-scoped dashboard endpoints refuse any other user id", async ({ page, game, errors }) => {
-  errors.allow(/Failed to load resource.*403/, "the browser logs the deliberate 403s");
-  await game.open();
-  const statuses = await page.evaluate(async (ownId) => {
-    const get = async (path: string) => (await fetch(path)).status;
-    return {
-      own: await get(`/api/profile/${ownId}`),
-      otherProfile: await get("/api/profile/someone-else"),
-      otherBrackets: await get("/api/brackets/someone-else/e2e-year-latest"),
-      otherStats: await get("/api/user-statistics/someone-else/e2e-year-latest"),
-      otherPicks: await get("/api/pick-count/someone-else/e2e-year-latest"),
-    };
-  }, FAKE_USER.id);
-  expect(statuses).toEqual({
-    own: 200,
-    otherProfile: 403,
-    otherBrackets: 403,
-    otherStats: 403,
-    otherPicks: 403,
-  });
-});

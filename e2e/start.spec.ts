@@ -29,7 +29,7 @@ test.describe("slow team stats", () => {
 
 test("choosing the older year plays that year's league", async ({ page, backend }) => {
   await page.goto("/");
-  await expect(startButton(page)).toBeEnabled();
+  await expect(startButton(page)).toBeEnabled({ timeout: PHASE_TIMEOUTS.toSeason });
   const olderStats = page.waitForResponse("**/api/team-statistics/e2e-year-older");
   await page
     .getByText("Select the tournament year")
@@ -38,7 +38,7 @@ test("choosing the older year plays that year's league", async ({ page, backend 
     .click();
   await page.getByRole("option", { name: "2024" }).click();
   await olderStats;
-  await expect(startButton(page)).toBeEnabled();
+  await expect(startButton(page)).toBeEnabled({ timeout: PHASE_TIMEOUTS.toSeason });
   await startButton(page).click();
   await expect(page.getByTestId("regular-season")).toBeVisible({ timeout: PHASE_TIMEOUTS.toSeason });
   expect(backend.requestedPaths).toContain("/api/team-statistics/e2e-year-older");

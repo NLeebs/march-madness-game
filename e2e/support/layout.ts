@@ -4,11 +4,6 @@ import type { TournamentRound } from "@/types";
 import { BRACKET_ROUNDS } from "./bracketMap";
 
 /**
- * Checks that a real user could click `locator`: it is visible and enabled, its box is inside
- * the viewport (after scrolling) and nothing else covers its centre. Use it before a
- * `dispatchEvent("click")` on a control whose animation defeats Playwright's stable check.
- */
-/**
  * The viewport the project configured. Not `window.innerWidth`: on a mobile-emulated page whose
  * content is wider than the screen, Chrome zooms out and `innerWidth` grows to the content
  * width, so a sideways overflow would measure as "fits".
@@ -19,6 +14,11 @@ function viewportOf(page: Page): { width: number; height: number } {
   return size;
 }
 
+/**
+ * Checks that a real user could click `locator`: it is visible and enabled, its box is inside
+ * the viewport (after scrolling) and nothing else covers its centre. Use it before a
+ * `dispatchEvent("click")` on a control whose animation defeats Playwright's stable check.
+ */
 export async function assertClickable(locator: Locator, timeout = 15_000): Promise<void> {
   await expect(locator, "control is not visible").toBeVisible({ timeout });
   await expect(locator, "control is not enabled").toBeEnabled({ timeout });
@@ -273,7 +273,7 @@ export const KNOWN_LAYOUT_ISSUES: KnownLayoutIssue[] = [
     check: "horizontal-scroll",
     description: "bracket screens scroll sideways: observed at 2349px; range 2326-2349 by analysis (max-w-tourny 2325px)",
     finding:
-      "DIAGNOSIS finding 46. Task 8 resize sweep: at 2349px the page's scrollWidth is 2361. Tournament.tsx wraps the round banner " +
+      "DIAGNOSIS finding 46. Resize sweep: at 2349px the page's scrollWidth is 2361. Tournament.tsx wraps the round banner " +
       "and the bracket grid (both w-screen / full width) in `mx-auto max-w-tourny` (2325px). Above 2325px the " +
       "wrapper is narrower than the viewport and centred, so its full-width children start (width - 2325) / 2 px " +
       "in and overhang the right edge by the same amount. Wider than 2350 the grid switches to its wide layout " +
@@ -285,7 +285,7 @@ export const KNOWN_LAYOUT_ISSUES: KnownLayoutIssue[] = [
     check: "horizontal-scroll",
     description: "signed-in pages scroll sideways on a 390px phone: scrollWidth 405",
     finding:
-      "DIAGNOSIS finding 48. Task 10: NavigationBar's signed-in button group (Dashboard + Logout, 215px wide) ends at x=405 on a " +
+      "DIAGNOSIS finding 48. NavigationBar's signed-in button group (Dashboard + Logout, 215px wide) ends at x=405 on a " +
       "390px viewport, 15px past the right edge, so every signed-in page scrolls sideways on a phone. The " +
       "logged-out group (Login + Signup) is narrower and fits. Dashboard content itself fits (its widest " +
       "element ends at 392, inside the page padding).",

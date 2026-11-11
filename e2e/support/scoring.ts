@@ -1,4 +1,4 @@
-import { ROUND_POINTS } from "@/store";
+import { ROUND_POINTS } from "@/store/tournamentSlice";
 import type { TournamentRound } from "@/types";
 import { BRACKET_ROUNDS } from "./bracketMap";
 

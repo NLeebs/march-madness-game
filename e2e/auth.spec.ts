@@ -2,7 +2,7 @@ import type { Page } from "@playwright/test";
 import { test, expect } from "./support/test";
 import { DASHBOARD_USERNAME } from "./fixtures/dashboard";
 import { FAKE_PASSWORD, FAKE_USER, signInThroughUi } from "./support/fakeAuth";
-import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
+import { GAME_BUDGET_MS } from "./support/timeouts";
 import { checkPersistPayload } from "./checks/results";
 
 const loginButton = (page: Page) =>
@@ -58,12 +58,7 @@ test.describe("with dashboard data", () => {
 });
 
 test("signed-in full game saves under the user id", async ({ page, game, backend }) => {
-  test.setTimeout(
-    2 *
-      (Object.values(PHASE_TIMEOUTS).reduce((sum, ms) => sum + ms, 0) +
-        70 * PICK_ACTION_TIMEOUT_MS) +
-      60_000,
-  );
+  test.setTimeout(2 * GAME_BUDGET_MS + 60_000);
   await game.open();
   await signInThroughUi(page, FAKE_USER.email, FAKE_PASSWORD);
   await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();

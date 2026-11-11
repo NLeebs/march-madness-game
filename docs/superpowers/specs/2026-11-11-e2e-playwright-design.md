@@ -24,7 +24,7 @@ In the owner's words, a refactor shouldn't produce any of these:
 10. **Login dialog.** Open it from the nav bar, see an error for bad credentials, sign in, and see the signed-in nav state (dashboard link, logout).
 11. **Logout.** Sign out and you're logged out. Visiting `/dashboard` logged out sends you back to `/`.
 12. **Saving the bracket.** The `POST /api/bracket/simulation` the app sends at the end contains picks that match what was picked on screen. It uses the user's ID when signed in and the anonymous ID when not. A failed save (the fake returns 500) doesn't crash or stall the game: the recap and restart still work. Today a failed save is silent (no `onError`, no `<Toaster>` mounted). That's logged as a new DIAGNOSIS finding and slated for step 9, and the test pins today's behaviour. *(Owner's call, 2026-11-11: option b.)*
-13. **Dashboards (signed in).** `/dashboard` shows both tabs ("Your Stats", "Madness Predictions") filled from the fake data. Switching years refetches and re-renders. Both tabs work at phone and laptop widths.
+13. **Dashboards (signed in).** `/dashboard` shows both tabs ("Your Stats", "Madness Prep") filled from the fake data. Switching years refetches and re-renders. Both tabs work at phone and laptop widths.
 
 ### Responsiveness
 

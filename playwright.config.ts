@@ -1,10 +1,12 @@
 import { defineConfig } from "@playwright/test";
-import { ANON_USER_ID_STORAGE_KEY, FAKE_ANON_KEY, FAKE_SUPABASE_URL } from "./e2e/support/fakeAuth";
+import { E2E_ENV, E2E_PORT } from "./e2e/support/env";
 
-const PORT = 3100;
+const PORT = E2E_PORT;
 
 export default defineConfig({
   testDir: "e2e",
+  timeout: 120_000,
+  expect: { timeout: 10_000 },
   retries: 0,
   fullyParallel: true,
   workers: process.env.CI ? 2 : undefined,
@@ -14,19 +16,14 @@ export default defineConfig({
     baseURL: `http://127.0.0.1:${PORT}`,
   },
   webServer: {
-    command: `npm run build && npx next start -p ${PORT}`,
+    // CI builds in a separate workflow step (`npm run e2e:build`); locally the build runs here.
+    command: process.env.CI
+      ? `npx next start -p ${PORT}`
+      : `npm run e2e:build && npx next start -p ${PORT}`,
     url: `http://127.0.0.1:${PORT}`,
-    timeout: 240_000,
+    timeout: process.env.CI ? 120_000 : 300_000,
     reuseExistingServer: !process.env.CI,
-    env: {
-      NEXT_PUBLIC_SUPABASE_URL: FAKE_SUPABASE_URL,
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: FAKE_ANON_KEY,
-      SUPABASE_SERVICE_ROLE_KEY: "e2e-unused",
-      NEXT_PUBLIC_APP_URL: `http://127.0.0.1:${PORT}`,
-      NEXT_PUBLIC_E2E: "1",
-      NEXT_PUBLIC_BROWSER_ANON_KEY: ANON_USER_ID_STORAGE_KEY,
-      NEXT_PUBLIC_APP_MODE: "",
-    },
+    env: E2E_ENV,
   },
   projects: [
     {
