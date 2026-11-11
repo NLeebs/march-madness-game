@@ -4,13 +4,18 @@ import {
   type FakeBackend,
   type FakeBackendOptions,
 } from "./fakeBackend";
+import { GamePage } from "./game";
 import { watchForErrors, countErrorToasts, type ErrorWatch } from "./errorWatch";
 
 export const test = base.extend<{
   backendOptions: FakeBackendOptions;
   backend: FakeBackend;
   errors: ErrorWatch;
+  game: GamePage;
 }>({
+  game: async ({ page }, use) => {
+    await use(new GamePage(page));
+  },
   /** Override per file or describe with test.use({ backendOptions: {...} }). */
   backendOptions: [{}, { option: true }],
   backend: [
