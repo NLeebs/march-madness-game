@@ -33,6 +33,8 @@ async function playToRecap(game: GamePage, page: Page, label: string): Promise<v
   };
   await timed("toSeason", () => game.start());
   await timed("season", () => game.finishSeason());
+  // "Go to Tournament" only appears once Selection Sunday starts, so after finishSeason the
+  // screen is already in its Selection Sunday view: records and trophy icons both show.
   await checkGameCounts(page);
   await checkConferenceChampions(page);
   await timed("toSelection", () => game.goToTournament());
