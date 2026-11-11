@@ -197,7 +197,7 @@
 
 - [ ] **Step 4: Run.** Expected: both pass.
 
-- [ ] **Step 5: Sabotage.** Comment out `dispatch(appStateActions.activateTournamentSelectionStage())` in `RegularSeason.tsx`. `goToTournament` must fail at its time limit with a message naming the phase, not at the global timeout. Revert.
+- [ ] **Step 5: Sabotage.** Comment out `dispatch(appStateActions.activateTournament())` in `RegularSeason.tsx`'s `selectionSundayButtonHandler` (not `activateTournamentSelectionStage()`: the bracket still shows without it and only the picks break, so `goToTournament` would not fail). `goToTournament` must fail at its time limit with a message naming the phase, not at the global timeout. Revert.
 
 - [ ] **Step 6: Commit.** `test(e2e): game driver with phase time limits, restart and reload`
 

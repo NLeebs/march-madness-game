@@ -68,20 +68,38 @@ test("plays a full game and restarts into a clean second game @every-size", asyn
 });
 
 test("reload mid-tournament returns to a clean start", async ({ page, game }) => {
+  // The auto `errors` fixture fails this test on any console or page error, including after the reload.
   test.setTimeout(GAME_BUDGET_MS + 60_000);
+
+  // The whole tournament sim runs inside one React commit (state jumps from selection straight
+  // to recap, verified by logging every DOM mutation), so no browser-visible "mid" state exists.
+  // The closest real window is the recap with the bracket save still in flight: hold that
+  // request open, reload while it is pending, and assert that is where we reloaded.
+  let saveStarted = false;
+  await page.route("**/api/bracket/simulation", () => {
+    saveStarted = true; // never fulfilled: the save stays in flight
+  });
 
   await game.open();
   await game.start();
   await game.finishSeason();
   await game.goToTournament();
   await game.makePicks(1);
-  await game.submitPicks();
+  await game.playTournament();
+  await expect.poll(() => saveStarted, { message: "bracket save in flight" }).toBe(true);
+  const before = (await readState(page)).appState;
+  expect(before.tournamentRecap, "reloading with the tournament finished but the save pending").toBe(true);
+
   await page.reload();
 
   const startButton = page.getByRole("button", { name: "Start the game" });
   await expect(startButton, "phase: start screen after reload").toBeVisible({
     timeout: PHASE_TIMEOUTS.toStart,
   });
+  const after = (await readState(page)).appState;
+  expect(after.startScreen).toBe(true);
+  expect(after.tournamentRecap).toBe(false);
   await expect(page.getByTestId("regular-season")).toHaveCount(0);
+  await page.unroute("**/api/bracket/simulation");
   await game.start();
 });

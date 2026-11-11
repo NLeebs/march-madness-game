@@ -1,6 +1,7 @@
 import type { Locator, Page } from "@playwright/test";
 import type { TournamentRound } from "@/types";
 import { expect } from "@playwright/test";
+import { assertClickable } from "./layout";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./timeouts";
 
 export { PHASE_TIMEOUTS };
@@ -107,10 +108,10 @@ export class GamePage {
 
   async goToTournament(): Promise<void> {
     // The button bounces forever (motion-safe:animate-bounce), so Playwright's "stable" check
-    // never passes; dispatch the click event instead.
-    await this.page
-      .getByRole("button", { name: "Go to Tournament" })
-      .dispatchEvent("click", undefined, { timeout: PICK_ACTION_TIMEOUT_MS });
+    // never passes. Check by hand that a user could click it, then dispatch the click event.
+    const button = this.page.getByRole("button", { name: "Go to Tournament" });
+    await assertClickable(button);
+    await button.dispatchEvent("click", undefined, { timeout: PICK_ACTION_TIMEOUT_MS });
     await expect(
       this.page.getByTestId("bracket-column-1").first(),
       "phase: selection (round-1 bracket) did not appear in time",
@@ -128,6 +129,12 @@ export class GamePage {
 
   /** Chalk: the first team of every matchup, round by round, through the UI. */
   async makePicks(_seed: number): Promise<RecordedPick[]> {
+    const startedAt = Date.now();
+    const checkBudget = () => {
+      if (Date.now() - startedAt > PHASE_TIMEOUTS.picks) {
+        throw new Error(`phase: picks did not finish within ${PHASE_TIMEOUTS.picks} ms`);
+      }
+    };
     const picks: RecordedPick[] = [];
     for (const round of PICK_ROUNDS) {
       await this.showRound(round);
@@ -143,8 +150,11 @@ export class GamePage {
         ).toHaveCount(count, { timeout: PICK_ACTION_TIMEOUT_MS });
         for (let i = 0; i < count; i++) {
           const team = matchups.nth(i).locator("button.team-selection").first();
+          checkBudget();
           const name = await team.getAttribute("data-team", { timeout: PICK_ACTION_TIMEOUT_MS });
-          expect(name, `phase: picks: no team in ${String(round.round)} matchup ${i}`).toBeTruthy();
+          if (!name) {
+            throw new Error(`phase: picks: no team in ${String(round.round)} matchup ${i}`);
+          }
           await team.click({ timeout: PICK_ACTION_TIMEOUT_MS });
           picks.push({
             round: round.round,
