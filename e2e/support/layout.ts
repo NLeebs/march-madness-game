@@ -279,6 +279,17 @@ export const KNOWN_LAYOUT_ISSUES: KnownLayoutIssue[] = [
       "in and overhang the right edge by the same amount. Wider than 2350 the grid switches to its wide layout " +
       "and the overhang goes away.",
   },
+  {
+    project: "phone",
+    phases: ["dashboard"],
+    check: "horizontal-scroll",
+    description: "signed-in pages scroll sideways on a 390px phone: scrollWidth 405",
+    finding:
+      "Task 10: NavigationBar's signed-in button group (Dashboard + Logout, 215px wide) ends at x=405 on a " +
+      "390px viewport, 15px past the right edge, so every signed-in page scrolls sideways on a phone. The " +
+      "logged-out group (Login + Signup) is narrower and fits. Dashboard content itself fits (its widest " +
+      "element ends at 392, inside the page padding).",
+  },
 ];
 
 /**
