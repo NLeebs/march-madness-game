@@ -57,11 +57,7 @@ function sessionBody(user: FakeUser) {
  * Answers the browser's Supabase auth calls. Logged out, nothing errors.
  * Password login succeeds only for FAKE_USER / FAKE_PASSWORD.
  */
-export async function installFakeAuth(
-  page: Page,
-  user: FakeUser | null = null,
-): Promise<void> {
-  void user;
+export async function installFakeAuth(page: Page): Promise<void> {
   await page.route(`${FAKE_SUPABASE_URL}/auth/v1/**`, (route) => {
     const request = route.request();
     const { pathname, searchParams } = new URL(request.url());
@@ -93,9 +89,11 @@ export async function installFakeAuth(
 }
 
 /**
- * Opens the Login dialog from the nav bar, fills it in and submits. The form rejects a submit
- * made within MIN_FORM_FILL_TIME of it appearing, so the wait is a polled condition (time since
- * the form was first seen), not a sleep.
+ * Opens the Login dialog from the nav bar, fills it in and submits. ProtectedForm starts its
+ * fill timer when it mounts (with the dialog) and rejects a submit made within MIN_FORM_FILL_TIME
+ * of that. The form exposes no state to poll (the submit button is enabled throughout), so the
+ * wait is an elapsed-time poll anchored to the dialog appearing, not a sleep and not added on
+ * top of the time the fills take.
  */
 export async function signInThroughUi(
   page: Page,
@@ -105,12 +103,12 @@ export async function signInThroughUi(
   await page.getByRole("button", { name: "Login", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Login" });
   await expect(dialog).toBeVisible();
+  const shownAt = Date.now();
   // The app's labels carry htmlFor but the inputs have no id, so getByLabel cannot find them.
   await dialog.locator('input[name="email"]').fill(email);
   await dialog.locator('input[name="password"]').fill(password);
 
   const submit = dialog.getByRole("button", { name: "Login", exact: true });
-  const shownAt = Date.now();
   await expect
     .poll(() => Date.now() - shownAt, { message: "form fill time reached" })
     .toBeGreaterThanOrEqual(MIN_FORM_FILL_TIME);

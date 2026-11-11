@@ -2,13 +2,11 @@ import type { Page, Route } from "@playwright/test";
 import type { getYears, PersistTournamentResult } from "@/application/useCases";
 import type { SimulationRequestBody } from "@/app/api/bracket/simulation/route";
 import { E2E_YEARS, e2eTeamStats } from "../fixtures/league";
-import { installFakeAuth, type FakeUser } from "./fakeAuth";
+import { installFakeAuth } from "./fakeAuth";
 
 export type FakeBackendOptions = {
   persistStatus?: number;
   teamStatsDelayMs?: number;
-  /** Used by a later task (login). Inert for now. */
-  user?: FakeUser | null;
   /** Used by a later task (dashboards). Inert for now. */
   dashboard?: boolean;
 };
@@ -37,7 +35,7 @@ export async function installFakeBackend(
     unhandled: [],
   };
 
-  await installFakeAuth(page, opts.user ?? null);
+  await installFakeAuth(page);
 
   await page.route("**/api/**", async (route) => {
     const request = route.request();

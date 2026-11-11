@@ -1,9 +1,10 @@
+import type { Page } from "@playwright/test";
 import { test, expect } from "./support/test";
 import { FAKE_PASSWORD, FAKE_USER, signInThroughUi } from "./support/fakeAuth";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
 import { checkPersistPayload } from "./checks/results";
 
-const loginButton = (page: import("@playwright/test").Page) =>
+const loginButton = (page: Page) =>
   page.getByRole("navigation").getByRole("button", { name: "Login", exact: true });
 
 test("wrong password shows an error and stays logged out", async ({ page, game, errors }) => {
@@ -34,14 +35,37 @@ test("login shows the signed-in nav", async ({ page, game }) => {
 });
 
 test("logout returns to logged out", async ({ page, game }) => {
+  // Dashboard data is not part of the shared fake backend yet (a later task adds it). These
+  // minimal empty bodies for this test only keep the dashboard shell rendering.
+  await page.route(/\/api\/(profile|user-statistics|brackets|pick-count|teams)\//, (route) => {
+    const { pathname } = new URL(route.request().url());
+    const body = pathname.startsWith("/api/profile/")
+      ? { username: "player" }
+      : pathname.startsWith("/api/user-statistics/")
+        ? {}
+        : [];
+    return route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(body),
+    });
+  });
+
   await game.open();
   await signInThroughUi(page, FAKE_USER.email, FAKE_PASSWORD);
+
+  // Positive control: signed in, /dashboard is reachable and stays put.
+  await page.goto("/dashboard");
+  await expect(page.getByText("Welcome player")).toBeVisible();
+  await expect(page).toHaveURL(/\/dashboard$/);
+
   await page.getByRole("button", { name: "Logout" }).click();
 
   await expect(loginButton(page)).toBeVisible();
   await expect(page.getByRole("button", { name: "Logout" })).toHaveCount(0);
   await page.goto("/dashboard");
   await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByText("Welcome player")).toHaveCount(0);
 });
 
 test("signed-in full game saves under the user id", async ({ page, game, backend }) => {
@@ -64,6 +88,6 @@ test("signed-in full game saves under the user id", async ({ page, game, backend
     await game.openRecap();
     await checkPersistPayload(backend, picks, FAKE_USER.id, page);
     backend.persistRequests.length = 0;
-    await game.restart();
+    if (seed === 1) await game.restart();
   }
 });
