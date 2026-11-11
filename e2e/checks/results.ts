@@ -1,11 +1,11 @@
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
-import { ROUND_POINTS } from "@/store";
 import type { TournamentRound } from "@/types";
 import { BRACKET_ROUNDS, PLAYIN_PLACEHOLDERS, nextSlot, type Slot } from "../support/bracketMap";
 import type { FakeBackend } from "../support/fakeBackend";
 import { ANON_USER_ID_STORAGE_KEY } from "../support/fakeAuth";
 import type { RecordedPick } from "../support/game";
+import { expectedScore } from "../support/scoring";
 import { readState } from "../support/state";
 
 type PlayinGame = { team: string; win?: boolean }[];
@@ -69,7 +69,6 @@ export async function checkHighlights(page: Page): Promise<number> {
   const expectedBars = BRACKET_ROUNDS.reduce((sum, r) => sum + r.games, 0);
   expect(bars, "one pick bar per team slot in rounds 2 to champion").toHaveLength(expectedBars);
 
-  let total = 0;
   bars.forEach((bar, i) => {
     const label = `bar ${i} (round ${bar.round}, slot team "${bar.team}", pick "${bar.text}")`;
     const previous = BRACKET_ROUNDS.find((r) => String(r.next) === bar.round);
@@ -80,14 +79,21 @@ export async function checkHighlights(page: Page): Promise<number> {
       expect(bar.green, `${label}: green`).toBe(true);
       expect(bar.red, `${label}: not red`).toBe(false);
       expect(bar.struck, `${label}: not struck through`).toBe(false);
-      total += ROUND_POINTS[previous!.round as keyof typeof ROUND_POINTS];
     } else {
       expect(bar.red, `${label}: red`).toBe(true);
       expect(bar.struck, `${label}: struck through`).toBe(true);
       expect(bar.green, `${label}: not green`).toBe(false);
     }
   });
-  return total;
+  const greens = bars.filter((b) => b.green).length;
+  expect(greens, "at least one green bar").toBeGreaterThan(0);
+  expect(greens, "at least one red bar").toBeLessThan(bars.length);
+  return expectedScore(
+    bars.map((b) => ({
+      round: (b.round === "2" ? 2 : b.round) as TournamentRound,
+      correct: b.green,
+    })),
+  );
 }
 
 /** The "Score" value on the page itself (not the copy inside the recap dialog). */

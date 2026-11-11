@@ -12,7 +12,12 @@ test("a failed bracket save is silent: the recap still shows and Play Again work
   test.setTimeout(
     Object.values(PHASE_TIMEOUTS).reduce((sum, ms) => sum + ms, 0) + 70 * PICK_ACTION_TIMEOUT_MS + 60_000,
   );
-  // The browser logs the failed request itself as a console error.
+  // The browser logs the failed request itself as a console error, without its URL. So the
+  // allowance is narrowed by checking below that the only failed response is the bracket save.
+  const failedResponses: string[] = [];
+  page.on("response", (r) => {
+    if (r.status() >= 400) failedResponses.push(new URL(r.url()).pathname);
+  });
   errors.allow(/Failed to load resource.*500/, "silent save failure, finding 43");
 
   await game.open();
@@ -27,6 +32,8 @@ test("a failed bracket save is silent: the recap still shows and Play Again work
   await expect.poll(() => backend.persistRequests.length, { message: "save was attempted" }).toBe(1);
   // Today the player is told nothing: no error toast (the auto `errors` fixture checks this too).
   await expect(page.locator('[data-sonner-toaster] [data-type="error"]')).toHaveCount(0);
+
+  expect(failedResponses, "the only failed response is the bracket save").toEqual(["/api/bracket/simulation"]);
 
   await game.restart();
   await expect(page.getByRole("button", { name: "Start the game" })).toBeEnabled();
