@@ -207,12 +207,18 @@ function expectedSignature(width: number, phase: SignaturePhase, selectedRound: 
   };
 }
 
-/** True while the regular season screen is up and its weeks have not all been played. */
+/**
+ * True while the regular season is still settling: weeks left to play, or all played but
+ * Selection Sunday not yet on (`activateSelectionSunday` runs in an effect after the last week)
+ * or the field not yet picked (SelectionSunday's effect adds the teams and seeds them in one go).
+ */
 function seasonPlaying(state: RootState): boolean {
   return (
     state.appState.regularSeason &&
     !state.appState.tournament &&
-    state.regularSeasonRecords.weeksPlayed < AMOUNT_SEASON_GAMES
+    (state.regularSeasonRecords.weeksPlayed < AMOUNT_SEASON_GAMES ||
+      !state.appState.selectionSunday ||
+      state.tournament.tournamentTeams.length === 0)
   );
 }
 
@@ -230,14 +236,12 @@ function phaseOf(state: RootState): { label: string; signature: SignaturePhase }
 /**
  * The part of the state a resize must leave alone: everything except the window size.
  *
- * During regular-season playback the season moves on by itself while the resize is in flight, so
- * from a mid-playback snapshot only the parts playback never touches are compared: picks, UI,
- * team stats, schedule and the app flags other than `selectionSunday`. Left out are the week
- * results (`regularSeasonRecords`), the end-of-season flag and `tournament` (Selection Sunday
- * fills in the field and seeds as soon as the last week lands). There is no week boundary to pause
- * at: all 30 week timers fall due together and run back to back, blocking the page's main
- * thread for seconds. The test instead freezes the season before its first week with a paused
- * page clock, and makes one more resize as the weeks play (see the test body).
+ * `midPlayback`: the season is moving on by itself while the resize is in flight (only the
+ * extra probe right after the page clock resumes), so only the parts playback never touches are
+ * compared: picks, UI, team stats, schedule and the app flags other than `selectionSunday`. Left
+ * out are the week results (`regularSeasonRecords`), the end-of-season flag and `tournament`
+ * (Selection Sunday fills in the field and seeds once the last week lands). The main phase-1
+ * sweep runs with the clock paused, the season frozen, and compares the full state.
  */
 function stablePart(state: RootState, midPlayback: boolean): Record<string, unknown> {
   const copy = JSON.parse(JSON.stringify(state)) as Record<string, Record<string, unknown>>;
@@ -257,10 +261,15 @@ function stablePart(state: RootState, midPlayback: boolean): Record<string, unkn
  * screen, going wider than TOURNAMENT_BREAK_POINT selects round 1 (every round shows at once there;
  * `Tournament.tsx` dispatches `selectRound(1)`), so the selected round is expected to become 1.
  */
-async function resizeAndCompare(page: Page, width: number): Promise<void> {
+async function resizeAndCompare(
+  page: Page,
+  width: number,
+  options: { seasonFrozen?: boolean } = {},
+): Promise<void> {
   const before = await readState(page);
   const phase = phaseOf(before);
-  const midPlayback = seasonPlaying(before);
+  // With the page clock paused the season cannot move, so the full state must stay put.
+  const midPlayback = !options.seasonFrozen && seasonPlaying(before);
   const where = `${phase.label} @${width}px`;
   const expectedRound: TournamentRound =
     before.appState.tournament && width > TOURNAMENT_BREAK_POINT ? 1 : before.uiState.selectedRound;
@@ -295,6 +304,8 @@ async function resizeAndCompare(page: Page, width: number): Promise<void> {
   }
 
   await enforceLayout(page, phase.label, "horizontal-scroll", () => assertNoHorizontalScroll(page));
+  // On season screens the signature is always { banner: false, columns: [] } (no bracket), so
+  // there the check rests on screenWidth, the unchanged state and the no-sideways-scroll check.
   if (phase.signature === "season") return;
 
   await assertRoundUnclipped(page, expectedRound);
@@ -318,10 +329,10 @@ async function resizeAndCompare(page: Page, width: number): Promise<void> {
 }
 
 /** Up through every width, back down, then home to the laptop width. */
-async function sweep(page: Page): Promise<void> {
+async function sweep(page: Page, options: { seasonFrozen?: boolean } = {}): Promise<void> {
   const down = RESIZE_WIDTHS.slice(0, -1).reverse();
   for (const width of [...RESIZE_WIDTHS, ...down, HOME_WIDTH]) {
-    await resizeAndCompare(page, width);
+    await resizeAndCompare(page, width, options);
   }
 }
 
@@ -385,18 +396,20 @@ if (process.env.E2E_MEASURE_SIGNATURES) {
     test.setTimeout(GAME_BUDGET_MS + 300_000);
     expect(page.viewportSize()?.width, "starts at the laptop width").toBe(HOME_WIDTH);
     const timings: string[] = [];
-    const timedSweep = async (label: string) => {
+    const timedSweep = async (label: string, options: { seasonFrozen?: boolean } = {}) => {
       const started = Date.now();
-      await sweep(page);
+      await sweep(page, options);
       timings.push(`${label}=${Date.now() - started}ms`);
     };
 
-    // 1. Regular season mid-playback. The 30 week timers all fall due together about 0.6 s after
-    // the screen appears and then run back to back, holding the main thread for seconds; under
-    // load that window is easily missed. So the page clock is faked (it runs normally except
-    // while paused): pause it before Start, step it until the regular season screen is up and
-    // its weeks are pending, sweep with the season frozen there, then let the clock run and
-    // resize again straight away, so that resize lands while (or just after) the weeks play.
+    // 1. Regular season in progress. The app has no week-by-week playback to resize in: the 30
+    // week timers all fall due together about 0.6 s after the screen appears and then run back
+    // to back, holding the main thread for seconds. The only stable "season in progress" state
+    // is the regular season screen with those timers pending, so the page clock is faked (it
+    // runs normally except while paused): pause it before Start, step it until the screen is up
+    // and its weeks are pending, and sweep there with the season frozen (full state compared).
+    // Then the clock resumes and one more resize goes in straight away as an extra probe: it
+    // may land during playback or after it; nothing asserts which.
     await page.clock.install();
     await game.open();
     await page.clock.pauseAt(Date.now() + 1_000);
@@ -415,7 +428,7 @@ if (process.env.E2E_MEASURE_SIGNATURES) {
       )
       .toBe(true);
     await expect(page.getByTestId("regular-season")).toBeVisible();
-    await timedSweep("regularSeason");
+    await timedSweep("regularSeason", { seasonFrozen: true });
     expect(
       (await readState(page)).regularSeasonRecords.weeksPlayed,
       "no week was played while the clock was paused",

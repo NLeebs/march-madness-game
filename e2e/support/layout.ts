@@ -106,6 +106,10 @@ type ScreenBox = {
  * every ancestor that clips its overflow (a collapsed bracket column has width 0 and clips its
  * buttons away). Scroll containers do not clip: what they hold can be scrolled to, so along a
  * scrolling axis no clipping further out counts either.
+ *
+ * Limitation: once an ancestor scrolls along an axis, every clip further out on that axis is
+ * ignored, including one that would hide the scroll container itself (e.g. a scrolling grid
+ * inside a collapsed overflow-hidden wrapper). Such a case would count as on screen.
  */
 async function onScreenBoxes(page: Page, selector: string): Promise<ScreenBox[]> {
   return page.evaluate((sel) => {
@@ -267,7 +271,7 @@ export const KNOWN_LAYOUT_ISSUES: KnownLayoutIssue[] = [
     phases: BRACKET_PHASES,
     width: 2349,
     check: "horizontal-scroll",
-    description: "bracket screens scroll sideways between 2326 and 2349px",
+    description: "bracket screens scroll sideways: observed at 2349px; range 2326-2349 by analysis (max-w-tourny 2325px)",
     finding:
       "Task 8 resize sweep: at 2349px the page's scrollWidth is 2361. Tournament.tsx wraps the round banner " +
       "and the bracket grid (both w-screen / full width) in `mx-auto max-w-tourny` (2325px). Above 2325px the " +
