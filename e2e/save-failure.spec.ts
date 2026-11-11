@@ -33,7 +33,10 @@ test("a failed bracket save is silent: the recap still shows and Play Again work
   // Today the player is told nothing: no error toast (the auto `errors` fixture checks this too).
   await expect(page.locator('[data-sonner-toaster] [data-type="error"]')).toHaveCount(0);
 
-  expect(failedResponses, "the only failed response is the bracket save").toEqual(["/api/bracket/simulation"]);
+  // The response event can land after the persist-request poll above, so poll for it too.
+  await expect
+    .poll(() => failedResponses, { message: "the only failed response is the bracket save" })
+    .toEqual(["/api/bracket/simulation"]);
 
   await game.restart();
   await expect(page.getByRole("button", { name: "Start the game" })).toBeEnabled();

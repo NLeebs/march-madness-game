@@ -4,7 +4,7 @@ import { expect } from "@playwright/test";
 import { mulberry32 } from "../../tests/game/helpers/mulberry32";
 import { checkPickLandsInNextSlot, showRound, teamButton } from "../checks/picks";
 import { BRACKET_ROUNDS, PLAYIN_PLACEHOLDERS, REGION_ORDER } from "./bracketMap";
-import { assertClickable } from "./layout";
+import { assertNoHorizontalScroll, assertNoOverlap, assertUsable, enforceLayout } from "./layout";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./timeouts";
 
 export { PHASE_TIMEOUTS };
@@ -31,22 +31,35 @@ export class GamePage {
     return this.page.getByRole("button", { name: "Submit Picks" });
   }
 
+  /** No sideways page scroll in the phase just reached (known issues are pinned in layout.ts). */
+  private async checkScroll(phase: string): Promise<void> {
+    await enforceLayout(phase, "horizontal-scroll", () => assertNoHorizontalScroll(this.page));
+  }
+
+  /** No two visible team buttons overlap in the phase just reached. */
+  async checkNoOverlap(phase: string): Promise<void> {
+    await enforceLayout(phase, "overlap", () => assertNoOverlap(this.page, "button.team-selection"));
+  }
+
   async open(): Promise<void> {
     await this.page.goto("/");
     await expect(this.startButton, "phase: start screen did not become ready").toBeEnabled({
       timeout: PHASE_TIMEOUTS.toSeason,
     });
+    await this.checkScroll("start screen");
   }
 
   async start(): Promise<void> {
     await expect(this.startButton, "phase: Start button never became enabled").toBeEnabled({
       timeout: PHASE_TIMEOUTS.toSeason,
     });
+    await assertUsable(this.startButton);
     await this.startButton.click({ timeout: PICK_ACTION_TIMEOUT_MS });
     await expect(
       this.page.getByTestId("regular-season"),
       "phase: start -> regular season did not appear in time",
     ).toBeVisible({ timeout: PHASE_TIMEOUTS.toSeason });
+    await this.checkScroll("regular season");
   }
 
   async finishSeason(): Promise<void> {
@@ -54,18 +67,20 @@ export class GamePage {
       this.page.getByRole("button", { name: "Go to Tournament" }),
       "phase: regular season did not finish in time",
     ).toBeVisible({ timeout: PHASE_TIMEOUTS.season });
+    await this.checkScroll("selection sunday");
   }
 
   async goToTournament(): Promise<void> {
     // The button bounces forever (motion-safe:animate-bounce), so Playwright's "stable" check
     // never passes. Check by hand that a user could click it, then dispatch the click event.
     const button = this.page.getByRole("button", { name: "Go to Tournament" });
-    await assertClickable(button);
+    await assertUsable(button, { animated: true });
     await button.dispatchEvent("click", undefined, { timeout: PICK_ACTION_TIMEOUT_MS });
     await expect(
       this.page.getByTestId("bracket-column-1").first(),
       "phase: selection (round-1 bracket) did not appear in time",
     ).toBeVisible({ timeout: PHASE_TIMEOUTS.toSelection });
+    await this.checkScroll("bracket picks");
   }
 
   /**
@@ -135,12 +150,14 @@ export class GamePage {
               ? 0
               : 1;
         const team = game.teams[side];
-        await teamButton(this.page, {
+        const button = teamButton(this.page, {
           round: round.round,
           region: game.region,
           matchup: game.matchup,
           side,
-        }).click({ timeout: PICK_ACTION_TIMEOUT_MS });
+        });
+        await assertUsable(button);
+        await button.click({ timeout: PICK_ACTION_TIMEOUT_MS });
         const pick: RecordedPick = { round: round.round, region: game.region, slot: game.matchup, team };
         await checkPickLandsInNextSlot(this.page, pick);
         picks.push(pick);
@@ -154,11 +171,13 @@ export class GamePage {
       this.submitButton,
       "phase: picks: bracket not complete after making every pick",
     ).toBeVisible({ timeout: PICK_ACTION_TIMEOUT_MS });
+    await this.checkScroll("bracket complete");
     return picks;
   }
 
   /** Click Submit Picks, which starts the play-in games and then the rest of the tournament. */
   async submitPicks(): Promise<void> {
+    await assertUsable(this.submitButton);
     await this.submitButton.click({ timeout: PICK_ACTION_TIMEOUT_MS });
   }
 
@@ -168,6 +187,7 @@ export class GamePage {
       this.page.getByRole("button", { name: "See Recap" }),
       "phase: tournament did not finish in time",
     ).toBeVisible({ timeout: PHASE_TIMEOUTS.tournament });
+    await this.checkScroll("tournament finished");
   }
 
   /**
@@ -176,17 +196,22 @@ export class GamePage {
    */
   async openRecap(): Promise<Locator> {
     if (!(await this.recapDialog.isVisible())) {
-      await this.page.getByRole("button", { name: "See Recap" }).click({ timeout: PICK_ACTION_TIMEOUT_MS });
+      const seeRecap = this.page.getByRole("button", { name: "See Recap" });
+      await assertUsable(seeRecap);
+      await seeRecap.click({ timeout: PICK_ACTION_TIMEOUT_MS });
     }
     await expect(this.recapDialog, "phase: recap dialog did not open").toBeVisible();
     return this.recapDialog;
   }
 
   async restart(): Promise<void> {
-    await this.recapDialog.getByRole("button", { name: "Play Again" }).click({ timeout: PICK_ACTION_TIMEOUT_MS });
+    const playAgain = this.recapDialog.getByRole("button", { name: "Play Again" });
+    await assertUsable(playAgain);
+    await playAgain.click({ timeout: PICK_ACTION_TIMEOUT_MS });
     await expect(
       this.startButton,
       "phase: start screen did not come back after Play Again",
     ).toBeVisible({ timeout: PHASE_TIMEOUTS.toStart });
+    await this.checkScroll("start screen after restart");
   }
 }

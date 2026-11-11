@@ -4,6 +4,7 @@ import type { TournamentRound } from "@/types";
 import type { RecordedPick } from "../support/game";
 import { BRACKET_ROUNDS, nextSlot, type BracketRound, type Slot } from "../support/bracketMap";
 import { readState } from "../support/state";
+import { assertUsable } from "../support/layout";
 import { PICK_ACTION_TIMEOUT_MS } from "../support/timeouts";
 
 const PICK_KEYS = [
@@ -50,6 +51,7 @@ export async function showRound(page: Page, round: TournamentRound): Promise<voi
   const selectedIndex = BRACKET_ROUNDS.findIndex((r) => r.banner === selectedName);
   if (selectedIndex > targetIndex && (await back.isVisible())) {
     for (let i = selectedIndex; i > targetIndex; i--) {
+      await assertUsable(back);
       await back.click({ timeout: PICK_ACTION_TIMEOUT_MS });
       await expect(selected, "back button: previous round not selected").toHaveText(
         BRACKET_ROUNDS[i - 1].banner,
@@ -57,9 +59,9 @@ export async function showRound(page: Page, round: TournamentRound): Promise<voi
       );
     }
   } else {
-    await banner
-      .getByRole("button", { name: target.banner, exact: true })
-      .click({ timeout: PICK_ACTION_TIMEOUT_MS });
+    const bannerButton = banner.getByRole("button", { name: target.banner, exact: true });
+    await assertUsable(bannerButton);
+    await bannerButton.click({ timeout: PICK_ACTION_TIMEOUT_MS });
   }
 }
 
@@ -108,9 +110,9 @@ async function findTeam(page: Page, round: TournamentRound, team: string): Promi
 async function pickTeam(page: Page, round: TournamentRound, team: string): Promise<RecordedPick> {
   const at = await findTeam(page, round, team);
   await showRound(page, round);
-  await teamButton(page, { round, region: at.region, matchup: at.matchup, side: at.side }).click({
-    timeout: PICK_ACTION_TIMEOUT_MS,
-  });
+  const button = teamButton(page, { round, region: at.region, matchup: at.matchup, side: at.side });
+  await assertUsable(button);
+  await button.click({ timeout: PICK_ACTION_TIMEOUT_MS });
   const pick: RecordedPick = { round, region: at.region, slot: at.matchup, team };
   await checkPickLandsInNextSlot(page, pick);
   return pick;

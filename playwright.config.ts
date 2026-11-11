@@ -30,9 +30,24 @@ export default defineConfig({
   },
   projects: [
     {
+      name: "phone",
+      grep: /@every-size|@mobile-too/,
+      use: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+    },
+    {
+      name: "tablet",
+      grep: /@every-size/,
+      use: { viewport: { width: 768, height: 1024 } },
+    },
+    {
       name: "laptop",
       grepInvert: /@wide/,
       use: { viewport: { width: 1440, height: 900 } },
+    },
+    {
+      name: "wide",
+      grep: /@wide/,
+      use: { viewport: { width: 2560, height: 1440 } },
     },
   ],
 });

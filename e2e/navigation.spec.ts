@@ -2,6 +2,7 @@ import type { Locator, Page } from "@playwright/test";
 import { test, expect } from "./support/test";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
 import { BRACKET_ROUNDS } from "./support/bracketMap";
+import { assertUsable } from "./support/layout";
 import { XXXL_LARGE_BREAK_POINT } from "@/src/constants";
 
 const banner = (page: Page) => page.getByTestId("round-select-banner");
@@ -50,9 +51,9 @@ test("round banner buttons and back button switch the visible round @every-size"
 
   // Forward: later buttons are never collapsed, so a player can click each in turn.
   for (const round of BRACKET_ROUNDS) {
-    await banner(page)
-      .getByRole("button", { name: round.banner, exact: true })
-      .click({ timeout: PICK_ACTION_TIMEOUT_MS });
+    const roundButton = banner(page).getByRole("button", { name: round.banner, exact: true });
+    await assertUsable(roundButton);
+    await roundButton.click({ timeout: PICK_ACTION_TIMEOUT_MS });
     await expectSelected(page, round.banner);
     await expectColumnVisible(page, round.testId);
   }
@@ -60,6 +61,7 @@ test("round banner buttons and back button switch the visible round @every-size"
   // Back: one round at a time down to Round of 64.
   if (hasBack) {
     for (let i = BRACKET_ROUNDS.length - 1; i > 0; i--) {
+      await assertUsable(backButton(page));
       await backButton(page).click({ timeout: PICK_ACTION_TIMEOUT_MS });
       const previous = BRACKET_ROUNDS[i - 1];
       await expectSelected(page, previous.banner);

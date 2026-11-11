@@ -40,6 +40,7 @@ async function playToRecap(game: GamePage, page: Page, label: string): Promise<R
   await checkGameCounts(page);
   await checkConferenceChampions(page);
   await timed("toSelection", () => game.goToTournament());
+  await game.checkNoOverlap("bracket picks");
   // Changing an earlier pick must clear that team from later rounds; checked before the final picks.
   let picks: RecordedPick[] = [];
   await timed("picks", async () => {
@@ -50,6 +51,7 @@ async function playToRecap(game: GamePage, page: Page, label: string): Promise<R
     });
   });
   await timed("tournament", () => game.playTournament());
+  await game.checkNoOverlap("tournament finished");
   console.log(`[phase timings] ${label}: ${times.join(" ")}`);
   return picks;
 }
