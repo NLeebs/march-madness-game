@@ -3,6 +3,8 @@ import type { Page } from "@playwright/test";
 /** Nothing listens here, so server-side Supabase calls (middleware) fail fast. */
 export const FAKE_SUPABASE_URL = "http://127.0.0.1:54399";
 export const FAKE_ANON_KEY = "e2e-anon-key";
+/** localStorage key under which the app keeps a logged-out player's anonymous id. */
+export const ANON_USER_ID_STORAGE_KEY = "e2e_anon_user_id";
 
 export type FakeUser = { id: string; email: string };
 

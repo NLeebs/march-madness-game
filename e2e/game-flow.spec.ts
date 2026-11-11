@@ -4,7 +4,8 @@ import { readState } from "./support/state";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
 import { checkGameCounts, checkConferenceChampions } from "./checks/season";
 import { checkCascadeClears } from "./checks/picks";
-import type { GamePage } from "./support/game";
+import { checkHighlights, checkScore, checkRecap, checkPersistPayload } from "./checks/results";
+import type { GamePage, RecordedPick } from "./support/game";
 
 /** Every phase of one game at its limit, plus the pick-making budget. */
 const GAME_BUDGET_MS =
@@ -25,7 +26,7 @@ function pickedTeams(node: unknown, found: string[] = []): string[] {
 }
 
 /** Plays through to the recap and logs how long each phase took. */
-async function playToRecap(game: GamePage, page: Page, label: string): Promise<void> {
+async function playToRecap(game: GamePage, page: Page, label: string): Promise<RecordedPick[]> {
   const times: string[] = [];
   const timed = async (phase: string, fn: () => Promise<unknown>) => {
     const started = Date.now();
@@ -40,27 +41,33 @@ async function playToRecap(game: GamePage, page: Page, label: string): Promise<v
   await checkConferenceChampions(page);
   await timed("toSelection", () => game.goToTournament());
   // Changing an earlier pick must clear that team from later rounds; checked before the final picks.
-  await timed("picks", () =>
-    game.makePicks(1, {
+  let picks: RecordedPick[] = [];
+  await timed("picks", async () => {
+    picks = await game.makePicks(1, {
       beforeRound: async (round) => {
         if (round === "finals") await checkCascadeClears(page);
       },
-    }),
-  );
+    });
+  });
   await timed("tournament", () => game.playTournament());
   console.log(`[phase timings] ${label}: ${times.join(" ")}`);
+  return picks;
 }
 
 test("plays a full game and restarts into a clean second game @every-size", async ({
   page,
   game,
+  backend,
 }) => {
   test.setTimeout(2 * GAME_BUDGET_MS + 60_000);
 
   await game.open();
-  await playToRecap(game, page, "game 1");
+  const picks = await playToRecap(game, page, "game 1");
+  await checkScore(page, await checkHighlights(page));
   const recap = await game.openRecap();
   await expect(recap).toBeVisible();
+  await checkRecap(recap, page);
+  await checkPersistPayload(backend, picks, null, page);
   const started = Date.now();
   await game.restart();
   console.log(`[phase timings] restart: toStart=${Date.now() - started}ms`);

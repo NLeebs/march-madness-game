@@ -23,7 +23,7 @@ export const PlayerScore = () => {
       }}
     >
       <div className="text-center text-2xl">Score</div>
-      <div className="text-center text-xl">{playerScore}</div>
+      <div className="text-center text-xl" data-testid="player-score-value">{playerScore}</div>
     </div>
   );
 };

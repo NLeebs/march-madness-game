@@ -1,5 +1,5 @@
 import { defineConfig } from "@playwright/test";
-import { FAKE_ANON_KEY, FAKE_SUPABASE_URL } from "./e2e/support/fakeAuth";
+import { ANON_USER_ID_STORAGE_KEY, FAKE_ANON_KEY, FAKE_SUPABASE_URL } from "./e2e/support/fakeAuth";
 
 const PORT = 3100;
 
@@ -24,6 +24,7 @@ export default defineConfig({
       SUPABASE_SERVICE_ROLE_KEY: "e2e-unused",
       NEXT_PUBLIC_APP_URL: `http://127.0.0.1:${PORT}`,
       NEXT_PUBLIC_E2E: "1",
+      NEXT_PUBLIC_BROWSER_ANON_KEY: ANON_USER_ID_STORAGE_KEY,
       NEXT_PUBLIC_APP_MODE: "",
     },
   },
