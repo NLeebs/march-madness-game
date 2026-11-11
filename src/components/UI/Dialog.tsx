@@ -12,6 +12,7 @@ interface DialogProps {
   dialogBackgroundColor?: string;
   dialogBorderColor?: string;
   overlayOpacity?: number;
+  ariaLabel?: string;
   children: React.ReactNode;
 }
 
@@ -22,6 +23,7 @@ export const Dialog: React.FC<DialogProps> = ({
   dialogBackgroundColor = "#FFF",
   dialogBorderColor = ACCENT_COLOR,
   overlayOpacity = 0.5,
+  ariaLabel,
   children,
 }) => {
   if (!isOpen) return null;
@@ -29,6 +31,8 @@ export const Dialog: React.FC<DialogProps> = ({
   return ReactDOM.createPortal(
     <>
       <motion.div
+        role="dialog"
+        aria-label={ariaLabel}
         className="fixed h-max transform inset-x-8 md:left-1/2 md:-translate-x-1/2 top-1/2 -translate-y-1/2 z-50 p-8 flex flex-col justify-around items-center gap-4 border-solid border-2 rounded-lg"
         initial={{
           opacity: 0,

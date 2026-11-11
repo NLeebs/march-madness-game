@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import { test, expect } from "./support/test";
+import { readState } from "./support/state";
 import { START_TO_SEASON_TIMEOUT_MS } from "./support/timeouts";
 
 const startButton = (page: Page) =>
@@ -10,6 +11,7 @@ test("starts the latest year and reaches the regular season", async ({ page, bac
   await startButton(page).click();
   await expect(page.getByTestId("regular-season")).toBeVisible({ timeout: START_TO_SEASON_TIMEOUT_MS });
   expect(backend.requestedPaths).toContain("/api/team-statistics/e2e-year-latest");
+  expect((await readState(page)).appState.regularSeason).toBe(true);
 });
 
 test.describe("slow team stats", () => {

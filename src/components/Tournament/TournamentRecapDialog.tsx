@@ -42,6 +42,7 @@ export const TournamentRecapDialog: React.FC = () => {
       isOpen={isRecapDialogOpen}
       onClose={onCloseRecapDialogHandler}
       dialogBackgroundColor={championPrimaryColor}
+      ariaLabel="Tournament recap"
     >
       <h3 className="text-center" style={{ color: ACCENT_COLOR }}>
         We Have a New Champ

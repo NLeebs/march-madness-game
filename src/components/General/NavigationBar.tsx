@@ -113,6 +113,7 @@ export const NavigationBar = () => {
         dialogBorderColor="transparent"
         hasCloseButton={false}
         overlayOpacity={0.8}
+        ariaLabel="Login"
       >
         <UserAuthentication openedTab={openedTab} />
       </Dialog>

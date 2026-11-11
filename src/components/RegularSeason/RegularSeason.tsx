@@ -58,6 +58,7 @@ export const RegularSeason: React.FC<RegularSeasonProps> = ({ teamStats }) => {
             <ConferenceGroups
               key={conf}
               isPowerConf="true"
+              conferenceKey={conf}
               conferenceTeams={teamStats[conf]}
             />
           ))}
@@ -65,6 +66,7 @@ export const RegularSeason: React.FC<RegularSeasonProps> = ({ teamStats }) => {
             <ConferenceGroups
               key={conf}
               isPowerConf="false"
+              conferenceKey={conf}
               conferenceTeams={teamStats[conf]}
             />
           ))}
