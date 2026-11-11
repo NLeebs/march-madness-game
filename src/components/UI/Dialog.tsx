@@ -47,7 +47,7 @@ export const Dialog: React.FC<DialogProps> = ({
       >
         {hasCloseButton && (
           <div className="w-full flex flex-row-reverse">
-            <button onClick={onClose}>
+            <button onClick={onClose} aria-label="Close">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill={ACCENT_COLOR}

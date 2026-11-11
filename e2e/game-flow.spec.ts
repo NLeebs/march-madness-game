@@ -6,6 +6,12 @@ import { checkGameCounts, checkConferenceChampions } from "./checks/season";
 import { checkCascadeClears } from "./checks/picks";
 import { checkHighlights, checkScore, checkRecap, checkPersistPayload } from "./checks/results";
 import type { GamePage, RecordedPick } from "./support/game";
+import { assertRoundUnclipped } from "./support/layout";
+
+/** Every matchup of the round on show is on screen and not cut off. */
+async function checkShownRoundUnclipped(page: Page): Promise<void> {
+  await assertRoundUnclipped(page, (await readState(page)).uiState.selectedRound);
+}
 
 /** Every phase of one game at its limit, plus the pick-making budget. */
 const GAME_BUDGET_MS =
@@ -41,6 +47,7 @@ async function playToRecap(game: GamePage, page: Page, label: string): Promise<R
   await checkConferenceChampions(page);
   await timed("toSelection", () => game.goToTournament());
   await game.checkNoOverlap("bracket picks");
+  await checkShownRoundUnclipped(page);
   // Changing an earlier pick must clear that team from later rounds; checked before the final picks.
   let picks: RecordedPick[] = [];
   await timed("picks", async () => {
@@ -52,6 +59,7 @@ async function playToRecap(game: GamePage, page: Page, label: string): Promise<R
   });
   await timed("tournament", () => game.playTournament());
   await game.checkNoOverlap("tournament finished");
+  await checkShownRoundUnclipped(page);
   console.log(`[phase timings] ${label}: ${times.join(" ")}`);
   return picks;
 }

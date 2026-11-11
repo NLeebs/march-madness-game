@@ -20,10 +20,14 @@ test("wide screen shows every round at once and plays without banner navigation 
   await game.goToTournament();
 
   await expect(page.getByTestId("round-select-banner"), "round banner is hidden on a wide screen").toHaveCount(0);
-  const signature = await layoutSignature(page);
-  expect(signature.bannerVisible, "banner visible").toBe(false);
   const expected = ["bracket-column-playin", ...BRACKET_ROUNDS.map((r) => r.testId), "bracket-column-champion"].sort();
-  expect(signature.visibleColumns, "every round column is visible at once").toEqual(expected);
+  // Polled: columns animate in after the tournament screen mounts.
+  await expect
+    .poll(() => layoutSignature(page), {
+      message: "no banner, every round column visible at once",
+      timeout: PICK_ACTION_TIMEOUT_MS,
+    })
+    .toEqual({ bannerVisible: false, visibleColumns: expected });
   await game.checkNoOverlap("bracket picks");
 
   await game.makePicks(1);

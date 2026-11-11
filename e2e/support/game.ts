@@ -33,12 +33,12 @@ export class GamePage {
 
   /** No sideways page scroll in the phase just reached (known issues are pinned in layout.ts). */
   private async checkScroll(phase: string): Promise<void> {
-    await enforceLayout(phase, "horizontal-scroll", () => assertNoHorizontalScroll(this.page));
+    await enforceLayout(this.page, phase, "horizontal-scroll", () => assertNoHorizontalScroll(this.page));
   }
 
   /** No two visible team buttons overlap in the phase just reached. */
   async checkNoOverlap(phase: string): Promise<void> {
-    await enforceLayout(phase, "overlap", () => assertNoOverlap(this.page, "button.team-selection"));
+    await enforceLayout(this.page, phase, "overlap", () => assertNoOverlap(this.page, "button.team-selection"));
   }
 
   async open(): Promise<void> {
@@ -202,6 +202,14 @@ export class GamePage {
     }
     await expect(this.recapDialog, "phase: recap dialog did not open").toBeVisible();
     return this.recapDialog;
+  }
+
+  /** Closes the recap dialog with its close (X) button, uncovering the bracket. */
+  async closeRecap(): Promise<void> {
+    const close = this.recapDialog.getByRole("button", { name: "Close" });
+    await assertUsable(close);
+    await close.click({ timeout: PICK_ACTION_TIMEOUT_MS });
+    await expect(this.recapDialog, "phase: recap dialog did not close").toHaveCount(0);
   }
 
   async restart(): Promise<void> {
