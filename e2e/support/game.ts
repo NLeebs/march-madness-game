@@ -1,6 +1,9 @@
 import type { Locator, Page } from "@playwright/test";
 import type { TournamentRound } from "@/types";
 import { expect } from "@playwright/test";
+import { mulberry32 } from "../../tests/game/helpers/mulberry32";
+import { checkPickLandsInNextSlot, showRound, teamButton } from "../checks/picks";
+import { BRACKET_ROUNDS, PLAYIN_PLACEHOLDERS, REGION_ORDER } from "./bracketMap";
 import { assertClickable } from "./layout";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./timeouts";
 
@@ -13,64 +16,11 @@ export type RecordedPick = {
   team: string;
 };
 
-type PickRound = {
-  round: TournamentRound;
-  /** Button name in the round select banner. */
-  banner: string;
-  testId: string;
-  /** Regions in DOM order for the first (top) and second (bottom) copy of the column. */
-  regions: [string[], string[]];
-  /** Matchups per region. */
-  perRegion: number;
-};
-
-const HALVES: [string[], string[]] = [
-  ["west", "east"],
-  ["south", "midwest"],
-];
-
-const PICK_ROUNDS: PickRound[] = [
-  { round: 1, banner: "Round of 64", testId: "bracket-column-1", regions: HALVES, perRegion: 8 },
-  { round: 2, banner: "Round of 32", testId: "bracket-column-2", regions: HALVES, perRegion: 4 },
-  {
-    round: "sweet sixteen",
-    banner: "Sweet Sixteen",
-    testId: "bracket-column-sweet-sixteen",
-    regions: HALVES,
-    perRegion: 2,
-  },
-  {
-    round: "elite eight",
-    banner: "Elite Eight",
-    testId: "bracket-column-elite-eight",
-    regions: HALVES,
-    perRegion: 1,
-  },
-  {
-    round: "final four",
-    banner: "Final Four",
-    testId: "bracket-column-final-four",
-    regions: [["eastWest"], ["southMidwest"]],
-    perRegion: 1,
-  },
-  {
-    round: "finals",
-    banner: "Finals",
-    testId: "bracket-column-finals",
-    regions: [["championship"], []],
-    perRegion: 1,
-  },
-];
-
 export class GamePage {
   constructor(private readonly page: Page) {}
 
   private get startButton(): Locator {
     return this.page.getByRole("button", { name: "Start the game" });
-  }
-
-  private get banner(): Locator {
-    return this.page.getByTestId("round-select-banner");
   }
 
   private get recapDialog(): Locator {
@@ -118,53 +68,88 @@ export class GamePage {
     ).toBeVisible({ timeout: PHASE_TIMEOUTS.toSelection });
   }
 
-  /** Switch the bracket to `round` when the round banner is showing (narrower than 2350px). */
-  private async showRound(round: PickRound): Promise<void> {
-    if (await this.banner.isVisible()) {
-      await this.banner
-        .getByRole("button", { name: round.banner, exact: true })
-        .click({ timeout: PICK_ACTION_TIMEOUT_MS });
-    }
-  }
-
-  /** Chalk: the first team of every matchup, round by round, through the UI. */
-  async makePicks(_seed: number): Promise<RecordedPick[]> {
+  /**
+   * Picks every game round by round through the UI. A seeded RNG chooses each winner; one
+   * play-in placeholder (e.g. playinGameSeed11Game1) is always picked to win its round-1 game.
+   * After every click the winner must show in the right slot of the next round.
+   * `beforeRound` runs before the games of that round are picked (used for the cascade check).
+   */
+  async makePicks(
+    seed: number,
+    hooks: { beforeRound?: (round: TournamentRound) => Promise<void> } = {},
+  ): Promise<RecordedPick[]> {
     const startedAt = Date.now();
     const checkBudget = () => {
       if (Date.now() - startedAt > PHASE_TIMEOUTS.picks) {
         throw new Error(`phase: picks did not finish within ${PHASE_TIMEOUTS.picks} ms`);
       }
     };
+    const rng = mulberry32(seed);
     const picks: RecordedPick[] = [];
-    for (const round of PICK_ROUNDS) {
-      await this.showRound(round);
-      const columns = this.page.getByTestId(round.testId);
-      for (let half = 0; half < 2; half++) {
-        const regions = round.regions[half];
-        if (regions.length === 0) continue;
-        const count = regions.length * round.perRegion;
-        const matchups = columns.nth(half).locator(".matchup-container");
-        await expect(
-          matchups,
-          `phase: picks: ${String(round.round)} column has the wrong matchup count`,
-        ).toHaveCount(count, { timeout: PICK_ACTION_TIMEOUT_MS });
-        for (let i = 0; i < count; i++) {
-          const team = matchups.nth(i).locator("button.team-selection").first();
-          checkBudget();
-          const name = await team.getAttribute("data-team", { timeout: PICK_ACTION_TIMEOUT_MS });
-          if (!name) {
-            throw new Error(`phase: picks: no team in ${String(round.round)} matchup ${i}`);
-          }
-          await team.click({ timeout: PICK_ACTION_TIMEOUT_MS });
-          picks.push({
-            round: round.round,
-            region: regions[Math.floor(i / round.perRegion)],
-            slot: i % round.perRegion,
-            team: name,
-          });
+    for (const round of BRACKET_ROUNDS) {
+      await hooks.beforeRound?.(round.round);
+      await showRound(this.page, round.round);
+      const buttons = this.page.locator(`button.team-selection[data-round="${String(round.round)}"]`);
+      await expect(
+        buttons,
+        `phase: picks: ${String(round.round)} has the wrong number of team buttons`,
+      ).toHaveCount(round.games * 2, { timeout: PICK_ACTION_TIMEOUT_MS });
+      const cells = await buttons.evaluateAll((els) =>
+        els.map((el) => ({
+          region: (el as HTMLElement).dataset.region ?? "",
+          matchup: Number((el as HTMLElement).dataset.matchup),
+          side: Number((el as HTMLElement).dataset.value),
+          team: (el as HTMLElement).dataset.team ?? "",
+        })),
+      );
+      const games = new Map<string, { region: string; matchup: number; teams: string[] }>();
+      for (const cell of cells) {
+        const key = `${cell.region}/${cell.matchup}`;
+        const game = games.get(key) ?? { region: cell.region, matchup: cell.matchup, teams: ["", ""] };
+        game.teams[cell.side] = cell.team;
+        games.set(key, game);
+      }
+      const ordered = Array.from(games.values()).sort(
+        (x, y) => REGION_ORDER.indexOf(x.region) - REGION_ORDER.indexOf(y.region) || x.matchup - y.matchup,
+      );
+      expect(ordered, `phase: picks: ${String(round.round)} games`).toHaveLength(round.games);
+
+      let forced = -1;
+      if (round.round === 1) {
+        const withPlayin = ordered
+          .map((game, i) => ({ game, i }))
+          .filter(({ game }) => game.teams.some((t) => PLAYIN_PLACEHOLDERS.includes(t)));
+        if (withPlayin.length === 0) throw new Error("phase: picks: no play-in placeholder in round 1");
+        forced = withPlayin[Math.floor(rng() * withPlayin.length)].i;
+      }
+
+      for (const [i, game] of Array.from(ordered.entries())) {
+        checkBudget();
+        if (game.teams.some((t) => t === "")) {
+          throw new Error(`phase: picks: ${String(round.round)} ${game.region} #${game.matchup} has an empty slot`);
         }
+        const side =
+          i === forced
+            ? game.teams.findIndex((t) => PLAYIN_PLACEHOLDERS.includes(t))
+            : rng() < 0.5
+              ? 0
+              : 1;
+        const team = game.teams[side];
+        await teamButton(this.page, {
+          round: round.round,
+          region: game.region,
+          matchup: game.matchup,
+          side,
+        }).click({ timeout: PICK_ACTION_TIMEOUT_MS });
+        const pick: RecordedPick = { round: round.round, region: game.region, slot: game.matchup, team };
+        await checkPickLandsInNextSlot(this.page, pick);
+        picks.push(pick);
       }
     }
+    expect(
+      picks.some((p) => p.round === 1 && PLAYIN_PLACEHOLDERS.includes(p.team)),
+      "phase: picks: no play-in placeholder was picked to win round 1",
+    ).toBe(true);
     await expect(
       this.submitButton,
       "phase: picks: bracket not complete after making every pick",

@@ -1,6 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { TournamentMatchup, TournamentRound, TournamentTeam } from "@/types";
+import {
+  TournamentMatchup,
+  TournamentRegion,
+  TournamentRound,
+  TournamentTeam,
+} from "@/types";
 import { RootState } from "@/store";
 import { PlayerPickBar, TeamBar } from "@/src/components";
 import { motion } from "framer-motion";
@@ -8,6 +13,9 @@ import classes from "@/src/components/Tournament/css/TournamentMatchup.module.cs
 
 interface TournamentMatchupCardProps {
   round: TournamentRound | "playin";
+  region: TournamentRegion;
+  /** Position of this matchup within its region. */
+  index: number;
   matchup: TournamentMatchup;
   matchupIndex: number;
   matchupTeam: TournamentTeam;
@@ -19,6 +27,8 @@ interface TournamentMatchupCardProps {
 
 export const TournamentMatchupCard: React.FC<TournamentMatchupCardProps> = ({
   round,
+  region,
+  index,
   matchup,
   matchupIndex,
   matchupTeam,
@@ -68,6 +78,9 @@ export const TournamentMatchupCard: React.FC<TournamentMatchupCardProps> = ({
         data-value={matchupIndex}
         data-team={matchupTeam.team}
         data-seed={matchupTeam.seed}
+        data-round={round}
+        data-region={region}
+        data-matchup={index}
         className={`team-selection w-full flex items-center px-4 h-14 bg-transparent
             ${
               round === "champion" && matchup[0].team

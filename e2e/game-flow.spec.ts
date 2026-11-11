@@ -3,6 +3,7 @@ import { test, expect } from "./support/test";
 import { readState } from "./support/state";
 import { PHASE_TIMEOUTS, PICK_ACTION_TIMEOUT_MS } from "./support/timeouts";
 import { checkGameCounts, checkConferenceChampions } from "./checks/season";
+import { checkCascadeClears } from "./checks/picks";
 import type { GamePage } from "./support/game";
 
 /** Every phase of one game at its limit, plus the pick-making budget. */
@@ -38,7 +39,14 @@ async function playToRecap(game: GamePage, page: Page, label: string): Promise<v
   await checkGameCounts(page);
   await checkConferenceChampions(page);
   await timed("toSelection", () => game.goToTournament());
-  await timed("picks", () => game.makePicks(1));
+  // Changing an earlier pick must clear that team from later rounds; checked before the final picks.
+  await timed("picks", () =>
+    game.makePicks(1, {
+      beforeRound: async (round) => {
+        if (round === "finals") await checkCascadeClears(page);
+      },
+    }),
+  );
   await timed("tournament", () => game.playTournament());
   console.log(`[phase timings] ${label}: ${times.join(" ")}`);
 }

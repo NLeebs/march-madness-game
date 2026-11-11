@@ -38,6 +38,7 @@ export const RoundSelectBackButton = () => {
       {selectedRound !== 1 && screenWidth <= XXXL_LARGE_BREAK_POINT && (
         <motion.button
           onClick={roundSelectBackHandler}
+          aria-label="Previous round"
           className="relative w-roundSelectBackButton h-16 flex justify-center items-center text-center"
           style={{ backgroundColor: NON_CTA_BUTTON_COLOR }}
         >
