@@ -13,6 +13,7 @@ npm run lint           # next lint (eslint next/core-web-vitals)
 npm test               # vitest in watch mode
 npx vitest run         # single run - use this from Claude / CI
 npx vitest run tests/unit/useCases/team/getTeamById.test.ts   # one file
+npm run e2e            # Playwright e2e (npx playwright test); first run builds the app (~40 s); full run ~4 min
 npx tsc --noEmit       # type-check (2 CSS-module errors are expected until next-env.d.ts exists; run `npm run build` once)
 npm run db:types         # regenerate types/database.ts (local DB must be running)
 npm run db:types:check   # fail if types/database.ts is stale (runs in CI)
@@ -23,7 +24,7 @@ Always use `npx vitest` / `npx tsc` *after* `npm ci` - if `node_modules` is miss
 
 ## Environment
 
-`.env.local` (gitignored) needs: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (server only - never import `supabaseServiceRole.ts` from client code), `NEXT_PUBLIC_APP_URL`, optional `NEXT_PUBLIC_STAGING_URL`, `NEXT_PUBLIC_APP_MODE=dev` (pre-fills picks), and `NEXT_PUBLIC_FIREBASE_*` (legacy team-stats source only). Tests stub Supabase env vars in `src/test-setup.ts` and never hit a real database.
+`.env.local` (gitignored) needs: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (server only - never import `supabaseServiceRole.ts` from client code), `NEXT_PUBLIC_APP_URL`, optional `NEXT_PUBLIC_STAGING_URL`, `NEXT_PUBLIC_APP_MODE=dev` (pre-fills picks), `NEXT_PUBLIC_BROWSER_ANON_KEY` (localStorage key for the anonymous player id, required by `src/utils/getAnonUserId.ts`; e2e sets it in `playwright.config.ts`), and `NEXT_PUBLIC_FIREBASE_*` (legacy team-stats source only). Tests stub Supabase env vars in `src/test-setup.ts` and never hit a real database.
 
 ## Architecture
 
@@ -76,6 +77,7 @@ Rules load automatically when you touch matching files. Before designing or plan
 |---|---|---|
 | Database: schema, migrations, generated types, DB tests, stats schema, hosted-project safety | `.claude/rules/database.md` | `supabase/**`, `infrastructure/db/**`, `models/**`, `types/database.ts`, `scripts/db/**` |
 | Game engine: seeded RNG, characterization tests (fixed contract, statistical checks, draw-order pins), pin regeneration | `.claude/rules/game-engine.md` | `src/functions/**`, `store/**`, `src/components/RegularSeason/**`, `src/components/Tournament/**`, `tests/factories/league*`, `tests/game/**` |
+| E2E: Playwright suite, fake backend, store snapshot, tags/projects, phase timeouts, console allowlist, known layout issues, resize signatures | `.claude/rules/e2e.md` | `e2e/**`, `playwright.config.ts` |
 
 ## Conventions
 
