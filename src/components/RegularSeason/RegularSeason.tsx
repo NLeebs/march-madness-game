@@ -45,7 +45,10 @@ export const RegularSeason: React.FC<RegularSeasonProps> = ({ teamStats }) => {
   };
 
   return (
-    <div className="h-[calc(100vh-5rem)] overflow-y-scroll pb-12">
+    <div
+      data-testid="regular-season"
+      className="h-[calc(100vh-5rem)] overflow-y-scroll pb-12"
+    >
       <motion.div
         exit={{ opacity: 0 }}
         className="flex flex-col justify-center items-center p-8 gap-y-12"

@@ -73,6 +73,7 @@ export const StartButton = ({
     <motion.button
       onClick={activateRegularSeason}
       disabled={isLoading}
+      aria-label="Start the game"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className={`relative rounded-full transition-transform ease-out ${
