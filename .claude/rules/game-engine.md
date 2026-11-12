@@ -50,7 +50,7 @@ Changing the order or number of random draws without changing the game (e.g. mov
   - `buildLeague()` builds a deterministic 360-team league with 31 conferences (hard-coded, matching real data; don't derive it from the legacy scraping config), rank-string RPI 1..360 and quality-skewed stats;
   - `configureStoreForLeague(store, league)` dispatches the same setup as `StartScreen`.
 - `store/store.ts` `createAppStore({ preloadedState, extraMiddleware, devChecks })` gives a fresh store per test.
-  - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which make season play (one `addRegularSeasonGameResult` per game) still slow.
+  - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which still make season play (one `addRegularSeasonGameResult` per game) slow.
   - `recordActions()` (in `renderWithStore.tsx`) captures dispatched actions. Use it instead of `vi.spyOn` on barrel exports, which doesn't intercept component imports.
 - `tests/game/helpers/runGame.ts`:
   - `playSeason` uses fake timers for `delay`;
