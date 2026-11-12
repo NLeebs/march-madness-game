@@ -37,7 +37,7 @@ Every part of it is under characterization tests in `tests/game/`. Preserve game
 
 ## Regenerating draw-order pins
 
-Changing the order or number of random draws without changing the game (e.g. collapsing `playGame`'s favored/underdog code, or moving the tournament driver out of components) is allowed. When you do it:
+Changing the order or number of random draws without changing the game (e.g. moving the tournament driver out of components) is allowed. When you do it:
 
 1. Make the draw-order change in a commit that changes nothing else.
 2. In that commit, the fixed-contract tests and statistical checks must pass **unchanged**. If a statistical check fails, the gameplay changed, not just the draw order.
