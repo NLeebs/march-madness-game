@@ -137,4 +137,37 @@ describe("selectTournamentField", () => {
     expect(Object.keys(records)).toEqual(Object.keys(recordsCopy));
     expect(confArrs).toEqual(confCopy);
   });
+
+  describe("input validation", () => {
+    it("throws when a conference has fewer than two teams", () => {
+      const oneTeamConf = { ...confArrs, [confs[0]]: [confArrs[confs[0]][0]] };
+      expect(() => selectTournamentField(baseRecords(), oneTeamConf)).toThrow(
+        /at least 2 teams/
+      );
+    });
+
+    it("throws when a conference team has no record", () => {
+      const missing = { ...baseRecords() };
+      delete missing[confArrs[confs[1]][1]];
+      expect(() => selectTournamentField(missing, confArrs)).toThrow(
+        /has no regular season record/
+      );
+    });
+
+    it("throws when there are too few non-champions for the at-large spots", () => {
+      // Two teams per conference leaves N non-champions; require N < K.
+      const smallConfArrs = Object.fromEntries(
+        confs.map((c) => [c, confArrs[c].slice(0, 2)])
+      );
+      const keep = new Set(Object.values(smallConfArrs).flat());
+      const full = baseRecords();
+      const small = Object.fromEntries(
+        Object.entries(full).filter(([team]) => keep.has(team))
+      );
+      expect(N).toBeLessThan(K);
+      expect(() => selectTournamentField(small, smallConfArrs)).toThrow(
+        /at-large/
+      );
+    });
+  });
 });
