@@ -40,6 +40,7 @@ const shootFreeThrows = (
   return missedLastFT;
 };
 
+// Intentionally mutates the given sides' `score` and `fouls` in place: this is the game's local mutable state, not a pure function.
 const playPossession = (
   offense: Side,
   defense: Side,
