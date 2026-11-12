@@ -10,7 +10,7 @@ import {
   configureStoreForLeague,
 } from "@/tests/factories";
 import type { League } from "@/tests/factories";
-import { renderWithStore } from "./helpers/renderWithStore";
+import { renderWithStore, recordActions } from "./helpers/renderWithStore";
 import { seedMathRandom } from "./helpers/rng";
 import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
@@ -149,6 +149,25 @@ describe("SeasonSchedule", () => {
       league,
       Array.from({ length: 20 }, (_, i) => i + 1),
     );
+  }, GAME_TEST_TIMEOUT);
+
+  it("dispatches the whole schedule as one setSeasonSchedule action", () => {
+    const league = buildLeague();
+    const store = createFastStore();
+    configureStoreForLeague(store, league);
+    const teamArray = store.getState().teamSchedule.teamArray;
+    const { middleware, actions } = recordActions();
+    const recorded = createFastStore({ extraMiddleware: [middleware] });
+    configureStoreForLeague(recorded, league);
+    actions.length = 0;
+    renderWithStore(
+      <SeasonSchedule teamStats={league.teamStats} teamArray={teamArray} />,
+      recorded,
+    );
+    const types = actions.map((a) => a.type);
+    expect(types.filter((t) => t === "teamSchedule/setSeasonSchedule")).toHaveLength(1);
+    expect(types.filter((t) => t === "teamSchedule/addGameToTeamSchedule")).toHaveLength(0);
+    expect(types).toHaveLength(1);
   }, GAME_TEST_TIMEOUT);
 
   it("does nothing when the team array is empty", () => {

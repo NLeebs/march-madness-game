@@ -18,12 +18,10 @@ export const SeasonSchedule: React.FC<SeasonScheduleProps> = ({
 
   useEffect(() => {
     if (teamArray.length > 0) {
-      createSeasonSchedule(teamStats, teamArray).forEach(
-        ({ weekNumber, matchup }) => {
-          dispatch(
-            teamScheduleActions.addGameToTeamSchedule({ weekNumber, matchup })
-          );
-        }
+      dispatch(
+        teamScheduleActions.setSeasonSchedule(
+          createSeasonSchedule(teamStats, teamArray)
+        )
       );
     }
   }, [teamArray, teamStats, dispatch]);
