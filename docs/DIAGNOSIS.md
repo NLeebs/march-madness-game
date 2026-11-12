@@ -117,6 +117,11 @@ The review also confirmed findings 3 (non-atomic bracket persistence; the most s
 49. **Low - Form inputs have no `id`**, so `<Label htmlFor>` doesn't associate the label (accessibility; tests locate inputs by `name`). *Fix later.*
 50. **Low - The whole tournament simulation runs inside one React commit**, so there is no visible game-by-game playback (cf. the "Slow down tourny playing" TODO in `App.tsx`). Informational; the e2e reload test reloads with the save in flight instead of mid-tournament. *Fix later if playback is wanted.*
 
+#### Found in the step 8a code review (not fixed; gameplay changes for their own PR)
+
+51. **Low - The buzzer-beater loop can run forever.** After a tied regulation, possession only changes on a made shot, so if the team with the ball has a 3P % of 0 or `NaN` (e.g. a missing `three-point-percentage` / `opp-three-point-percentage`, which makes `determineBiasedStat` return `NaN`), the `while` never exits and the page freezes. Real data never hits it. *Fix:* switch possession on a miss or cap the iterations; that changes draws and gameplay, so it needs its own PR with pins regenerated.
+52. **Low - Team fouls reset one possession early.** The halftime reset runs at `poss === halftime`, before that possession is played, so the first half has `halftime - 1` possessions and the second half `halftime + 1`. The second half reaches the 7/10-foul bonus slightly more often. Not pinned by a test. *Fix:* reset at `poss === halftime + 1`, as a deliberate gameplay change.
+
 ### React components
 
 11. **Med - Heavy components mix layout math with rendering.**

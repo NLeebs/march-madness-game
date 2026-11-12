@@ -57,7 +57,7 @@ Branch: `refactor/step8a-playgame` off `main`.
 This is a pure refactor under existing characterization tests (`tests/game/playGame*.test.ts`, `tests/game/playGame.stats.test.ts`, `tests/game/draworder/playGame.draworder.test.ts`, the full-run pins). Those tests are the safety net, so no new test is written first.
 
 **Files:**
-- Modify: `src/functions/playGame.ts:148-402` (the game-time section only; lines 1-146 stay byte-identical)
+- Modify: `src/functions/playGame.ts`. New module-private types and helpers go above `playGame`; inside it, the helper functions, favored/underdog selection, schedule-strength and possession derivations stay unchanged, and every stat derivation keeps its arguments exactly.
 - Add (with this PR): `docs/superpowers/specs/2026-11-12-game-logic-extraction-design.md`, `docs/superpowers/plans/2026-11-12-game-logic-extraction.md`
 - Modify: `docs/DIAGNOSIS.md`, `.claude/rules/game-engine.md`
 
@@ -88,11 +88,11 @@ function playPossession(offense: Side, defense: Side, rng: () => number): Posses
 function shootFreeThrows(shooter: Side, numberOfShots: number, rng: () => number): boolean // returns missedLastFT
 ```
 
-Build `favored: Side` and `underdog: Side` from the existing computed constants:
-- `favored.reboundPercentage = teamFavoredReboundPercentage`;
-- `underdog.reboundPercentage = teamUnderdogReboundPercentage`.
+Build `favored: Side` and `underdog: Side` directly from the existing derivation calls (same arguments; they draw nothing from `rng`), replacing the `teamFavoredX` / `teamUnderdogX` constants:
+- `favored.reboundPercentage` = the favored side's defensive rebound derivation (`true` to the rebound helper);
+- `underdog.reboundPercentage` = the underdog side's (`false`).
 
-`playPossession` must call `rng()` in exactly the order of the current favored branch (lines 197-289):
+`playPossession` must call `rng()` in exactly the order of the current favored branch of the possession loop:
 - substitute `offense` for "favored" and `defense` for "underdog";
 - e.g. foul -> `defense.fouls++`, bonus checks on `defense.fouls`, miss -> `defense.reboundPercentage >= rng()` gives "switch", otherwise "keep".
 

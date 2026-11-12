@@ -63,13 +63,13 @@ It also prepares step 9. There, the server recomputes the bracket score itself i
 
 ### 8a - `playGame`: one possession routine
 
-Today the favored and underdog branches of the possession loop (`src/functions/playGame.ts` lines 196-385) are mirror images. So are `favoredShootFT` / `underdogShootFT` and the two halves of the buzzer-beater loop.
+Today the favored and underdog branches of the possession loop in `src/functions/playGame.ts` (the `//// The Game` section) are mirror images. So are `favoredShootFT` / `underdogShootFT` and the two halves of the buzzer-beater loop.
 
 - Collapse them into a single routine parameterized by "offense" and "defense" sides. Each side carries:
   - its pre-computed rates: turnover, two-point attempt ratio, foul-drawn %, 2P %, 3P %, FT %;
-  - the **opponent's** rebound % used after a miss;
+  - its **own** defensive rebound %, read from the defending side (`defense.reboundPercentage`) after the offense misses;
   - its score and foul counter.
-- The biased-stat derivations (lines 73-146) stay exactly as they are. Their asymmetry ("upper limit" / "sync" / "lower limit", and which side passes `true` to the rebound helper) is gameplay. Only the per-possession code is merged.
+- The biased-stat derivations (`determineBiasedStat` / `determineBiasedReboundStats` calls) stay exactly as they are. Their asymmetry ("upper limit" / "sync" / "lower limit", and which side passes `true` to the rebound helper) is gameplay. Only the per-possession code is merged.
 - Keep `playGame(team1, team2, rng = Math.random)` and its `GameResult` return value unchanged.
 - **Draw order:** both branches currently draw `rng()` in the same sequence, so a faithful collapse should leave the draw-order pins unchanged. That is the target.
   - If the implementation still changes the order or count of draws, follow the regeneration procedure and say so in the PR.
