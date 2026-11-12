@@ -40,6 +40,19 @@ const shootFreeThrows = (
   return missedLastFT;
 };
 
+// After a missed shot: the defense rebounds ("switch") or the offense keeps it.
+const rebound = (defense: Side, rng: () => number): PossessionOutcome =>
+  defense.reboundPercentage >= rng() ? "switch" : "keep";
+
+// Shoots the free throws; a miss on the last one goes to a rebound.
+const freeThrowsThenRebound = (
+  offense: Side,
+  defense: Side,
+  numberOfShots: number,
+  rng: () => number
+): PossessionOutcome =>
+  shootFreeThrows(offense, numberOfShots, rng) ? rebound(defense, rng) : "switch";
+
 // Intentionally mutates the given sides' `score` and `fouls` in place: this is the game's local mutable state, not a pure function.
 const playPossession = (
   offense: Side,
@@ -57,13 +70,9 @@ const playPossession = (
     defense.fouls++;
     // Shooting Foul
     if (PERCENT_FOULS_THAT_SHOOT_FT >= rng()) {
-      const missedLastFT = shootFreeThrows(offense, potentialPoints, rng);
-      if (missedLastFT) {
-        return defense.reboundPercentage >= rng() ? "switch" : "keep";
-      }
-      return "switch";
+      return freeThrowsThenRebound(offense, defense, potentialPoints, rng);
     }
-    // Check for Bonus
+    // Check for Bonus (one-and-one)
     else if (defense.fouls >= 7 && defense.fouls < 10) {
       if (offense.freeThrowPercentage >= rng()) {
         offense.score++;
@@ -72,15 +81,11 @@ const playPossession = (
           return "switch";
         }
       }
-      return defense.reboundPercentage >= rng() ? "switch" : "keep";
+      return rebound(defense, rng);
     }
     // Check for double bonus
     else if (defense.fouls >= 10) {
-      const missedLastFT = shootFreeThrows(offense, 2, rng);
-      if (missedLastFT) {
-        return defense.reboundPercentage >= rng() ? "switch" : "keep";
-      }
-      return "switch";
+      return freeThrowsThenRebound(offense, defense, 2, rng);
     }
     // Normal Foul on the floor
     return "replay";
@@ -95,7 +100,7 @@ const playPossession = (
     offense.score += potentialPoints;
     return "switch";
   }
-  return defense.reboundPercentage >= rng() ? "switch" : "keep";
+  return rebound(defense, rng);
 };
 
 export const playGame = (
@@ -170,93 +175,67 @@ export const playGame = (
   );
   const possessions = halftime * 2;
 
-  //// TURNOVER PERCENTAGES ////
-  const teamFavoredTurnoverRate =
-    +teamUnderdog["stats-defense"]["cause-turnover-percentage"];
-  const teamUnderdogTurnoverRate =
-    +teamFavored["stats-defense"]["cause-turnover-percentage"];
-
-  //// FOUL PERCENTAGES ////
-  const teamFavoredCauseFoulPercentage = determineBiasedStat(
-    teamFavored["stats-offensive"]["draw-foul-percentage"],
-    teamUnderdog["stats-defense"]["commit-foul-percentage"],
-    "upper limit"
-  );
-  const teamUnderdogCauseFoulPercentage = determineBiasedStat(
-    teamFavored["stats-defense"]["commit-foul-percentage"],
-    teamUnderdog["stats-offensive"]["draw-foul-percentage"],
-    "lower limit"
-  );
-
-  //// SHOOTING PERCENTAGES ////
-  // Shot Ratios
-  const teamFavoredTwoPointAttemptRatio =
-    teamFavored["stats-offensive"]["two-point-attempt-percentage"];
-  const teamUnderdogTwoPointAttemptRatio =
-    teamUnderdog["stats-offensive"]["two-point-attempt-percentage"];
-
-  // Two Point Percentage
-  const teamFavoredTwoPointPercentage = determineBiasedStat(
-    teamFavored["stats-offensive"]["two-point-percentage"],
-    teamUnderdog["stats-defense"]["opp-two-point-percentage"],
-    "upper limit"
-  );
-  const teamUnderdogTwoPointPercentage = determineBiasedStat(
-    teamFavored["stats-defense"]["opp-two-point-percentage"],
-    teamUnderdog["stats-offensive"]["two-point-percentage"],
-    "sync"
-  );
-
-  // Three Point Percentage
-  const teamFavoredThreePointPercentage = determineBiasedStat(
-    teamFavored["stats-offensive"]["three-point-percentage"],
-    teamUnderdog["stats-defense"]["opp-three-point-percentage"],
-    "upper limit"
-  );
-  const teamUnderdogThreePointPercentage = determineBiasedStat(
-    teamFavored["stats-defense"]["opp-three-point-percentage"],
-    teamUnderdog["stats-offensive"]["three-point-percentage"],
-    "sync"
-  );
-
-  // Free Throw Percentage
-  const teamFavoredFreeThrowPercentage =
-    teamFavored["stats-offensive"]["free-throw-percentage"];
-  const teamUnderdogFreeThrowPercentage =
-    teamUnderdog["stats-offensive"]["free-throw-percentage"];
-
-  //// REBOUNDS ////
-  const teamFavoredReboundPercentage = determineBiasedReboundStats(
-    teamFavored["stats-defense"]["defensive-rebound-percentage"],
-    teamUnderdog["stats-offensive"]["offensive-rebound-percentage"],
-    true
-  );
-  const teamUnderdogReboundPercentage = determineBiasedReboundStats(
-    teamUnderdog["stats-defense"]["defensive-rebound-percentage"],
-    teamFavored["stats-offensive"]["offensive-rebound-percentage"],
-    false
-  );
-
   //// GAME TIME ////
+  // The derivations are pure (no `rng` draws), so their order doesn't matter.
+  // Their asymmetry ("upper limit" / "sync" / "lower limit", and which side
+  // passes `true` to the rebound helper) is gameplay: keep it as is.
+  // Turnover rate comes from the opponent's defense. `reboundPercentage` is
+  // this side's rebound % when defending a miss.
   const favored: Side = {
-    turnoverRate: teamFavoredTurnoverRate,
-    twoPointAttemptRatio: teamFavoredTwoPointAttemptRatio,
-    causeFoulPercentage: teamFavoredCauseFoulPercentage,
-    twoPointPercentage: teamFavoredTwoPointPercentage,
-    threePointPercentage: teamFavoredThreePointPercentage,
-    freeThrowPercentage: teamFavoredFreeThrowPercentage,
-    reboundPercentage: teamFavoredReboundPercentage,
+    turnoverRate: +teamUnderdog["stats-defense"]["cause-turnover-percentage"],
+    causeFoulPercentage: determineBiasedStat(
+      teamFavored["stats-offensive"]["draw-foul-percentage"],
+      teamUnderdog["stats-defense"]["commit-foul-percentage"],
+      "upper limit"
+    ),
+    twoPointAttemptRatio:
+      teamFavored["stats-offensive"]["two-point-attempt-percentage"],
+    twoPointPercentage: determineBiasedStat(
+      teamFavored["stats-offensive"]["two-point-percentage"],
+      teamUnderdog["stats-defense"]["opp-two-point-percentage"],
+      "upper limit"
+    ),
+    threePointPercentage: determineBiasedStat(
+      teamFavored["stats-offensive"]["three-point-percentage"],
+      teamUnderdog["stats-defense"]["opp-three-point-percentage"],
+      "upper limit"
+    ),
+    freeThrowPercentage:
+      teamFavored["stats-offensive"]["free-throw-percentage"],
+    reboundPercentage: determineBiasedReboundStats(
+      teamFavored["stats-defense"]["defensive-rebound-percentage"],
+      teamUnderdog["stats-offensive"]["offensive-rebound-percentage"],
+      true
+    ),
     score: 0,
     fouls: 0,
   };
   const underdog: Side = {
-    turnoverRate: teamUnderdogTurnoverRate,
-    twoPointAttemptRatio: teamUnderdogTwoPointAttemptRatio,
-    causeFoulPercentage: teamUnderdogCauseFoulPercentage,
-    twoPointPercentage: teamUnderdogTwoPointPercentage,
-    threePointPercentage: teamUnderdogThreePointPercentage,
-    freeThrowPercentage: teamUnderdogFreeThrowPercentage,
-    reboundPercentage: teamUnderdogReboundPercentage,
+    turnoverRate: +teamFavored["stats-defense"]["cause-turnover-percentage"],
+    causeFoulPercentage: determineBiasedStat(
+      teamFavored["stats-defense"]["commit-foul-percentage"],
+      teamUnderdog["stats-offensive"]["draw-foul-percentage"],
+      "lower limit"
+    ),
+    twoPointAttemptRatio:
+      teamUnderdog["stats-offensive"]["two-point-attempt-percentage"],
+    twoPointPercentage: determineBiasedStat(
+      teamFavored["stats-defense"]["opp-two-point-percentage"],
+      teamUnderdog["stats-offensive"]["two-point-percentage"],
+      "sync"
+    ),
+    threePointPercentage: determineBiasedStat(
+      teamFavored["stats-defense"]["opp-three-point-percentage"],
+      teamUnderdog["stats-offensive"]["three-point-percentage"],
+      "sync"
+    ),
+    freeThrowPercentage:
+      teamUnderdog["stats-offensive"]["free-throw-percentage"],
+    reboundPercentage: determineBiasedReboundStats(
+      teamUnderdog["stats-defense"]["defensive-rebound-percentage"],
+      teamFavored["stats-offensive"]["offensive-rebound-percentage"],
+      false
+    ),
     score: 0,
     fouls: 0,
   };
