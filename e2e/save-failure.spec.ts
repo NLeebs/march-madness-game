@@ -1,0 +1,42 @@
+import { test, expect } from "./support/test";
+import { ERROR_TOAST } from "./support/errorWatch";
+import { GAME_BUDGET_MS } from "./support/timeouts";
+
+test.use({ backendOptions: { persistStatus: 500 } });
+
+test("a failed bracket save is silent: the recap still shows and Play Again works", async ({
+  page,
+  game,
+  backend,
+  errors,
+}) => {
+  test.setTimeout(GAME_BUDGET_MS + 60_000);
+  // The browser logs the failed request itself as a console error, without its URL. So the
+  // allowance is narrowed by checking below that the only failed response is the bracket save.
+  const failedResponses: string[] = [];
+  page.on("response", (r) => {
+    if (r.status() >= 400) failedResponses.push(new URL(r.url()).pathname);
+  });
+  errors.allow(/Failed to load resource.*500/, "silent save failure, finding 43");
+
+  await game.open();
+  await game.start();
+  await game.finishSeason();
+  await game.goToTournament();
+  await game.makePicks(1);
+  await game.playTournament();
+
+  const recap = await game.openRecap();
+  await expect(recap.getByText("We Have a New Champ")).toBeVisible();
+  await expect.poll(() => backend.persistRequests.length, { message: "save was attempted" }).toBe(1);
+  // Today the player is told nothing: no error toast (the auto `errors` fixture checks this too).
+  await expect(page.locator(ERROR_TOAST)).toHaveCount(0);
+
+  // The response event can land after the persist-request poll above, so poll for it too.
+  await expect
+    .poll(() => failedResponses, { message: "the only failed response is the bracket save" })
+    .toEqual(["/api/bracket/simulation"]);
+
+  await game.restart();
+  await expect(page.getByRole("button", { name: "Start the game" })).toBeEnabled();
+});

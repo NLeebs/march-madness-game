@@ -7,6 +7,18 @@ import {
 } from "@/types";
 import { HIGHEST_SEED } from "@/src/constants";
 
+/** Points awarded per correct pick, by the round whose results are scored. */
+export const ROUND_POINTS: Readonly<
+  Record<1 | 2 | "sweet sixteen" | "elite eight" | "final four" | "finals", number>
+> = {
+  1: 10,
+  2: 20,
+  "sweet sixteen": 40,
+  "elite eight": 80,
+  "final four": 160,
+  finals: 320,
+};
+
 export interface TournamentState {
   yearId: string;
   tournamentScoringRulesId: string;
@@ -258,29 +270,24 @@ const tournamentSlice = createSlice({
       }
     },
     comparePicksAndGames(state, action) {
-      let pointsPerCorrectPick, nextRoundKey;
+      let nextRoundKey;
+      const pointsPerCorrectPick = ROUND_POINTS[action.payload.round];
       if (action.payload.round === 1) {
-        pointsPerCorrectPick = 10;
         nextRoundKey = "roundTwoMatchups";
       }
       if (action.payload.round === 2) {
-        pointsPerCorrectPick = 20;
         nextRoundKey = "roundSweetSixteenMatchups";
       }
       if (action.payload.round === "sweet sixteen") {
-        pointsPerCorrectPick = 40;
         nextRoundKey = "roundEliteEightMatchups";
       }
       if (action.payload.round === "elite eight") {
-        pointsPerCorrectPick = 80;
         nextRoundKey = "roundFinalFourMatchups";
       }
       if (action.payload.round === "final four") {
-        pointsPerCorrectPick = 160;
         nextRoundKey = "roundFinalsMatchups";
       }
       if (action.payload.round === "finals") {
-        pointsPerCorrectPick = 320;
         nextRoundKey = "champion";
       }
 

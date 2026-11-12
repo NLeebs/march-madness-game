@@ -7,6 +7,7 @@ export default defineConfig({
     include: ["src/**/*.test.ts", "src/**/*.test.tsx", "tests/**/*.test.ts", "tests/**/*.test.tsx"],
     exclude: [
       "node_modules",
+      "e2e/**",
       "dist",
       "data-scraping",
       "**/*.config.js",

@@ -144,6 +144,8 @@ export const TournamentMatchup: React.FC<TournamentMatchupProps> = ({
     <TournamentMatchupCard
       key={`${round}-${region}-${index}-${i}`}
       round={round}
+      region={region}
+      index={index}
       matchup={matchup}
       matchupIndex={i}
       matchupTeam={teamObj}

@@ -13,7 +13,7 @@ export const PingNotification: React.FC<PingNotificationProps> = ({ icon }) => {
       className="absolute flex justify-center items-center p-1 -top-2 -right-2 rounded-full"
       style={{ backgroundColor: CONFIRMATION_GREEN }}
     >
-      {icon === "trophy" && <TrophyIcon className="h-4 w-4 text-slate-50" />}
+      {icon === "trophy" && <TrophyIcon data-testid="conf-champion-icon" className="h-4 w-4 text-slate-50" />}
       {icon === "check" && <CheckIcon className="h-4 w-4 text-slate-50" />}
     </div>
   );

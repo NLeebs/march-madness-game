@@ -117,6 +117,7 @@ export const Tournament = () => {
                 `}
       >
         <motion.div
+          data-testid="bracket-column-1"
           initial={false}
           animate={{
             width:
@@ -150,6 +151,7 @@ export const Tournament = () => {
         </motion.div>
 
         <motion.div
+          data-testid="bracket-column-2"
           initial={false}
           animate={{
             width:
@@ -187,6 +189,7 @@ export const Tournament = () => {
         </motion.div>
 
         <motion.div
+          data-testid="bracket-column-sweet-sixteen"
           initial={false}
           animate={{
             width:
@@ -227,6 +230,7 @@ export const Tournament = () => {
 
         {/* Elite Eight  */}
         <motion.div
+          data-testid="bracket-column-elite-eight"
           initial={false}
           animate={{
             width:
@@ -263,6 +267,7 @@ export const Tournament = () => {
 
         {/* Final Four  */}
         <motion.div
+          data-testid="bracket-column-final-four"
           initial={false}
           animate={{
             width:
@@ -298,14 +303,20 @@ export const Tournament = () => {
               : ` h-max ${styles.gridFinal}`
           }`}
         >
-          <div className="flex flex-col gap-y-16 min-w-300">
+          <div
+            data-testid="bracket-column-finals"
+            className="flex flex-col gap-y-16 min-w-300"
+          >
             <TournamentRound
               region="championship"
               round="finals"
               roundUIPosition={finalsUIPosition}
             />
           </div>
-          <div className="flex flex-col gap-y-16 min-w-300">
+          <div
+            data-testid="bracket-column-champion"
+            className="flex flex-col gap-y-16 min-w-300"
+          >
             <TournamentRound
               region="champion"
               round="champion"
@@ -328,6 +339,7 @@ export const Tournament = () => {
 
         {/* Final Four  */}
         <motion.div
+          data-testid="bracket-column-final-four"
           initial={false}
           animate={{
             width:
@@ -357,6 +369,7 @@ export const Tournament = () => {
 
         {/* Elite Eight  */}
         <motion.div
+          data-testid="bracket-column-elite-eight"
           initial={false}
           animate={{
             width:
@@ -393,6 +406,7 @@ export const Tournament = () => {
 
         {/* Sweet Sixteen  */}
         <motion.div
+          data-testid="bracket-column-sweet-sixteen"
           initial={false}
           animate={{
             width:
@@ -433,6 +447,7 @@ export const Tournament = () => {
 
         {/* Round 2  */}
         <motion.div
+          data-testid="bracket-column-2"
           initial={false}
           animate={{
             width:
@@ -471,6 +486,7 @@ export const Tournament = () => {
 
         {/* Round 1  */}
         <motion.div
+          data-testid="bracket-column-1"
           initial={false}
           animate={{
             width:
@@ -506,6 +522,7 @@ export const Tournament = () => {
         {/* Playin Games Smaller Screens  */}
         {screenWidth < TOURNAMENT_BREAK_POINT && (
           <motion.div
+            data-testid="bracket-column-playin"
             initial={false}
             animate={{
               width:
@@ -538,7 +555,7 @@ export const Tournament = () => {
 
       {/* Playin Games Larger Screens  */}
       {screenWidth > TOURNAMENT_BREAK_POINT && (
-        <div>
+        <div data-testid="bracket-column-playin">
           <TournamentRound region="playin" round="playin" />
         </div>
       )}

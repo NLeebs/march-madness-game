@@ -8,11 +8,13 @@ import { TeamMap } from "@/models";
 interface ConferenceGroupsProps {
   conferenceTeams: TeamMap;
   isPowerConf: string;
+  conferenceKey?: string;
 }
 
 export const ConferenceGroups: React.FC<ConferenceGroupsProps> = ({
   conferenceTeams,
   isPowerConf,
+  conferenceKey,
 }) => {
   const appState = useSelector((state: RootState) => state.appState);
   const regularSeasonRecords = useSelector(
@@ -21,6 +23,11 @@ export const ConferenceGroups: React.FC<ConferenceGroupsProps> = ({
 
   return (
     <div
+      data-testid={
+        conferenceKey === undefined
+          ? undefined
+          : `conference-group-${conferenceKey}`
+      }
       className={`max-w-300 flex flex-row flex-wrap gap-4 p-8 bg-slate-50 
       ${isPowerConf === "true" ? "" : "lg:flex hidden "}
       transition-opacity duration-500 opacity-0

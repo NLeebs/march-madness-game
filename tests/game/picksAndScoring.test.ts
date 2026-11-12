@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { tounramentPlayersPicksActions, tournamentActions } from "@/store";
+import {
+  ROUND_POINTS,
+  tounramentPlayersPicksActions,
+  tournamentActions,
+} from "@/store";
 // The slices are the modules' default exports (not re-exported by the barrel).
 import picksSlice from "@/store/tournamentPlayersPicksSlice";
 import tournamentSlice from "@/store/tournamentSlice";
@@ -223,6 +227,17 @@ describe("replacePlayinPicksWithWinner", () => {
 });
 
 describe("comparePicksAndGames", () => {
+  it("exports the points per correct pick for each round", () => {
+    expect(ROUND_POINTS).toEqual({
+      1: 10,
+      2: 20,
+      "sweet sixteen": 40,
+      "elite eight": 80,
+      "final four": 160,
+      finals: 320,
+    });
+  });
+
   type Slot = { team: string; seed: string };
   const selectedOf = (t: unknown) => (t as { selected?: boolean }).selected;
   const slot = (team: string): Slot => ({ team, seed: "1" });

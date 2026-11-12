@@ -15,6 +15,7 @@ export const PlayerPickBar: React.FC<PlayerPickBarProps> = ({
 }) => {
   return (
     <div
+      data-testid="pick-bar"
       className={`w-full flex flex-row justify-center items-center h-5 text-sm text-center 
           ${!pick && "bg-slate-200"}  
           ${team === pick && "bg-green-100 text-green-700"}

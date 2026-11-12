@@ -6,7 +6,7 @@ import {
   teamStatsActions,
 } from "@/store";
 import type { AppStore } from "@/store";
-import { mulberry32 } from "@/tests/game/helpers/rng";
+import { mulberry32 } from "@/tests/game/helpers/mulberry32";
 import { buildTeamStats } from "./teamStats.factory";
 
 export interface League {

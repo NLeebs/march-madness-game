@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "e2e": "playwright test",
+    "e2e:build": "tsx scripts/e2e/build.mts",
+    "e2e:ui": "playwright test --ui",
     "lint": "next lint",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -50,6 +53,7 @@
     "zod": "^3.25.61"
   },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",

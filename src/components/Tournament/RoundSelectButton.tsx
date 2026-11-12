@@ -246,6 +246,7 @@ export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
   return (
     <motion.button
       onClick={roundSelectHandler}
+      aria-current={round === selectedRound ? "true" : undefined}
       initial={{
         width: TOURNAMENT_ROUND_COLUMN_WIDTH,
         color: PRIMARY_TEXT_COLOR,

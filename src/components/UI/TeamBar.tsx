@@ -69,6 +69,8 @@ export const TeamBar: React.FC<TeamBarProps> = ({
 
   return (
     <div
+      data-testid="team-bar"
+      data-team={team}
       className={`w-full relative flex justify-between items-center
         ${round === "champion" && team !== "" ? "flex-col gap-2" : "flex-row"} 
         ${teamBarClasses}`}
@@ -182,6 +184,7 @@ export const TeamBar: React.FC<TeamBarProps> = ({
       </div>
 
       <div
+        data-testid="team-record"
         className={`${appState.regularSeason && "min-w-50"} ${
           win && "font-bold"
         }`}
