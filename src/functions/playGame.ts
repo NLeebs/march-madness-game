@@ -6,6 +6,103 @@ import {
 import { GameResult } from "@/types";
 import { TeamStats } from "@/models";
 
+// One team's possession inputs and running game state. `reboundPercentage` is
+// this side's rebound chance when it is DEFENDING a missed shot.
+interface Side {
+  turnoverRate: number;
+  twoPointAttemptRatio: number;
+  causeFoulPercentage: number;
+  twoPointPercentage: number;
+  threePointPercentage: number;
+  freeThrowPercentage: number;
+  reboundPercentage: number;
+  score: number;
+  fouls: number; // fouls committed by this side
+}
+
+// "switch" = possession changes, "keep" = same team shoots again,
+// "replay" = floor foul: the possession does not count (poss -= 1).
+type PossessionOutcome = "switch" | "keep" | "replay";
+
+// Returns true if the last free throw was missed.
+const shootFreeThrows = (
+  shooter: Side,
+  numberOfShots: number,
+  rng: () => number
+): boolean => {
+  let missedLastFT = false;
+  for (let FT = 1; FT <= numberOfShots; FT++) {
+    if (shooter.freeThrowPercentage >= rng()) {
+      shooter.score++;
+      missedLastFT = false;
+    } else missedLastFT = true;
+  }
+  return missedLastFT;
+};
+
+// After a missed shot: the defense rebounds ("switch") or the offense keeps it.
+const rebound = (defense: Side, rng: () => number): PossessionOutcome =>
+  defense.reboundPercentage >= rng() ? "switch" : "keep";
+
+// Shoots the free throws; a miss on the last one goes to a rebound.
+const freeThrowsThenRebound = (
+  offense: Side,
+  defense: Side,
+  numberOfShots: number,
+  rng: () => number
+): PossessionOutcome =>
+  shootFreeThrows(offense, numberOfShots, rng) ? rebound(defense, rng) : "switch";
+
+// Intentionally mutates the given sides' `score` and `fouls` in place: this is the game's local mutable state, not a pure function.
+const playPossession = (
+  offense: Side,
+  defense: Side,
+  rng: () => number
+): PossessionOutcome => {
+  // Chance of turnover
+  if (offense.turnoverRate >= rng()) return "switch";
+
+  // Was 2 or 3
+  const potentialPoints = offense.twoPointAttemptRatio >= rng() ? 2 : 3;
+
+  // Check if a foul on defense and free throws awarded
+  if (offense.causeFoulPercentage >= rng()) {
+    defense.fouls++;
+    // Shooting Foul
+    if (PERCENT_FOULS_THAT_SHOOT_FT >= rng()) {
+      return freeThrowsThenRebound(offense, defense, potentialPoints, rng);
+    }
+    // Check for Bonus (one-and-one)
+    else if (defense.fouls >= 7 && defense.fouls < 10) {
+      if (offense.freeThrowPercentage >= rng()) {
+        offense.score++;
+        if (offense.freeThrowPercentage >= rng()) {
+          offense.score++;
+          return "switch";
+        }
+      }
+      return rebound(defense, rng);
+    }
+    // Check for double bonus
+    else if (defense.fouls >= 10) {
+      return freeThrowsThenRebound(offense, defense, 2, rng);
+    }
+    // Normal Foul on the floor
+    return "replay";
+  }
+
+  // Chance of Scoring
+  const shotPercentage =
+    potentialPoints === 2
+      ? offense.twoPointPercentage
+      : offense.threePointPercentage;
+  if (shotPercentage >= rng()) {
+    offense.score += potentialPoints;
+    return "switch";
+  }
+  return rebound(defense, rng);
+};
+
 export const playGame = (
   team1Stats: TeamStats,
   team2Stats: TeamStats,
@@ -78,105 +175,71 @@ export const playGame = (
   );
   const possessions = halftime * 2;
 
-  //// TURNOVER PERCENTAGES ////
-  const teamFavoredTurnoverRate =
-    +teamUnderdog["stats-defense"]["cause-turnover-percentage"];
-  const teamUnderdogTurnoverRate =
-    +teamFavored["stats-defense"]["cause-turnover-percentage"];
-
-  //// FOUL PERCENTAGES ////
-  const teamFavoredCauseFoulPercentage = determineBiasedStat(
-    teamFavored["stats-offensive"]["draw-foul-percentage"],
-    teamUnderdog["stats-defense"]["commit-foul-percentage"],
-    "upper limit"
-  );
-  const teamUnderdogCauseFoulPercentage = determineBiasedStat(
-    teamFavored["stats-defense"]["commit-foul-percentage"],
-    teamUnderdog["stats-offensive"]["draw-foul-percentage"],
-    "lower limit"
-  );
-
-  //// SHOOTING PERCENTAGES ////
-  // Shot Ratios
-  const teamFavoredTwoPointAttemptRatio =
-    teamFavored["stats-offensive"]["two-point-attempt-percentage"];
-  const teamUnderdogTwoPointAttemptRatio =
-    teamUnderdog["stats-offensive"]["two-point-attempt-percentage"];
-
-  // Two Point Percentage
-  const teamFavoredTwoPointPercentage = determineBiasedStat(
-    teamFavored["stats-offensive"]["two-point-percentage"],
-    teamUnderdog["stats-defense"]["opp-two-point-percentage"],
-    "upper limit"
-  );
-  const teamUnderdogTwoPointPercentage = determineBiasedStat(
-    teamFavored["stats-defense"]["opp-two-point-percentage"],
-    teamUnderdog["stats-offensive"]["two-point-percentage"],
-    "sync"
-  );
-
-  // Three Point Percentage
-  const teamFavoredThreePointPercentage = determineBiasedStat(
-    teamFavored["stats-offensive"]["three-point-percentage"],
-    teamUnderdog["stats-defense"]["opp-three-point-percentage"],
-    "upper limit"
-  );
-  const teamUnderdogThreePointPercentage = determineBiasedStat(
-    teamFavored["stats-defense"]["opp-three-point-percentage"],
-    teamUnderdog["stats-offensive"]["three-point-percentage"],
-    "sync"
-  );
-
-  // Free Throw Percentage
-  const teamFavoredFreeThrowPercentage =
-    teamFavored["stats-offensive"]["free-throw-percentage"];
-  const teamUnderdogFreeThrowPercentage =
-    teamUnderdog["stats-offensive"]["free-throw-percentage"];
-
-  //// REBOUNDS ////
-  const teamFavoredReboundPercentage = determineBiasedReboundStats(
-    teamFavored["stats-defense"]["defensive-rebound-percentage"],
-    teamUnderdog["stats-offensive"]["offensive-rebound-percentage"],
-    true
-  );
-  const teamUnderdogReboundPercentage = determineBiasedReboundStats(
-    teamUnderdog["stats-defense"]["defensive-rebound-percentage"],
-    teamFavored["stats-offensive"]["offensive-rebound-percentage"],
-    false
-  );
-
   //// GAME TIME ////
-  let favoredScore = 0;
-  let underdogScore = 0;
-  let favoredFouls = 0;
-  let underdogFouls = 0;
-  let potentialPoints = 0;
+  // The derivations are pure (no `rng` draws), so their order doesn't matter.
+  // Their asymmetry ("upper limit" / "sync" / "lower limit", and which side
+  // passes `true` to the rebound helper) is gameplay: keep it as is.
+  // Turnover rate comes from the opponent's defense. `reboundPercentage` is
+  // this side's rebound % when defending a miss.
+  const favored: Side = {
+    turnoverRate: +teamUnderdog["stats-defense"]["cause-turnover-percentage"],
+    causeFoulPercentage: determineBiasedStat(
+      teamFavored["stats-offensive"]["draw-foul-percentage"],
+      teamUnderdog["stats-defense"]["commit-foul-percentage"],
+      "upper limit"
+    ),
+    twoPointAttemptRatio:
+      teamFavored["stats-offensive"]["two-point-attempt-percentage"],
+    twoPointPercentage: determineBiasedStat(
+      teamFavored["stats-offensive"]["two-point-percentage"],
+      teamUnderdog["stats-defense"]["opp-two-point-percentage"],
+      "upper limit"
+    ),
+    threePointPercentage: determineBiasedStat(
+      teamFavored["stats-offensive"]["three-point-percentage"],
+      teamUnderdog["stats-defense"]["opp-three-point-percentage"],
+      "upper limit"
+    ),
+    freeThrowPercentage:
+      teamFavored["stats-offensive"]["free-throw-percentage"],
+    reboundPercentage: determineBiasedReboundStats(
+      teamFavored["stats-defense"]["defensive-rebound-percentage"],
+      teamUnderdog["stats-offensive"]["offensive-rebound-percentage"],
+      true
+    ),
+    score: 0,
+    fouls: 0,
+  };
+  const underdog: Side = {
+    turnoverRate: +teamFavored["stats-defense"]["cause-turnover-percentage"],
+    causeFoulPercentage: determineBiasedStat(
+      teamFavored["stats-defense"]["commit-foul-percentage"],
+      teamUnderdog["stats-offensive"]["draw-foul-percentage"],
+      "lower limit"
+    ),
+    twoPointAttemptRatio:
+      teamUnderdog["stats-offensive"]["two-point-attempt-percentage"],
+    twoPointPercentage: determineBiasedStat(
+      teamFavored["stats-defense"]["opp-two-point-percentage"],
+      teamUnderdog["stats-offensive"]["two-point-percentage"],
+      "sync"
+    ),
+    threePointPercentage: determineBiasedStat(
+      teamFavored["stats-defense"]["opp-three-point-percentage"],
+      teamUnderdog["stats-offensive"]["three-point-percentage"],
+      "sync"
+    ),
+    freeThrowPercentage:
+      teamUnderdog["stats-offensive"]["free-throw-percentage"],
+    reboundPercentage: determineBiasedReboundStats(
+      teamUnderdog["stats-defense"]["defensive-rebound-percentage"],
+      teamFavored["stats-offensive"]["offensive-rebound-percentage"],
+      false
+    ),
+    score: 0,
+    fouls: 0,
+  };
   let secondHalf = false;
-
-  // Game functions
-  const changePossession = () => {
-    favoredHasPossession = !favoredHasPossession;
-  };
-  const favoredShootFT = (numberOfShots: number) => {
-    let missedLastFT: boolean;
-    for (let FT = 1; FT <= numberOfShots; FT++) {
-      if (teamFavoredFreeThrowPercentage >= rng()) {
-        favoredScore++;
-        missedLastFT = false;
-      } else missedLastFT = true;
-    }
-    return missedLastFT;
-  };
-  const underdogShootFT = (numberOfShots: number) => {
-    let missedLastFT: boolean;
-    for (let FT = 1; FT <= numberOfShots; FT++) {
-      if (teamUnderdogFreeThrowPercentage >= rng()) {
-        underdogScore++;
-        missedLastFT = false;
-      } else missedLastFT = true;
-    }
-    return missedLastFT;
-  };
 
   // The Tipoff
   const tip = rng();
@@ -189,225 +252,33 @@ export const playGame = (
     // Halftime Logic
     if (poss === halftime && secondHalf === false) {
       secondHalf = true;
-      favoredFouls = 0;
-      underdogFouls = 0;
+      favored.fouls = 0;
+      underdog.fouls = 0;
     }
 
-    // FAVORED TEAM POSSESSION
-    if (favoredHasPossession) {
-      // Chance of turnover
-      if (teamFavoredTurnoverRate >= rng()) {
-        changePossession();
-        continue;
-      }
-
-      // Was 2 or 3
-      if (teamFavoredTwoPointAttemptRatio >= rng()) potentialPoints = 2;
-      else potentialPoints = 3;
-
-      // Check if a foul on defense and free throws awarded
-      if (teamFavoredCauseFoulPercentage >= rng()) {
-        underdogFouls++;
-        // Shooting Foul
-        if (PERCENT_FOULS_THAT_SHOOT_FT >= rng()) {
-          let missedLastFT = favoredShootFT(potentialPoints);
-
-          if (missedLastFT) {
-            if (teamUnderdogReboundPercentage >= rng()) {
-              changePossession();
-              continue;
-            } else continue;
-          } else {
-            changePossession();
-            continue;
-          }
-        }
-        // Check for Bonus
-        else if (underdogFouls >= 7 && underdogFouls < 10) {
-          if (teamFavoredFreeThrowPercentage >= rng()) {
-            favoredScore++;
-            if (teamFavoredFreeThrowPercentage >= rng()) {
-              favoredScore++;
-              changePossession();
-              continue;
-            } else {
-              if (teamUnderdogReboundPercentage >= rng()) {
-                changePossession();
-                continue;
-              } else continue;
-            }
-          } else {
-            if (teamUnderdogReboundPercentage >= rng()) {
-              changePossession();
-              continue;
-            } else continue;
-          }
-        }
-        // Check for double bonus
-        else if (underdogFouls >= 10) {
-          let missedLastFT = favoredShootFT(2);
-          if (missedLastFT) {
-            if (teamUnderdogReboundPercentage >= rng()) {
-              changePossession();
-              continue;
-            } else continue;
-          } else {
-            changePossession();
-            continue;
-          }
-        }
-        // Normal Foul on the floor
-        else {
-          poss -= 1;
-          continue;
-        }
-      }
-
-      // Chance of Scoring
-      if (potentialPoints === 2) {
-        if (teamFavoredTwoPointPercentage >= rng()) {
-          favoredScore += potentialPoints;
-          changePossession();
-          continue;
-        } else {
-          if (teamUnderdogReboundPercentage >= rng()) {
-            changePossession();
-            continue;
-          } else continue;
-        }
-      } else if (potentialPoints === 3) {
-        if (teamFavoredThreePointPercentage >= rng()) {
-          favoredScore += potentialPoints;
-          changePossession();
-          continue;
-        } else {
-          if (teamUnderdogReboundPercentage >= rng()) {
-            changePossession();
-            continue;
-          } else continue;
-        }
-      }
-
-      // UNDERDOG TEAM POSSESSION
-    } else {
-      if (teamUnderdogTurnoverRate >= rng()) {
-        changePossession();
-        continue;
-      }
-
-      // Was 2 or 3
-      if (teamUnderdogTwoPointAttemptRatio >= rng())
-        potentialPoints = 2;
-      else potentialPoints = 3;
-
-      // Check if a foul on defense and free throws awarded
-      if (teamUnderdogCauseFoulPercentage >= rng()) {
-        favoredFouls++;
-        // Shooting Foul
-        if (PERCENT_FOULS_THAT_SHOOT_FT >= rng()) {
-          let missedLastFT = underdogShootFT(potentialPoints);
-
-          if (missedLastFT) {
-            if (teamFavoredReboundPercentage >= rng()) {
-              changePossession();
-              continue;
-            } else continue;
-          } else {
-            changePossession();
-            continue;
-          }
-        }
-        // Check for Bonus
-        else if (favoredFouls >= 7 && favoredFouls < 10) {
-          if (teamUnderdogFreeThrowPercentage >= rng()) {
-            underdogScore++;
-            if (teamUnderdogFreeThrowPercentage >= rng()) {
-              underdogScore++;
-              changePossession();
-              continue;
-            } else {
-              if (teamFavoredReboundPercentage >= rng()) {
-                changePossession();
-                continue;
-              } else continue;
-            }
-          } else {
-            if (teamFavoredReboundPercentage >= rng()) {
-              changePossession();
-              continue;
-            } else continue;
-          }
-        }
-        // Check for double bonus
-        else if (favoredFouls >= 10) {
-          let missedLastFT = underdogShootFT(2);
-          if (missedLastFT) {
-            if (teamFavoredReboundPercentage >= rng()) {
-              changePossession();
-              continue;
-            } else continue;
-          } else {
-            changePossession();
-            continue;
-          }
-        }
-        // Normal Foul on the floor
-        else {
-          poss -= 1;
-          continue;
-        }
-      }
-
-      // Chance of Scoring
-      if (potentialPoints === 2) {
-        if (teamUnderdogTwoPointPercentage >= rng()) {
-          underdogScore += potentialPoints;
-          changePossession();
-          continue;
-        } else {
-          if (teamFavoredReboundPercentage >= rng()) {
-            changePossession();
-            continue;
-          } else continue;
-        }
-      } else if (potentialPoints === 3) {
-        if (teamUnderdogThreePointPercentage >= rng()) {
-          underdogScore += potentialPoints;
-          changePossession();
-          continue;
-        } else {
-          if (teamFavoredReboundPercentage >= rng()) {
-            changePossession();
-            continue;
-          } else continue;
-        }
-      }
-    }
+    const outcome = favoredHasPossession
+      ? playPossession(favored, underdog, rng)
+      : playPossession(underdog, favored, rng);
+    if (outcome === "replay") poss -= 1;
+    else if (outcome === "switch") favoredHasPossession = !favoredHasPossession;
   }
 
   // Buzzer Beater!
-  while (favoredScore === underdogScore) {
-    // Favored Chance to win
-    if (favoredHasPossession) {
-      if (teamFavoredThreePointPercentage >= rng()) {
-        favoredScore += 1;
-        changePossession();
-      }
-    } else {
-      if (teamUnderdogThreePointPercentage >= rng()) {
-        underdogScore += 1;
-        changePossession();
-      }
+  while (favored.score === underdog.score) {
+    const offense = favoredHasPossession ? favored : underdog;
+    if (offense.threePointPercentage >= rng()) {
+      offense.score += 1;
+      favoredHasPossession = !favoredHasPossession;
     }
   }
 
   // Return game result object
   return {
     favoredTeam: teamFavored.name,
-    favoredScore,
+    favoredScore: favored.score,
     favoredRPI: +teamFavored.rpi,
     underdogTeam: teamUnderdog.name,
-    underdogScore,
+    underdogScore: underdog.score,
     underdogRPI: +teamUnderdog.rpi,
   };
 };
