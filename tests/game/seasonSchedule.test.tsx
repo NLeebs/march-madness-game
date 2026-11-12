@@ -153,12 +153,10 @@ describe("SeasonSchedule", () => {
 
   it("dispatches the whole schedule as one setSeasonSchedule action", () => {
     const league = buildLeague();
-    const store = createFastStore();
-    configureStoreForLeague(store, league);
-    const teamArray = store.getState().teamSchedule.teamArray;
     const { middleware, actions } = recordActions();
     const recorded = createFastStore({ extraMiddleware: [middleware] });
     configureStoreForLeague(recorded, league);
+    const teamArray = recorded.getState().teamSchedule.teamArray;
     actions.length = 0;
     renderWithStore(
       <SeasonSchedule teamStats={league.teamStats} teamArray={teamArray} />,

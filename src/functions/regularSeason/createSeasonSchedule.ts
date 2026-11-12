@@ -44,7 +44,7 @@ export function createSeasonSchedule(
     }
   });
 
-  const scheduleNonConferenceGames =(weekNo: number) => {
+  const scheduleNonConferenceGames = (weekNo: number) => {
     randomTeamSchedule([...teamArray], weekNo);
   };
 

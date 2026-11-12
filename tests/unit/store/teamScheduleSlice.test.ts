@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { createAppStore } from "@/store/store";
 import { teamScheduleActions } from "@/store";
+import { AMOUNT_SEASON_GAMES } from "@/src/constants";
 import type { TeamSchedule } from "@/types";
 
 const A: TeamSchedule = { team: "A", conference: "c1" };
@@ -40,7 +41,7 @@ describe("teamScheduleSlice setSeasonSchedule", () => {
       [C, D],
     ]);
     expect(weeks.week2).toEqual([[A, C]]);
-    for (let w = 3; w <= 30; w++) expect(weeks[`week${w}`]).toEqual([]);
+    for (let w = 3; w <= AMOUNT_SEASON_GAMES; w++) expect(weeks[`week${w}`]).toEqual([]);
   });
 
   it("appends to games already in a week", () => {
@@ -50,7 +51,7 @@ describe("teamScheduleSlice setSeasonSchedule", () => {
       preloadedState: {
         teamSchedule: { teamArray: [], teamSchedules: { week1: [[X, Y]] } },
       },
-    } as never);
+    });
     store.dispatch(teamScheduleActions.setSeasonSchedule([game("week1", A, B)]));
     expect(store.getState().teamSchedule.teamSchedules.week1).toEqual([
       [X, Y],
