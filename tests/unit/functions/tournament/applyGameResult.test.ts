@@ -4,6 +4,7 @@ import {
   applyPlayinResult,
 } from "@/src/functions/tournament/applyGameResult";
 import { deepFreeze } from "./deepFreeze";
+import { GameDataError } from "@/src/functions/generic";
 import type { BracketMatchups, TournamentRoundMatchups } from "@/types";
 
 type Slot = Record<string, unknown>;
@@ -129,7 +130,7 @@ describe("applyGameResult", () => {
     seed,
   });
 
-  it("round 1: pushes the winner at floor(gameIndex/2) and sets score/win", () => {
+  it("round 1: places the winner in game floor(gameIndex/2) and sets score/win", () => {
     let b = bracket();
     b = applyGameResult(b, 1, result("west", 0, "s01", "1"));
     b = applyGameResult(b, 1, result("west", 1, "s33", "9"));
@@ -152,14 +153,46 @@ describe("applyGameResult", () => {
     ]);
   });
 
-  it("fills eastWest in dispatch order: east before west puts east in slot 0", () => {
+  it("places eastWest by ROUND_CONFIG teamIndex, not dispatch order: east before west still puts west in slot 0", () => {
     let b = bracket();
     b = applyGameResult(b, "elite eight", result("east", 0, "e1", "1"));
     b = applyGameResult(b, "elite eight", result("west", 0, "w1", "1"));
     expect(b.roundFinalFourMatchups.eastWest[0]).toEqual([
-      { team: "e1", seed: "1" },
       { team: "w1", seed: "1" },
+      { team: "e1", seed: "1" },
     ]);
+  });
+
+  it("places a same-region winner at gameIndex % 2, whatever the dispatch order", () => {
+    let b = bracket();
+    b = applyGameResult(b, 1, result("west", 1, "s33", "9"));
+    b = applyGameResult(b, 1, result("west", 0, "s01", "1"));
+    expect(b.roundTwoMatchups.west[0]).toEqual([
+      { team: "s01", seed: "1" },
+      { team: "s33", seed: "9" },
+    ]);
+  });
+
+  it("applying the same result twice leaves one team in the slot", () => {
+    let b = bracket();
+    b = applyGameResult(b, 1, result("west", 0, "s01", "1"));
+    b = applyGameResult(b, 1, result("west", 0, "s01", "1"));
+    expect(b.roundTwoMatchups.west[0]).toEqual([{ team: "s01", seed: "1" }]);
+  });
+
+  it("throws a GameDataError carrying round and gameIndex on a null region", () => {
+    let caught: unknown;
+    try {
+      applyGameResult(bracket(), 1, { ...result("west", 3, "s01", "1"), region: null });
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(GameDataError);
+    expect((caught as GameDataError).details).toMatchObject({
+      round: 1,
+      gameIndex: 3,
+      winningTeam: "s01",
+    });
   });
 
   it("advances through final four and finals", () => {

@@ -1,3 +1,4 @@
+import { GameDataError } from "@/src/functions/generic";
 import {
   PLAYIN_ROUND_ONE_SLOTS,
   ROUND_CONFIG,
@@ -78,9 +79,11 @@ export function applyPlayinResult(
 type RoundGames = Record<string, Game[]>;
 
 /**
- * Applies a tournament game result: pushes the winner onto the next round
- * (push semantics, so call order decides the slot) and records score/win on
- * the played game. Replaces only the round's own and next round's keys.
+ * Applies a tournament game result: writes the winner into its next-round
+ * slot (`ROUND_CONFIG[round].advance[region].teamIndex` when the region
+ * changes, else `gameIndex % 2`, the same slots picks use) and records
+ * score/win on the played game. Replaces only the round's own and next
+ * round's keys.
  */
 export function applyGameResult(
   bracket: BracketMatchups,
@@ -88,19 +91,27 @@ export function applyGameResult(
   result: TournamentGameResult
 ): BracketMatchups {
   if (result.region === null) {
-    throw new Error("applyGameResult: result has no region");
+    throw new GameDataError("applyGameResult: result has no region", {
+      round,
+      gameIndex: result.gameIndex,
+      winningTeam: result.winningTeam,
+    });
   }
   const region: TournamentRegion = result.region;
   const { matchupsKey, nextMatchupsKey } = ROUND_CONFIG[round];
   const nextRegion = nextRegionOf(round, region);
   const slotIndex = Math.floor(result.gameIndex / 2);
+  const teamIndex =
+    ROUND_CONFIG[round].advance[region]?.teamIndex ?? result.gameIndex % 2;
 
   const nextRound = bracket[nextMatchupsKey] as unknown as RoundGames;
   const nextRegionGames = nextRound[nextRegion].map((g) => g);
-  nextRegionGames[slotIndex] = [
-    ...nextRegionGames[slotIndex],
-    { team: result.winningTeam, seed: result.seed } as unknown as Game[number],
-  ];
+  const nextGame = [...nextRegionGames[slotIndex]];
+  nextGame[teamIndex] = {
+    team: result.winningTeam,
+    seed: result.seed,
+  } as unknown as Game[number];
+  nextRegionGames[slotIndex] = nextGame;
 
   const currentRound = bracket[matchupsKey] as unknown as RoundGames;
   const currentRegionGames = currentRound[region].map((g) => g);

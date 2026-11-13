@@ -253,7 +253,7 @@ describe("setTournamentGameResults", () => {
     return next;
   };
 
-  it("round 1: pushes winner into round two at floor(gameIndex/2) and sets scores/win", () => {
+  it("round 1: places winner in round two game floor(gameIndex/2), slot gameIndex % 2, and sets scores/win", () => {
     let s = withMatchups();
     s = win(s, 1, "west", 0, "s01", 1, 90, 50);
     s = win(s, 1, "west", 1, "s33", 9, 71, 70);
@@ -261,7 +261,8 @@ describe("setTournamentGameResults", () => {
     expect(s.roundTwoMatchups.west).toEqual([
       [{ team: "s01", seed: 1 }, { team: "s33", seed: 9 }],
       [],
-      [{ team: "s54", seed: 14 }],
+      // game 5 is the second game feeding round-two game 2, so slot 1
+      [undefined, { team: "s54", seed: 14 }],
       [],
     ]);
     expect(s.roundOneMatchups.west[0]).toEqual([
@@ -346,17 +347,18 @@ describe("setTournamentGameResults", () => {
     s = playRound(s, 1, "roundOneMatchups", [...REGIONS]);
     s = playRound(s, 2, "roundTwoMatchups", [...REGIONS]);
     s = playRound(s, "sweet sixteen", "roundSweetSixteenMatchups", [...REGIONS]);
+    // midwest and east winners take slot 1 (ROUND_CONFIG teamIndex), even when played first
     s = win(s, "elite eight", "midwest", 0, "s21", 6);
     expect(s.roundFinalFourMatchups.southMidwest).toEqual([
-      [{ team: "s21", seed: 6 }],
+      [undefined, { team: "s21", seed: 6 }],
     ]);
     expect(s.roundFinalFourMatchups.eastWest).toEqual([[]]);
     s = win(s, "elite eight", "east", 0, "s23", 6);
     expect(s.roundFinalFourMatchups.eastWest).toEqual([
-      [{ team: "s23", seed: 6 }],
+      [undefined, { team: "s23", seed: 6 }],
     ]);
     expect(s.roundFinalFourMatchups.southMidwest).toEqual([
-      [{ team: "s21", seed: 6 }],
+      [undefined, { team: "s21", seed: 6 }],
     ]);
   });
 });
