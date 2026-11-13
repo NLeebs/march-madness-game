@@ -5,3 +5,5 @@ export * from "./PasswordRecoveryForm";
 export * from "./RestartGameButton";
 export * from "./SignupForm";
 export * from "./UserAuthentication";
+export * from "./CrashScreen";
+export * from "./GameErrorBoundary";

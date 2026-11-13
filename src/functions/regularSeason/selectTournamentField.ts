@@ -4,6 +4,7 @@ import {
   NUMBER_OF_CONF_CHAMP_PLAYINS,
 } from "@/src/constants";
 import { ConferenceArrays, RegularSeasonTeam } from "@/types";
+import { GameDataError } from "@/src/functions/generic";
 
 export type TournamentFieldSelection = {
   /** One champion per conference, in conference-key order. */
@@ -16,18 +17,52 @@ export type TournamentFieldSelection = {
   field: string[];
 };
 
+function validateInputs(
+  records: Record<string, RegularSeasonTeam>,
+  conferenceArrays: ConferenceArrays
+): void {
+  const conferences = Object.keys(conferenceArrays);
+  for (const conf of conferences) {
+    const teams = conferenceArrays[conf];
+    if (teams.length < 2) {
+      throw new GameDataError(
+        `Conference "${conf}" has ${teams.length} team(s); at least 2 teams are needed to pick a champion`,
+        { conference: conf, teamCount: teams.length }
+      );
+    }
+  }
+  for (const conf of conferences) {
+    for (const team of conferenceArrays[conf]) {
+      if (!records[team]) {
+        throw new GameDataError(
+          `Team "${team}" in conference "${conf}" has no regular season record`,
+          { team, conference: conf }
+        );
+      }
+    }
+  }
+  const nonChampions = Object.keys(records).length - conferences.length;
+  if (nonChampions < NUMBER_OF_AT_LARGE_TEAMS) {
+    throw new GameDataError(
+      `Only ${nonChampions} non-champions for ${NUMBER_OF_AT_LARGE_TEAMS} at-large spots`,
+      { nonChampions, atLargeSpots: NUMBER_OF_AT_LARGE_TEAMS }
+    );
+  }
+}
+
 /**
  * Picks the tournament field from the final regular season records.
  * Pure: does not mutate its inputs. Ties resolve by stable sort: conference
  * champions over conferenceArrays[conference] order, everything else over
- * Object.keys(records) order. Assumes every conference has at least two
- * teams, every team has a record, and there are enough non-champions for
- * the at-large spots (see DIAGNOSIS findings 34 and 39).
+ * Object.keys(records) order. Throws if a conference has fewer than two
+ * teams, if a conference team has no record, or if there are fewer
+ * non-champions than at-large spots (DIAGNOSIS findings 34 and 39).
  */
 export function selectTournamentField(
   records: Record<string, RegularSeasonTeam>,
   conferenceArrays: ConferenceArrays
 ): TournamentFieldSelection {
+  validateInputs(records, conferenceArrays);
   const sortByTournamentScore = (arr: string[]) =>
     [...arr].sort(
       (a, b) =>

@@ -1,22 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AMOUNT_SEASON_GAMES } from "@/src/constants";
 import { TeamSchedule, TeamSchedules } from "@/types";
+import type { ConferenceMap } from "@/models";
+import type { ScheduledGame } from "@/src/functions/regularSeason/createSeasonSchedule";
 
 interface TeamScheduleState {
   teamArray: TeamSchedule[];
   teamSchedules: TeamSchedules;
 }
 
-interface TeamScheduleConfigPayload {
-  [conference: string]: {
-    [team: string]: any;
-  };
-}
-
-interface AddGameToTeamSchedulePayload {
-  weekNumber: string;
-  matchup: TeamSchedule[];
-}
+type TeamScheduleConfigPayload = ConferenceMap;
 
 const initialState: TeamScheduleState = {
   teamArray: [],
@@ -50,13 +43,10 @@ const teamScheduleSlice = createSlice({
         state.teamSchedules[key] = [];
       }
     },
-    addGameToTeamSchedule(
-      state,
-      action: PayloadAction<AddGameToTeamSchedulePayload>
-    ) {
-      state.teamSchedules[action.payload.weekNumber].push(
-        action.payload.matchup
-      );
+    setSeasonSchedule(state, action: PayloadAction<ScheduledGame[]>) {
+      action.payload.forEach(({ weekNumber, matchup }) => {
+        state.teamSchedules[weekNumber].push(matchup);
+      });
     },
   },
 });

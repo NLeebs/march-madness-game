@@ -33,6 +33,17 @@ export function createSeasonSchedule(
     if (arr.length > 0) return arr;
   };
 
+  // Grouped once per season; each conference keeps `teamArray` order.
+  const teamsByConference = new Map<string, TeamSchedule[]>();
+  teamArray.forEach((team) => {
+    const confTeams = teamsByConference.get(team.conference);
+    if (confTeams) {
+      confTeams.push(team);
+    } else {
+      teamsByConference.set(team.conference, [team]);
+    }
+  });
+
   const scheduleNonConferenceGames = (weekNo: number) => {
     randomTeamSchedule([...teamArray], weekNo);
   };
@@ -40,12 +51,8 @@ export function createSeasonSchedule(
   const scheduleConferenceGames = (weekNo: number) => {
     const leftoverTeamsArr: TeamSchedule[] = [];
     Object.keys(teamStats).forEach((conf) => {
-      const confTeams: TeamSchedule[] = [];
-      teamArray.forEach((team) => {
-        if (conf === team.conference) {
-          confTeams.push(team);
-        }
-      });
+      // randomTeamSchedule consumes its array, so each week gets a fresh copy.
+      const confTeams = [...(teamsByConference.get(conf) ?? [])];
       const leftoverTeam = randomTeamSchedule(confTeams, weekNo);
       if (leftoverTeam) {
         leftoverTeamsArr.push(leftoverTeam[0]);
