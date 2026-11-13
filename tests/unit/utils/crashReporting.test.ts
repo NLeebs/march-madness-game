@@ -84,6 +84,11 @@ describe("reportCrash", () => {
     expect(scope.setUser).not.toHaveBeenCalled();
   });
 
+  it("tags the Next.js error digest when there is one", () => {
+    reportCrash(new Error("x"), { boundary: "route", digest: "d-123" });
+    expect(scope.setTag).toHaveBeenCalledWith("digest", "d-123");
+  });
+
   it("adds no gameData context for a plain Error", () => {
     reportCrash(new Error("x"), { boundary: "route" });
     expect(scope.setContext).not.toHaveBeenCalledWith("gameData", expect.anything());

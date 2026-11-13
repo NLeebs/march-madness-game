@@ -9,6 +9,8 @@ export type CrashContext = {
   game?: GameCrashContext;
   userId?: string;
   anonUserId?: string;
+  /** Next.js error digest, which links a client crash to its server log line. */
+  digest?: string;
 };
 
 /** Sends one crash to Sentry with its context. Never throws. */
@@ -16,6 +18,7 @@ export function reportCrash(error: unknown, context: CrashContext): void {
   try {
     Sentry.withScope((scope) => {
       scope.setTag("boundary", context.boundary);
+      if (context.digest) scope.setTag("digest", context.digest);
       if (context.game) scope.setContext("game", context.game);
       if (error instanceof GameDataError) scope.setContext("gameData", error.details);
       if (context.userId) scope.setUser({ id: context.userId });
