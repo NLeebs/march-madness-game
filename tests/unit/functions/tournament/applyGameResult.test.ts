@@ -180,6 +180,17 @@ describe("applyGameResult", () => {
     expect(b.roundTwoMatchups.west[0]).toEqual([{ team: "s01", seed: "1" }]);
   });
 
+  it("throws a GameDataError when the result has no seed", () => {
+    const { seed: _seed, ...noSeed } = result("west", 0, "s01", "1");
+    expect(() => applyGameResult(bracket(), 1, noSeed)).toThrow(GameDataError);
+  });
+
+  it("throws a GameDataError when the round has no games for the region", () => {
+    expect(() =>
+      applyGameResult(bracket(), "sweet sixteen", result("west", 0, "s01", "1"))
+    ).toThrow(GameDataError);
+  });
+
   it("throws a GameDataError carrying round and gameIndex on a null region", () => {
     let caught: unknown;
     try {

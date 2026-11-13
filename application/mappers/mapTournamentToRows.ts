@@ -103,8 +103,7 @@ export function mapTournamentToRows({
 
     const winningTeam =
       favored.win ||
-      (favored.score &&
-        parseInt(favored.score) > parseInt(underdog.score || "0"))
+      (favored.score && Number(favored.score) > Number(underdog.score ?? 0))
         ? favored
         : underdog;
     const winningTeamId = teamIdMap.get(winningTeam.team);
@@ -114,8 +113,8 @@ export function mapTournamentToRows({
       );
     }
 
-    const favoredScore = favored.score ? parseInt(favored.score) : 0;
-    const underdogScore = underdog.score ? parseInt(underdog.score) : 0;
+    const favoredScore = Number(favored.score ?? 0);
+    const underdogScore = Number(underdog.score ?? 0);
 
     const gameRow: GameInsertSupabase = {
       year_id: yearId,

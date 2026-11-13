@@ -6,31 +6,27 @@ import {
 } from "@/src/functions/tournament/roundConfig";
 import type {
   BracketMatchups,
-  PlayinSeedType,
+  PlayInGameWinner,
   ScoredRound,
   TournamentGameResult,
   TournamentRegion,
+  TournamentMatchup,
   TournamentRoundMatchups,
 } from "@/types";
 
-export interface PlayinGameResult {
-  seedType: PlayinSeedType;
-  gameIndex: number;
-  winningTeam: string;
-  /** Optional because the play-in driver dispatches no scores today (the scores stay undefined). */
+/** Scores are optional because the play-in driver dispatches none today (finding 54). */
+export type PlayinGameResult = PlayInGameWinner & {
   winningScore?: number;
   losingScore?: number;
-}
-
-type Game = { team: string; score?: unknown; win?: boolean }[];
+};
 
 /** Copies a game, setting score/win on both teams from the winner. */
 function scoreGame(
-  game: Game,
+  game: TournamentMatchup,
   winningTeam: string,
   winningScore: number | undefined,
   losingScore: number | undefined
-): Game {
+): TournamentMatchup {
   return game.map((team) =>
     team.team === winningTeam
       ? { ...team, score: winningScore, win: true }
@@ -63,11 +59,11 @@ export function applyPlayinResult(
 
   const playinGames = roundOne.playin[seedType].map((g) => g);
   playinGames[gameIndex] = scoreGame(
-    playinGames[gameIndex] as unknown as Game,
+    playinGames[gameIndex],
     winningTeam,
     winningScore,
     losingScore
-  ) as unknown as (typeof playinGames)[number];
+  );
 
   return {
     ...roundOne,
@@ -76,7 +72,7 @@ export function applyPlayinResult(
   };
 }
 
-type RoundGames = Record<string, Game[]>;
+type RoundGames = Partial<Record<TournamentRegion, TournamentMatchup[]>>;
 
 /**
  * Applies a tournament game result: writes the winner into its next-round
@@ -104,17 +100,30 @@ export function applyGameResult(
   const teamIndex =
     ROUND_CONFIG[round].advance[region]?.teamIndex ?? result.gameIndex % 2;
 
-  const nextRound = bracket[nextMatchupsKey] as unknown as RoundGames;
-  const nextRegionGames = nextRound[nextRegion].map((g) => g);
+  const nextRound: RoundGames = bracket[nextMatchupsKey];
+  const currentRound: RoundGames = bracket[matchupsKey];
+  const nextRoundGames = nextRound[nextRegion];
+  const currentRoundGames = currentRound[region];
+  const { seed } = result;
+  if (!nextRoundGames || !currentRoundGames || seed === undefined) {
+    throw new GameDataError("applyGameResult: result does not fit the bracket", {
+      round,
+      region,
+      nextRegion,
+      gameIndex: result.gameIndex,
+      winningTeam: result.winningTeam,
+      seed,
+      hasRegionGames: !!currentRoundGames,
+      hasNextRegionGames: !!nextRoundGames,
+    });
+  }
+
+  const nextRegionGames = nextRoundGames.map((g) => g);
   const nextGame = [...nextRegionGames[slotIndex]];
-  nextGame[teamIndex] = {
-    team: result.winningTeam,
-    seed: result.seed,
-  } as unknown as Game[number];
+  nextGame[teamIndex] = { team: result.winningTeam, seed };
   nextRegionGames[slotIndex] = nextGame;
 
-  const currentRound = bracket[matchupsKey] as unknown as RoundGames;
-  const currentRegionGames = currentRound[region].map((g) => g);
+  const currentRegionGames = currentRoundGames.map((g) => g);
   currentRegionGames[result.gameIndex] = scoreGame(
     currentRegionGames[result.gameIndex],
     result.winningTeam,
