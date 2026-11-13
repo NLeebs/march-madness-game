@@ -54,10 +54,7 @@ export const PlayPlayinGames = () => {
           )
         );
         dispatch(
-          tournamentActions.setPlayinGameResults({
-            ...gameDispatchObj,
-            seedType: seeds,
-          })
+          tournamentActions.setPlayinGameResults(gameDispatchObj)
         );
       });
     });

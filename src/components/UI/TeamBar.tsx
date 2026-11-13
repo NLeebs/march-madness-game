@@ -5,17 +5,17 @@ import { TournamentRound } from "@/types";
 import { RootState } from "@/store";
 import Image from "next/image";
 import { PingNotification } from "@/src/components";
-import { findTeamConference } from "@/src/functions";
 import {
   ALL_PLAYIN_PLACEHOLDERS,
   PLAYIN_PLACEHOLDERS,
-} from "@/src/functions/tournament/roundConfig";
+  findTeamConference,
+} from "@/src/functions";
 import { NON_CTA_BUTTON_COLOR } from "@/src/constants/CONSTANTS";
 
 interface TeamBarProps {
   team: string;
   round?: TournamentRound | "playin";
-  score?: string;
+  score?: number;
   win?: boolean;
 }
 

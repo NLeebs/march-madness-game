@@ -8,11 +8,11 @@ import type {
 } from "@/types";
 import { RootState, tournamentPlayersPicksActions } from "@/store";
 import { TournamentMatchupCard } from "@/src/components";
-import { findTeamConference } from "@/src/functions";
 import {
   ALL_PLAYIN_PLACEHOLDERS,
   ROUND_CONFIG,
-} from "@/src/functions/tournament/roundConfig";
+  findTeamConference,
+} from "@/src/functions";
 import {
   NON_CTA_BUTTON_COLOR,
   TOURAMENT_CHAMPION_RIBBON_HEIGHT,
