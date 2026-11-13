@@ -47,11 +47,18 @@ class Boundary extends React.Component<BoundaryProps, BoundaryState> {
 export const GameErrorBoundary: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const store = useStore<RootState>();
   const { user } = useAuth() as { user: { id?: string } | null };
-  const getContext = (): CrashContext => ({
-    boundary: "game",
-    game: summarizeGameState(store.getState()),
-    userId: user?.id,
-    anonUserId: readAnonUserId(),
-  });
+  const getContext = (): CrashContext => {
+    const context: CrashContext = {
+      boundary: "game",
+      userId: user?.id,
+      anonUserId: readAnonUserId(),
+    };
+    try {
+      context.game = summarizeGameState(store.getState());
+    } catch {
+      // Bad game state may be what crashed; report without the summary.
+    }
+    return context;
+  };
   return <Boundary getContext={getContext}>{children}</Boundary>;
 };

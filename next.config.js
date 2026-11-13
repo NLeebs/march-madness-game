@@ -19,4 +19,6 @@ module.exports = withSentryConfig(nextConfig, {
   // Send browser reports through our own domain so ad blockers don't drop them.
   tunnelRoute: "/monitoring",
   widenClientFileUpload: true,
+  // The build plugin otherwise reports its own usage to Sentry on every build, including CI and e2e.
+  telemetry: false,
 });

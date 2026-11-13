@@ -87,7 +87,7 @@ describe("GameErrorBoundary", () => {
     expect(screen.queryByText("game")).not.toBeInTheDocument();
   });
 
-  it("still shows the crash screen when gathering context throws", () => {
+  it("still shows the crash screen, and keeps the user id, when the game summary throws", () => {
     vi.mocked(summarizeGameState).mockImplementationOnce(() => {
       throw new Error("bad state");
     });
@@ -95,7 +95,7 @@ describe("GameErrorBoundary", () => {
     expect(screen.getByRole("heading", { name: "Something went wrong" })).toBeInTheDocument();
     expect(reportCrash).toHaveBeenCalledWith(
       expect.objectContaining({ message: "render boom" }),
-      { boundary: "game" }
+      { boundary: "game", userId: "u1", anonUserId: undefined }
     );
   });
 

@@ -1,7 +1,8 @@
 "use client";
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "@/src/components/Context/AuthProvider";
-import { CrashScreen } from "@/src/components/General";
+// Direct import, not the barrel: this page must load even when the rest of the app cannot.
+import { CrashScreen } from "@/src/components/General/CrashScreen";
 import { readAnonUserId, reportCrash } from "@/src/utils/crashReporting";
 
 interface ErrorPageProps {

@@ -1,7 +1,8 @@
 "use client";
 import "./globals.css";
 import React, { useEffect } from "react";
-import { CrashScreen } from "@/src/components/General";
+// Direct import, not the barrel: this page must load even when the rest of the app cannot.
+import { CrashScreen } from "@/src/components/General/CrashScreen";
 import { readAnonUserId, reportCrash } from "@/src/utils/crashReporting";
 
 interface GlobalErrorProps {

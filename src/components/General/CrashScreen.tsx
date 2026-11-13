@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
-import { Button } from "@/src/components";
+// Direct import, not the components barrel: the crash screen must load even when the
+// rest of the app (e.g. the Supabase client) cannot.
+import { Button } from "@/src/components/UI/Button";
 import { PRIMARY_COLOR } from "@/src/constants";
 
 interface CrashScreenProps {
