@@ -14,7 +14,7 @@ import {
 import {
   TournamentMatchup,
   TournamentRegion,
-  TournamentRound,
+  ScoredRound,
   TournamentRoundMatchups,
 } from "@/types";
 
@@ -41,7 +41,7 @@ export const PlayTournamentGames = () => {
   } = useSelector((state: RootState) => state.tournament);
 
   const playTournamentRound = useCallback(
-    (round: TournamentRound, roundMatchups: TournamentRoundMatchups) => {
+    (round: ScoredRound, roundMatchups: TournamentRoundMatchups) => {
       const winningTeamsArr = [];
 
       Object.keys(roundMatchups).forEach((region: TournamentRegion) => {

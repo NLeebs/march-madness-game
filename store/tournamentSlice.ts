@@ -2,9 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
 import { SEED_REGIONS } from "@/src/functions/tournament/roundConfig";
+import {
+  applyGameResult,
+  applyPlayinResult,
+  type PlayinGameResult,
+} from "@/src/functions/tournament/applyGameResult";
 import type {
   BracketMatchups,
+  ScoredRound,
   SeedRegion,
+  TournamentGameResult,
   TournamentRegion,
   TournamentRoundMatchups,
 } from "@/types";
@@ -129,106 +136,23 @@ const tournamentSlice = createSlice({
       });
       state.roundOneMatchups.playin = matchups.playin;
     },
-    setPlayinGameResults(state, action) {
-      // Set round one matchup to winning team
-      if (action.payload.seedType === "elevenSeeds") {
-        if (action.payload.gameIndex === 0)
-          state.roundOneMatchups.south[4][1].team = action.payload.winningTeam;
-        else
-          state.roundOneMatchups.midwest[4][1].team =
-            action.payload.winningTeam;
-      } else {
-        if (action.payload.gameIndex === 0)
-          state.roundOneMatchups.west[0][1].team = action.payload.winningTeam;
-        else
-          state.roundOneMatchups.east[0][1].team = action.payload.winningTeam;
-      }
-
-      for (let i = 0; i <= 1; i++) {
-        if (
-          state.roundOneMatchups.playin[action.payload.seedType][
-            action.payload.gameIndex
-          ][i].team === action.payload.winningTeam
-        ) {
-          state.roundOneMatchups.playin[action.payload.seedType][
-            action.payload.gameIndex
-          ][i].score = action.payload.winningScore;
-          state.roundOneMatchups.playin[action.payload.seedType][
-            action.payload.gameIndex
-          ][i].win = true;
-        } else {
-          state.roundOneMatchups.playin[action.payload.seedType][
-            action.payload.gameIndex
-          ][i].score = action.payload.losingScore;
-          state.roundOneMatchups.playin[action.payload.seedType][
-            action.payload.gameIndex
-          ][i].win = false;
-        }
-      }
+    setPlayinGameResults(state, action: PayloadAction<PlayinGameResult>) {
+      state.roundOneMatchups = applyPlayinResult(
+        state.roundOneMatchups,
+        action.payload
+      );
     },
-    setTournamentGameResults(state, action) {
-      let nextRoundKey, currentRoundKey;
-      if (action.payload.round === 1) {
-        nextRoundKey = "roundTwoMatchups";
-        currentRoundKey = "roundOneMatchups";
-      }
-      if (action.payload.round === 2) {
-        nextRoundKey = "roundSweetSixteenMatchups";
-        currentRoundKey = "roundTwoMatchups";
-      }
-      if (action.payload.round === "sweet sixteen") {
-        nextRoundKey = "roundEliteEightMatchups";
-        currentRoundKey = "roundSweetSixteenMatchups";
-      }
-      if (action.payload.round === "elite eight") {
-        nextRoundKey = "roundFinalFourMatchups";
-        currentRoundKey = "roundEliteEightMatchups";
-      }
-      if (action.payload.round === "final four") {
-        nextRoundKey = "roundFinalsMatchups";
-        currentRoundKey = "roundFinalFourMatchups";
-      }
-      if (action.payload.round === "finals") {
-        nextRoundKey = "champion";
-        currentRoundKey = "roundFinalsMatchups";
-      }
-
-      let nextRegion = action.payload.results.region;
-      if (action.payload.round === "elite eight")
-        nextRegion === "east" || nextRegion === "west"
-          ? (nextRegion = "eastWest")
-          : (nextRegion = "southMidwest");
-      if (action.payload.round === "final four") nextRegion = "championship";
-      if (action.payload.round === "finals") nextRegion = "champion";
-
-      state[nextRoundKey][nextRegion][
-        Math.floor(action.payload.results.gameIndex / 2)
-      ].push({
-        team: action.payload.results.winningTeam,
-        seed: action.payload.results.seed,
-      });
-
-      for (let i = 0; i <= 1; i++) {
-        if (
-          state[currentRoundKey][action.payload.results.region][
-            action.payload.results.gameIndex
-          ][i].team === action.payload.results.winningTeam
-        ) {
-          state[currentRoundKey][action.payload.results.region][
-            action.payload.results.gameIndex
-          ][i].score = action.payload.results.winningScore;
-          state[currentRoundKey][action.payload.results.region][
-            action.payload.results.gameIndex
-          ][i].win = true;
-        } else {
-          state[currentRoundKey][action.payload.results.region][
-            action.payload.results.gameIndex
-          ][i].score = action.payload.results.losingScore;
-          state[currentRoundKey][action.payload.results.region][
-            action.payload.results.gameIndex
-          ][i].win = false;
-        }
-      }
+    setTournamentGameResults(
+      state,
+      action: PayloadAction<{
+        round: ScoredRound;
+        results: TournamentGameResult;
+      }>
+    ) {
+      Object.assign(
+        state,
+        applyGameResult(state, action.payload.round, action.payload.results)
+      );
     },
     comparePicksAndGames(state, action) {
       let nextRoundKey;

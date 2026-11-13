@@ -12,7 +12,7 @@ import {
   playGame,
   getTournamentGameResultObj,
 } from "@/src/functions";
-import { PlayInGameWinner } from "@/types";
+import type { PlayInGameWinner, PlayinSeedType } from "@/types";
 
 export const PlayPlayinGames = () => {
   const dispatch = useDispatch();
@@ -53,7 +53,12 @@ export const PlayPlayinGames = () => {
             gameDispatchObj
           )
         );
-        dispatch(tournamentActions.setPlayinGameResults(gameDispatchObj));
+        dispatch(
+          tournamentActions.setPlayinGameResults({
+            ...gameDispatchObj,
+            seedType: seeds as PlayinSeedType,
+          })
+        );
       });
     });
     dispatch(appStateActions.activateTournamentStandardGames());

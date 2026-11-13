@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { tournamentActions } from "@/store";
 // The slice itself is the module's default export (not re-exported by the barrel).
 import tournamentSlice from "@/store/tournamentSlice";
+import type { PlayinSeedType, TournamentGameResult } from "@/types";
 
 type State = ReturnType<typeof tournamentSlice.reducer>;
 type Action = Parameters<typeof tournamentSlice.reducer>[1];
@@ -156,7 +157,7 @@ describe("setPlayinGameResults", () => {
     reduce(
       withMatchups(),
       tournamentActions.setPlayinGameResults({
-        seedType,
+        seedType: seedType as PlayinSeedType,
         gameIndex,
         winningTeam,
         winningScore: 70,
@@ -223,7 +224,14 @@ describe("setTournamentGameResults", () => {
       s,
       tournamentActions.setTournamentGameResults({
         round,
-        results: { region, gameIndex, winningTeam, winningScore, losingScore, seed },
+        results: {
+          region,
+          gameIndex,
+          winningTeam,
+          winningScore,
+          losingScore,
+          seed,
+        } as unknown as TournamentGameResult,
       })
     );
 
