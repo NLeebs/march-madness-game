@@ -6,7 +6,10 @@ import { RootState } from "@/store";
 import Image from "next/image";
 import { PingNotification } from "@/src/components";
 import { findTeamConference } from "@/src/functions";
-import { ALL_PLAYIN_PLACEHOLDERS } from "@/src/functions/tournament/roundConfig";
+import {
+  ALL_PLAYIN_PLACEHOLDERS,
+  PLAYIN_PLACEHOLDERS,
+} from "@/src/functions/tournament/roundConfig";
 import { NON_CTA_BUTTON_COLOR } from "@/src/constants/CONSTANTS";
 
 interface TeamBarProps {
@@ -120,36 +123,36 @@ export const TeamBar: React.FC<TeamBarProps> = ({
           {isPlayin || team}
 
           {isPlayin &&
-            team === "playinGameSeed11Game1" &&
+            team === PLAYIN_PLACEHOLDERS.elevenSeeds[0] &&
             round !== "champion" &&
             `${playinTeamMatchups.elevenSeeds[0][0].team}/${playinTeamMatchups.elevenSeeds[0][1].team}`}
           {isPlayin &&
-            team === "playinGameSeed11Game2" &&
+            team === PLAYIN_PLACEHOLDERS.elevenSeeds[1] &&
             round !== "champion" &&
             `${playinTeamMatchups.elevenSeeds[1][0].team}/${playinTeamMatchups.elevenSeeds[1][1].team}`}
           {isPlayin &&
-            team === "playinGameSeed16Game1" &&
+            team === PLAYIN_PLACEHOLDERS.sixteenSeeds[0] &&
             round !== "champion" &&
             `${playinTeamMatchups.sixteenSeeds[0][0].team}/${playinTeamMatchups.sixteenSeeds[0][1].team}`}
           {isPlayin &&
-            team === "playinGameSeed16Game2" &&
+            team === PLAYIN_PLACEHOLDERS.sixteenSeeds[1] &&
             round !== "champion" &&
             `${playinTeamMatchups.sixteenSeeds[1][0].team}/${playinTeamMatchups.sixteenSeeds[1][1].team}`}
 
           {isPlayin &&
-            team === "playinGameSeed11Game1" &&
+            team === PLAYIN_PLACEHOLDERS.elevenSeeds[0] &&
             round === "champion" &&
             `${playinTeamMatchups.elevenSeeds[0][0].team}`}
           {isPlayin &&
-            team === "playinGameSeed11Game2" &&
+            team === PLAYIN_PLACEHOLDERS.elevenSeeds[1] &&
             round === "champion" &&
             `${playinTeamMatchups.elevenSeeds[1][0].team}`}
           {isPlayin &&
-            team === "playinGameSeed16Game1" &&
+            team === PLAYIN_PLACEHOLDERS.sixteenSeeds[0] &&
             round === "champion" &&
             `${playinTeamMatchups.sixteenSeeds[0][0].team}`}
           {isPlayin &&
-            team === "playinGameSeed16Game2" &&
+            team === PLAYIN_PLACEHOLDERS.sixteenSeeds[1] &&
             round === "champion" &&
             `${playinTeamMatchups.sixteenSeeds[1][0].team}`}
 
@@ -158,19 +161,19 @@ export const TeamBar: React.FC<TeamBarProps> = ({
           {isPlayin && round === "champion" && <br />}
 
           {isPlayin &&
-            team === "playinGameSeed11Game2" &&
+            team === PLAYIN_PLACEHOLDERS.elevenSeeds[1] &&
             round === "champion" &&
             `${playinTeamMatchups.elevenSeeds[1][1].team}`}
           {isPlayin &&
-            team === "playinGameSeed11Game1" &&
+            team === PLAYIN_PLACEHOLDERS.elevenSeeds[0] &&
             round === "champion" &&
             `${playinTeamMatchups.elevenSeeds[0][1].team}`}
           {isPlayin &&
-            team === "playinGameSeed16Game1" &&
+            team === PLAYIN_PLACEHOLDERS.sixteenSeeds[0] &&
             round === "champion" &&
             `${playinTeamMatchups.sixteenSeeds[0][1].team}`}
           {isPlayin &&
-            team === "playinGameSeed16Game2" &&
+            team === PLAYIN_PLACEHOLDERS.sixteenSeeds[1] &&
             round === "champion" &&
             `${playinTeamMatchups.sixteenSeeds[1][1].team}`}
         </div>
