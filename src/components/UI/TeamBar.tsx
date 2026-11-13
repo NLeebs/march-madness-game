@@ -6,6 +6,7 @@ import { RootState } from "@/store";
 import Image from "next/image";
 import { PingNotification } from "@/src/components";
 import { findTeamConference } from "@/src/functions";
+import { ALL_PLAYIN_PLACEHOLDERS } from "@/src/functions/tournament/roundConfig";
 import { NON_CTA_BUTTON_COLOR } from "@/src/constants/CONSTANTS";
 
 interface TeamBarProps {
@@ -45,12 +46,7 @@ export const TeamBar: React.FC<TeamBarProps> = ({
 
   let isPlayin;
   let teamLogoPath;
-  if (
-    team === "playinGameSeed11Game1" ||
-    team === "playinGameSeed11Game2" ||
-    team === "playinGameSeed16Game1" ||
-    team === "playinGameSeed16Game2"
-  ) {
+  if (ALL_PLAYIN_PLACEHOLDERS.includes(team)) {
     isPlayin = true;
   } else if (team !== "") {
     isPlayin = false;
@@ -81,10 +77,7 @@ export const TeamBar: React.FC<TeamBarProps> = ({
           className="uppercase font-bold"
           style={{
             color:
-              team !== "playinGameSeed16Game1" &&
-              team !== "playinGameSeed16Game2" &&
-              team !== "playinGameSeed11Game1" &&
-              team !== "playinGameSeed11Game2"
+              !ALL_PLAYIN_PLACEHOLDERS.includes(team)
                 ? NON_CTA_BUTTON_COLOR
                 : "#000",
           }}

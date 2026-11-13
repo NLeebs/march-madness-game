@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createMatchupsFromSeededArr } from "@/src/functions";
-import {
-  TournamentRoundMatchups,
+import type {
+  BracketMatchups,
   TournamentRegion,
-  TournamentTeam,
+  TournamentRoundMatchups,
 } from "@/types";
 import { HIGHEST_SEED } from "@/src/constants";
 
@@ -19,7 +19,7 @@ export const ROUND_POINTS: Readonly<
   finals: 320,
 };
 
-export interface TournamentState {
+export interface TournamentState extends BracketMatchups {
   yearId: string;
   tournamentScoringRulesId: string;
   tournamentTeams: string[];
@@ -30,13 +30,6 @@ export interface TournamentState {
     elevenSeeds: string[];
     sixteenSeeds: string[];
   };
-  roundOneMatchups: TournamentRoundMatchups;
-  roundTwoMatchups: TournamentRoundMatchups;
-  roundSweetSixteenMatchups: TournamentRoundMatchups;
-  roundEliteEightMatchups: TournamentRoundMatchups;
-  roundFinalFourMatchups: TournamentRoundMatchups;
-  roundFinalsMatchups: TournamentRoundMatchups;
-  champion: { [region in TournamentRegion]?: TournamentTeam[][] };
   playerScore: number;
 }
 

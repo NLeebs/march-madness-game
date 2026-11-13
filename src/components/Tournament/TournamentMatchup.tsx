@@ -10,6 +10,10 @@ import { RootState, tounramentPlayersPicksActions } from "@/store";
 import { TournamentMatchupCard } from "@/src/components";
 import { findTeamConference } from "@/src/functions";
 import {
+  ALL_PLAYIN_PLACEHOLDERS,
+  ROUND_CONFIG,
+} from "@/src/functions/tournament/roundConfig";
+import {
   NON_CTA_BUTTON_COLOR,
   TOURAMENT_CHAMPION_RIBBON_HEIGHT,
 } from "@/src/constants";
@@ -33,21 +37,11 @@ export const getNextRoundInfo = (
   region: TournamentRegion,
   index: number
 ): NextRoundInfo => {
-  const regionMapping: Record<string, NextRoundInfo> = {
-    "elite eight-west": { nextRoundRegion: "eastWest", teamIndex: 0 },
-    "elite eight-east": { nextRoundRegion: "eastWest", teamIndex: 1 },
-    "elite eight-south": { nextRoundRegion: "southMidwest", teamIndex: 0 },
-    "elite eight-midwest": { nextRoundRegion: "southMidwest", teamIndex: 1 },
-    "final four-eastWest": { nextRoundRegion: "championship", teamIndex: 0 },
-    "final four-southMidwest": {
-      nextRoundRegion: "championship",
-      teamIndex: 1,
-    },
-    "finals-championship": { nextRoundRegion: "champion", teamIndex: 0 },
-  };
-
-  const key = `${round}-${region}`;
-  return regionMapping[key] || { nextRoundRegion: region, teamIndex: index };
+  if (round !== "playin" && round !== "champion") {
+    const next = ROUND_CONFIG[round].advance[region];
+    if (next) return { nextRoundRegion: next.region, teamIndex: next.teamIndex };
+  }
+  return { nextRoundRegion: region, teamIndex: index };
 };
 
 const getChampionStyles = (
@@ -63,14 +57,7 @@ const getChampionStyles = (
     };
   }
 
-  const playinTeams = [
-    "playinGameSeed16Game1",
-    "playinGameSeed16Game2",
-    "playinGameSeed11Game1",
-    "playinGameSeed11Game2",
-  ];
-
-  if (playinTeams.includes(matchup[0].team)) {
+  if (ALL_PLAYIN_PLACEHOLDERS.includes(matchup[0].team)) {
     return {
       teamBarHeight: TOURAMENT_CHAMPION_RIBBON_HEIGHT,
       teamBarColor: NON_CTA_BUTTON_COLOR,
