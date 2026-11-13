@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createMatchupsFromSeededArr } from "@/src/functions";
+import { seedTournament } from "@/src/functions/tournament/seedTournament";
+import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
+import { SEED_REGIONS } from "@/src/functions/tournament/roundConfig";
 import type {
   BracketMatchups,
+  SeedRegion,
   TournamentRegion,
   TournamentRoundMatchups,
 } from "@/types";
-import { HIGHEST_SEED } from "@/src/constants";
 
 /** Points awarded per correct pick, by the round whose results are scored. */
 export const ROUND_POINTS: Readonly<
@@ -99,67 +101,33 @@ const tournamentSlice = createSlice({
     setTournamentScoringRulesId(state, action: PayloadAction<string>) {
       state.tournamentScoringRulesId = action.payload;
     },
-    addTournamentTeams(state, action) {
+    addTournamentTeams(state, action: PayloadAction<string[]>) {
       state.tournamentTeams = action.payload;
     },
     setTournamentSeeds(state) {
-      const seedSettingArr = [...state.tournamentTeams];
-      const regions = Object.keys(state.tournamentSeeds);
-      const numberOfRegions = regions.length;
-      for (let i = 1; i <= HIGHEST_SEED; i++) {
-        for (let j = 0; j < numberOfRegions; j++) {
-          if (i % 2 === 1) {
-            if (i === 11 && (j === 2 || j === 3)) {
-              state.tournamentSeeds[regions[j]].push(
-                `playinGameSeed11Game${j - 1}`
-              );
-              seedSettingArr.splice(j, 0, "PlayinTeam");
-            } else state.tournamentSeeds[regions[j]].push(seedSettingArr[j]);
-          } else {
-            if (i === 16 && (j === 0 || j === 1)) {
-              state.tournamentSeeds[regions[j]].push(
-                `playinGameSeed16Game${j + 1}`
-              );
-            } else
-              state.tournamentSeeds[regions[j]].push(
-                seedSettingArr[numberOfRegions - (j + 1)]
-              );
-          }
-        }
-        seedSettingArr.splice(0, 4);
-      }
+      const seeds = seedTournament(state.tournamentTeams);
+      SEED_REGIONS.forEach((region) => {
+        state.tournamentSeeds[region].push(...seeds[region]);
+      });
     },
-    setPlayinTeams(state, action) {
+    setPlayinTeams(
+      state,
+      action: PayloadAction<{ seed: 11 | 16; team: string }>
+    ) {
       if (action.payload.seed === 11)
         state.playinTeams.elevenSeeds.push(action.payload.team);
       else if (action.payload.seed === 16)
         state.playinTeams.sixteenSeeds.push(action.payload.team);
     },
     setRoundOneMatchups(state) {
-      Object.keys(state.tournamentSeeds).forEach((region) => {
-        const unorderedMatchupArr = createMatchupsFromSeededArr(
-          state.tournamentSeeds[region]
-        );
-        state.roundOneMatchups[region] = [
-          unorderedMatchupArr[0],
-          unorderedMatchupArr[7],
-          unorderedMatchupArr[4],
-          unorderedMatchupArr[3],
-          unorderedMatchupArr[5],
-          unorderedMatchupArr[2],
-          unorderedMatchupArr[6],
-          unorderedMatchupArr[1],
-        ];
+      const matchups = buildRoundOneMatchups(
+        state.tournamentSeeds as Record<SeedRegion, string[]>,
+        state.playinTeams
+      );
+      SEED_REGIONS.forEach((region) => {
+        state.roundOneMatchups[region] = matchups[region];
       });
-      Object.keys(state.playinTeams).forEach((playinSeed) => {
-        let seedNum;
-        if (playinSeed === "elevenSeeds") seedNum = 11;
-        if (playinSeed === "sixteenSeeds") seedNum = 16;
-        state.roundOneMatchups.playin[playinSeed] = createMatchupsFromSeededArr(
-          state.playinTeams[playinSeed],
-          seedNum
-        );
-      });
+      state.roundOneMatchups.playin = matchups.playin;
     },
     setPlayinGameResults(state, action) {
       // Set round one matchup to winning team
