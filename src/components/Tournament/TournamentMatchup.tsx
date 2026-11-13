@@ -102,7 +102,7 @@ export const TournamentMatchup: React.FC<TournamentMatchupProps> = ({
       const teamEl = (e.target as HTMLElement).closest(
         "button.team-selection"
       ) as HTMLButtonElement;
-      if (!teamEl || round === "playin") return;
+      if (!teamEl || round === "playin" || round === "champion") return;
 
       const opponentValue = teamEl.dataset.value === "0" ? "1" : "0";
       const opponentEl = teamEl

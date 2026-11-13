@@ -2,7 +2,6 @@ import { PLAYIN_PLACEHOLDERS, ROUND_CONFIG } from "./roundConfig";
 import type {
   Pick,
   PlayInGameWinner,
-  ScoredRound,
   TournamentPicks,
   TournamentPickMatchup,
   RegionPicks,
@@ -28,7 +27,7 @@ function mapRound(
  * (when `opponent` is non-empty, even if the write was skipped). Never mutates `picks`.
  */
 export function applyPick(picks: TournamentPicks, pick: Pick): TournamentPicks {
-  const config = ROUND_CONFIG[pick.round as ScoredRound];
+  const config = ROUND_CONFIG[pick.round];
   let next = picks;
 
   if (pick.team !== "") {

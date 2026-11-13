@@ -204,3 +204,18 @@ describe("replacePlayinPlaceholder", () => {
     expect(s.roundTwoPicks.west[0][0].team).toBe("playinGameSeed16Game1");
   });
 });
+
+describe("Pick.round type", () => {
+  it("rejects the champion round at compile time (no round follows it)", () => {
+    const championPick: Pick = {
+      // @ts-expect-error "champion" is not a pickable round
+      round: "champion",
+      region: "champion",
+      roundIndex: 0,
+      team: "a",
+      seed: "1",
+      opponent: "b",
+    };
+    expect(championPick.round).toBe("champion");
+  });
+});
