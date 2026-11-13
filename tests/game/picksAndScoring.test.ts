@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   ROUND_POINTS,
-  tounramentPlayersPicksActions,
+  tournamentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
 // The slices are the modules' default exports (not re-exported by the barrel).
@@ -29,7 +29,7 @@ const pick = (
 ): PicksState =>
   picksSlice.reducer(
     state,
-    tounramentPlayersPicksActions.setPick({ seed: "1", opponent: "", ...p })
+    tournamentPlayersPicksActions.setPick({ seed: "1", opponent: "", ...p })
   );
 
 const teamsIn = (state: PicksState, key: PicksKey): string[] =>
@@ -194,7 +194,7 @@ describe("replacePlayinPicksWithWinner", () => {
 
       s = picksSlice.reducer(
         s,
-        tounramentPlayersPicksActions.replacePlayinPicksWithWinner({
+        tournamentPlayersPicksActions.replacePlayinPicksWithWinner({
           seedType,
           gameIndex,
           winningTeam: "Winner U",
@@ -215,7 +215,7 @@ describe("replacePlayinPicksWithWinner", () => {
     s = pick(s, { round: 1, region: "west", roundIndex: 1, team: "playinGameSeed11Game1" });
     s = picksSlice.reducer(
       s,
-      tounramentPlayersPicksActions.replacePlayinPicksWithWinner({
+      tournamentPlayersPicksActions.replacePlayinPicksWithWinner({
         seedType: "sixteenSeeds",
         gameIndex: 0,
         winningTeam: "Winner U",

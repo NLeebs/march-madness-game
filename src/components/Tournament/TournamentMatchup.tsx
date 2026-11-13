@@ -6,7 +6,7 @@ import type {
   TournamentRegion,
   TournamentRound,
 } from "@/types";
-import { RootState, tounramentPlayersPicksActions } from "@/store";
+import { RootState, tournamentPlayersPicksActions } from "@/store";
 import { TournamentMatchupCard } from "@/src/components";
 import { findTeamConference } from "@/src/functions";
 import {
@@ -114,7 +114,7 @@ export const TournamentMatchup: React.FC<TournamentMatchupProps> = ({
       if (!opponentEl) return;
 
       dispatch(
-        tounramentPlayersPicksActions.setPick({
+        tournamentPlayersPicksActions.setPick({
           round,
           region: nextRoundRegion,
           roundIndex: teamIndex,

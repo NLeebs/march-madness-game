@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   RootState,
   appStateActions,
-  tounramentPlayersPicksActions,
+  tournamentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
 import {
@@ -49,7 +49,7 @@ export const PlayPlayinGames = () => {
         };
 
         dispatch(
-          tounramentPlayersPicksActions.replacePlayinPicksWithWinner(
+          tournamentPlayersPicksActions.replacePlayinPicksWithWinner(
             gameDispatchObj
           )
         );
