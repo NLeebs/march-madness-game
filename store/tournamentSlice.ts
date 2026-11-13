@@ -141,10 +141,14 @@ const tournamentSlice = createSlice({
         results: TournamentGameResult;
       }>
     ) {
-      Object.assign(
-        state,
-        applyGameResult(state, action.payload.round, action.payload.results)
-      );
+      const { round, results } = action.payload;
+      const { matchupsKey, nextMatchupsKey } = ROUND_CONFIG[round];
+      const next = applyGameResult(state, round, results);
+      // Only these two rounds change; writing just them avoids touching every key.
+      Object.assign(state, {
+        [matchupsKey]: next[matchupsKey],
+        [nextMatchupsKey]: next[nextMatchupsKey],
+      });
     },
     recordRoundScore(
       state,
