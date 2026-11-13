@@ -191,7 +191,7 @@ describe("replacePlayinPlaceholder", () => {
 
   it("treats any seedType other than sixteenSeeds as eleven seeds and keeps the seed", () => {
     let s = pick(initialPicks(), { round: 1, region: "west", roundIndex: 0, team: "playinGameSeed11Game2", seed: "11" });
-    s = replacePlayinPlaceholder(s, { seedType: "other", gameIndex: 1, winningTeam: "W" });
+    s = replacePlayinPlaceholder(s, { seedType: "other" as never, gameIndex: 1, winningTeam: "W" });
     expect(s.roundTwoPicks.west[0][0]).toEqual({ team: "W", seed: "11" });
   });
 

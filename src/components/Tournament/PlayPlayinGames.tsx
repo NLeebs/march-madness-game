@@ -28,7 +28,7 @@ export const PlayPlayinGames = () => {
   );
 
   useEffect(() => {
-    Object.keys(playinMatchups).forEach((seeds) => {
+    (Object.keys(playinMatchups) as PlayinSeedType[]).forEach((seeds) => {
       playinMatchups[seeds].forEach((matchup, i) => {
         const gameResults = playGame(
           teamStats[findTeamConference(matchup[0].team, confArrs)][
@@ -56,7 +56,7 @@ export const PlayPlayinGames = () => {
         dispatch(
           tournamentActions.setPlayinGameResults({
             ...gameDispatchObj,
-            seedType: seeds as PlayinSeedType,
+            seedType: seeds,
           })
         );
       });
