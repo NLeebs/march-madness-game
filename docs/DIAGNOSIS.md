@@ -97,7 +97,7 @@ The review also confirmed findings 3 (non-atomic bracket persistence; the most s
 35. **Low - An odd total team count leaves a team without a game.** With an odd league, one team sits out each non-conference week, and one leftover sits out each conference week. Real data has an even count today.
 36. **Low - `setPick` with an empty `team` but a non-empty `opponent` still clears the opponent from later rounds.** The empty-team guard only skips the write.
 37. **Low - Ties are settled by key order.** Equal RPI makes `team1` the favored team (strict `>`), and equal selection scores or wins resolve by the stable sort over `Object.keys(records)` order, including at the at-large cutoff. Deterministic, but arbitrary.
-38. **Low - `setTournamentSeeds` is not idempotent.** It pushes onto the region arrays, so dispatching it twice doubles them. `SelectionSunday`'s guard prevents that today. Also, `comparePicksAndGames` scores by walking the next round's matchups, so it must run after the results are recorded (it does). Not pinned by a test.
+38. **Low - `setTournamentSeeds` is not idempotent.** It pushes onto the region arrays, so dispatching it twice doubles them. `SelectionSunday`'s guard prevents that today. Also, `recordRoundScore` (was `comparePicksAndGames`, calls `scoreRound`) scores by walking the next round's matchups, so it must run after the results are recorded (it does). Not pinned by a test.
 
 #### Found in the step 6 code review (deferred to the steps named)
 

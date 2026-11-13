@@ -17,7 +17,7 @@ The game loop runs entirely in the browser:
 5. picks (`applyPick`, stored by `tournamentPlayersPicksSlice`);
 6. the tournament drivers (`PlayPlayinGames`, `PlayTournamentGames`).
 
-Every part of it is under characterization tests in `tests/game/`. Preserve gameplay unless a change is a deliberate gameplay change. The pure tournament functions are also unit-tested in `tests/unit/functions/tournament/` with deep-frozen inputs.
+Every part of it is under characterization tests in `tests/game/`. Preserve gameplay unless a change is a deliberate gameplay change. Advancement into `eastWest` / `southMidwest` / `championship` / `champion` pushes in dispatch order (`applyGameResult`), while picks place teams by `ROUND_CONFIG[round].advance[region].teamIndex` (`getNextRoundInfo`); the two agree only because the drivers dispatch regions in `west, east, south, midwest` order, so any change to dispatch order (e.g. collapsing `PlayTournamentGames`' effects in step 10) must keep it. The pure tournament functions are also unit-tested in `tests/unit/functions/tournament/` with deep-frozen inputs.
 
 ## Randomness
 
