@@ -226,7 +226,7 @@ describe("replacePlayinPicksWithWinner", () => {
   });
 });
 
-describe("comparePicksAndGames", () => {
+describe("recordRoundScore", () => {
   it("exports the points per correct pick for each round", () => {
     expect(ROUND_POINTS).toEqual({
       1: 10,
@@ -251,7 +251,7 @@ describe("comparePicksAndGames", () => {
   ): TState =>
     tournamentSlice.reducer(
       state,
-      tournamentActions.comparePicksAndGames({ round, winningTeams, picks })
+      tournamentActions.recordRoundScore({ round, winningTeams, picks })
     );
   // picks for one region: list of matchups, each a list of team names.
   const picksOf = (matchups: string[][]) =>

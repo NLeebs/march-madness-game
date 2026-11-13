@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
-import { SEED_REGIONS } from "@/src/functions/tournament/roundConfig";
+import { ROUND_CONFIG, SEED_REGIONS } from "@/src/functions/tournament/roundConfig";
+import { ROUND_POINTS, scoreRound } from "@/src/functions/tournament/scoreRound";
 import {
   applyGameResult,
   applyPlayinResult,
@@ -9,6 +10,7 @@ import {
 } from "@/src/functions/tournament/applyGameResult";
 import type {
   BracketMatchups,
+  RegionPicks,
   ScoredRound,
   SeedRegion,
   TournamentGameResult,
@@ -16,17 +18,7 @@ import type {
   TournamentRoundMatchups,
 } from "@/types";
 
-/** Points awarded per correct pick, by the round whose results are scored. */
-export const ROUND_POINTS: Readonly<
-  Record<1 | 2 | "sweet sixteen" | "elite eight" | "final four" | "finals", number>
-> = {
-  1: 10,
-  2: 20,
-  "sweet sixteen": 40,
-  "elite eight": 80,
-  "final four": 160,
-  finals: 320,
-};
+export { ROUND_POINTS } from "@/src/functions/tournament/scoreRound";
 
 export interface TournamentState extends BracketMatchups {
   yearId: string;
@@ -154,44 +146,32 @@ const tournamentSlice = createSlice({
         applyGameResult(state, action.payload.round, action.payload.results)
       );
     },
-    comparePicksAndGames(state, action) {
-      let nextRoundKey;
-      const pointsPerCorrectPick = ROUND_POINTS[action.payload.round];
-      if (action.payload.round === 1) {
-        nextRoundKey = "roundTwoMatchups";
-      }
-      if (action.payload.round === 2) {
-        nextRoundKey = "roundSweetSixteenMatchups";
-      }
-      if (action.payload.round === "sweet sixteen") {
-        nextRoundKey = "roundEliteEightMatchups";
-      }
-      if (action.payload.round === "elite eight") {
-        nextRoundKey = "roundFinalFourMatchups";
-      }
-      if (action.payload.round === "final four") {
-        nextRoundKey = "roundFinalsMatchups";
-      }
-      if (action.payload.round === "finals") {
-        nextRoundKey = "champion";
-      }
-
-      Object.keys(state[nextRoundKey]).forEach((region) => {
-        state[nextRoundKey][region].forEach((matchup, i) => {
+    recordRoundScore(
+      state,
+      action: PayloadAction<{
+        round: ScoredRound;
+        winningTeams: string[];
+        picks: RegionPicks;
+      }>
+    ) {
+      const { round, winningTeams, picks } = action.payload;
+      const nextKey = ROUND_CONFIG[round].nextMatchupsKey;
+      const next = state[nextKey] as Omit<TournamentRoundMatchups, "playin">;
+      const { correct, points } = scoreRound({
+        round,
+        advanced: next,
+        picks,
+        winningTeams,
+        points: ROUND_POINTS,
+      });
+      Object.keys(correct).forEach((region) => {
+        next[region].forEach((matchup, i) => {
           matchup.forEach((teamObj, j) => {
-            if (
-              action.payload.winningTeams.includes(
-                action.payload.picks[region][i][j].team
-              )
-            ) {
-              teamObj.selected = true;
-              state.playerScore += pointsPerCorrectPick;
-            } else {
-              teamObj.selected = false;
-            }
+            teamObj.selected = correct[region][i][j];
           });
         });
       });
+      state.playerScore += points;
     },
   },
 });

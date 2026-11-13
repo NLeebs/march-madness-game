@@ -89,7 +89,7 @@ export const PlayTournamentGames = () => {
       return;
     const winningTeamsArr = playTournamentRound(1, roundOneMatchups);
     dispatch(
-      tournamentActions.comparePicksAndGames({
+      tournamentActions.recordRoundScore({
         round: 1,
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundTwoPicks,
@@ -107,7 +107,7 @@ export const PlayTournamentGames = () => {
     const winningTeamsArr = playTournamentRound(2, roundTwoMatchups);
     // Compare to picks
     dispatch(
-      tournamentActions.comparePicksAndGames({
+      tournamentActions.recordRoundScore({
         round: 2,
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundSweetSixteenPicks,
@@ -132,7 +132,7 @@ export const PlayTournamentGames = () => {
     );
     // Compare to picks
     dispatch(
-      tournamentActions.comparePicksAndGames({
+      tournamentActions.recordRoundScore({
         round: "sweet sixteen",
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundEliteEightPicks,
@@ -160,7 +160,7 @@ export const PlayTournamentGames = () => {
     );
     // Compare to picks
     dispatch(
-      tournamentActions.comparePicksAndGames({
+      tournamentActions.recordRoundScore({
         round: "elite eight",
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundFinalFourPicks,
@@ -188,7 +188,7 @@ export const PlayTournamentGames = () => {
     );
     // Compare to picks
     dispatch(
-      tournamentActions.comparePicksAndGames({
+      tournamentActions.recordRoundScore({
         round: "final four",
         winningTeams: winningTeamsArr,
         picks: playersPicks.roundFinalsPicks,
@@ -212,7 +212,7 @@ export const PlayTournamentGames = () => {
     const winningTeamsArr = playTournamentRound("finals", roundFinalsMatchups);
     // Compare to picks
     dispatch(
-      tournamentActions.comparePicksAndGames({
+      tournamentActions.recordRoundScore({
         round: "finals",
         winningTeams: winningTeamsArr,
         picks: playersPicks.champion,
