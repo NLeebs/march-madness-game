@@ -4,22 +4,54 @@ import type {
   PlayInGameWinner,
   TournamentPicks,
   TournamentPickMatchup,
+  TournamentPlayerPickRound,
   RegionPicks,
 } from "@/types";
 
 const EMPTY_TEAM = { team: "", seed: "" };
 
-/** Copies a round's picks, mapping every team slot through `fn` (which returns the slot or a replacement). */
+type PickSlot = { team: string; seed: string };
+
+/** Maps `items` through `fn`, returning `items` itself when every element maps to itself. */
+function mapShared<T>(items: readonly T[], fn: (item: T) => T): T[] {
+  const mapped = items.map(fn);
+  return mapped.every((item, i) => item === items[i]) ? (items as T[]) : mapped;
+}
+
+/**
+ * Maps every team slot of a round through `fn` (which returns the slot itself
+ * or a replacement). Unchanged matchups, regions and rounds keep their
+ * references, so selectors on them don't re-render.
+ */
 function mapRound(
   roundPicks: RegionPicks,
-  fn: (slot: { team: string; seed: string }) => { team: string; seed: string }
+  fn: (slot: PickSlot) => PickSlot
 ): RegionPicks {
-  return Object.fromEntries(
-    Object.entries(roundPicks).map(([region, matchups]) => [
-      region,
-      (matchups as TournamentPickMatchup[]).map((matchup) => matchup.map(fn)),
-    ])
-  ) as RegionPicks;
+  let changed = false;
+  const next: RegionPicks = {};
+  (Object.keys(roundPicks) as (keyof RegionPicks)[]).forEach((region) => {
+    const matchups = roundPicks[region] as TournamentPickMatchup[];
+    next[region] = mapShared(matchups, (matchup) => mapShared(matchup, fn));
+    if (next[region] !== matchups) changed = true;
+  });
+  return changed ? next : roundPicks;
+}
+
+/** Maps each listed pick round through `mapRound`, returning `picks` itself when none changed. */
+function mapRounds(
+  picks: TournamentPicks,
+  keys: readonly TournamentPlayerPickRound[],
+  fn: (slot: PickSlot) => PickSlot
+): TournamentPicks {
+  let next = picks;
+  keys.forEach((key) => {
+    const round = mapRound(picks[key], fn);
+    if (round !== picks[key]) {
+      if (next === picks) next = { ...picks };
+      next[key] = round;
+    }
+  });
+  return next;
 }
 
 /**
@@ -51,13 +83,9 @@ export function applyPick(picks: TournamentPicks, pick: Pick): TournamentPicks {
   }
 
   if (pick.opponent !== "") {
-    const cleared = { ...next };
-    config.laterPicksKeys.forEach((key) => {
-      cleared[key] = mapRound(next[key], (slot) =>
-        slot.team === pick.opponent ? { ...EMPTY_TEAM } : slot
-      );
-    });
-    next = cleared;
+    next = mapRounds(next, config.laterPicksKeys, (slot) =>
+      slot.team === pick.opponent ? { ...EMPTY_TEAM } : slot
+    );
   }
 
   return next;
@@ -74,11 +102,10 @@ export function replacePlayinPlaceholder(
       : PLAYIN_PLACEHOLDERS.elevenSeeds;
   const placeholder = winner.gameIndex === 0 ? game1 : game2;
 
-  const next = { ...picks };
-  (Object.keys(picks) as (keyof TournamentPicks)[]).forEach((key) => {
-    next[key] = mapRound(picks[key], (slot) =>
+  return mapRounds(
+    picks,
+    Object.keys(picks) as TournamentPlayerPickRound[],
+    (slot) =>
       slot.team === placeholder ? { ...slot, team: winner.winningTeam } : slot
-    );
-  });
-  return next;
+  );
 }

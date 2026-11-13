@@ -219,3 +219,47 @@ describe("Pick.round type", () => {
     expect(championPick.round).toBe("champion");
   });
 });
+
+describe("reference sharing", () => {
+  it("applyPick keeps later rounds (and their regions) when the opponent appears in none of them", () => {
+    const input = deepFreeze(initialPicks());
+    const out = applyPick(input, {
+      round: 1,
+      region: "west",
+      roundIndex: 0,
+      team: "a",
+      seed: "1",
+      opponent: "nobody",
+    });
+    expect(out.roundSweetSixteenPicks).toBe(input.roundSweetSixteenPicks);
+    expect(out.champion).toBe(input.champion);
+    expect(out.roundTwoPicks.east).toBe(input.roundTwoPicks.east);
+    expect(out.roundTwoPicks.west![1]).toBe(input.roundTwoPicks.west![1]);
+  });
+
+  it("applyPick clearing one region keeps the other regions and matchups of that round", () => {
+    let s = pick(initialPicks(), { round: 2, region: "west", roundIndex: 0, team: "Rival", seed: "8" });
+    s = deepFreeze(s);
+    const out = applyPick(s, {
+      round: 1,
+      region: "west",
+      roundIndex: 0,
+      team: "Winner",
+      seed: "1",
+      opponent: "Rival",
+    });
+    expect(out.roundSweetSixteenPicks.west![0][0]).toEqual({ team: "", seed: "" });
+    expect(out.roundSweetSixteenPicks.east).toBe(s.roundSweetSixteenPicks.east);
+    expect(out.roundEliteEightPicks).toBe(s.roundEliteEightPicks);
+  });
+
+  it("replacePlayinPlaceholder returns the same picks when the placeholder is nowhere", () => {
+    const input = deepFreeze(initialPicks());
+    const out = replacePlayinPlaceholder(input, {
+      seedType: "sixteenSeeds",
+      gameIndex: 0,
+      winningTeam: "p16a",
+    });
+    expect(out).toBe(input);
+  });
+});
