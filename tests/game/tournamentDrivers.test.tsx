@@ -10,6 +10,7 @@ import { seedMathRandom } from "./helpers/rng";
 import { tournamentActions } from "@/store";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
 import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
+import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
 
 afterEach(() => cleanup());
 
@@ -193,4 +194,21 @@ describe("playTournament invariants", () => {
       seeded.restore();
     }
   }, GAME_TEST_TIMEOUT);
+});
+
+describe("getNextRoundInfo", () => {
+  it("getNextRoundInfo returns the same values as before for every round and region", () => {
+    expect(getNextRoundInfo("elite eight", "west", 0)).toEqual({ nextRoundRegion: "eastWest", teamIndex: 0 });
+    expect(getNextRoundInfo("elite eight", "east", 0)).toEqual({ nextRoundRegion: "eastWest", teamIndex: 1 });
+    expect(getNextRoundInfo("elite eight", "south", 0)).toEqual({ nextRoundRegion: "southMidwest", teamIndex: 0 });
+    expect(getNextRoundInfo("elite eight", "midwest", 0)).toEqual({ nextRoundRegion: "southMidwest", teamIndex: 1 });
+    expect(getNextRoundInfo("final four", "eastWest", 0)).toEqual({ nextRoundRegion: "championship", teamIndex: 0 });
+    expect(getNextRoundInfo("final four", "southMidwest", 0)).toEqual({ nextRoundRegion: "championship", teamIndex: 1 });
+    expect(getNextRoundInfo("finals", "championship", 0)).toEqual({ nextRoundRegion: "champion", teamIndex: 0 });
+    for (const round of [1, 2, "sweet sixteen", "playin", "champion"] as const) {
+      for (const region of ["west", "east", "south", "midwest"] as const) {
+        expect(getNextRoundInfo(round, region, 3)).toEqual({ nextRoundRegion: region, teamIndex: 3 });
+      }
+    }
+  });
 });

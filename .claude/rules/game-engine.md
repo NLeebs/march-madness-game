@@ -13,11 +13,11 @@ The game loop runs entirely in the browser:
 1. schedule (`createSeasonSchedule`);
 2. regular season (`PlayRegularSeasonGames` → `playGame`);
 3. Selection Sunday (`selectTournamentField`);
-4. seeding and bracket (`tournamentSlice`);
-5. picks (`tournamentPlayersPicksSlice`);
+4. seeding and bracket (`src/functions/tournament/`, stored by `tournamentSlice`);
+5. picks (`applyPick`, stored by `tournamentPlayersPicksSlice`);
 6. the tournament drivers (`PlayPlayinGames`, `PlayTournamentGames`).
 
-Every part of it is under characterization tests in `tests/game/`. Preserve gameplay unless a change is a deliberate gameplay change.
+Every part of it is under characterization tests in `tests/game/`. Preserve gameplay unless a change is a deliberate gameplay change. Results (`applyGameResult`) and picks (`getNextRoundInfo`) place a winner in the same next-round slot: `ROUND_CONFIG[round].advance[region].teamIndex` when the region changes, else `gameIndex % 2`. Slots don't depend on dispatch order, but RNG draw order does, so collapsing `PlayTournamentGames`' effects (step 10) is a draw-order change if it reorders games. Play-in placeholder regions (seeding, `applyPlayinResult`) all come from `PLAYIN_ROUND_ONE_SLOTS`. The pure tournament functions are also unit-tested in `tests/unit/functions/tournament/` with deep-frozen inputs.
 
 ## Randomness
 

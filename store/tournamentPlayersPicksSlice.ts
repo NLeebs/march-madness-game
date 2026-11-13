@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
+import type {
   TournamentPlayerPicks,
   Pick,
   PlayInGameWinner,
-  TournamentPlayerPickRound,
 } from "@/types";
+import {
+  applyPick,
+  replacePlayinPlaceholder,
+} from "@/src/functions/tournament/picks";
 
 const initalState: TournamentPlayerPicks =
   process.env.NEXT_PUBLIC_APP_MODE !== "dev"
@@ -357,106 +360,17 @@ const tournamentPlayersPicksSlice = createSlice({
   reducers: {
     restartGame: () => initalState,
     setPick(state, action: PayloadAction<Pick>) {
-      let whichRound: TournamentPlayerPickRound;
-      let removeRoundPicksArr: TournamentPlayerPickRound[];
-      if (action.payload.round === 1) {
-        whichRound = "roundTwoPicks";
-        removeRoundPicksArr = [
-          "roundSweetSixteenPicks",
-          "roundEliteEightPicks",
-          "roundFinalFourPicks",
-          "roundFinalsPicks",
-          "champion",
-        ];
-      }
-      if (action.payload.round === 2) {
-        whichRound = "roundSweetSixteenPicks";
-        removeRoundPicksArr = [
-          "roundEliteEightPicks",
-          "roundFinalFourPicks",
-          "roundFinalsPicks",
-          "champion",
-        ];
-      }
-      if (action.payload.round === "sweet sixteen") {
-        whichRound = "roundEliteEightPicks";
-        removeRoundPicksArr = [
-          "roundFinalFourPicks",
-          "roundFinalsPicks",
-          "champion",
-        ];
-      }
-      if (action.payload.round === "elite eight") {
-        whichRound = "roundFinalFourPicks";
-        removeRoundPicksArr = ["roundFinalsPicks", "champion"];
-      }
-      if (action.payload.round === "final four") {
-        whichRound = "roundFinalsPicks";
-        removeRoundPicksArr = ["champion"];
-      }
-      if (action.payload.round === "finals") {
-        whichRound = "champion";
-        removeRoundPicksArr = [];
-      }
-
-      // Set Pick
-      if (action.payload.team !== "") {
-        state.picks[whichRound][action.payload.region][
-          Math.floor(+action.payload.roundIndex / 2)
-        ][+action.payload.roundIndex % 2].team = action.payload.team;
-        state.picks[whichRound][action.payload.region][
-          Math.floor(+action.payload.roundIndex / 2)
-        ][+action.payload.roundIndex % 2].seed = action.payload.seed;
-      }
-
-      // Remove erroneous future picks
-      if (action.payload.opponent !== "") {
-        removeRoundPicksArr.forEach((round) => {
-          Object.keys(state.picks[round]).forEach((region) => {
-            state.picks[round][region].forEach((matchup) => {
-              for (const teamObj of matchup) {
-                if (teamObj.team === action.payload.opponent) {
-                  teamObj.team = "";
-                  teamObj.seed = "";
-                }
-              }
-            });
-          });
-        });
-      }
+      state.picks = applyPick(state.picks, action.payload);
     },
     replacePlayinPicksWithWinner(
       state,
       action: PayloadAction<PlayInGameWinner>
     ) {
-      let playinTeamPlaceholder;
-      if (action.payload.seedType === "sixteenSeeds") {
-        playinTeamPlaceholder =
-          action.payload.gameIndex === 0
-            ? "playinGameSeed16Game1"
-            : "playinGameSeed16Game2";
-      } else {
-        playinTeamPlaceholder =
-          action.payload.gameIndex === 0
-            ? "playinGameSeed11Game1"
-            : "playinGameSeed11Game2";
-      }
-
-      Object.keys(state.picks).forEach((roundPicks) => {
-        Object.keys(state.picks[roundPicks]).forEach((region) => {
-          state.picks[roundPicks][region].forEach((matchup) => {
-            for (const teamObj of matchup) {
-              if (teamObj.team === playinTeamPlaceholder) {
-                teamObj.team = action.payload.winningTeam;
-              }
-            }
-          });
-        });
-      });
+      state.picks = replacePlayinPlaceholder(state.picks, action.payload);
     },
   },
 });
 
-export const tounramentPlayersPicksActions =
+export const tournamentPlayersPicksActions =
   tournamentPlayersPicksSlice.actions;
 export default tournamentPlayersPicksSlice;

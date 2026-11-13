@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   RootState,
   appStateActions,
-  tounramentPlayersPicksActions,
+  tournamentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
 import {
@@ -12,7 +12,7 @@ import {
   playGame,
   getTournamentGameResultObj,
 } from "@/src/functions";
-import { PlayInGameWinner } from "@/types";
+import type { PlayInGameWinner, PlayinSeedType } from "@/types";
 
 export const PlayPlayinGames = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const PlayPlayinGames = () => {
   );
 
   useEffect(() => {
-    Object.keys(playinMatchups).forEach((seeds) => {
+    (Object.keys(playinMatchups) as PlayinSeedType[]).forEach((seeds) => {
       playinMatchups[seeds].forEach((matchup, i) => {
         const gameResults = playGame(
           teamStats[findTeamConference(matchup[0].team, confArrs)][
@@ -49,11 +49,13 @@ export const PlayPlayinGames = () => {
         };
 
         dispatch(
-          tounramentPlayersPicksActions.replacePlayinPicksWithWinner(
+          tournamentPlayersPicksActions.replacePlayinPicksWithWinner(
             gameDispatchObj
           )
         );
-        dispatch(tournamentActions.setPlayinGameResults(gameDispatchObj));
+        dispatch(
+          tournamentActions.setPlayinGameResults(gameDispatchObj)
+        );
       });
     });
     dispatch(appStateActions.activateTournamentStandardGames());

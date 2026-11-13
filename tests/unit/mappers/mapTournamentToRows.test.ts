@@ -22,8 +22,8 @@ const ROUND_IDS = buildRoundIdMap();
 describe("mapTournamentToRows", () => {
   describe("round 1 matchups", () => {
     it("should create a game row and a pick row for a standard round 1 matchup", () => {
-      const teamA = makeTeam("Duke", "1", { win: true, score: "80" });
-      const teamB = makeTeam("FGCU", "16", { win: false, score: "60" });
+      const teamA = makeTeam("Duke", "1", { win: true, score: 80 });
+      const teamB = makeTeam("FGCU", "16", { win: false, score: 60 });
       const matchup = makeMatchup(teamA, teamB);
 
       const tournamentState = makeEmptyTournamentState({
@@ -71,8 +71,8 @@ describe("mapTournamentToRows", () => {
     });
 
     it("should determine favored/underdog by lower seed number", () => {
-      const teamA = makeTeam("LowSeed", "12", { win: true, score: "70" });
-      const teamB = makeTeam("HighSeed", "5", { win: false, score: "65" });
+      const teamA = makeTeam("LowSeed", "12", { win: true, score: 70 });
+      const teamB = makeTeam("HighSeed", "5", { win: false, score: 65 });
       const matchup = makeMatchup(teamA, teamB);
 
       const tournamentState = makeEmptyTournamentState({
@@ -108,8 +108,8 @@ describe("mapTournamentToRows", () => {
     });
 
     it("should determine the winner by score when win flag is not set", () => {
-      const teamA = makeTeam("TeamA", "3", { score: "72" });
-      const teamB = makeTeam("TeamB", "14", { score: "80" });
+      const teamA = makeTeam("TeamA", "3", { score: 72 });
+      const teamB = makeTeam("TeamB", "14", { score: 80 });
       const matchup = makeMatchup(teamA, teamB);
 
       const tournamentState = makeEmptyTournamentState({
@@ -176,12 +176,12 @@ describe("mapTournamentToRows", () => {
 
     it("should map multiple matchups in a region with correct pick indices", () => {
       const matchup1 = makeMatchup(
-        makeTeam("Seed1", "1", { win: true, score: "80" }),
-        makeTeam("Seed16", "16", { score: "50" }),
+        makeTeam("Seed1", "1", { win: true, score: 80 }),
+        makeTeam("Seed16", "16", { score: 50 }),
       );
       const matchup2 = makeMatchup(
-        makeTeam("Seed8", "8", { score: "60" }),
-        makeTeam("Seed9", "9", { win: true, score: "65" }),
+        makeTeam("Seed8", "8", { score: 60 }),
+        makeTeam("Seed9", "9", { win: true, score: 65 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -220,8 +220,8 @@ describe("mapTournamentToRows", () => {
   describe("play-in games", () => {
     it("should create game rows without pick rows for eleven seed play-ins", () => {
       const matchup = makeMatchup(
-        makeTeam("PlayinA", "11", { win: true, score: "70" }),
-        makeTeam("PlayinB", "11", { score: "65" }),
+        makeTeam("PlayinA", "11", { win: true, score: 70 }),
+        makeTeam("PlayinB", "11", { score: 65 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -252,8 +252,8 @@ describe("mapTournamentToRows", () => {
 
     it("should create game rows without pick rows for sixteen seed play-ins", () => {
       const matchup = makeMatchup(
-        makeTeam("Playin16A", "16", { win: true, score: "55" }),
-        makeTeam("Playin16B", "16", { score: "50" }),
+        makeTeam("Playin16A", "16", { win: true, score: 55 }),
+        makeTeam("Playin16B", "16", { score: 50 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -284,16 +284,16 @@ describe("mapTournamentToRows", () => {
 
     it("should handle multiple play-in games across both seed groups", () => {
       const elevenSeed1 = makeMatchup(
-        makeTeam("E11A", "11", { win: true, score: "70" }),
-        makeTeam("E11B", "11", { score: "60" }),
+        makeTeam("E11A", "11", { win: true, score: 70 }),
+        makeTeam("E11B", "11", { score: 60 }),
       );
       const elevenSeed2 = makeMatchup(
-        makeTeam("E11C", "11", { score: "55" }),
-        makeTeam("E11D", "11", { win: true, score: "65" }),
+        makeTeam("E11C", "11", { score: 55 }),
+        makeTeam("E11D", "11", { win: true, score: 65 }),
       );
       const sixteenSeed1 = makeMatchup(
-        makeTeam("S16A", "16", { win: true, score: "50" }),
-        makeTeam("S16B", "16", { score: "45" }),
+        makeTeam("S16A", "16", { win: true, score: 50 }),
+        makeTeam("S16B", "16", { score: 45 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -333,8 +333,8 @@ describe("mapTournamentToRows", () => {
   describe("round 2 matchups", () => {
     it("should create game and pick rows for round 2", () => {
       const matchup = makeMatchup(
-        makeTeam("TeamR2A", "1", { win: true, score: "85" }),
-        makeTeam("TeamR2B", "8", { score: "70" }),
+        makeTeam("TeamR2A", "1", { win: true, score: 85 }),
+        makeTeam("TeamR2B", "8", { score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -373,8 +373,8 @@ describe("mapTournamentToRows", () => {
   describe("sweet sixteen matchups", () => {
     it("should create game and pick rows for sweet sixteen", () => {
       const matchup = makeMatchup(
-        makeTeam("S16TeamA", "2", { win: true, score: "75" }),
-        makeTeam("S16TeamB", "3", { score: "70" }),
+        makeTeam("S16TeamA", "2", { win: true, score: 75 }),
+        makeTeam("S16TeamB", "3", { score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -413,8 +413,8 @@ describe("mapTournamentToRows", () => {
   describe("elite eight matchups", () => {
     it("should use regionBasedPickIndex for east region mapping to eastWest", () => {
       const matchup = makeMatchup(
-        makeTeam("E8EastA", "1", { win: true, score: "80" }),
-        makeTeam("E8EastB", "4", { score: "70" }),
+        makeTeam("E8EastA", "1", { win: true, score: 80 }),
+        makeTeam("E8EastB", "4", { score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -450,8 +450,8 @@ describe("mapTournamentToRows", () => {
 
     it("should use regionBasedPickIndex for west region mapping to eastWest", () => {
       const matchup = makeMatchup(
-        makeTeam("E8WestA", "1", { win: true, score: "80" }),
-        makeTeam("E8WestB", "5", { score: "70" }),
+        makeTeam("E8WestA", "1", { win: true, score: 80 }),
+        makeTeam("E8WestB", "5", { score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -487,8 +487,8 @@ describe("mapTournamentToRows", () => {
 
     it("should use regionBasedPickIndex for south region mapping to southMidwest", () => {
       const matchup = makeMatchup(
-        makeTeam("E8SouthA", "1", { win: true, score: "90" }),
-        makeTeam("E8SouthB", "3", { score: "75" }),
+        makeTeam("E8SouthA", "1", { win: true, score: 90 }),
+        makeTeam("E8SouthB", "3", { score: 75 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -526,8 +526,8 @@ describe("mapTournamentToRows", () => {
   describe("final four matchups", () => {
     it("should map eastWest to championship with pickIndex 0", () => {
       const matchup = makeMatchup(
-        makeTeam("FF_EW_A", "1", { win: true, score: "75" }),
-        makeTeam("FF_EW_B", "2", { score: "70" }),
+        makeTeam("FF_EW_A", "1", { win: true, score: 75 }),
+        makeTeam("FF_EW_B", "2", { score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -562,8 +562,8 @@ describe("mapTournamentToRows", () => {
 
     it("should map southMidwest to championship with pickIndex 1", () => {
       const matchup = makeMatchup(
-        makeTeam("FF_SM_A", "1", { win: true, score: "80" }),
-        makeTeam("FF_SM_B", "3", { score: "65" }),
+        makeTeam("FF_SM_A", "1", { win: true, score: 80 }),
+        makeTeam("FF_SM_B", "3", { score: 65 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -600,8 +600,8 @@ describe("mapTournamentToRows", () => {
   describe("finals matchups", () => {
     it("should map the finals to champion with pickIndex 0", () => {
       const matchup = makeMatchup(
-        makeTeam("Finalist1", "1", { win: true, score: "85" }),
-        makeTeam("Finalist2", "2", { score: "78" }),
+        makeTeam("Finalist1", "1", { win: true, score: 85 }),
+        makeTeam("Finalist2", "2", { score: 78 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -637,8 +637,8 @@ describe("mapTournamentToRows", () => {
   describe("winner determination logic", () => {
     it("should pick favored team as winner when favored.win is true", () => {
       const matchup = makeMatchup(
-        makeTeam("Favored", "1", { win: true, score: "80" }),
-        makeTeam("Underdog", "16", { score: "60" }),
+        makeTeam("Favored", "1", { win: true, score: 80 }),
+        makeTeam("Underdog", "16", { score: 60 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -667,8 +667,8 @@ describe("mapTournamentToRows", () => {
 
     it("should pick underdog as winner when favored has no win flag and lower score", () => {
       const matchup = makeMatchup(
-        makeTeam("Favored", "2", { score: "60" }),
-        makeTeam("Underdog", "15", { score: "70" }),
+        makeTeam("Favored", "2", { score: 60 }),
+        makeTeam("Underdog", "15", { score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -697,8 +697,8 @@ describe("mapTournamentToRows", () => {
 
     it("should pick favored as winner when favored score is higher and no win flag", () => {
       const matchup = makeMatchup(
-        makeTeam("Higher", "3", { score: "90" }),
-        makeTeam("Lower", "14", { score: "60" }),
+        makeTeam("Higher", "3", { score: 90 }),
+        makeTeam("Lower", "14", { score: 60 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -786,8 +786,8 @@ describe("mapTournamentToRows", () => {
 
     it("should throw when a team is not found in teamIdMap", () => {
       const matchup = makeMatchup(
-        makeTeam("Known", "1", { win: true, score: "80" }),
-        makeTeam("Unknown", "16", { score: "60" }),
+        makeTeam("Known", "1", { win: true, score: 80 }),
+        makeTeam("Unknown", "16", { score: 60 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -816,8 +816,8 @@ describe("mapTournamentToRows", () => {
 
     it("should throw when a round is not found in roundIdMap", () => {
       const matchup = makeMatchup(
-        makeTeam("A", "1", { win: true, score: "80" }),
-        makeTeam("B", "16", { score: "60" }),
+        makeTeam("A", "1", { win: true, score: 80 }),
+        makeTeam("B", "16", { score: 60 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -877,8 +877,8 @@ describe("mapTournamentToRows", () => {
 
     it("should throw when picks are not found for a region", () => {
       const matchup = makeMatchup(
-        makeTeam("X", "1", { win: true, score: "80" }),
-        makeTeam("Y", "16", { score: "60" }),
+        makeTeam("X", "1", { win: true, score: 80 }),
+        makeTeam("Y", "16", { score: 60 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -905,8 +905,8 @@ describe("mapTournamentToRows", () => {
 
     it("should throw when a pick team is not in teamIdMap", () => {
       const matchup = makeMatchup(
-        makeTeam("TeamA", "1", { win: true, score: "80" }),
-        makeTeam("TeamB", "16", { score: "60" }),
+        makeTeam("TeamA", "1", { win: true, score: 80 }),
+        makeTeam("TeamB", "16", { score: 60 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -937,12 +937,12 @@ describe("mapTournamentToRows", () => {
   describe("full tournament integration", () => {
     it("should process multiple rounds and produce the correct total number of rows", () => {
       const r1East = makeMatchup(
-        makeTeam("R1E1", "1", { win: true, score: "80" }),
-        makeTeam("R1E16", "16", { score: "55" }),
+        makeTeam("R1E1", "1", { win: true, score: 80 }),
+        makeTeam("R1E16", "16", { score: 55 }),
       );
       const r2East = makeMatchup(
-        makeTeam("R2E1", "1", { win: true, score: "75" }),
-        makeTeam("R2E8", "8", { score: "65" }),
+        makeTeam("R2E1", "1", { win: true, score: 75 }),
+        makeTeam("R2E8", "8", { score: 65 }),
       );
 
       const tournamentState = makeEmptyTournamentState({

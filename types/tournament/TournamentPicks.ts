@@ -1,4 +1,4 @@
-import { TournamentRound, TournamentRegion } from "@/types";
+import { ScoredRound, TournamentRegion } from "@/types";
 
 export interface TournamentPlayerPicks {
   picks: TournamentPicks;
@@ -13,7 +13,8 @@ export type RegionPicks = {
 };
 
 export interface Pick {
-  round: TournamentRound;
+  /** The round being picked in; the pick fills that round's next-round slot, so "champion" can't be picked. */
+  round: ScoredRound;
   region: string;
   roundIndex: number;
   team: string;

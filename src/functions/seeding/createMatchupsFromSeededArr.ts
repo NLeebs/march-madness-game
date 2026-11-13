@@ -1,8 +1,8 @@
 import { TournamentMatchup } from "@/types";
 
 export const createMatchupsFromSeededArr = (
-  seededArr: string[],
-  playinSeed = false
+  seededArr: readonly string[],
+  playinSeed: number | false = false
 ): TournamentMatchup[] => {
   const matchupArr = [];
   for (let i = 0; i < seededArr.length / 2; i++) {

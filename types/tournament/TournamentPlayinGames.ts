@@ -1,5 +1,7 @@
+import type { PlayinSeedType } from "./BracketMatchups";
+
 export interface PlayInGameWinner {
-  seedType: string;
+  seedType: PlayinSeedType;
   gameIndex: number;
   winningTeam: string;
 }

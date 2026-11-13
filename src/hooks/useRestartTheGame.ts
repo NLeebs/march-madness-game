@@ -6,7 +6,7 @@ import {
   uiStateActions,
   teamScheduleActions,
   regularSeasonRecordActions,
-  tounramentPlayersPicksActions,
+  tournamentPlayersPicksActions,
   tournamentActions,
   teamStatsActions,
 } from "@/store";
@@ -21,7 +21,7 @@ export const useRestartTheGame = () => {
     dispatch(uiStateActions.restartGame());
     dispatch(teamScheduleActions.restartGame());
     dispatch(regularSeasonRecordActions.restartGame());
-    dispatch(tounramentPlayersPicksActions.restartGame());
+    dispatch(tournamentPlayersPicksActions.restartGame());
     dispatch(tournamentActions.restartGame());
     dispatch(teamStatsActions.restartGame());
 

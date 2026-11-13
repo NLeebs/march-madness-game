@@ -6,9 +6,13 @@ import type {
   TournamentRegion,
   TournamentRound,
 } from "@/types";
-import { RootState, tounramentPlayersPicksActions } from "@/store";
+import { RootState, tournamentPlayersPicksActions } from "@/store";
 import { TournamentMatchupCard } from "@/src/components";
-import { findTeamConference } from "@/src/functions";
+import {
+  ALL_PLAYIN_PLACEHOLDERS,
+  ROUND_CONFIG,
+  findTeamConference,
+} from "@/src/functions";
 import {
   NON_CTA_BUTTON_COLOR,
   TOURAMENT_CHAMPION_RIBBON_HEIGHT,
@@ -33,21 +37,11 @@ export const getNextRoundInfo = (
   region: TournamentRegion,
   index: number
 ): NextRoundInfo => {
-  const regionMapping: Record<string, NextRoundInfo> = {
-    "elite eight-west": { nextRoundRegion: "eastWest", teamIndex: 0 },
-    "elite eight-east": { nextRoundRegion: "eastWest", teamIndex: 1 },
-    "elite eight-south": { nextRoundRegion: "southMidwest", teamIndex: 0 },
-    "elite eight-midwest": { nextRoundRegion: "southMidwest", teamIndex: 1 },
-    "final four-eastWest": { nextRoundRegion: "championship", teamIndex: 0 },
-    "final four-southMidwest": {
-      nextRoundRegion: "championship",
-      teamIndex: 1,
-    },
-    "finals-championship": { nextRoundRegion: "champion", teamIndex: 0 },
-  };
-
-  const key = `${round}-${region}`;
-  return regionMapping[key] || { nextRoundRegion: region, teamIndex: index };
+  if (round !== "playin" && round !== "champion") {
+    const next = ROUND_CONFIG[round].advance[region];
+    if (next) return { nextRoundRegion: next.region, teamIndex: next.teamIndex };
+  }
+  return { nextRoundRegion: region, teamIndex: index };
 };
 
 const getChampionStyles = (
@@ -63,14 +57,7 @@ const getChampionStyles = (
     };
   }
 
-  const playinTeams = [
-    "playinGameSeed16Game1",
-    "playinGameSeed16Game2",
-    "playinGameSeed11Game1",
-    "playinGameSeed11Game2",
-  ];
-
-  if (playinTeams.includes(matchup[0].team)) {
+  if (ALL_PLAYIN_PLACEHOLDERS.includes(matchup[0].team)) {
     return {
       teamBarHeight: TOURAMENT_CHAMPION_RIBBON_HEIGHT,
       teamBarColor: NON_CTA_BUTTON_COLOR,
@@ -115,7 +102,7 @@ export const TournamentMatchup: React.FC<TournamentMatchupProps> = ({
       const teamEl = (e.target as HTMLElement).closest(
         "button.team-selection"
       ) as HTMLButtonElement;
-      if (!teamEl || round === "playin") return;
+      if (!teamEl || round === "playin" || round === "champion") return;
 
       const opponentValue = teamEl.dataset.value === "0" ? "1" : "0";
       const opponentEl = teamEl
@@ -127,7 +114,7 @@ export const TournamentMatchup: React.FC<TournamentMatchupProps> = ({
       if (!opponentEl) return;
 
       dispatch(
-        tounramentPlayersPicksActions.setPick({
+        tournamentPlayersPicksActions.setPick({
           round,
           region: nextRoundRegion,
           roundIndex: teamIndex,

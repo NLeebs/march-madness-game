@@ -4,7 +4,7 @@ import { vi } from "vitest";
 import { useSelector } from "react-redux";
 import {
   appStateActions,
-  tounramentPlayersPicksActions,
+  tournamentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
 import { PlayPlayinGames } from "@/src/components/Tournament/PlayPlayinGames";
@@ -118,7 +118,7 @@ export function pickChalk(store: AppStore): void {
         const better = Number(matchup[1].seed) < Number(matchup[0].seed) ? 1 : 0;
         const { nextRoundRegion, teamIndex } = getNextRoundInfo(round, region, index);
         store.dispatch(
-          tounramentPlayersPicksActions.setPick({
+          tournamentPlayersPicksActions.setPick({
             round,
             region: nextRoundRegion,
             roundIndex: teamIndex,
