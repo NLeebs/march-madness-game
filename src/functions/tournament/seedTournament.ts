@@ -1,12 +1,33 @@
-import type { SeedRegion } from "@/types";
+import type { PlayinSeedType, SeedRegion } from "@/types";
 import { HIGHEST_SEED } from "@/src/constants/CONSTANTS";
-import { PLAYIN_PLACEHOLDERS, SEED_REGIONS } from "./roundConfig";
+import {
+  PLAYIN_PLACEHOLDERS,
+  PLAYIN_ROUND_ONE_SLOTS,
+  SEED_REGIONS,
+} from "./roundConfig";
+
+const PLAYIN_SEED_LINES: Readonly<Record<number, PlayinSeedType>> = {
+  11: "elevenSeeds",
+  16: "sixteenSeeds",
+};
+
+/** Placeholder name for `region` on seed line `seed`, or undefined when that slot holds a real team. */
+function placeholderFor(seed: number, region: SeedRegion): string | undefined {
+  const seedType = PLAYIN_SEED_LINES[seed];
+  if (!seedType) return undefined;
+  const index = PLAYIN_ROUND_ONE_SLOTS[seedType].findIndex(
+    (slot) => slot.region === region
+  );
+  return index === -1 ? undefined : PLAYIN_PLACEHOLDERS[seedType][index];
+}
 
 /**
- * Deals the selected field into the four regions, seed line by seed line.
+ * Deals the selected field into the four regions, seed line by seed line,
+ * snaking (odd lines west -> midwest, even lines midwest -> west).
  * `tournamentTeams` holds the 60 non-play-in teams in rank order; the play-in
- * slots (the two 11 seeds in south/midwest, the two 16 seeds in west/east) get
- * placeholder names that the play-in games later replace.
+ * slots (the regions `PLAYIN_ROUND_ONE_SLOTS` names on the 11 and 16 lines)
+ * get placeholder names that the play-in games later replace, and the real
+ * teams on that line go to the other regions in snake order.
  */
 export function seedTournament(
   tournamentTeams: readonly string[]
@@ -17,23 +38,15 @@ export function seedTournament(
     south: [],
     midwest: [],
   };
-  const seedSettingArr = [...tournamentTeams];
-  const numberOfRegions = SEED_REGIONS.length;
-  for (let i = 1; i <= HIGHEST_SEED; i++) {
-    for (let j = 0; j < numberOfRegions; j++) {
-      const region = SEED_REGIONS[j];
-      if (i % 2 === 1) {
-        if (i === 11 && (j === 2 || j === 3)) {
-          seeds[region].push(PLAYIN_PLACEHOLDERS.elevenSeeds[j - 2]);
-          seedSettingArr.splice(j, 0, "PlayinTeam");
-        } else seeds[region].push(seedSettingArr[j]);
-      } else {
-        if (i === 16 && (j === 0 || j === 1)) {
-          seeds[region].push(PLAYIN_PLACEHOLDERS.sixteenSeeds[j]);
-        } else seeds[region].push(seedSettingArr[numberOfRegions - (j + 1)]);
-      }
-    }
-    seedSettingArr.splice(0, 4);
+  let next = 0;
+  for (let seed = 1; seed <= HIGHEST_SEED; seed++) {
+    const regions =
+      seed % 2 === 1 ? SEED_REGIONS : [...SEED_REGIONS].reverse();
+    const line: Partial<Record<SeedRegion, string>> = {};
+    regions.forEach((region) => {
+      line[region] = placeholderFor(seed, region) ?? tournamentTeams[next++];
+    });
+    SEED_REGIONS.forEach((region) => seeds[region].push(line[region]));
   }
   return seeds;
 }
