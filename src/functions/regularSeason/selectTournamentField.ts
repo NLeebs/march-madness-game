@@ -4,6 +4,7 @@ import {
   NUMBER_OF_CONF_CHAMP_PLAYINS,
 } from "@/src/constants";
 import { ConferenceArrays, RegularSeasonTeam } from "@/types";
+import { GameDataError } from "@/src/functions/generic";
 
 export type TournamentFieldSelection = {
   /** One champion per conference, in conference-key order. */
@@ -24,24 +25,27 @@ function validateInputs(
   for (const conf of conferences) {
     const teams = conferenceArrays[conf];
     if (teams.length < 2) {
-      throw new Error(
-        `Conference "${conf}" has ${teams.length} team(s); at least 2 teams are needed to pick a champion`
+      throw new GameDataError(
+        `Conference "${conf}" has ${teams.length} team(s); at least 2 teams are needed to pick a champion`,
+        { conference: conf, teamCount: teams.length }
       );
     }
   }
   for (const conf of conferences) {
     for (const team of conferenceArrays[conf]) {
       if (!records[team]) {
-        throw new Error(
-          `Team "${team}" in conference "${conf}" has no regular season record`
+        throw new GameDataError(
+          `Team "${team}" in conference "${conf}" has no regular season record`,
+          { team, conference: conf }
         );
       }
     }
   }
   const nonChampions = Object.keys(records).length - conferences.length;
   if (nonChampions < NUMBER_OF_AT_LARGE_TEAMS) {
-    throw new Error(
-      `Only ${nonChampions} non-champions for ${NUMBER_OF_AT_LARGE_TEAMS} at-large spots`
+    throw new GameDataError(
+      `Only ${nonChampions} non-champions for ${NUMBER_OF_AT_LARGE_TEAMS} at-large spots`,
+      { nonChampions, atLargeSpots: NUMBER_OF_AT_LARGE_TEAMS }
     );
   }
 }

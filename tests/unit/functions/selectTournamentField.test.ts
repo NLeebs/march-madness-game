@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { selectTournamentField } from "@/src/functions";
+import { GameDataError, selectTournamentField } from "@/src/functions";
 import { NUMBER_OF_AT_LARGE_TEAMS } from "@/src/constants";
 import { buildLeague } from "@/tests/factories";
 import { buildRecords } from "@/tests/game/helpers/runGame";
@@ -168,6 +168,55 @@ describe("selectTournamentField", () => {
       expect(() => selectTournamentField(small, smallConfArrs)).toThrow(
         /at-large/
       );
+    });
+
+    describe("throws GameDataError with the bad data as details", () => {
+      function thrownBy(fn: () => unknown): unknown {
+        try {
+          fn();
+        } catch (err) {
+          return err;
+        }
+        throw new Error("expected a throw");
+      }
+
+      it("names the one-team conference", () => {
+        const oneTeamConf = { ...confArrs, [confs[0]]: [confArrs[confs[0]][0]] };
+        const err = thrownBy(() => selectTournamentField(baseRecords(), oneTeamConf));
+        expect(err).toBeInstanceOf(GameDataError);
+        expect((err as GameDataError).details).toEqual({
+          conference: confs[0],
+          teamCount: 1,
+        });
+      });
+
+      it("names the team without a record and its conference", () => {
+        const team = confArrs[confs[1]][1];
+        const missing = { ...baseRecords() };
+        delete missing[team];
+        const err = thrownBy(() => selectTournamentField(missing, confArrs));
+        expect(err).toBeInstanceOf(GameDataError);
+        expect((err as GameDataError).details).toEqual({
+          team,
+          conference: confs[1],
+        });
+      });
+
+      it("gives the non-champion count and the at-large spots", () => {
+        const smallConfArrs = Object.fromEntries(
+          confs.map((c) => [c, confArrs[c].slice(0, 2)])
+        );
+        const keep = new Set(Object.values(smallConfArrs).flat());
+        const small = Object.fromEntries(
+          Object.entries(baseRecords()).filter(([team]) => keep.has(team))
+        );
+        const err = thrownBy(() => selectTournamentField(small, smallConfArrs));
+        expect(err).toBeInstanceOf(GameDataError);
+        expect((err as GameDataError).details).toEqual({
+          nonChampions: confs.length,
+          atLargeSpots: NUMBER_OF_AT_LARGE_TEAMS,
+        });
+      });
     });
   });
 });
