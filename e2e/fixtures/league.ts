@@ -43,3 +43,13 @@ export function e2eTeamStats(yearId: string): ConferenceMap {
   }
   return league;
 }
+
+/** The normal league with conf01 cut to its first team: Selection Sunday rejects it (step 8b crash test). */
+export function e2eOneTeamConferenceStats(yearId: string): ConferenceMap {
+  const league = e2eTeamStats(yearId);
+  if (league.conf01) {
+    const [first] = Object.keys(league.conf01);
+    league.conf01 = { [first]: league.conf01[first] };
+  }
+  return league;
+}

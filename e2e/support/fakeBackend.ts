@@ -1,6 +1,7 @@
 import type { Page, Route } from "@playwright/test";
 import type { getYears, PersistTournamentResult } from "@/application/useCases";
 import type { SimulationRequestBody } from "@/app/api/bracket/simulation/route";
+import type { ConferenceMap } from "@/models";
 import { E2E_YEARS, e2eTeamStats } from "../fixtures/league";
 import {
   PREP_LISTS,
@@ -20,6 +21,8 @@ import { FAKE_USER, installFakeAuth } from "./fakeAuth";
 export type FakeBackendOptions = {
   persistStatus?: number;
   teamStatsDelayMs?: number;
+  /** Replaces the league served by /api/team-statistics (e.g. a deliberately broken one). */
+  teamStats?: (yearId: string) => ConferenceMap;
   /** Serve the dashboard endpoints (user-scoped ones for FAKE_USER only; others get 403). */
   dashboard?: boolean;
 };
@@ -120,7 +123,7 @@ export async function installFakeBackend(
           setTimeout(resolve, opts.teamStatsDelayMs),
         );
       }
-      return json(route, e2eTeamStats(yearId));
+      return json(route, (opts.teamStats ?? e2eTeamStats)(yearId));
     }
 
     const rules = pathname.match(/^\/api\/tournament-scoring-rules\/([^/]+)$/);
