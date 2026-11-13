@@ -26,7 +26,7 @@ Full run is ~5.8 min with 2 workers including the build (local 14-core machine);
 
 ## Fake backend
 
-- `e2e/support/fakeBackend.ts` routes every `/api` call (plus Supabase auth via `fakeAuth.ts`). The `backend` fixture is automatic; options go through `test.use({ backendOptions })` (`persistStatus`, `teamStatsDelayMs`, `dashboard`).
+- `e2e/support/fakeBackend.ts` routes every `/api` call (plus Supabase auth via `fakeAuth.ts`). The `backend` fixture is automatic; options go through `test.use({ backendOptions })` (`persistStatus`, `teamStatsDelayMs`, `dashboard`, `teamStats` to serve a different league, e.g. `e2eOneTeamConferenceStats`).
 - Any request that has no route is recorded in `backend.unhandled`, and the test fails. When the app gains an `/api` call, route it.
 - Fixtures are typed from the use cases and route bodies (`getYears`, `PersistTournamentResult`, `SimulationRequestBody`), so response-shape drift fails `tsc`. League data is in `e2e/fixtures/league.ts`, dashboard data in `e2e/fixtures/dashboard.ts`.
 - `NEXT_PUBLIC_BROWSER_ANON_KEY` (the localStorage key for the anonymous id) is set in the `webServer.env` of `playwright.config.ts`.
@@ -67,7 +67,7 @@ An untagged test runs on laptop only. `@every-size` (a full game, navigation) ru
 
 ## Console errors
 
-The `errors` fixture fails a test on any `console.error` or uncaught page error. Allow one with `errors.allow(pattern, reason)` in the test. Every entry needs a reason that names why it is expected **and**, where it records an app defect, a DIAGNOSIS finding (for example `save-failure.spec.ts`: "silent save failure, finding 43"). Keep patterns narrow, and where the message is generic (a bare "Failed to load resource") assert separately that only the intended request failed.
+The `errors` fixture fails a test on any `console.error` or uncaught page error. Allow one with `errors.allow(pattern, reason)` in the test. Every entry needs a reason that names why it is expected **and**, where it records an app defect, a DIAGNOSIS finding (for example `save-failure.spec.ts`: "silent save failure, finding 43"; `crash.spec.ts`: "forced crash to test the error boundary", where React logs the error the boundary caught). Keep patterns narrow, and where the message is generic (a bare "Failed to load resource") assert separately that only the intended request failed.
 
 ## Layout checks and KNOWN_LAYOUT_ISSUES
 

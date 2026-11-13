@@ -24,7 +24,7 @@ Always use `npx vitest` / `npx tsc` *after* `npm ci` - if `node_modules` is miss
 
 ## Environment
 
-`.env.local` (gitignored) needs: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (server only - never import `supabaseServiceRole.ts` from client code), `NEXT_PUBLIC_APP_URL`, optional `NEXT_PUBLIC_STAGING_URL`, `NEXT_PUBLIC_APP_MODE=dev` (pre-fills picks), `NEXT_PUBLIC_BROWSER_ANON_KEY` (localStorage key for the anonymous player id, required by `src/utils/getAnonUserId.ts`; e2e sets it in `playwright.config.ts`), and `NEXT_PUBLIC_FIREBASE_*` (legacy team-stats source only). Tests stub Supabase env vars in `src/test-setup.ts` and never hit a real database.
+`.env.local` (gitignored) needs: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (server only - never import `supabaseServiceRole.ts` from client code), `NEXT_PUBLIC_APP_URL`, optional `NEXT_PUBLIC_STAGING_URL`, `NEXT_PUBLIC_APP_MODE=dev` (pre-fills picks), `NEXT_PUBLIC_BROWSER_ANON_KEY` (localStorage key for the anonymous player id, required by `src/utils/getAnonUserId.ts`; e2e sets it in `playwright.config.ts`), `NEXT_PUBLIC_FIREBASE_*` (legacy team-stats source only), and optional `NEXT_PUBLIC_SENTRY_DSN` (crash reports; unset = Sentry off, which is how dev, CI and e2e run). `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` are set only in Vercel's build env, for source-map upload; builds without them skip the upload. Tests stub Supabase env vars in `src/test-setup.ts` and never hit a real database.
 
 ## Architecture
 
@@ -48,6 +48,9 @@ Import alias `@/` = repo root (e.g. `@/src/components`, `@/store`, `@/applicatio
 ### Two kinds of state
 - **Game state** lives in Redux (`store/`). The game is a client-side state machine driven by boolean flags in `appStateSlice` (`startScreen -> regularSeason -> selectionSunday -> tournament -> ... -> tournamentRecap`). `App.tsx` renders phases off those flags.
 - **Server data** (years, stats, dashboards) goes through TanStack Query hooks in `src/hooks/` that `fetch('/api/...')`. Query keys are `[camelCaseName, ...params]`.
+
+### Crashes
+`GameErrorBoundary` (around the game in `app/page.tsx`), `app/error.tsx` and `app/global-error.tsx` render `CrashScreen` ("Something went wrong", button does a full load of `/`) and report through `src/utils/crashReporting` (`reportCrash`, never throws) to Sentry, which emails the developer. Sentry is initialized in `instrumentation-client.ts` / `instrumentation.ts` from `sentryInitOptions` (no personal or request data, no tracing). Game logic that rejects bad data throws `GameDataError(message, details)`; `details` (team, conference, counts) shows up as fields on the Sentry event. Errors in event handlers, timers and promises are not caught by the boundaries.
 
 ### Adding an API endpoint (follow the existing pattern)
 1. Repository method in `infrastructure/db/<Domain>Repository.ts` - throw `new Error("Failed to ...: " + error.message)` on Supabase error.
