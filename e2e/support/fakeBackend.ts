@@ -24,9 +24,13 @@ import {
   isDashboardYearId,
 } from "../fixtures/dashboard";
 import { FAKE_USER, installFakeAuth } from "./fakeAuth";
+import { apiError, checkSimulationRequest } from "./simulationRequest";
 
 export type FakeBackendOptions = {
-  /** Status for POST /api/bracket/simulation (default 201, answered with the played tournament). */
+  /**
+   * Status for POST /api/bracket/simulation (default 201, answered with the played tournament).
+   * A status >= 400 answers with a handleApiError-shaped body instead.
+   */
   persistStatus?: number;
   teamStatsDelayMs?: number;
   /** Replaces the league served by /api/team-statistics (e.g. a deliberately broken one). */
@@ -146,13 +150,20 @@ export async function installFakeBackend(
       const body = request.postDataJSON() as SimulationRequestBody;
       backend.persistRequests.push(body);
       const status = opts.persistStatus ?? 201;
-      if (status >= 400) return json(route, { error: "e2e simulated failure" }, status);
-      // Plays the tournament like the route does, with the league this backend served.
+      if (status >= 400) {
+        const failure = apiError(status, "e2e simulated failure");
+        return json(route, failure.body, failure.status);
+      }
+      // Validates like the route (strict schema, league teams, consistent picks), so a body
+      // the real route would refuse fails here too, then plays the tournament like the route.
+      const teamStats = (opts.teamStats ?? e2eTeamStats)(body.yearId ?? "");
+      const checked = checkSimulationRequest(body, teamStats);
+      if ("error" in checked) return json(route, checked.error.body, checked.error.status);
       // cast: the schema's inferred types are looser than the game's (see playTournamentPost.ts).
       const { playin, rounds, roundPoints, score } = simulateTournament({
-        field: body.field as TournamentField,
-        picks: body.picks as TournamentPicks,
-        teamStats: (opts.teamStats ?? e2eTeamStats)(body.yearId ?? ""),
+        field: checked.request.field as TournamentField,
+        picks: checked.request.picks as TournamentPicks,
+        teamStats,
         points: ROUND_POINTS,
       });
       const result: PlayTournamentResult = { playin, rounds, roundPoints, score, bracketId: "e2e-bracket" };

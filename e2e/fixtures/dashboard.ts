@@ -15,7 +15,7 @@ import { FAKE_USER } from "../support/fakeAuth";
  * shows differs between the years, so a year switch can't pass on stale data. Team logos are
  * empty on purpose: the dashboard then renders the name only and loads no images.
  */
-export const DASHBOARD_YEAR_IDS = ["e2e-year-older", "e2e-year-latest"] as const;
+export const DASHBOARD_YEAR_IDS = ["e2e00000-0000-4000-8000-000000002024", "e2e00000-0000-4000-8000-000000002025"] as const;
 export type DashboardYearId = (typeof DASHBOARD_YEAR_IDS)[number];
 
 export function isDashboardYearId(id: string): id is DashboardYearId {
@@ -67,7 +67,7 @@ type YearValues = {
 };
 
 export const DASHBOARD_YEAR_VALUES: Record<DashboardYearId, YearValues> = {
-  "e2e-year-latest": {
+  "e2e00000-0000-4000-8000-000000002025": {
     label: "2025",
     scores: [412, 455, 501],
     stats: {
@@ -88,7 +88,7 @@ export const DASHBOARD_YEAR_VALUES: Record<DashboardYearId, YearValues> = {
     },
     seedUpsetPercentage: 37,
   },
-  "e2e-year-older": {
+  "e2e00000-0000-4000-8000-000000002024": {
     label: "2024",
     scores: [388, 430],
     stats: {

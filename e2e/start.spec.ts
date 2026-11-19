@@ -10,7 +10,7 @@ test("starts the latest year and reaches the regular season", async ({ page, bac
   await page.goto("/");
   await startButton(page).click();
   await expect(page.getByTestId("regular-season")).toBeVisible({ timeout: PHASE_TIMEOUTS.toSeason });
-  expect(backend.requestedPaths).toContain("/api/team-statistics/e2e-year-latest");
+  expect(backend.requestedPaths).toContain("/api/team-statistics/e2e00000-0000-4000-8000-000000002025");
   expect((await readState(page)).appState.regularSeason).toBe(true);
 });
 
@@ -30,7 +30,7 @@ test.describe("slow team stats", () => {
 test("choosing the older year plays that year's league", async ({ page, backend }) => {
   await page.goto("/");
   await expect(startButton(page)).toBeEnabled({ timeout: PHASE_TIMEOUTS.toSeason });
-  const olderStats = page.waitForResponse("**/api/team-statistics/e2e-year-older");
+  const olderStats = page.waitForResponse("**/api/team-statistics/e2e00000-0000-4000-8000-000000002024");
   await page
     .getByText("Select the tournament year")
     .locator("..")
@@ -41,7 +41,7 @@ test("choosing the older year plays that year's league", async ({ page, backend 
   await expect(startButton(page)).toBeEnabled({ timeout: PHASE_TIMEOUTS.toSeason });
   await startButton(page).click();
   await expect(page.getByTestId("regular-season")).toBeVisible({ timeout: PHASE_TIMEOUTS.toSeason });
-  expect(backend.requestedPaths).toContain("/api/team-statistics/e2e-year-older");
+  expect(backend.requestedPaths).toContain("/api/team-statistics/e2e00000-0000-4000-8000-000000002024");
   // conf01 is dropped from the older year; team001 belongs to it.
   await expect(page.getByText("team001", { exact: true })).toHaveCount(0);
   await expect(page.getByText("team360", { exact: true })).not.toHaveCount(0);
