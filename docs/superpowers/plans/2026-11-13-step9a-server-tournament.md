@@ -390,12 +390,31 @@ The use case:
 
 The mapper keeps today's favored/underdog and pick-index logic.
 
+Errors from the `persist_bracket` RPC are server errors (500) whatever their SQLSTATE: malformed ids raise 22P02 and check failures 22023, but the payload is server-built, so a failure is our bug, never the client's. Never map them to 400; only `ValidationError`s from the use case's own checks are 400.
+
 - [ ] **Step 4: Run them and see them pass**
 
 Run: `npx vitest run tests/unit; npx tsc --noEmit`
 Expected: PASS. `tsc` checks the RPC name and args.
 
-- [ ] **Step 5: Commit**: `feat(tournament): server plays, scores and saves the tournament`
+- [ ] **Step 5: Re-backfill `tournament_games.bracket_id`**
+
+Brackets the deployed (old) app saves between the 9a-1 merge and this PR's merge have `bracket_id` null on all their games. Write the pgTAP test first (`supabase/tests/database/`, next free number): as service_role seed a legacy bracket with a null-`bracket_id` game plus a pick on it, and a play-in game with no pick; run the migration, assert the picked game has the bracket id and the play-in game stays null. See it fail. Then:
+
+Run: `npx supabase migration new rebackfill_tournament_games_bracket_id`
+
+The migration re-runs the same idempotent statement as 9a-1:
+
+```sql
+update public.tournament_games g
+set bracket_id = p.bracket_id
+from public.user_picks p
+where p.game_id = g.id and g.bracket_id is null;
+```
+
+Run `npx supabase db reset; npx supabase test db` (pass), then `npm run db:types` (expect no diff). In the PR body, note that a bracket saved in the seconds between the migration and the Vercel deploy could still be missed, and the same statement can be re-run by hand.
+
+- [ ] **Step 6: Commit**: `feat(tournament): server plays, scores and saves the tournament`
 
 ### Task 8: Route
 
