@@ -1,7 +1,14 @@
 import type { Page, Route } from "@playwright/test";
-import type { getYears, PersistTournamentResult } from "@/application/useCases";
-import type { SimulationRequestBody } from "@/app/api/bracket/simulation/route";
+import type { getYears } from "@/application/useCases";
+import type { PlayTournamentResult } from "@/application/useCases/tournament/PlayTournament";
+import type { SimulationRequestBody } from "@/app/api/bracket/simulation/schema";
 import type { ConferenceMap } from "@/models";
+import { ROUND_POINTS } from "@/src/functions/tournament/scoreRound";
+import {
+  simulateTournament,
+  type TournamentField,
+} from "@/src/functions/tournament/simulateTournament";
+import type { TournamentPicks } from "@/types";
 import { E2E_YEARS, e2eTeamStats } from "../fixtures/league";
 import {
   PREP_LISTS,
@@ -19,6 +26,7 @@ import {
 import { FAKE_USER, installFakeAuth } from "./fakeAuth";
 
 export type FakeBackendOptions = {
+  /** Status for POST /api/bracket/simulation (default 201, answered with the played tournament). */
   persistStatus?: number;
   teamStatsDelayMs?: number;
   /** Replaces the league served by /api/team-statistics (e.g. a deliberately broken one). */
@@ -135,14 +143,20 @@ export async function installFakeBackend(
     }
 
     if (method === "POST" && pathname === "/api/bracket/simulation") {
-      backend.persistRequests.push(
-        request.postDataJSON() as SimulationRequestBody,
-      );
-      const result: PersistTournamentResult = {
-        bracketId: "e2e-bracket",
-        success: true,
-      };
-      return json(route, result, opts.persistStatus ?? 200);
+      const body = request.postDataJSON() as SimulationRequestBody;
+      backend.persistRequests.push(body);
+      const status = opts.persistStatus ?? 201;
+      if (status >= 400) return json(route, { error: "e2e simulated failure" }, status);
+      // Plays the tournament like the route does, with the league this backend served.
+      // cast: the schema's inferred types are looser than the game's (see playTournamentPost.ts).
+      const { playin, rounds, roundPoints, score } = simulateTournament({
+        field: body.field as TournamentField,
+        picks: body.picks as TournamentPicks,
+        teamStats: (opts.teamStats ?? e2eTeamStats)(body.yearId ?? ""),
+        points: ROUND_POINTS,
+      });
+      const result: PlayTournamentResult = { playin, rounds, roundPoints, score, bracketId: "e2e-bracket" };
+      return json(route, result, status);
     }
 
     if (opts.dashboard && method === "GET") {
