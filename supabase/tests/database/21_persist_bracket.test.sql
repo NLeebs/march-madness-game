@@ -1,5 +1,5 @@
 begin;
-select plan(19);
+select plan(36);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -74,33 +74,104 @@ select is((select count(*) from public.tournament_games
 
 -- rejections leave nothing behind
 select throws_ok($$select public.persist_bracket(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules2'), 67, (select id from fx where name = 't2')))$$,
-  '22023', null, 'rules from another year are rejected');
+  '22023', 'persist_bracket: scoring rules do not belong to the bracket year', 'rules from another year are rejected');
 select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
   'no bracket saved after rules from another year');
 
 select throws_ok($$select public.persist_bracket(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 66, (select id from fx where name = 't2')))$$,
-  '22023', null, '66 games are rejected');
+  '22023', 'persist_bracket: expected exactly 67 games', '66 games are rejected');
 select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
   'no bracket saved after 66 games');
 
 select throws_ok($$select public.persist_bracket(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't3')))$$,
-  '22023', null, 'a team from another year is rejected');
+  '22023', 'persist_bracket: every team must be a team of the bracket year', 'a team from another year is rejected');
 select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
   'no bracket saved after a team from another year');
 
 select throws_ok($$select public.persist_bracket(jsonb_set(
     pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')),
     '{games,10,winning_team_id}', to_jsonb((select id from fx where name = 't4'))))$$,
-  '22023', null, 'a winner who did not play is rejected');
+  '22023', 'persist_bracket: a winner must be one of the two teams in the game', 'a winner who did not play is rejected');
 select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
   'no bracket saved after a winner who did not play');
 
 select throws_ok($$select public.persist_bracket(jsonb_set(
     pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')),
     '{games,0,pick}', jsonb_build_object('picked_team_id', (select id from fx where name = 't1'), 'picked_team_seed', 1)))$$,
-  '22023', null, 'a play-in game with a pick is rejected');
+  '22023', 'persist_bracket: expected exactly 4 play-in games, none with a pick', 'a play-in game with a pick is rejected');
 select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
   'no bracket saved after a play-in game with a pick');
+
+select throws_ok($$select public.persist_bracket(pg_temp.payload(null, null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')))$$,
+  '22023', 'persist_bracket: exactly one of user_id and anon_user_id is required', 'an owner-less bracket is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after an owner-less bracket');
+select throws_ok($$select public.persist_bracket(pg_temp.payload((select id from fx where name = 'user_a'), gen_random_uuid(), (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')))$$,
+  '22023', 'persist_bracket: exactly one of user_id and anon_user_id is required', 'a bracket with both owners is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a bracket with both owners');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,pick}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: expected exactly 63 picks', '62 picks are rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after 62 picks');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{bracket,score}', '-1'::jsonb))$$,
+  '22023', 'persist_bracket: score must be at least 0', 'a negative score is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a negative score');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,favored_team_id}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: every team must be a team of the bracket year', 'a null team id is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a null team id');
+
+-- anonymous owner
+insert into fx select 'anon_bracket', public.persist_bracket(pg_temp.payload(null, '00000000-0000-4000-8000-0000000000a1'::uuid, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')));
+select is((select count(*) from public.user_brackets
+           where id = (select id from fx where name = 'anon_bracket')
+             and anon_user_id = '00000000-0000-4000-8000-0000000000a1' and user_id is null), 1::bigint,
+  'an anonymous bracket is saved with its anon id');
+
+-- legacy backfill. The migration ran on an empty DB, so this repeats its exact
+-- UPDATE statement against rows shaped like the old app's (null bracket_id).
+with ins as (
+  insert into public.user_brackets (anon_user_id, year_id, tournament_scoring_rules_id, score)
+  values ('00000000-0000-4000-8000-0000000000b1', (select id from fx where name = 'y1'), (select id from fx where name = 'rules1'), 0)
+  returning id)
+insert into fx select 'legacy', id from ins;
+with ins as (
+  insert into public.tournament_games (year_id, round_id, is_play_in, favored_team_id, favored_team_seed, favored_team_score,
+    underdog_team_id, underdog_team_seed, underdog_team_score, winning_team_id)
+  values ((select id from fx where name = 'y1'), (select id from fx where name = 'r2'), false,
+    (select id from fx where name = 't1'), 1, 70, (select id from fx where name = 't2'), 16, 60, (select id from fx where name = 't1'))
+  returning id)
+insert into fx select 'legacy_game', id from ins;
+with ins as (
+  insert into public.tournament_games (year_id, round_id, is_play_in, favored_team_id, favored_team_seed, favored_team_score,
+    underdog_team_id, underdog_team_seed, underdog_team_score, winning_team_id)
+  values ((select id from fx where name = 'y1'), (select id from fx where name = 'r1'), true,
+    (select id from fx where name = 't1'), 11, 66, (select id from fx where name = 't2'), 11, 61, (select id from fx where name = 't1'))
+  returning id)
+insert into fx select 'legacy_playin', id from ins;
+insert into public.user_picks (bracket_id, game_id, picked_team_id, picked_team_seed)
+values ((select id from fx where name = 'legacy'), (select id from fx where name = 'legacy_game'), (select id from fx where name = 't1'), 1);
+
+update public.tournament_games g
+set bracket_id = p.bracket_id
+from public.user_picks p
+where p.game_id = g.id and g.bracket_id is null;
+
+select is((select bracket_id from public.tournament_games where id = (select id from fx where name = 'legacy_game')),
+  (select id from fx where name = 'legacy'), 'backfill gives a picked legacy game its bracket id');
+select is((select bracket_id from public.tournament_games where id = (select id from fx where name = 'legacy_playin')),
+  null::uuid, 'backfill leaves a legacy play-in game null');
+
+-- schema
+select fk_ok('public', 'tournament_games', 'bracket_id', 'public', 'user_brackets', 'id', 'bracket_id references user_brackets');
+select has_index('public', 'tournament_games', 'tournament_games_bracket_id_idx', 'bracket_id is indexed');
+delete from public.user_brackets where id = (select id from fx where name = 'new');
+select is((select count(*) from public.tournament_games where bracket_id = (select id from fx where name = 'new')), 0::bigint,
+  'deleting a bracket deletes its games');
+select is((select count(*) from public.user_picks where bracket_id = (select id from fx where name = 'new')), 0::bigint,
+  'deleting a bracket deletes its picks');
 
 select * from finish();
 rollback;
