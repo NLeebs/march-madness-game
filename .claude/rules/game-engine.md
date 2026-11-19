@@ -9,13 +9,13 @@ paths:
 ---
 # Game engine (simulation, selection, bracket, scoring)
 
-The game loop runs entirely in the browser:
+The game loop runs in the browser, except the tournament, which the server plays:
 1. schedule (`createSeasonSchedule`);
 2. regular season (`PlayRegularSeasonGames` → `playGame`);
 3. Selection Sunday (`selectTournamentField`);
 4. seeding and bracket (`src/functions/tournament/`, stored by `tournamentSlice`);
 5. picks (`applyPick`, stored by `tournamentPlayersPicksSlice`);
-6. the tournament drivers (`PlayPlayinGames`, `PlayTournamentGames`).
+6. the tournament: `simulateTournament` (`src/functions/tournament/`) plays and scores it on the server (`POST /api/bracket/simulation`); the drivers (`PlayPlayinGames`, `PlayTournamentGames`) only replay `tournament.simulation` and dispatch the stored results. They pass the server's `roundPoints` to `recordRoundScore`'s optional `points` argument; without it the reducer uses `scoreRound`'s points.
 
 Every part of it is under characterization tests in `tests/game/`. Preserve gameplay unless a change is a deliberate gameplay change. Results (`applyGameResult`) and picks (`getNextRoundInfo`) place a winner in the same next-round slot: `ROUND_CONFIG[round].advance[region].teamIndex` when the region changes, else `gameIndex % 2`. Slots don't depend on dispatch order, but RNG draw order does, so collapsing `PlayTournamentGames`' effects (step 10) is a draw-order change if it reorders games. Play-in placeholder regions (seeding, `applyPlayinResult`) all come from `PLAYIN_ROUND_ONE_SLOTS`. The pure tournament functions are also unit-tested in `tests/unit/functions/tournament/` with deep-frozen inputs.
 
@@ -37,7 +37,7 @@ Every part of it is under characterization tests in `tests/game/`. Preserve game
 
 ## Regenerating draw-order pins
 
-Changing the order or number of random draws without changing the game (e.g. moving the tournament driver out of components) is allowed. When you do it:
+Changing the order or number of random draws without changing the game (e.g. moving the tournament driver out of components) is allowed. The `fullRun` pin was regenerated once in step 9a-2 because play-in results now carry scores. When you do it:
 
 1. Make the draw-order change in a commit that changes nothing else.
 2. In that commit, the fixed-contract tests and statistical checks must pass **unchanged**. If a statistical check fails, the gameplay changed, not just the draw order.
@@ -56,7 +56,7 @@ Changing the order or number of random draws without changing the game (e.g. mov
   - `playSeason` uses fake timers for `delay`;
   - `buildRecords`;
   - `pickChalk` uses `getNextRoundInfo`, exported from `TournamentMatchup.tsx`;
-  - `playTournament` mounts the drivers under a hand-copy of `App.tsx`'s conditions (finding 41: keep the two in sync until they share a component).
+  - `playTournament` calls `simulateTournament` (as the server does), stores the result in `tournament.simulation`, then mounts the drivers under a hand-copy of `App.tsx`'s conditions (finding 41: keep the two in sync until they share a component).
 - `tests/game/helpers/fullRun.ts` `playFullGame(seed)` runs one seeded stream from schedule to champion.
 - Heavy tests (360-team schedules, seasons, tournaments) pass `GAME_TEST_TIMEOUT` (`tests/game/helpers/timeout.ts`). Vitest's 5 s default fails under load. `npx vitest run tests/game` should stay under about 40 s.
 
