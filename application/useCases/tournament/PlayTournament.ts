@@ -24,6 +24,8 @@ export interface PlayTournamentDto {
 
 export type PlayTournamentResult = TournamentPlayResult & { bracketId: string };
 
+const FIELD_SIZE = 68;
+
 /** rounds.round_name -> round identifier. */
 const ROUND_BY_NAME: Readonly<Record<string, TournamentRound>> = {
   "1": 1,
@@ -53,20 +55,44 @@ export async function playTournament({
     throw new ValidationError("A bracket needs a userId or an anonUserId");
   }
 
-  const repository = new TournamentRepository();
-  const [teamStats, teams, rounds, points, scoringRules] = await Promise.all([
-    getTeamStatisticsByYearId(yearId),
-    repository.getTeamsByYearId(yearId),
-    repository.getRounds(),
-    repository.getRoundPoints(),
-    repository.getBracketScoringRulesByYearId(yearId),
-  ]);
-
   const fieldTeams = [
     ...field.tournamentTeams,
     ...field.playinTeams.elevenSeeds,
     ...field.playinTeams.sixteenSeeds,
   ];
+  const duplicates = fieldTeams.filter((team, i) => fieldTeams.indexOf(team) !== i);
+  if (duplicates.length > 0) {
+    throw new ValidationError(
+      `Field teams appear more than once: ${Array.from(new Set(duplicates)).join(", ")}`
+    );
+  }
+  if (fieldTeams.length !== FIELD_SIZE) {
+    throw new ValidationError(
+      `The field needs ${FIELD_SIZE} teams, got ${fieldTeams.length}`
+    );
+  }
+
+  const repository = new TournamentRepository();
+  const loads = await Promise.allSettled([
+    getTeamStatisticsByYearId(yearId),
+    repository.getTeamsByYearId(yearId),
+    repository.getRounds(),
+    repository.getRoundPoints(),
+    repository.findBracketScoringRulesByYearId(yearId),
+  ]);
+  // A year without scoring rules is an unknown year: the other loads may fail
+  // for the same reason, so this check comes before rethrowing their errors.
+  if (loads[4].status === "fulfilled" && loads[4].value === null) {
+    throw new ValidationError(`Unknown year: ${yearId}`);
+  }
+  const teamStats = settled(loads[0]);
+  const teams = settled(loads[1]);
+  const rounds = settled(loads[2]);
+  const points = settled(loads[3]);
+  const scoringRules = settled(loads[4]);
+  if (scoringRules === null) {
+    throw new ValidationError(`Unknown year: ${yearId}`);
+  }
 
   const statsTeams = teamNamesWithStats(teamStats);
   const withoutStats = fieldTeams.filter((team) => !statsTeams.has(team));
@@ -132,4 +158,10 @@ function teamNamesWithStats(teamStats: ConferenceMap): Set<string> {
   return new Set(
     Object.values(teamStats).flatMap((conference) => Object.keys(conference))
   );
+}
+
+/** The value of a settled load, rethrowing its error (a server error) if it failed. */
+function settled<T>(result: PromiseSettledResult<T>): T {
+  if (result.status === "rejected") throw result.reason;
+  return result.value;
 }

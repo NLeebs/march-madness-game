@@ -19,7 +19,7 @@ const mocks = vi.hoisted(() => ({
   getTeamsByYearId: vi.fn(),
   getRounds: vi.fn(),
   getRoundPoints: vi.fn(),
-  getBracketScoringRulesByYearId: vi.fn(),
+  findBracketScoringRulesByYearId: vi.fn(),
   persistBracket: vi.fn(),
 }));
 
@@ -28,7 +28,7 @@ vi.mock("@/infrastructure/db/TournamentRepository", () => ({
     getTeamsByYearId: mocks.getTeamsByYearId,
     getRounds: mocks.getRounds,
     getRoundPoints: mocks.getRoundPoints,
-    getBracketScoringRulesByYearId: mocks.getBracketScoringRulesByYearId,
+    findBracketScoringRulesByYearId: mocks.findBracketScoringRulesByYearId,
     persistBracket: mocks.persistBracket,
   })),
 }));
@@ -111,7 +111,7 @@ describe("playTournament", () => {
     mocks.getTeamsByYearId.mockResolvedValue(teams);
     mocks.getRounds.mockResolvedValue(rounds);
     mocks.getRoundPoints.mockResolvedValue(ROUND_POINTS);
-    mocks.getBracketScoringRulesByYearId.mockResolvedValue(rules);
+    mocks.findBracketScoringRulesByYearId.mockResolvedValue(rules);
     mocks.persistBracket.mockResolvedValue("bracket-uuid");
   });
 
@@ -125,7 +125,7 @@ describe("playTournament", () => {
     mocks.getTeamsByYearId.mockReturnValue(teamsLoad.promise);
     mocks.getRounds.mockReturnValue(roundsLoad.promise);
     mocks.getRoundPoints.mockReturnValue(points.promise);
-    mocks.getBracketScoringRulesByYearId.mockReturnValue(rulesLoad.promise);
+    mocks.findBracketScoringRulesByYearId.mockReturnValue(rulesLoad.promise);
 
     const pending = playTournament(buildDto());
     await Promise.resolve();
@@ -134,7 +134,7 @@ describe("playTournament", () => {
     expect(mocks.getTeamsByYearId).toHaveBeenCalledWith(YEAR_ID);
     expect(mocks.getRounds).toHaveBeenCalledTimes(1);
     expect(mocks.getRoundPoints).toHaveBeenCalledTimes(1);
-    expect(mocks.getBracketScoringRulesByYearId).toHaveBeenCalledWith(YEAR_ID);
+    expect(mocks.findBracketScoringRulesByYearId).toHaveBeenCalledWith(YEAR_ID);
     expect(mocks.persistBracket).not.toHaveBeenCalled();
 
     stats.resolve(league.teamStats);
@@ -192,6 +192,54 @@ describe("playTournament", () => {
     await expect(
       playTournament(buildDto({ userId: null, anonUserId: null }))
     ).rejects.toBeInstanceOf(ValidationError);
+    expect(mocks.persistBracket).not.toHaveBeenCalled();
+  });
+
+  it("rejects the same team twice in the field", async () => {
+    const duplicated: TournamentField = {
+      ...field,
+      tournamentTeams: [field.tournamentTeams[0], ...field.tournamentTeams.slice(0, 59)],
+    };
+
+    const pending = playTournament(buildDto({ field: duplicated }));
+    await expect(pending).rejects.toBeInstanceOf(ValidationError);
+    await expect(pending).rejects.toThrow(field.tournamentTeams[0]);
+    expect(mocks.persistBracket).not.toHaveBeenCalled();
+  });
+
+  it("rejects a field without 68 teams", async () => {
+    const short: TournamentField = {
+      ...field,
+      tournamentTeams: field.tournamentTeams.slice(0, 59),
+    };
+
+    await expect(playTournament(buildDto({ field: short }))).rejects.toBeInstanceOf(
+      ValidationError
+    );
+    expect(mocks.persistBracket).not.toHaveBeenCalled();
+  });
+
+  it("rejects an unknown year", async () => {
+    mocks.findBracketScoringRulesByYearId.mockResolvedValue(null);
+    mocks.getTeamsByYearId.mockResolvedValue([]);
+    mocks.getTeamStatisticsByYearId.mockRejectedValue(
+      new Error("Failed to fetch year: JSON object requested, multiple (or no) rows returned")
+    );
+
+    const pending = playTournament(buildDto());
+    await expect(pending).rejects.toBeInstanceOf(ValidationError);
+    await expect(pending).rejects.toThrow(YEAR_ID);
+    expect(mocks.persistBracket).not.toHaveBeenCalled();
+  });
+
+  it("a database error while loading stays a server error", async () => {
+    mocks.findBracketScoringRulesByYearId.mockRejectedValue(
+      new Error("Failed to fetch bracket scoring rules: connection refused")
+    );
+
+    const pending = playTournament(buildDto());
+    await expect(pending).rejects.toThrow("connection refused");
+    await expect(pending).rejects.not.toBeInstanceOf(ValidationError);
     expect(mocks.persistBracket).not.toHaveBeenCalled();
   });
 

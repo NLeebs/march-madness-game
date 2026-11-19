@@ -94,6 +94,23 @@ export class TournamentRepository {
     return bracketScoringRulesData;
   }
 
+  /** The year's scoring rules, or null when the year has none (e.g. an unknown year id). */
+  async findBracketScoringRulesByYearId(
+    yearId: string,
+  ): Promise<BracketScoringRuleSupabase | null> {
+    const { data, error } = await this.supabase
+      .from("tournament_scoring_rules")
+      .select("*")
+      .eq("year_id", yearId)
+      .maybeSingle();
+
+    if (error) {
+      throw new Error(`Failed to fetch bracket scoring rules: ${error.message}`);
+    }
+
+    return data;
+  }
+
   async getRounds(): Promise<Pick<RoundSupabase, "id" | "round_name">[]> {
     const { data: roundData, error } = await this.supabase
       .from("rounds")
