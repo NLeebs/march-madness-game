@@ -14,7 +14,7 @@ vi.mock("@/infrastructure/db/TournamentRepository", () => ({
   TournamentRepository: vi.fn().mockImplementation(() => ({
     getTeamsByYearId: mockGetTeamsByYearId,
     getRounds: mockGetRounds,
-    persistBracket: mockPersistBracket,
+    insertBracketRow: mockPersistBracket,
     persistTournament: mockPersistTournament,
   })),
 }));

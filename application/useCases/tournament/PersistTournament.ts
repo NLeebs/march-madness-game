@@ -40,7 +40,7 @@ export async function persistTournament({
   if (!bracket.user_id && !bracket.anon_user_id) {
     throw new Error("Anonymous brackets must have anon_user_id set.");
   }
-  const bracketId = await repository.persistBracket(bracket);
+  const bracketId = await repository.insertBracketRow(bracket);
 
   const gamesAndPicks = mapTournamentToRows({
     bracketId,

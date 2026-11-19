@@ -47,6 +47,11 @@ describe("models match the generated database types", () => {
     // SeedRepository -> SeedPerformanceSupabase
     expectTypeOf<M.RpcRow<"get_seed_matchup_upset_percentages_by_year_and_round">>().toMatchTypeOf<M.SeedPerformanceSupabase>();
   });
+  it("persist_bracket takes the PersistBracketPayload model and returns the bracket id", () => {
+    type PersistBracket = Database["public"]["Functions"]["persist_bracket"];
+    expectTypeOf<{ payload: M.PersistBracketPayload }>().toMatchTypeOf<PersistBracket["Args"]>();
+    expectTypeOf<PersistBracket["Returns"]>().toEqualTypeOf<string>();
+  });
   it("Supabase clients are typed with Database", () => {
     expectTypeOf<ReturnType<typeof createSupabaseServiceRoleClient>>().toEqualTypeOf<SupabaseClient<Database>>();
     expectTypeOf(supabase).toEqualTypeOf<SupabaseClient<Database>>();

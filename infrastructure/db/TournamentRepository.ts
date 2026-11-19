@@ -5,6 +5,7 @@ import {
   BracketInsertSupabase,
   BracketScoringRuleSupabase,
   GameInsertSupabase,
+  PersistBracketPayload,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
@@ -13,6 +14,18 @@ import {
 import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, TablesInsert } from "@/types/database";
+import type { RoundPoints } from "@/src/functions/tournament/scoreRound";
+import type { ScoredRound } from "@/types";
+
+/** rounds.round_name -> the scored round it holds. "champion" is not scored. */
+const SCORED_ROUND_BY_NAME: Readonly<Record<string, ScoredRound>> = {
+  "1": 1,
+  "2": 2,
+  "sweet sixteen": "sweet sixteen",
+  "elite eight": "elite eight",
+  "final four": "final four",
+  finals: "finals",
+};
 
 interface PersistTournamentData {
   bracket: BracketInsertSupabase;
@@ -149,7 +162,56 @@ export class TournamentRepository {
     return userTotalStatsData;
   }
 
-  async persistBracket(bracket: BracketInsertSupabase): Promise<string> {
+  /**
+   * Points per correct pick, keyed by scored round. Scoring is global (not per
+   * year); a round with several rows uses its latest. Throws if a scored round
+   * has no points.
+   */
+  async getRoundPoints(): Promise<RoundPoints> {
+    const { data, error } = await this.supabase
+      .from("tournament_round_scoring")
+      .select("score, created_at, rounds(round_name)")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw new Error(`Failed to fetch round points: ${error.message}`);
+    }
+
+    const points: Partial<Record<ScoredRound, number>> = {};
+    data.forEach((row) => {
+      const round = row.rounds
+        ? SCORED_ROUND_BY_NAME[row.rounds.round_name]
+        : undefined;
+      if (round !== undefined && points[round] === undefined && row.score !== null) {
+        points[round] = row.score;
+      }
+    });
+
+    const missing = Object.values(SCORED_ROUND_BY_NAME).filter(
+      (round) => points[round] === undefined
+    );
+    if (missing.length > 0) {
+      throw new Error(`No round points for rounds: ${missing.join(", ")}`);
+    }
+
+    return points as RoundPoints; // cast: every scored round checked above
+  }
+
+  /** Saves a bracket, its 67 games and 63 picks in one transaction; returns the bracket id. */
+  async persistBracket(payload: PersistBracketPayload): Promise<string> {
+    const { data, error } = await this.supabase.rpc("persist_bracket", {
+      payload,
+    });
+
+    if (error) {
+      throw new Error("Failed to persist bracket: " + error.message);
+    }
+
+    return data;
+  }
+
+  // legacy: removed with the old persist path
+  async insertBracketRow(bracket: BracketInsertSupabase): Promise<string> {
     if (bracket.user_id) {
       const {
         data: { user },
