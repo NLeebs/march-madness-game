@@ -27,7 +27,7 @@ paths:
 - The three Supabase clients (`supabaseClient.ts`, `supabaseServer.ts`, `supabaseServiceRole.ts`) and every repository are typed with `Database`, so a misspelled table, column, RPC name or RPC argument fails `tsc`.
 - `models/appStatsData` types are aliases of the generated types, not hand-written shapes:
   - Row types keep the existing names: `XSupabase = Tables<"table">`.
-  - Inserts use `XInsertSupabase = TablesInsert<"table">` (`PickInsertSupabase` omits `game_id`, which is added after the game row is inserted).
+  - Inserts use `XInsertSupabase = TablesInsert<"table">`.
   - RPC result models are built from `RpcRow<"function_name">` (`models/appStatsData/rpc.ts`).
 - A new table or RPC the app reads gets an alias in `models/appStatsData` and a line in `tests/unit/models/databaseTypes.test.ts` (type-level; `tsc` checks it, not vitest).
 - Repository casts (`as XSupabase`) are only for cases the typed client can't express; each needs a `// cast: <reason>` comment.

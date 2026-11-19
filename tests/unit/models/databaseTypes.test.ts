@@ -22,7 +22,6 @@ describe("models match the generated database types", () => {
   it("insert models are the generated Insert types", () => {
     expectTypeOf<M.BracketInsertSupabase>().toEqualTypeOf<TablesInsert<"user_brackets">>();
     expectTypeOf<M.GameInsertSupabase>().toEqualTypeOf<TablesInsert<"tournament_games">>();
-    expectTypeOf<M.PickInsertSupabase>().toEqualTypeOf<Omit<TablesInsert<"user_picks">, "game_id">>();
   });
   it("every RPC row fits the model its repository returns", () => {
     // TeamRepository -> TeamPerformanceSupabase

@@ -1,19 +1,15 @@
 import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
-import { createSupabaseServerClient } from "@/infrastructure/db/supabaseServer";
 import {
   BracketSupabase,
-  BracketInsertSupabase,
   BracketScoringRuleSupabase,
-  GameInsertSupabase,
   PersistBracketPayload,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
   UserTotalStatsSupabase,
 } from "@/models/appStatsData";
-import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database, TablesInsert } from "@/types/database";
+import type { Database } from "@/types/database";
 import type { RoundPoints } from "@/src/functions/tournament/scoreRound";
 import type { ScoredRound } from "@/types";
 
@@ -27,18 +23,11 @@ const SCORED_ROUND_BY_NAME: Readonly<Record<string, ScoredRound>> = {
   finals: "finals",
 };
 
-interface PersistTournamentData {
-  bracket: BracketInsertSupabase;
-  gamesAndPicks: MappedRowsResult;
-}
-
 export class TournamentRepository {
   private supabase: SupabaseClient<Database>;
-  private authClient: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
-    this.authClient = createSupabaseServerClient();
   }
 
   async getYears(): Promise<Pick<YearSupabase, "id" | "year">[]> {
@@ -225,103 +214,5 @@ export class TournamentRepository {
     }
 
     return data;
-  }
-
-  // legacy: removed with the old persist path
-  async insertBracketRow(bracket: BracketInsertSupabase): Promise<string> {
-    if (bracket.user_id) {
-      const {
-        data: { user },
-        error: authError,
-      } = await this.authClient.auth.getUser();
-
-      if (authError || !user || user.id !== bracket.user_id) {
-        throw new Error(
-          `Authentication failed: ${
-            authError?.message || "User not authenticated"
-          }`,
-        );
-      }
-    }
-
-    const { data: bracketData, error: bracketError } = await this.supabase
-      .from("user_brackets")
-      .insert(bracket)
-      .select("id")
-      .single();
-
-    if (bracketError || !bracketData) {
-      if (
-        bracketError?.code === "42501" ||
-        bracketError?.message?.includes("row-level security")
-      ) {
-        throw new Error(
-          `RLS Policy Violation: Failed to create bracket. ` +
-            `Policy requires: user_id IS NULL AND anon_user_id IS NOT NULL. ` +
-            `Received: user_id=${bracket.user_id}, anon_user_id=${bracket.anon_user_id}. ` +
-            `Error: ${bracketError?.message}`,
-        );
-      }
-      throw new Error(`Failed to create bracket: ${bracketError?.message}`);
-    }
-
-    return bracketData.id;
-  }
-
-  async persistTournament({
-    bracket,
-    gamesAndPicks,
-  }: PersistTournamentData): Promise<void> {
-    if (!bracket.id) {
-      throw new Error(
-        "Bracket must have an ID before persisting games and picks",
-      );
-    }
-
-    if (bracket.user_id) {
-      const {
-        data: { user },
-        error: authError,
-      } = await this.authClient.auth.getUser();
-
-      if (authError) {
-        throw new Error(`Authentication failed: ${authError?.message}`);
-      }
-    }
-
-    const persistGame = async (game: GameInsertSupabase) => {
-      const { data: gameData, error: gameError } = await this.supabase
-        .from("tournament_games")
-        .insert(game)
-        .select("id")
-        .single();
-
-      if (gameError) {
-        throw new Error(`Failed to insert game: ${gameError.message}`);
-      }
-
-      return gameData.id;
-    };
-
-    const persistPick = async (pick: TablesInsert<"user_picks">) => {
-      const { error: pickError } = await this.supabase
-        .from("user_picks")
-        .insert(pick);
-
-      if (pickError) {
-        throw new Error(`Failed to insert pick: ${pickError.message}`);
-      }
-    };
-
-    await Promise.all(
-      gamesAndPicks.map(async (gameAndPick) => {
-        const { game, pick } = gameAndPick;
-        const gameId = await persistGame(game);
-
-        if (pick) {
-          await persistPick({ ...pick, game_id: gameId });
-        }
-      }),
-    );
   }
 }

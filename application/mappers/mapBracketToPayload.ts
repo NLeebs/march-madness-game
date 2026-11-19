@@ -28,8 +28,7 @@ interface MapBracketToPayloadInput {
  * Turns a played bracket and its picks into the `games` of a persist_bracket
  * payload: one row per played game (play-in games included, with their
  * scores), each carrying the pick for its winner's next-round slot, or null
- * for play-in games. Same favored/underdog and pick-index rules as the legacy
- * mapTournamentToRows.
+ * for play-in games.
  */
 export function mapBracketToPayloadGames({
   bracket,
