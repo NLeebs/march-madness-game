@@ -1,6 +1,6 @@
 # Cron jobs (pg_cron)
 
-These jobs are managed by migration `supabase/migrations/20261109211628_schedule_stats_jobs_in_sql.sql`. They call SQL functions in the private `stats` schema; they no longer call Edge Functions. The old Edge Function definitions are kept in `supabase/rollback/restore_edge_function_cron.sql` (not a migration, never auto-applied) in case a rollback is needed.
+These jobs are managed by migration `supabase/migrations/20261109211628_schedule_stats_jobs_in_sql.sql`. They call SQL functions in the private `stats` schema; they no longer call Edge Functions. The old stats Edge Functions were deleted from the hosted project on 2026-11-19; their source and the rollback script are in git history.
 
 ## Add New Year Cron Job
 

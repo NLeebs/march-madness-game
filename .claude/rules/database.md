@@ -45,7 +45,7 @@ Stats computation runs as SQL functions in the private `stats` schema (not expos
 - Every new `stats.*` function needs its own `revoke execute ... from public, anon, authenticated, service_role` (a per-schema default can't do it; test 19 enforces it).
 - Stats upserts use an `IS DISTINCT FROM` guard so unchanged rows aren't rewritten.
 - Open stats cost follow-ups: `docs/DIAGNOSIS.md` findings 27-30.
-- `supabase/functions/` (the old stats Edge Functions) is retired and pending deletion; `supabase/rollback/restore_edge_function_cron.sql` is a manual, never-auto-applied rollback.
+- The project has no Edge Functions. The old stats Edge Functions were deleted on 2026-11-19 (step 5b); their source is in git history.
 
 ## Hosted project
 
