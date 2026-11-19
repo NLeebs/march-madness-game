@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { mapBracketToPayloadGames } from "@/application/mappers/mapBracketToPayload";
+import { GameDataError } from "@/src/functions/generic/GameDataError";
 import { TournamentRound, TournamentRoundMatchups } from "@/types";
 import {
   buildTournamentTeam as makeTeam,
@@ -99,7 +100,7 @@ describe("mapBracketToPayloadGames", () => {
       expect(game.winning_team_id).toBe("LowSeed-uuid");
     });
 
-    it("should determine the winner by score when win flag is not set", () => {
+    it("throws a GameDataError when neither team is flagged the winner", () => {
       const teamA = makeTeam("TeamA", "3", { score: 72 });
       const teamB = makeTeam("TeamB", "14", { score: 80 });
       const matchup = makeMatchup(teamA, teamB);
@@ -120,18 +121,19 @@ describe("mapBracketToPayloadGames", () => {
 
       const teamIdMap = makeTeamIdMap(["TeamA", "TeamB"]);
 
-      const result = mapBracketToPayloadGames({
-        bracket: tournamentState,
-        picks: picksState.picks,
-        teamIdMap,
-        roundIdMap: ROUND_IDS,
-      });
+      const map = () =>
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
+          teamIdMap,
+          roundIdMap: ROUND_IDS,
+        });
 
-      const game = result[0];
-      expect(game.winning_team_id).toBe("TeamB-uuid");
+      expect(map).toThrow(GameDataError);
+      expect(map).toThrow("no winner");
     });
 
-    it("should default scores to 0 when not provided", () => {
+    it("throws a GameDataError when a score is missing", () => {
       const teamA = makeTeam("TeamA", "1", { win: true });
       const teamB = makeTeam("TeamB", "16");
       const matchup = makeMatchup(teamA, teamB);
@@ -152,16 +154,16 @@ describe("mapBracketToPayloadGames", () => {
 
       const teamIdMap = makeTeamIdMap(["TeamA", "TeamB"]);
 
-      const result = mapBracketToPayloadGames({
-        bracket: tournamentState,
-        picks: picksState.picks,
-        teamIdMap,
-        roundIdMap: ROUND_IDS,
-      });
+      const map = () =>
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
+          teamIdMap,
+          roundIdMap: ROUND_IDS,
+        });
 
-      const game = result[0];
-      expect(game.favored_team_score).toBe(0);
-      expect(game.underdog_team_score).toBe(0);
+      expect(map).toThrow(GameDataError);
+      expect(map).toThrow("no score");
     });
 
     it("should map multiple matchups in a region with correct pick indices", () => {
@@ -680,10 +682,10 @@ describe("mapBracketToPayloadGames", () => {
       expect(result[0].winning_team_id).toBe("Favored-uuid");
     });
 
-    it("should pick underdog as winner when favored has no win flag and lower score", () => {
+    it("should pick underdog as winner when it has the win flag", () => {
       const matchup = makeMatchup(
-        makeTeam("Favored", "2", { score: 60 }),
-        makeTeam("Underdog", "15", { score: 70 }),
+        makeTeam("Favored", "2", { win: false, score: 60 }),
+        makeTeam("Underdog", "15", { win: true, score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -709,9 +711,9 @@ describe("mapBracketToPayloadGames", () => {
       expect(result[0].winning_team_id).toBe("Underdog-uuid");
     });
 
-    it("should pick favored as winner when favored score is higher and no win flag", () => {
+    it("should pick favored as winner when it has the win flag", () => {
       const matchup = makeMatchup(
-        makeTeam("Higher", "3", { score: 90 }),
+        makeTeam("Higher", "3", { win: true, score: 90 }),
         makeTeam("Lower", "14", { score: 60 }),
       );
 
@@ -738,8 +740,11 @@ describe("mapBracketToPayloadGames", () => {
       expect(result[0].winning_team_id).toBe("Higher-uuid");
     });
 
-    it("should fall back to underdog when favored has no win and no score", () => {
-      const matchup = makeMatchup(makeTeam("Fav", "1"), makeTeam("Dog", "16"));
+    it("throws a GameDataError naming the game when both teams are flagged winners", () => {
+      const matchup = makeMatchup(
+        makeTeam("Fav", "1", { win: true, score: 70 }),
+        makeTeam("Dog", "16", { win: true, score: 60 }),
+      );
 
       const tournamentState = makeEmptyTournamentState({
         roundOneMatchups: { ...emptyRoundMatchups(), east: [matchup] },
@@ -754,14 +759,25 @@ describe("mapBracketToPayloadGames", () => {
 
       const teamIdMap = makeTeamIdMap(["Fav", "Dog"]);
 
-      const result = mapBracketToPayloadGames({
-        bracket: tournamentState,
-        picks: picksState.picks,
-        teamIdMap,
-        roundIdMap: ROUND_IDS,
-      });
+      let thrown: unknown;
+      try {
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
+          teamIdMap,
+          roundIdMap: ROUND_IDS,
+        });
+      } catch (e) {
+        thrown = e;
+      }
 
-      expect(result[0].winning_team_id).toBe("Dog-uuid");
+      expect(thrown).toBeInstanceOf(GameDataError);
+      expect((thrown as GameDataError).details).toEqual({
+        round: 1,
+        isPlayIn: false,
+        favored: "Fav",
+        underdog: "Dog",
+      });
     });
   });
 

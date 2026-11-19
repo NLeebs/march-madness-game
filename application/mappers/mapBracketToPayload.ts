@@ -15,6 +15,7 @@ import type {
   PersistBracketGame,
   PersistBracketPick,
 } from "@/models/appStatsData";
+import { GameDataError } from "@/src/functions/generic/GameDataError";
 import { mapPicksRegionAndIndex } from "./mapPicksRegionandIndex";
 
 interface MapBracketToPayloadInput {
@@ -28,7 +29,8 @@ interface MapBracketToPayloadInput {
  * Turns a played bracket and its picks into the `games` of a persist_bracket
  * payload: one row per played game (play-in games included, with their
  * scores), each carrying the pick for its winner's next-round slot, or null
- * for play-in games.
+ * for play-in games. Every game must carry both scores and exactly one
+ * winner (the server always plays them); anything else throws GameDataError.
  */
 export function mapBracketToPayloadGames({
   bracket,
@@ -93,21 +95,35 @@ export function mapBracketToPayloadGames({
       );
     }
 
-    const winningTeam =
-      favored.win ||
-      (favored.score && Number(favored.score) > Number(underdog.score ?? 0))
-        ? favored
-        : underdog;
+    const game = {
+      round,
+      isPlayIn,
+      favored: favored.team,
+      underdog: underdog.team,
+    };
+    if (typeof favored.score !== "number" || typeof underdog.score !== "number") {
+      throw new GameDataError("Played game has no score", game);
+    }
+    const winners = matchup.filter((team) => team.win === true);
+    if (winners.length !== 1) {
+      throw new GameDataError(
+        winners.length === 0
+          ? "Played game has no winner"
+          : "Played game has two winners",
+        game
+      );
+    }
+    const winningTeam = winners[0];
 
     games.push({
       round_id: roundId,
       is_play_in: isPlayIn,
       favored_team_id: favoredTeamId,
       favored_team_seed: parseInt(favored.seed),
-      favored_team_score: Number(favored.score ?? 0),
+      favored_team_score: favored.score,
       underdog_team_id: underdogTeamId,
       underdog_team_seed: parseInt(underdog.seed),
-      underdog_team_score: Number(underdog.score ?? 0),
+      underdog_team_score: underdog.score,
       winning_team_id: teamIdOf(winningTeam.team, "winning team"),
       pick: !isPlayIn && pick ? toPick(pick) : null,
     });
