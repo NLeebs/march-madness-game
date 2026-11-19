@@ -389,7 +389,10 @@ isOneToOne: false
             [_ in never]: never
           }
           Functions: {
-            "ensure_profile_exists":
+            "backfill_tournament_game_brackets":
+{ Args: Record<PropertyKey, never>; Returns: number
+                           },
+"ensure_profile_exists":
 { Args: Record<PropertyKey, never>; Returns: undefined
                            },
 "get_most_upset_teams_by_year":

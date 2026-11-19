@@ -97,7 +97,7 @@ Expected: `21_persist_bracket` fails (function does not exist). The other files 
 - [ ] **Step 4: Write the migration**
 
 1. Add `bracket_id` plus the index.
-2. Backfill: `update public.tournament_games g set bracket_id = p.bracket_id from public.user_picks p where p.game_id = g.id and g.bracket_id is null;`. Each bracket owns its own games. Legacy play-in rows stay null.
+2. Backfill: `public.backfill_tournament_game_brackets()` links picked games through their pick, then gives each unpicked game (legacy play-ins) the one bracket of its year whose games were saved within 5s of it (the old app saved a bracket's games within ~2s; on the hosted DB every one of the 213 unpicked games matched exactly one bracket). The migration calls it; it is idempotent and only the migration role may run it.
 3. Create `public.persist_bracket(payload jsonb) returns uuid`, `language plpgsql security invoker set search_path = ''`. It runs these checks in order and raises `using errcode = '22023'` with a message naming the failed check:
    - exactly one owner;
    - the rules' `year_id` equals the bracket `year_id`;
@@ -399,17 +399,14 @@ Expected: PASS. `tsc` checks the RPC name and args.
 
 - [ ] **Step 5: Re-backfill `tournament_games.bracket_id`**
 
-Brackets the deployed (old) app saves between the 9a-1 merge and this PR's merge have `bracket_id` null on all their games. Write the pgTAP test first (`supabase/tests/database/`, next free number): as service_role seed a legacy bracket with a null-`bracket_id` game plus a pick on it, and a play-in game with no pick; run the migration, assert the picked game has the bracket id and the play-in game stays null. See it fail. Then:
+Brackets the deployed (old) app saves between the 9a-1 merge and this PR's merge have `bracket_id` null on all their games. Write the pgTAP test first (`supabase/tests/database/`, next free number): seed a legacy bracket with a null-`bracket_id` game plus a pick on it, and a play-in game with no pick saved within 5s of it; run the migration's statement as postgres (service_role cannot execute the function), assert both games get the bracket id. Test 21 already covers the function's edge cases. See it fail. Then:
 
 Run: `npx supabase migration new rebackfill_tournament_games_bracket_id`
 
-The migration re-runs the same idempotent statement as 9a-1:
+The migration re-runs the same idempotent function as 9a-1:
 
 ```sql
-update public.tournament_games g
-set bracket_id = p.bracket_id
-from public.user_picks p
-where p.game_id = g.id and g.bracket_id is null;
+select public.backfill_tournament_game_brackets();
 ```
 
 Run `npx supabase db reset; npx supabase test db` (pass), then `npm run db:types` (expect no diff). In the PR body, note that a bracket saved in the seconds between the migration and the Vercel deploy could still be missed, and the same statement can be re-run by hand.

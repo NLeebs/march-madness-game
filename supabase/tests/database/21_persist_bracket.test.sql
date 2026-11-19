@@ -1,5 +1,5 @@
 begin;
-select plan(55);
+select plan(60);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -173,39 +173,58 @@ insert into fx select 'upper_winner', public.persist_bracket(jsonb_set(pg_temp.p
 select is((select count(*) from public.tournament_games where bracket_id = (select id from fx where name = 'upper_winner')), 67::bigint,
   'a winner id in upper case is accepted');
 
--- legacy backfill. The migration ran on an empty DB, so this repeats its exact
--- UPDATE statement (keep the two in sync) against rows shaped like the old app's (null bracket_id).
-with ins as (
+-- legacy backfill (public.backfill_tournament_game_brackets, which the migration
+-- calls). The old app saved a bracket's games one request at a time within ~2s
+-- and never linked play-in games to the bracket. Legacy rows get fixed times so
+-- they are far from the brackets saved above.
+select tests.clear_authentication();
+with b as (
   insert into public.user_brackets (anon_user_id, year_id, tournament_scoring_rules_id, score)
   values ('00000000-0000-4000-8000-0000000000b1', (select id from fx where name = 'y1'), (select id from fx where name = 'rules1'), 0)
   returning id)
-insert into fx select 'legacy', id from ins;
-with ins as (
-  insert into public.tournament_games (year_id, round_id, is_play_in, favored_team_id, favored_team_seed, favored_team_score,
-    underdog_team_id, underdog_team_seed, underdog_team_score, winning_team_id)
-  values ((select id from fx where name = 'y1'), (select id from fx where name = 'r2'), false,
-    (select id from fx where name = 't1'), 1, 70, (select id from fx where name = 't2'), 16, 60, (select id from fx where name = 't1'))
+insert into fx select 'legacy', id from b;
+with b as (
+  insert into public.user_brackets (anon_user_id, year_id, tournament_scoring_rules_id, score)
+  values ('00000000-0000-4000-8000-0000000000b2', (select id from fx where name = 'y1'), (select id from fx where name = 'rules1'), 0)
   returning id)
-insert into fx select 'legacy_game', id from ins;
-with ins as (
+insert into fx select 'legacy2', id from b;
+create function pg_temp.legacy_game(p_play_in boolean, p_at timestamptz) returns uuid language sql as $$
   insert into public.tournament_games (year_id, round_id, is_play_in, favored_team_id, favored_team_seed, favored_team_score,
-    underdog_team_id, underdog_team_seed, underdog_team_score, winning_team_id)
-  values ((select id from fx where name = 'y1'), (select id from fx where name = 'r1'), true,
-    (select id from fx where name = 't1'), 11, 66, (select id from fx where name = 't2'), 11, 61, (select id from fx where name = 't1'))
-  returning id)
-insert into fx select 'legacy_playin', id from ins;
-insert into public.user_picks (bracket_id, game_id, picked_team_id, picked_team_seed)
-values ((select id from fx where name = 'legacy'), (select id from fx where name = 'legacy_game'), (select id from fx where name = 't1'), 1);
+    underdog_team_id, underdog_team_seed, underdog_team_score, winning_team_id, created_at)
+  values ((select id from fx where name = 'y1'), (select id from fx where name = case when p_play_in then 'r1' else 'r2' end), p_play_in,
+    (select id from fx where name = 't1'), 1, 70, (select id from fx where name = 't2'), 16, 60, (select id from fx where name = 't1'), p_at)
+  returning id;
+$$;
+insert into fx values
+  ('legacy_game', pg_temp.legacy_game(false, '2025-03-20 12:00:00+00')),
+  ('legacy_game2', pg_temp.legacy_game(false, '2025-03-20 12:00:01.5+00')),
+  ('legacy_playin', pg_temp.legacy_game(true, '2025-03-20 12:00:00.4+00')),
+  ('legacy2_game', pg_temp.legacy_game(false, '2025-03-20 12:00:10+00')),
+  ('ambiguous_playin', pg_temp.legacy_game(true, '2025-03-20 12:00:06+00')),
+  ('stray_game', pg_temp.legacy_game(false, '2025-01-01 00:00:00+00'));
+insert into public.user_picks (bracket_id, game_id, picked_team_id, picked_team_seed) values
+  ((select id from fx where name = 'legacy'), (select id from fx where name = 'legacy_game'), (select id from fx where name = 't1'), 1),
+  ((select id from fx where name = 'legacy'), (select id from fx where name = 'legacy_game2'), (select id from fx where name = 't1'), 1),
+  ((select id from fx where name = 'legacy2'), (select id from fx where name = 'legacy2_game'), (select id from fx where name = 't1'), 1);
 
-update public.tournament_games g
-set bracket_id = p.bracket_id
-from public.user_picks p
-where p.game_id = g.id and g.bracket_id is null;
+select tests.authenticate_as_anon();
+select throws_ok($$select public.backfill_tournament_game_brackets()$$, '42501', null, 'anon cannot run the backfill');
+select tests.authenticate_as((select id from fx where name = 'user_a'));
+select throws_ok($$select public.backfill_tournament_game_brackets()$$, '42501', null, 'authenticated cannot run the backfill');
+select tests.authenticate_as_service_role();
+select throws_ok($$select public.backfill_tournament_game_brackets()$$, '42501', null, 'service_role cannot run the backfill');
+select tests.clear_authentication();
+select public.backfill_tournament_game_brackets();
 
 select is((select bracket_id from public.tournament_games where id = (select id from fx where name = 'legacy_game')),
   (select id from fx where name = 'legacy'), 'backfill gives a picked legacy game its bracket id');
 select is((select bracket_id from public.tournament_games where id = (select id from fx where name = 'legacy_playin')),
-  null::uuid, 'backfill leaves a legacy play-in game null');
+  (select id from fx where name = 'legacy'), 'backfill gives a play-in game the one bracket saved within 5s of it');
+select is((select bracket_id from public.tournament_games where id = (select id from fx where name = 'ambiguous_playin')),
+  null::uuid, 'backfill leaves a game within 5s of two brackets null');
+select is((select bracket_id from public.tournament_games where id = (select id from fx where name = 'stray_game')),
+  null::uuid, 'backfill leaves a game near no bracket null');
+select tests.authenticate_as_service_role();
 
 -- schema
 select fk_ok('public', 'tournament_games', 'bracket_id', 'public', 'user_brackets', 'id', 'bracket_id references user_brackets');
