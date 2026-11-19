@@ -1,5 +1,5 @@
 begin;
-select plan(36);
+select plan(55);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -123,6 +123,43 @@ select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((sele
 select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
   'no bracket saved after a null team id');
 
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,underdog_team_id}', to_jsonb((select id from fx where name = 't1'))))$$,
+  '22023', 'persist_bracket: a game needs two different teams', 'a team playing itself is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a team playing itself');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{bracket,score}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: score is required', 'a missing score is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a missing score');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{bracket,year_id}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: year_id is required', 'a missing year is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a missing year');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games}', '{}'::jsonb))$$,
+  '22023', 'persist_bracket: expected exactly 67 games', 'a games object is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a games object');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,round_id}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: every game needs a round, both seeds and both scores', 'a missing round is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a missing round');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,round_id}', to_jsonb(gen_random_uuid())))$$,
+  '22023', 'persist_bracket: every game needs a round, both seeds and both scores', 'an unknown round is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after an unknown round');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,favored_team_seed}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: every game needs a round, both seeds and both scores', 'a missing seed is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a missing seed');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,underdog_team_score}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: every game needs a round, both seeds and both scores', 'a missing game score is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a missing game score');
+select throws_ok($$select public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')), '{games,10,pick,picked_team_seed}', 'null'::jsonb))$$,
+  '22023', 'persist_bracket: every pick needs a team and a seed', 'a pick without a seed is rejected');
+select is((select count(*) from public.user_brackets where year_id = (select id from fx where name = 'y1')), 1::bigint,
+  'no bracket saved after a pick without a seed');
+
 -- anonymous owner
 insert into fx select 'anon_bracket', public.persist_bracket(pg_temp.payload(null, '00000000-0000-4000-8000-0000000000a1'::uuid, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')));
 select is((select count(*) from public.user_brackets
@@ -130,8 +167,14 @@ select is((select count(*) from public.user_brackets
              and anon_user_id = '00000000-0000-4000-8000-0000000000a1' and user_id is null), 1::bigint,
   'an anonymous bracket is saved with its anon id');
 
+-- team ids compare as uuids, whatever their letter case
+insert into fx select 'upper_winner', public.persist_bracket(jsonb_set(pg_temp.payload((select id from fx where name = 'user_a'), null, (select id from fx where name = 'rules1'), 67, (select id from fx where name = 't2')),
+  '{games,10,winning_team_id}', to_jsonb(upper((select id from fx where name = 't1')::text))));
+select is((select count(*) from public.tournament_games where bracket_id = (select id from fx where name = 'upper_winner')), 67::bigint,
+  'a winner id in upper case is accepted');
+
 -- legacy backfill. The migration ran on an empty DB, so this repeats its exact
--- UPDATE statement against rows shaped like the old app's (null bracket_id).
+-- UPDATE statement (keep the two in sync) against rows shaped like the old app's (null bracket_id).
 with ins as (
   insert into public.user_brackets (anon_user_id, year_id, tournament_scoring_rules_id, score)
   values ('00000000-0000-4000-8000-0000000000b1', (select id from fx where name = 'y1'), (select id from fx where name = 'rules1'), 0)

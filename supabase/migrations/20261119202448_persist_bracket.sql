@@ -12,7 +12,8 @@ alter table public.tournament_games
 create index tournament_games_bracket_id_idx on public.tournament_games (bracket_id);
 
 -- Each existing bracket's games are the ones its picks point at. Legacy play-in
--- rows have no pick, so they stay null.
+-- rows have no pick, so they stay null. supabase/tests/database/21 repeats this
+-- UPDATE; keep the two in sync.
 update public.tournament_games g
 set bracket_id = p.bracket_id
 from public.user_picks p
@@ -38,6 +39,11 @@ begin
       using errcode = '22023';
   end if;
 
+  if v_year_id is null then
+    raise exception 'persist_bracket: year_id is required'
+      using errcode = '22023';
+  end if;
+
   if not exists (
     select 1 from public.tournament_scoring_rules r
     where r.id = v_rules_id and r.year_id = v_year_id
@@ -46,7 +52,12 @@ begin
       using errcode = '22023';
   end if;
 
-  if jsonb_typeof(v_games) is distinct from 'array' or jsonb_array_length(v_games) <> 67 then
+  -- Separate ifs so jsonb_array_length only ever sees an array.
+  if jsonb_typeof(v_games) is distinct from 'array' then
+    raise exception 'persist_bracket: expected exactly 67 games'
+      using errcode = '22023';
+  end if;
+  if jsonb_array_length(v_games) <> 67 then
     raise exception 'persist_bracket: expected exactly 67 games'
       using errcode = '22023';
   end if;
@@ -91,13 +102,45 @@ begin
 
   if exists (
     select 1 from jsonb_array_elements(v_games) g
-    where g ->> 'winning_team_id' not in (g ->> 'favored_team_id', g ->> 'underdog_team_id')
+    where (g ->> 'favored_team_id')::uuid = (g ->> 'underdog_team_id')::uuid
+  ) then
+    raise exception 'persist_bracket: a game needs two different teams'
+      using errcode = '22023';
+  end if;
+
+  if exists (
+    select 1 from jsonb_array_elements(v_games) g
+    where (g ->> 'winning_team_id')::uuid
+          not in ((g ->> 'favored_team_id')::uuid, (g ->> 'underdog_team_id')::uuid)
   ) then
     raise exception 'persist_bracket: a winner must be one of the two teams in the game'
       using errcode = '22023';
   end if;
 
-  if coalesce(v_score, -1) < 0 then
+  if exists (
+    select 1 from jsonb_array_elements(v_games) g
+    where g ->> 'favored_team_seed' is null or g ->> 'underdog_team_seed' is null
+       or g ->> 'favored_team_score' is null or g ->> 'underdog_team_score' is null
+       or not exists (select 1 from public.rounds r where r.id = (g ->> 'round_id')::uuid)
+  ) then
+    raise exception 'persist_bracket: every game needs a round, both seeds and both scores'
+      using errcode = '22023';
+  end if;
+
+  if exists (
+    select 1 from jsonb_array_elements(v_games) g
+    where jsonb_typeof(g -> 'pick') = 'object' and g -> 'pick' ->> 'picked_team_seed' is null
+  ) then
+    raise exception 'persist_bracket: every pick needs a team and a seed'
+      using errcode = '22023';
+  end if;
+
+  if v_score is null then
+    raise exception 'persist_bracket: score is required'
+      using errcode = '22023';
+  end if;
+
+  if v_score < 0 then
     raise exception 'persist_bracket: score must be at least 0'
       using errcode = '22023';
   end if;
