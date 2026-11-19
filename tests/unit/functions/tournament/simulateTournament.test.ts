@@ -3,15 +3,12 @@ import {
   simulateTournament,
   type TournamentField,
 } from "@/src/functions/tournament/simulateTournament";
-import { emptyPicks } from "@/src/functions/tournament/emptyState";
-import { applyPick } from "@/src/functions/tournament/picks";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
 import {
   ALL_PLAYIN_PLACEHOLDERS,
   ROUND_CONFIG,
   SCORED_ROUNDS,
-  nextRegionOf,
 } from "@/src/functions/tournament/roundConfig";
 import {
   ROUND_POINTS,
@@ -19,17 +16,12 @@ import {
   type RoundPoints,
 } from "@/src/functions/tournament/scoreRound";
 import { GameDataError } from "@/src/functions/generic/GameDataError";
-import { buildLeague } from "@/tests/factories";
+import { buildLeague, chalkPicks } from "@/tests/factories";
 import { mulberry32 } from "@/tests/game/helpers/mulberry32";
 import { deepFreeze } from "./deepFreeze";
 import type {
   ScoredRound,
-  TournamentPicks,
-  TournamentRegion,
-  TournamentRoundMatchups,
 } from "@/types";
-
-type Slot = { team: string; seed: string | number };
 
 const league = buildLeague();
 const teamNames = Object.values(league.teamStats).flatMap((conf) =>
@@ -42,34 +34,6 @@ const buildField = (): TournamentField => ({
     sixteenSeeds: teamNames.slice(64, 68),
   },
 });
-
-/** Picks the better seed (team index 0 on a tie) in every game, like pickChalk in tests/game/helpers/runGame.ts. */
-function chalkPicks(roundOne: TournamentRoundMatchups): TournamentPicks {
-  let picks = emptyPicks();
-  SCORED_ROUNDS.forEach((round, r) => {
-    const source = (
-      r === 0 ? roundOne : picks[ROUND_CONFIG[SCORED_ROUNDS[r - 1]].nextPicksKey]
-    ) as unknown as Record<TournamentRegion | "playin", Slot[][]>;
-    (Object.keys(source) as (TournamentRegion | "playin")[]).forEach(
-      (region) => {
-        if (region === "playin") return;
-        source[region].forEach((matchup, index) => {
-          const better =
-            Number(matchup[1].seed) < Number(matchup[0].seed) ? 1 : 0;
-          picks = applyPick(picks, {
-            round,
-            region: nextRegionOf(round, region),
-            roundIndex: ROUND_CONFIG[round].advance[region]?.teamIndex ?? index,
-            team: matchup[better].team,
-            seed: String(matchup[better].seed),
-            opponent: matchup[1 - better].team,
-          });
-        });
-      }
-    );
-  });
-  return picks;
-}
 
 const buildInput = (points: RoundPoints = ROUND_POINTS) => {
   const field = buildField();

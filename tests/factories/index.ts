@@ -28,3 +28,5 @@ export { buildRound } from "./round.factory";
 
 export { buildLeague, configureStoreForLeague } from "./league.factory";
 export type { League } from "./league.factory";
+
+export { chalkPicks } from "./picks.factory";
