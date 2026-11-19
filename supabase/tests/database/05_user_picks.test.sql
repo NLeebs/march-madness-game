@@ -1,5 +1,5 @@
 begin;
-select plan(8);
+select plan(10);
 
 select tests.clear_authentication();
 create temp table fx (name text primary key, id uuid);
@@ -23,20 +23,31 @@ insert into fx values
 insert into public.user_picks (bracket_id, game_id)
   values ((select id from fx where name = 'bb'), (select id from fx where name = 'g1'));
 
--- characterization: reads and deletes are already scoped to own brackets
+-- reads stay scoped to own brackets; clients cannot write picks at all (only the server does)
 select tests.authenticate_as((select id from fx where name = 'user_a'));
 select is((select count(*) from public.user_picks where bracket_id = (select id from fx where name = 'bb')), 0::bigint,
   'user A cannot see user B picks');
-delete from public.user_picks where bracket_id = (select id from fx where name = 'bb');
+select throws_ok($$delete from public.user_picks where bracket_id = (select id from fx where name = 'bb')$$,
+  '42501', null, 'user A cannot delete picks');
 select tests.clear_authentication();
 select is((select count(*) from public.user_picks where bracket_id = (select id from fx where name = 'bb')), 1::bigint,
-  'user A delete did not remove user B pick');
+  'user B pick still exists after the denied delete');
+select ok(
+  not (has_table_privilege('anon', 'public.user_picks', 'TRUNCATE')
+    or has_table_privilege('authenticated', 'public.user_picks', 'TRUNCATE')
+    or has_table_privilege('anon', 'public.user_picks', 'INSERT')
+    or has_table_privilege('authenticated', 'public.user_picks', 'INSERT')
+    or has_table_privilege('anon', 'public.user_picks', 'UPDATE')
+    or has_table_privilege('authenticated', 'public.user_picks', 'UPDATE')
+    or has_table_privilege('anon', 'public.user_picks', 'DELETE')
+    or has_table_privilege('authenticated', 'public.user_picks', 'DELETE')),
+  'clients hold no insert, update, delete or truncate privilege on user_picks');
 
 select tests.authenticate_as_anon();
 select throws_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'ba'), (select id from fx where name = 'g1'))$$,
   '42501', null, 'anon cannot insert a pick');
 
--- security fix (a)
+-- client inserts are denied outright
 select tests.authenticate_as((select id from fx where name = 'user_a'));
 select throws_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'bb'), (select id from fx where name = 'g2'))$$,
   '42501', null, 'user A cannot insert a pick into user B bracket');
@@ -44,10 +55,10 @@ select throws_ok($$insert into public.user_picks (bracket_id, game_id) values ((
   '42501', null, 'user A cannot insert a pick for a game in another year');
 select throws_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'bn'), (select id from fx where name = 'g2'))$$,
   '42501', null, 'user A cannot insert a pick into an anonymous bracket');
+select throws_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'ba'), (select id from fx where name = 'g1'))$$,
+  '42501', null, 'user A cannot insert a pick into own bracket');
 
--- must keep working
-select lives_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'ba'), (select id from fx where name = 'g1'))$$,
-  'user A can insert a pick into own bracket for same-year game');
+-- the server keeps working
 select tests.authenticate_as_service_role();
 select lives_ok($$insert into public.user_picks (bracket_id, game_id) values ((select id from fx where name = 'bb'), (select id from fx where name = 'g4'))$$,
   'service_role can insert a pick into any bracket');
