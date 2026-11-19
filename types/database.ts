@@ -159,17 +159,23 @@ isOneToOne: false
                   ]
                 },"tournament_games": {
                   Row: {
-                    "created_at": string | null,"favored_team_id": string | null,"favored_team_score": number | null,"favored_team_seed": number | null,"id": string,"is_play_in": boolean | null,"round_id": string,"underdog_team_id": string | null,"underdog_team_score": number | null,"underdog_team_seed": number | null,"winning_team_id": string | null,"year_id": string
+                    "bracket_id": string | null,"created_at": string | null,"favored_team_id": string | null,"favored_team_score": number | null,"favored_team_seed": number | null,"id": string,"is_play_in": boolean | null,"round_id": string,"underdog_team_id": string | null,"underdog_team_score": number | null,"underdog_team_seed": number | null,"winning_team_id": string | null,"year_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string | null,"favored_team_id"?: string | null,"favored_team_score"?: number | null,"favored_team_seed"?: number | null,"id"?: string,"is_play_in"?: boolean | null,"round_id": string,"underdog_team_id"?: string | null,"underdog_team_score"?: number | null,"underdog_team_seed"?: number | null,"winning_team_id"?: string | null,"year_id": string
+                    "bracket_id"?: string | null,"created_at"?: string | null,"favored_team_id"?: string | null,"favored_team_score"?: number | null,"favored_team_seed"?: number | null,"id"?: string,"is_play_in"?: boolean | null,"round_id": string,"underdog_team_id"?: string | null,"underdog_team_score"?: number | null,"underdog_team_seed"?: number | null,"winning_team_id"?: string | null,"year_id": string
                   }
                   Update: {
-                    "created_at"?: string | null,"favored_team_id"?: string | null,"favored_team_score"?: number | null,"favored_team_seed"?: number | null,"id"?: string,"is_play_in"?: boolean | null,"round_id"?: string,"underdog_team_id"?: string | null,"underdog_team_score"?: number | null,"underdog_team_seed"?: number | null,"winning_team_id"?: string | null,"year_id"?: string
+                    "bracket_id"?: string | null,"created_at"?: string | null,"favored_team_id"?: string | null,"favored_team_score"?: number | null,"favored_team_seed"?: number | null,"id"?: string,"is_play_in"?: boolean | null,"round_id"?: string,"underdog_team_id"?: string | null,"underdog_team_score"?: number | null,"underdog_team_seed"?: number | null,"winning_team_id"?: string | null,"year_id"?: string
                   }
                   Relationships: [
                     {
+      foreignKeyName: "tournament_games_bracket_id_fkey"
+      columns: ["bracket_id"]
+isOneToOne: false
+      referencedRelation: "user_brackets"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "tournament_games_favored_team_id_fkey"
       columns: ["favored_team_id"]
 isOneToOne: false
@@ -470,6 +476,9 @@ isOneToOne: false
 { Args: { "p_user_id": string,"p_year_id": string }; Returns: {
               "conference_id": string,"pick_count": number,"team_id": string,"team_logo": string,"team_name": string
             }[]
+                           },
+"persist_bracket":
+{ Args: { "payload": Json }; Returns: string
                            }
           }
           Enums: {
