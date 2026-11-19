@@ -181,10 +181,21 @@ describe("PlayTournamentButton", () => {
   );
 
   it(
-    "a failed request shows the crash screen and reports the crash",
+    "a failed request shows the crash screen and reports the crash with the server's reason",
     async () => {
       const store = chalkStore();
-      fetchMock.mockResolvedValue(jsonResponse(500, { error: "boom" }));
+      fetchMock.mockResolvedValue(
+        jsonResponse(500, {
+          success: false,
+          error: {
+            message: "Failed to save bracket: timeout",
+            code: "UNKNOWN_ERROR",
+            statusCode: 500,
+            timestamp: "2026-11-19T00:00:00.000Z",
+            path: "/api/bracket/simulation",
+          },
+        })
+      );
       const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
       try {
         renderButton(store);
@@ -195,7 +206,11 @@ describe("PlayTournamentButton", () => {
         ).toBeInTheDocument();
         expect(reportCrash).toHaveBeenCalledTimes(1);
         expect(reportCrash).toHaveBeenCalledWith(
-          expect.objectContaining({ statusCode: 500 }),
+          expect.objectContaining({
+            statusCode: 500,
+            message:
+              "Failed to play tournament (500 UNKNOWN_ERROR): Failed to save bracket: timeout",
+          }),
           expect.objectContaining({ boundary: "game" })
         );
         expect(store.getState().appState.tournamentPlayPlayinGames).toBe(false);
