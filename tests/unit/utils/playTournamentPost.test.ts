@@ -65,7 +65,7 @@ describe("playTournamentPost errors", () => {
     respond(
       400,
       JSON.stringify(
-        apiErrorBody(400, "Validation error", "VALIDATION_ERROR", [
+        apiErrorBody(400, "Request validation failed", "VALIDATION_ERROR", [
           { field: "picks.roundTwoPicks.east.0.0.seed", message: "Invalid", code: "invalid_string" },
           { field: "field", message: "All 68 team names must be distinct", code: "custom" },
         ])
@@ -76,7 +76,7 @@ describe("playTournamentPost errors", () => {
 
     expect(error.code).toBe("VALIDATION_ERROR");
     expect(error.message).toBe(
-      "Failed to play tournament (400 VALIDATION_ERROR): Validation error " +
+      "Failed to play tournament (400 VALIDATION_ERROR): Request validation failed " +
         "[picks.roundTwoPicks.east.0.0.seed: Invalid; field: All 68 team names must be distinct]"
     );
   });
