@@ -11,7 +11,6 @@ import {
   RegularSeason,
   SeasonSchedule,
   TournamentRecapDialog,
-  TournamentPersist,
 } from "@/src/components";
 
 // 6. Slow down tourny playing
@@ -67,7 +66,6 @@ function App() {
         appState.tournamentPlayGames &&
         !appState.tournamentRecap && <PlayTournamentGames />}
       {appState.tournamentRecap && <TournamentRecapDialog />}
-      {appState.tournamentRecap && <TournamentPersist />}
     </MotionConfig>
   );
 }

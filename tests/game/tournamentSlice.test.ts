@@ -362,3 +362,42 @@ describe("setTournamentGameResults", () => {
     ]);
   });
 });
+
+describe("simulation", () => {
+  const simulation = {
+    playin: [],
+    rounds: { 1: [], 2: [], "sweet sixteen": [], "elite eight": [], "final four": [], finals: [] },
+    roundPoints: { 1: 10, 2: 0, "sweet sixteen": 0, "elite eight": 0, "final four": 0, finals: 0 },
+    score: 10,
+  };
+
+  it("starts null, is stored by setSimulation and cleared by restartGame", () => {
+    expect(initial().simulation).toBeNull();
+    const s = reduce(initial(), tournamentActions.setSimulation(simulation));
+    expect(s.simulation).toEqual(simulation);
+    expect(reduce(s, tournamentActions.restartGame()).simulation).toBeNull();
+  });
+});
+
+describe("recordRoundScore with points", () => {
+  it("recordRoundScore uses the given points over its own", () => {
+    const base = initial();
+    const state = {
+      ...base,
+      champion: { champion: [[{ team: "A", seed: "1" }]] },
+    } as unknown as State;
+    // scoreRound would award 320 for this correct champion pick.
+    const next = reduce(
+      state,
+      tournamentActions.recordRoundScore({
+        round: "finals",
+        winningTeams: ["A"],
+        picks: { champion: [[{ team: "A", seed: "1" }]] },
+        points: 7,
+      })
+    );
+    expect(next.playerScore).toBe(7);
+    // selected marks still come from scoreRound
+    expect((next.champion.champion[0][0] as { selected?: boolean }).selected).toBe(true);
+  });
+});

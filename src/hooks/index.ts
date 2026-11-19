@@ -5,7 +5,7 @@ export * from "./useMediaQuery";
 export * from "./useFieldAvailability";
 export * from "./useFormSubmissionRateLimit";
 export * from "./useFormFillTimeValidation";
-export * from "./usePersistTournament";
+export * from "./usePlayTournament";
 export * from "./useProfile";
 export * from "./useRestartTheGame";
 export * from "./useSignUp";
