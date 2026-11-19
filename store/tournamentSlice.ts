@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { emptyBracket } from "@/src/functions/tournament/emptyState";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
 import { ROUND_CONFIG, SEED_REGIONS } from "@/src/functions/tournament/roundConfig";
@@ -48,44 +49,7 @@ const initalState: TournamentState = {
     elevenSeeds: [],
     sixteenSeeds: [],
   },
-  roundOneMatchups: {
-    west: [],
-    east: [],
-    south: [],
-    midwest: [],
-    playin: {
-      elevenSeeds: [],
-      sixteenSeeds: [],
-    },
-  } as TournamentRoundMatchups,
-  roundTwoMatchups: {
-    west: [[], [], [], []],
-    east: [[], [], [], []],
-    south: [[], [], [], []],
-    midwest: [[], [], [], []],
-  },
-  roundSweetSixteenMatchups: {
-    west: [[], []],
-    east: [[], []],
-    south: [[], []],
-    midwest: [[], []],
-  },
-  roundEliteEightMatchups: {
-    west: [[]],
-    east: [[]],
-    south: [[]],
-    midwest: [[]],
-  },
-  roundFinalFourMatchups: {
-    eastWest: [[]],
-    southMidwest: [[]],
-  },
-  roundFinalsMatchups: {
-    championship: [[]],
-  },
-  champion: {
-    champion: [[]],
-  },
+  ...emptyBracket(),
   playerScore: 0,
 };
 
