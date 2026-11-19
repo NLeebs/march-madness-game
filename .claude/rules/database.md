@@ -15,7 +15,8 @@ paths:
 - Most dashboard stats come from Postgres RPC functions (`get_top_performing_teams_by_year`, `get_top_picked_teams_by_year`, etc.) called via `supabase.rpc(...)`.
 - All repositories currently use the **service-role** client (bypasses RLS); the cookie-based `supabaseServer` client is used only to verify the logged-in user.
 - Migrations auto-apply to production on merge to `main` via `.github/workflows/deploy-migrations.yml`, so each one must work with the currently deployed app code.
-- Clients write `user_brackets` through column-level grants, so a new `user_brackets` column needs an explicit column grant before client inserts/updates can set it.
+- Clients (anon/authenticated) can only `select` their own rows of `user_brackets` and `user_picks`; insert/update/delete/truncate and column grants are revoked and the write policies dropped (migration `20261119202903`). All writes go through the server (service role). The column-grant header comment in `20261109143058` is superseded, so a new column needs no client grant.
+- `public.persist_bracket(payload jsonb) returns uuid` (migration `20261119202448`) saves a bracket, its games and picks in one transaction; `service_role` only. The payload shape is in the migration. `tournament_games.bracket_id` (nullable FK to `user_brackets`, on delete cascade, indexed) ties each game to its bracket; legacy play-in rows stay null.
 
 ## Generated types
 
