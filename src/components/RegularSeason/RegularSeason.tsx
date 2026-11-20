@@ -74,9 +74,7 @@ export const RegularSeason: React.FC<RegularSeasonProps> = ({ teamStats }) => {
       </motion.div>
       {!appState.transition &&
         appState.regularSeason &&
-        !appState.selectionSunday && (
-          <PlayRegularSeasonGames teamStats={teamStats} />
-        )}
+        !appState.selectionSunday && <PlayRegularSeasonGames />}
       {appState.selectionSunday && <SelectionSunday />}
       {appState.selectionSunday && (
         <motion.div

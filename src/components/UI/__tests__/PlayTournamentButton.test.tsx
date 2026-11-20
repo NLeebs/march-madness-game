@@ -10,6 +10,7 @@ import { appStateActions, tournamentActions } from "@/store";
 import type { AppStore } from "@/store";
 import { SelectionSunday } from "@/src/components/RegularSeason/SelectionSunday";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
+import { selectTournamentField } from "@/src/functions/regularSeason/selectTournamentField";
 import { createFastStore } from "@/tests/game/helpers/fastStore";
 import { buildRecords, pickChalk } from "@/tests/game/helpers/runGame";
 import { renderWithStore } from "@/tests/game/helpers/renderWithStore";
@@ -49,7 +50,11 @@ function chalkStore(): AppStore {
   const store = createFastStore({
     preloadedState: {
       ...base,
-      regularSeasonRecords: { weeksPlayed: 30, records },
+      regularSeasonRecords: {
+        weeksPlayed: 30,
+        records,
+        season: { weeks: [], selection: selectTournamentField(records, league.conferenceArrays) },
+      },
       appState: { ...base.appState, selectionSunday: true },
     },
   });

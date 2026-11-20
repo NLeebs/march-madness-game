@@ -1,11 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { applySeasonGameResult } from "@/src/functions/regularSeason/applySeasonGameResult";
+import type { TournamentFieldSelection } from "@/src/functions/regularSeason/selectTournamentField";
 import { RegularSeasonTeam, GameResult } from "@/types";
 import { ConferenceMap } from "@/models";
+
+/** The server's season: what PlayRegularSeasonGames replays and SelectionSunday dispatches. */
+export interface StoredSeason {
+  /** weeks[0] = week1 ... weeks[29] = week30, games in schedule order. */
+  weeks: GameResult[][];
+  selection: TournamentFieldSelection;
+}
 
 interface RegularSeasonRecordState {
   weeksPlayed: number;
   records: Record<string, RegularSeasonTeam>;
+  /** null until POST /api/season answers. */
+  season: StoredSeason | null;
 }
 
 interface ConferenceChampionPayload {
@@ -15,6 +25,7 @@ interface ConferenceChampionPayload {
 const initialState: RegularSeasonRecordState = {
   weeksPlayed: 0,
   records: {},
+  season: null,
 };
 
 const regularSeasonRecordSlice = createSlice({
@@ -37,6 +48,9 @@ const regularSeasonRecordSlice = createSlice({
           };
         });
       });
+    },
+    setSeason: (state, action: PayloadAction<StoredSeason>) => {
+      state.season = action.payload;
     },
     addRegularSeasonGameResult: (state, action: PayloadAction<GameResult>) => {
       applySeasonGameResult(state.records, action.payload);

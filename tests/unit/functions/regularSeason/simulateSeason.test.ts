@@ -1,14 +1,11 @@
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { simulateSeason } from "@/src/functions/regularSeason/simulateSeason";
 import { applySeasonGameResult } from "@/src/functions/regularSeason/applySeasonGameResult";
 import { selectTournamentField } from "@/src/functions/regularSeason/selectTournamentField";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
-import { mulberry32, seedMathRandom } from "@/tests/game/helpers/rng";
 import { createFastStore } from "@/tests/game/helpers/fastStore";
-import { playSeason } from "@/tests/game/helpers/runGame";
+import { mulberry32 } from "@/tests/game/helpers/rng";
 import { GAME_TEST_TIMEOUT } from "@/tests/game/helpers/timeout";
-import { cleanup } from "@testing-library/react";
-import { vi } from "vitest";
 import type { RegularSeasonTeam } from "@/types";
 
 function deepFreeze<T>(value: T): T {
@@ -25,11 +22,6 @@ const zeroedRecords = (names: string[]): Record<string, RegularSeasonTeam> =>
   );
 
 describe("simulateSeason", () => {
-  afterEach(() => {
-    cleanup();
-    vi.useRealTimers();
-  });
-
   const league = buildLeague();
 
   it("teamArray matches teamScheduleConfig order", () => {
@@ -79,39 +71,5 @@ describe("simulateSeason", () => {
   it("does not mutate teamStats", () => {
     const frozen = deepFreeze(buildLeague().teamStats);
     expect(() => simulateSeason(frozen, mulberry32(7))).not.toThrow();
-  }, GAME_TEST_TIMEOUT);
-
-  it("matches the browser path draw for draw", async () => {
-    const store = createFastStore();
-    configureStoreForLeague(store, league);
-    const browserSeed = seedMathRandom(1);
-    let browserDraws = 0;
-    try {
-      await playSeason(store, league);
-      browserDraws = browserSeed.calls();
-    } finally {
-      browserSeed.restore();
-    }
-    const browserRecords = store.getState().regularSeasonRecords.records;
-
-    const serverSeed = seedMathRandom(1);
-    let sim: ReturnType<typeof simulateSeason>;
-    let serverDraws = 0;
-    try {
-      sim = simulateSeason(league.teamStats);
-      serverDraws = serverSeed.calls();
-    } finally {
-      serverSeed.restore();
-    }
-    const withoutChamp = Object.fromEntries(
-      Object.entries(browserRecords).map(([k, v]) => [
-        k,
-        { wins: v.wins, losses: v.losses, tournamentSelectionScore: v.tournamentSelectionScore },
-      ]),
-    );
-    expect(sim.records).toEqual(withoutChamp);
-    // React's act() draws once from Math.random (enqueueTask) after the last
-    // game; that draw is the test harness, not the engine.
-    expect(serverDraws).toBe(browserDraws - 1);
   }, GAME_TEST_TIMEOUT);
 });

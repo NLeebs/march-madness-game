@@ -1,7 +1,6 @@
-import React from "react";
-import { describe, it, expect, afterEach } from "vitest";
-import { cleanup } from "@testing-library/react";
-import { SeasonSchedule } from "@/src/components/RegularSeason/SeasonSchedule";
+import { describe, it, expect } from "vitest";
+import { teamScheduleActions } from "@/store";
+import { createSeasonSchedule } from "@/src/functions/regularSeason/createSeasonSchedule";
 import { createFastStore } from "./helpers/fastStore";
 import type { AppStore } from "@/store/store";
 import {
@@ -10,14 +9,13 @@ import {
   configureStoreForLeague,
 } from "@/tests/factories";
 import type { League } from "@/tests/factories";
-import { renderWithStore, recordActions } from "./helpers/renderWithStore";
 import { seedMathRandom } from "./helpers/rng";
 import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 
 const NON_CONF_WEEKS = 15;
 const SEASON_WEEKS = 30;
 
-function renderSchedule(league: League, seed: number) {
+function buildSchedule(league: League, seed: number) {
   const store: AppStore = createFastStore();
   configureStoreForLeague(store, league);
   const teamArray = store.getState().teamSchedule.teamArray;
@@ -25,9 +23,10 @@ function renderSchedule(league: League, seed: number) {
   const seeded = seedMathRandom(seed);
   let draws = 0;
   try {
-    renderWithStore(
-      <SeasonSchedule teamStats={league.teamStats} teamArray={teamArray} />,
-      store,
+    store.dispatch(
+      teamScheduleActions.setSeasonSchedule(
+        createSeasonSchedule(league.teamStats, teamArray),
+      ),
     );
     draws = seeded.calls();
   } finally {
@@ -58,8 +57,7 @@ function leagueFromSizes(sizes: number[]): League {
   return { teamStats, conferenceArrays, teamArray };
 }
 
-describe("SeasonSchedule", () => {
-  afterEach(() => cleanup());
+describe("createSeasonSchedule", () => {
 
   const checkInvariants = (league: League, seeds: number[]) => {
     const sizes = Object.values(league.conferenceArrays).map((t) => t.length);
@@ -77,8 +75,7 @@ describe("SeasonSchedule", () => {
     expect(oddConfs).toBeGreaterThan(0);
 
     for (const seed of seeds) {
-      const { schedules, before, store, draws } = renderSchedule(league, seed);
-      cleanup();
+      const { schedules, before, store, draws } = buildSchedule(league, seed);
 
       expect(Object.keys(schedules)).toHaveLength(SEASON_WEEKS);
       let total = 0;
@@ -129,7 +126,7 @@ describe("SeasonSchedule", () => {
       );
       // two Math.random draws per scheduled game, none otherwise
       expect(draws).toBe(total * 2);
-      // the component must not mutate store data
+      // scheduling must not mutate store data
       expect(store.getState().teamSchedule.teamArray).toEqual(before);
     }
   };
@@ -151,34 +148,10 @@ describe("SeasonSchedule", () => {
     );
   }, GAME_TEST_TIMEOUT);
 
-  it("dispatches the whole schedule as one setSeasonSchedule action", () => {
-    const league = buildLeague();
-    const { middleware, actions } = recordActions();
-    const recorded = createFastStore({ extraMiddleware: [middleware] });
-    configureStoreForLeague(recorded, league);
-    const teamArray = recorded.getState().teamSchedule.teamArray;
-    actions.length = 0;
-    renderWithStore(
-      <SeasonSchedule teamStats={league.teamStats} teamArray={teamArray} />,
-      recorded,
-    );
-    const types = actions.map((a) => a.type);
-    expect(types.filter((t) => t === "teamSchedule/setSeasonSchedule")).toHaveLength(1);
-    expect(types.filter((t) => t === "teamSchedule/addGameToTeamSchedule")).toHaveLength(0);
-    expect(types).toHaveLength(1);
-  }, GAME_TEST_TIMEOUT);
-
-  it("does nothing when the team array is empty", () => {
-    const store = createFastStore();
-    renderWithStore(<SeasonSchedule teamStats={{}} teamArray={[]} />, store);
-    expect(store.getState().teamSchedule.teamSchedules).toEqual({});
-  });
-
   it("pins odd-total behaviour for 3 conferences of 3 teams", () => {
     const league = leagueFromSizes([3, 3, 3]);
     for (let seed = 1; seed <= 5; seed++) {
-      const { schedules } = renderSchedule(league, seed);
-      cleanup();
+      const { schedules } = buildSchedule(league, seed);
       for (let w = 1; w <= SEASON_WEEKS; w++) {
         const games = schedules[`week${w}`];
         const seen = new Set(games.flatMap(([a, b]) => [a.team, b.team]));

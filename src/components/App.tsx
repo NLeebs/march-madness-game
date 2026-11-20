@@ -9,9 +9,9 @@ import {
   Tournament,
   PlayTournamentGames,
   RegularSeason,
-  SeasonSchedule,
   TournamentRecapDialog,
 } from "@/src/components";
+import { useRethrowPlaySeasonError } from "@/src/hooks";
 
 // 6. Slow down tourny playing
 // 7. Add Banner announcing new stats for year
@@ -23,9 +23,8 @@ function App() {
 
   const appState = useSelector((state: RootState) => state.appState);
   const teamStatsObject = useSelector((state: RootState) => state.teamStats);
-  const teamArray = useSelector(
-    (state: RootState) => state.teamSchedule.teamArray,
-  );
+  // A season request that fails after the start screen is gone.
+  useRethrowPlaySeasonError();
 
   useEffect(() => {
     function handleResize() {
@@ -46,12 +45,6 @@ function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      {teamArray && (
-        <SeasonSchedule
-          teamStats={teamStatsObject.teamStats}
-          teamArray={teamArray}
-        />
-      )}
       {appState.startScreen && <StartScreen />}
       <AnimatePresence>
         {appState.regularSeason && (
