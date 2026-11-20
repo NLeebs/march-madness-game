@@ -3,6 +3,12 @@ import { ANON_USER_ID_STORAGE_KEY, FAKE_ANON_KEY, FAKE_SUPABASE_URL } from "./fa
 export const E2E_PORT = 3100;
 
 /**
+ * Fixed fake secret (>= 32 characters) the fake backend signs and verifies field tokens with. The
+ * fake runs in the Playwright process, not the Next server, so it never reads process env.
+ */
+export const E2E_SIGNING_SECRET = "e2e-only-field-token-signing-secret-0000";
+
+/**
  * Environment of the app under test. `NEXT_PUBLIC_*` values are inlined at build time, so the
  * build (`scripts/e2e/build.mts`) and the server (`playwright.config.ts` webServer) both use this.
  */

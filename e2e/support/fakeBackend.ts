@@ -2,13 +2,16 @@ import type { Page, Route } from "@playwright/test";
 import type { getYears } from "@/application/useCases";
 import type { PlayTournamentResult } from "@/application/useCases/tournament/PlayTournament";
 import type { SimulationRequestBody } from "@/app/api/bracket/simulation/schema";
+import type { PlaySeasonResult } from "@/application/useCases/season/PlaySeason";
 import type { ConferenceMap } from "@/models";
+import { compactSeason } from "@/src/functions/regularSeason/seasonWire";
+import { simulateSeason } from "@/src/functions/regularSeason/simulateSeason";
 import { ROUND_POINTS } from "@/src/functions/tournament/scoreRound";
 import {
   simulateTournament,
-  type TournamentField,
 } from "@/src/functions/tournament/simulateTournament";
 import type { TournamentPicks } from "@/types";
+import { signFieldToken } from "@/utils/api/fieldToken";
 import { E2E_YEARS, e2eTeamStats } from "../fixtures/league";
 import {
   PREP_LISTS,
@@ -23,6 +26,7 @@ import {
   dashboardUserStats,
   isDashboardYearId,
 } from "../fixtures/dashboard";
+import { E2E_SIGNING_SECRET } from "./env";
 import { FAKE_USER, installFakeAuth } from "./fakeAuth";
 import { apiError, checkSimulationRequest } from "./simulationRequest";
 
@@ -32,6 +36,11 @@ export type FakeBackendOptions = {
    * A status >= 400 answers with a handleApiError-shaped body instead.
    */
   persistStatus?: number;
+  /**
+   * Status for POST /api/season (default 200, answered with the played season and its signed
+   * field token). A status >= 400 answers with a handleApiError-shaped body instead.
+   */
+  seasonStatus?: number;
   teamStatsDelayMs?: number;
   /** Replaces the league served by /api/team-statistics (e.g. a deliberately broken one). */
   teamStats?: (yearId: string) => ConferenceMap;
@@ -41,6 +50,7 @@ export type FakeBackendOptions = {
 
 export type FakeBackend = {
   persistRequests: SimulationRequestBody[];
+  seasonRequests: { yearId: string }[];
   requestedPaths: string[];
   unhandled: string[];
 };
@@ -107,6 +117,7 @@ export async function installFakeBackend(
 ): Promise<FakeBackend> {
   const backend: FakeBackend = {
     persistRequests: [],
+    seasonRequests: [],
     requestedPaths: [],
     unhandled: [],
   };
@@ -146,6 +157,45 @@ export async function installFakeBackend(
       });
     }
 
+    if (method === "POST" && pathname === "/api/season") {
+      const body = request.postDataJSON() as { yearId: string };
+      backend.seasonRequests.push(body);
+      const status = opts.seasonStatus ?? 200;
+      if (status >= 400) {
+        const failure = apiError(status, "e2e simulated failure", undefined, undefined, "/api/season");
+        return json(route, failure.body, failure.status);
+      }
+      const teamStats = (opts.teamStats ?? e2eTeamStats)(body.yearId);
+      let wire: ReturnType<typeof compactSeason>;
+      try {
+        wire = compactSeason(simulateSeason(teamStats));
+      } catch (error) {
+        // Like the route: a league the engine rejects (GameDataError) is a server error.
+        const message = error instanceof Error ? error.message : "season failed";
+        const failure = apiError(500, message, undefined, undefined, "/api/season");
+        return json(route, failure.body, failure.status);
+      }
+      const { selection } = wire;
+      const result: PlaySeasonResult = {
+        ...wire,
+        yearId: body.yearId,
+        fieldToken: signFieldToken(
+          {
+            yearId: body.yearId,
+            field: {
+              tournamentTeams: selection.field,
+              playinTeams: {
+                elevenSeeds: selection.elevenSeedPlayins,
+                sixteenSeeds: selection.sixteenSeedPlayins,
+              },
+            },
+          },
+          { secret: E2E_SIGNING_SECRET },
+        ),
+      };
+      return json(route, result, status);
+    }
+
     if (method === "POST" && pathname === "/api/bracket/simulation") {
       const body = request.postDataJSON() as SimulationRequestBody;
       backend.persistRequests.push(body);
@@ -156,12 +206,13 @@ export async function installFakeBackend(
       }
       // Validates like the route (strict schema, league teams, consistent picks), so a body
       // the real route would refuse fails here too, then plays the tournament like the route.
-      const teamStats = (opts.teamStats ?? e2eTeamStats)(body.yearId ?? "");
-      const checked = checkSimulationRequest(body, teamStats);
+      const teamStatsFor = opts.teamStats ?? e2eTeamStats;
+      const checked = checkSimulationRequest(body, teamStatsFor);
       if ("error" in checked) return json(route, checked.error.body, checked.error.status);
+      const teamStats = teamStatsFor(checked.signed.yearId);
       // cast: the schema's inferred types are looser than the game's (see playTournamentPost.ts).
       const { playin, rounds, roundPoints, score } = simulateTournament({
-        field: checked.request.field as TournamentField,
+        field: checked.signed.field,
         picks: checked.request.picks as TournamentPicks,
         teamStats,
         points: ROUND_POINTS,
