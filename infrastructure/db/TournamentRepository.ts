@@ -10,7 +10,7 @@ import {
 } from "@/models/appStatsData";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database";
-import type { RoundPoints } from "@/src/functions/tournament/scoreRound";
+import type { RoundPoints } from "@/src/functions/tournament";
 import type { ScoredRound } from "@/types";
 
 /** rounds.round_name -> the scored round it holds. "champion" is not scored. */

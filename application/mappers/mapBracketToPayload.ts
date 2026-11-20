@@ -1,7 +1,7 @@
 import {
   ROUND_CONFIG,
   SCORED_ROUNDS,
-} from "@/src/functions/tournament/roundConfig";
+} from "@/src/functions/tournament";
 import type {
   BracketMatchups,
   PlayinMatchup,
@@ -15,7 +15,7 @@ import type {
   PersistBracketGame,
   PersistBracketPick,
 } from "@/models/appStatsData";
-import { GameDataError } from "@/src/functions/generic/GameDataError";
+import { GameDataError } from "@/src/functions/generic";
 import { mapPicksRegionAndIndex } from "./mapPicksRegionandIndex";
 
 interface MapBracketToPayloadInput {

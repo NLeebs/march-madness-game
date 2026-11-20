@@ -1,14 +1,14 @@
 import { TournamentRepository } from "@/infrastructure/db/TournamentRepository";
 import { getTeamStatisticsByYearId } from "@/application/useCases/team/GetTeamStatisticsByYearId";
 import { mapBracketToPayloadGames } from "@/application/mappers/mapBracketToPayload";
-import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
-import { seedTournament } from "@/src/functions/tournament/seedTournament";
 import {
+  buildRoundOneMatchups,
+  seedTournament,
   simulateTournament,
+  validateBracketPicks,
   type TournamentField,
   type TournamentPlayResult,
-} from "@/src/functions/tournament/simulateTournament";
-import { validateBracketPicks } from "@/src/functions/tournament/validateBracketPicks";
+} from "@/src/functions/tournament";
 import { ValidationError } from "@/utils/errorHandling";
 import type { ConferenceMap } from "@/models";
 import type { PersistBracketPayload } from "@/models/appStatsData";

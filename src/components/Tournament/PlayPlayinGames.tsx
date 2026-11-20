@@ -7,7 +7,7 @@ import {
   tournamentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
-import { GameDataError } from "@/src/functions/generic/GameDataError";
+import { GameDataError } from "@/src/functions/generic";
 
 /** Replays the server's play-in results (state.tournament.simulation). */
 export const PlayPlayinGames = () => {

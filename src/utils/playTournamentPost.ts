@@ -1,6 +1,6 @@
 import type { SimulationRequestBody } from "@/app/api/bracket/simulation/schema";
 import type { PlayTournamentResult } from "@/application/useCases/tournament/PlayTournament";
-import type { TournamentField } from "@/src/functions/tournament/simulateTournament";
+import type { TournamentField } from "@/src/functions/tournament";
 import type { TournamentPicks } from "@/types";
 import { AppError } from "@/utils/errorHandling";
 

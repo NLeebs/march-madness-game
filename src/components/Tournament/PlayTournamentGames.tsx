@@ -6,7 +6,7 @@ import {
   uiStateActions,
   tournamentActions,
 } from "@/store";
-import { GameDataError } from "@/src/functions/generic/GameDataError";
+import { GameDataError } from "@/src/functions/generic";
 import type { ScoredRound } from "@/types";
 
 /** Replays the server's results (state.tournament.simulation) round by round. */

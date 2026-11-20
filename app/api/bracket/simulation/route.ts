@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { playTournament } from "@/application/useCases";
-import type { TournamentField } from "@/src/functions/tournament/simulateTournament";
+import type { TournamentField } from "@/src/functions/tournament";
 import { handleApiError } from "@/utils/errorHandling/errorHandler";
 import {
   validateRequest,
