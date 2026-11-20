@@ -230,15 +230,19 @@ describe("playTournament", () => {
     expect(savedPayload().bracket.year_id).toBe(otherYear);
   });
 
-  it("rejects a field without 68 teams", async () => {
+  it("a short field cannot get through the token", async () => {
     const short: TournamentField = {
       ...field,
       tournamentTeams: field.tournamentTeams.slice(0, 59),
     };
+    const fieldToken = signFieldToken({ yearId: YEAR_ID, field: short });
 
-    await expect(playTournament(buildDto({ fieldToken: signFieldToken({ yearId: YEAR_ID, field: short }) }))).rejects.toBeInstanceOf(
-      ValidationError
-    );
+    const pending = playTournament(buildDto({ fieldToken }));
+    await expect(pending).rejects.toBeInstanceOf(ValidationError);
+    await expect(pending).rejects.toThrow(FIELD_TOKEN_INVALID);
+    expect(mocks.getTeamStatisticsByYearId).not.toHaveBeenCalled();
+    expect(mocks.getTeamsByYearId).not.toHaveBeenCalled();
+    expect(mocks.findBracketScoringRulesByYearId).not.toHaveBeenCalled();
     expect(mocks.persistBracket).not.toHaveBeenCalled();
   });
 
