@@ -21,8 +21,14 @@ vi.mock("@/src/utils/crashReporting", async (importOriginal) => {
   return { ...actual, reportCrash: vi.fn() };
 });
 
+// The league fixture's logo paths are not valid next/image sources.
+vi.mock("next/image", () => ({
+  default: ({ alt }: { alt: string }) => <span data-alt={alt} />,
+}));
+
 import { reportCrash } from "@/src/utils/crashReporting";
 import { PlayTournamentButton } from "../PlayTournamentButton";
+import { TournamentMatchupCard } from "@/src/components/Tournament/TournamentMatchupCard";
 
 const YEAR_ID = "11111111-1111-4111-8111-111111111111";
 const ANON_KEY = "test-anon-key-storage";
@@ -64,15 +70,19 @@ const RESULT: TournamentPlayResult & { bracketId: string } = {
   bracketId: "33333333-3333-4333-8333-333333333333",
 };
 
-function renderButton(store: AppStore) {
+function renderButton(
+  store: AppStore,
+  { user = null, extra = null }: { user?: { id: string } | null; extra?: React.ReactNode } = {}
+) {
   const queryClient = new QueryClient({ defaultOptions: { mutations: { retry: false } } });
-  const authValue = { user: null, loading: false } as unknown as null;
+  const authValue = { user, loading: false } as unknown as null;
   return render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <AuthContext.Provider value={authValue}>
           <GameErrorBoundary>
             <PlayTournamentButton />
+            {extra}
           </GameErrorBoundary>
         </AuthContext.Provider>
       </QueryClientProvider>
@@ -100,6 +110,7 @@ afterEach(() => {
   cleanup();
   localStorage.clear();
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
 });
 
 const submitButton = () => screen.getByRole("button", { name: "Submit Picks" });
@@ -176,6 +187,84 @@ describe("PlayTournamentButton", () => {
       fireEvent.click(pending);
 
       expect(fetchMock).toHaveBeenCalledTimes(1);
+    },
+    GAME_TEST_TIMEOUT
+  );
+
+  it(
+    "sends the anon id for a logged-in player too, so the server can fall back to it",
+    async () => {
+      const store = chalkStore();
+      fetchMock.mockResolvedValue(jsonResponse(201, RESULT));
+      renderButton(store, { user: { id: "44444444-4444-4444-8444-444444444444" } });
+
+      fireEvent.click(submitButton());
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+      const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+      expect(JSON.parse(init.body as string).anonUserId).toBe(ANON_ID);
+    },
+    GAME_TEST_TIMEOUT
+  );
+
+  it(
+    "picks are locked while the request is pending",
+    async () => {
+      const store = chalkStore();
+      fetchMock.mockReturnValue(new Promise<Response>(() => {}));
+      const teamClickHandler = vi.fn();
+      const name = store.getState().tournament.tournamentTeams[0];
+      const team = { team: name, seed: 1, score: 0 } as never;
+      const { container } = renderButton(store, {
+        extra: (
+          <TournamentMatchupCard
+            round={2}
+            region="west"
+            index={0}
+            matchup={[team, team] as never}
+            matchupIndex={0}
+            matchupTeam={team}
+            teamBarHeight="3.5rem"
+            teamBarColor="#fff"
+            teamClickHandler={teamClickHandler}
+            playerPicks={[]}
+          />
+        ),
+      });
+      const card = () =>
+        container.querySelector<HTMLButtonElement>(`button[data-team="${name}"]`)!;
+
+      fireEvent.click(card());
+      expect(teamClickHandler).toHaveBeenCalled();
+      teamClickHandler.mockClear();
+
+      fireEvent.click(submitButton());
+      await screen.findByRole("button", { name: "Tipping off..." });
+      fireEvent.click(card());
+
+      expect(teamClickHandler).not.toHaveBeenCalled();
+    },
+    GAME_TEST_TIMEOUT
+  );
+
+  it(
+    "an error building the request shows the crash screen instead of a dead button",
+    async () => {
+      const store = chalkStore();
+      vi.stubEnv("NEXT_PUBLIC_BROWSER_ANON_KEY", "");
+      const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
+      try {
+        renderButton(store);
+        fireEvent.click(submitButton());
+
+        expect(
+          await screen.findByRole("heading", { name: "Something went wrong" })
+        ).toBeInTheDocument();
+        expect(reportCrash).toHaveBeenCalledTimes(1);
+        expect(fetchMock).not.toHaveBeenCalled();
+      } finally {
+        quiet.mockRestore();
+      }
     },
     GAME_TEST_TIMEOUT
   );

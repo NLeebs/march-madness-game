@@ -128,9 +128,11 @@ export async function checkRecap(dialog: Locator, page: Page): Promise<void> {
 
 /**
  * The one tournament request carries the right owner, the 68-team field and every pick the
- * player made. The server sees who is signed in from the session, so the body has no userId:
- * signed in, anonUserId is null; anonymous, it is the id the app stored in localStorage (`page`
- * is needed to read it). Picks go out as made, with play-in placeholders not yet replaced.
+ * player made. The server sees who is signed in from the session, so the body has no userId.
+ * anonUserId is always the id the app stored in localStorage (`page` is needed to read it),
+ * signed in or not: the server ignores it when the session has a user and falls back to it
+ * when the session can't be read. Picks go out as made, with play-in placeholders not yet
+ * replaced.
  */
 export async function checkPersistPayload(
   backend: FakeBackend,
@@ -145,13 +147,9 @@ export async function checkPersistPayload(
   const body = backend.persistRequests[0];
 
   expect(Object.keys(body), "no userId key in payload").not.toContain("userId");
-  if (signedIn) {
-    expect(body.anonUserId, "anonUserId in payload when signed in").toBeNull();
-  } else {
-    const stored = await page.evaluate((key) => localStorage.getItem(key), ANON_USER_ID_STORAGE_KEY);
-    expect(stored, "anonymous id stored in localStorage").toBeTruthy();
-    expect(body.anonUserId, "anonUserId in payload").toBe(stored);
-  }
+  const stored = await page.evaluate((key) => localStorage.getItem(key), ANON_USER_ID_STORAGE_KEY);
+  expect(stored, "anonymous id stored in localStorage").toBeTruthy();
+  expect(body.anonUserId, `anonUserId in payload (${signedIn ? "signed in" : "anonymous"})`).toBe(stored);
 
   expect(body.field?.tournamentTeams, "60 tournament teams in the field").toHaveLength(60);
   expect(body.field?.playinTeams?.elevenSeeds, "4 eleven-seed play-in teams").toHaveLength(4);
