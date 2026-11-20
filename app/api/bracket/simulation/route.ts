@@ -19,7 +19,9 @@ const securityMiddleware = combineMiddleware(
   validateMethod(["POST"]),
   validateContentType(["application/json"]),
   validateOrigin(getAllowedOrigins(), true),
-  rateLimit(20, 60000),
+  // Per IP, per server instance. A player sends one request per game, and an
+  // over-limit request ends their game, so leave room for shared networks.
+  rateLimit(60, 60000),
 );
 
 export async function POST(req: NextRequest) {

@@ -57,17 +57,20 @@ function createRequest(
     method?: string;
     contentType?: string;
     origin?: string;
+    ip?: string;
   } = {}
 ): NextRequest {
   const {
     method = "POST",
     contentType = "application/json",
     origin = "http://localhost:3000",
+    ip,
   } = options;
 
   const headers: Record<string, string> = {};
   if (contentType) headers["content-type"] = contentType;
   if (origin) headers["origin"] = origin;
+  if (ip) headers["x-forwarded-for"] = ip;
 
   return new NextRequest("http://localhost:3000/api/bracket/simulation", {
     method,
@@ -131,6 +134,20 @@ describe("POST /api/bracket/simulation", () => {
     expect(mockPlayTournament).toHaveBeenCalledWith(
       expect.objectContaining({ userId: null, anonUserId: null })
     );
+  });
+
+  it("allows 60 requests a minute from one IP, so players on a shared network don't crash each other's games", async () => {
+    const body = buildValidBody();
+    const ip = "203.0.113.60";
+    for (let i = 0; i < 60; i++) {
+      const response = await POST(createRequest(body, { ip }));
+      expect(response.status).toBe(201);
+    }
+
+    const response = await POST(createRequest(body, { ip }));
+
+    expect(response.status).toBe(400);
+    expect((await parseResponse(response)).error.code).toBe("RATE_LIMIT_EXCEEDED");
   });
 
   describe("request body validation", () => {
