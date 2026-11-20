@@ -18,6 +18,8 @@ export const FIELD_TOKEN_INVALID = "The tournament field is invalid or expired";
 
 const MAX_FUTURE_SKEW_MS = 5 * 60 * 1000;
 const MIN_SECRET_LENGTH = 32;
+// Canonical unpadded base64url of a 32-byte HMAC-SHA256 digest.
+const SIGNATURE_PATTERN = /^[A-Za-z0-9_-]{43}$/;
 
 const teams = (n: number) => z.array(z.string()).length(n);
 
@@ -74,7 +76,10 @@ export function verifyFieldToken(
   if (parts.length !== 2 || !parts[0] || !parts[1]) throw invalid();
   const [payload, signature] = parts;
 
+  if (!SIGNATURE_PATTERN.test(signature)) throw invalid();
   const given = Buffer.from(signature, "base64url");
+  // Reject non-canonical encodings (spare trailing bits) that decode to the same bytes.
+  if (given.toString("base64url") !== signature) throw invalid();
   const expected = mac(secret, payload);
   if (given.length !== expected.length || !timingSafeEqual(given, expected)) {
     throw invalid();

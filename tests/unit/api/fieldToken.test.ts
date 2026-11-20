@@ -127,6 +127,28 @@ describe("fieldToken", () => {
     expect(() => verifyFieldToken(near, { now: NOW, secret: SECRET })).not.toThrow();
   });
 
+  it("accepts exactly the expiry and future-skew edges", () => {
+    const t = signFieldToken(claims, { now: NOW, secret: SECRET });
+    expect(
+      verifyFieldToken(t, { now: NOW + FIELD_TOKEN_MAX_AGE_MS, secret: SECRET }).yearId,
+    ).toBe(YEAR_ID);
+    const edge = signFieldToken(claims, { now: NOW + 5 * 60 * 1000, secret: SECRET });
+    expect(verifyFieldToken(edge, { now: NOW, secret: SECRET }).yearId).toBe(YEAR_ID);
+  });
+
+  it("rejects non-canonical signature encodings", () => {
+    const t = signFieldToken(claims, { now: NOW, secret: SECRET });
+    const [p, s] = t.split(".");
+    rejects(() => verifyFieldToken(`${p}.${s}A`, { now: NOW, secret: SECRET }));
+    rejects(() => verifyFieldToken(`${p}.${s.slice(0, 10)}*${s.slice(11)}`, { now: NOW, secret: SECRET }));
+    rejects(() => verifyFieldToken(`${p}.${s}=`, { now: NOW, secret: SECRET }));
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    for (const c of alphabet) {
+      if (c === s[42]) continue;
+      rejects(() => verifyFieldToken(`${p}.${s.slice(0, 42)}${c}`, { now: NOW, secret: SECRET }));
+    }
+  });
+
   it("missing secret throws a plain Error, not ValidationError", () => {
     const t = signFieldToken(claims, { now: NOW, secret: SECRET });
     for (const secret of ["", undefined]) {
