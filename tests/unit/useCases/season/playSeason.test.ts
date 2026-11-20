@@ -35,12 +35,19 @@ describe("playSeason", () => {
     vi.stubEnv("GAME_SIGNING_SECRET", TEST_SECRET);
   });
 
-  it("unknown year (no scoring rules) is a ValidationError", async () => {
+  it("unknown year (no scoring rules) is a ValidationError even when stats load", async () => {
     mocks.findBracketScoringRulesByYearId.mockResolvedValue(null);
     await expect(playSeason({ yearId: YEAR_ID })).rejects.toBeInstanceOf(
       ValidationError
     );
-    expect(mocks.getTeamStatisticsByYearId).not.toHaveBeenCalled();
+  });
+
+  it("unknown year wins over a team-stats load failure", async () => {
+    mocks.findBracketScoringRulesByYearId.mockResolvedValue(null);
+    mocks.getTeamStatisticsByYearId.mockRejectedValue(new Error("db down"));
+    await expect(playSeason({ yearId: YEAR_ID })).rejects.toBeInstanceOf(
+      ValidationError
+    );
   });
 
   it("the token verifies and carries the selection's field and the yearId", async () => {

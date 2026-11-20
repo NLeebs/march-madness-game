@@ -20,14 +20,17 @@ export async function playSeason({
 }: {
   yearId: string;
 }): Promise<PlaySeasonResult> {
-  const rules = await new TournamentRepository().findBracketScoringRulesByYearId(
-    yearId
-  );
-  if (rules === null) {
+  const [rules, stats] = await Promise.allSettled([
+    new TournamentRepository().findBracketScoringRulesByYearId(yearId),
+    getTeamStatisticsByYearId(yearId),
+  ]);
+  // An unknown year is a ValidationError even if the stats load failed too.
+  if (rules.status === "fulfilled" && rules.value === null) {
     throw new ValidationError(`Unknown year: ${yearId}`);
   }
-
-  const teamStats = await getTeamStatisticsByYearId(yearId);
+  if (rules.status === "rejected") throw rules.reason;
+  if (stats.status === "rejected") throw stats.reason;
+  const teamStats = stats.value;
   const wire = compactSeason(simulateSeason(teamStats, Math.random));
   const { selection } = wire;
 
