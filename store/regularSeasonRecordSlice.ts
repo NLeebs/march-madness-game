@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NUMBER_OF_TEAMS, POINTS_PER_WIN } from "@/src/constants";
+import { applySeasonGameResult } from "@/src/functions/regularSeason/applySeasonGameResult";
 import { RegularSeasonTeam, GameResult } from "@/types";
 import { ConferenceMap } from "@/models";
 
@@ -39,17 +39,7 @@ const regularSeasonRecordSlice = createSlice({
       });
     },
     addRegularSeasonGameResult: (state, action: PayloadAction<GameResult>) => {
-      if (action.payload.favoredScore > action.payload.underdogScore) {
-        state.records[action.payload.favoredTeam].wins++;
-        state.records[action.payload.underdogTeam].losses++;
-        state.records[action.payload.favoredTeam].tournamentSelectionScore +=
-          NUMBER_OF_TEAMS - action.payload.underdogRPI + POINTS_PER_WIN;
-      } else {
-        state.records[action.payload.underdogTeam].wins++;
-        state.records[action.payload.favoredTeam].losses++;
-        state.records[action.payload.underdogTeam].tournamentSelectionScore +=
-          NUMBER_OF_TEAMS - action.payload.favoredRPI + POINTS_PER_WIN;
-      }
+      applySeasonGameResult(state.records, action.payload);
     },
     addWeekPlayedToTotal: (state) => {
       state.weeksPlayed++;
