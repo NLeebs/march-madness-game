@@ -9,7 +9,7 @@ paths:
 ---
 # Game engine (simulation, selection, bracket, scoring)
 
-The game loop runs on the server, and the browser replays it. Steps 1-3 run in `simulateSeason` (`POST /api/season`), which also signs the field token; `PlayRegularSeasonGames` and `SelectionSunday` replay `regularSeasonRecords.season` (the `SeasonSchedule` component is gone):
+Steps 1-3 and 6 of the game loop run on the server and the browser replays them; steps 4-5 run in the browser (the server re-seeds from the field token to validate picks). Steps 1-3 run in `simulateSeason` (`POST /api/season`), which also signs the field token; `PlayRegularSeasonGames` and `SelectionSunday` replay `regularSeasonRecords.season` (the `SeasonSchedule` component is gone):
 1. schedule (`createSeasonSchedule`);
 2. regular season (`playGame`);
 3. Selection Sunday (`selectTournamentField`);
