@@ -35,7 +35,6 @@ describe("seasonWire", () => {
       schedule: season.schedule,
       weeks: season.weeks,
     }).length;
-    console.log(`wire ${wire} / full ${full} = ${(wire / full).toFixed(3)}`);
     expect(wire).toBeLessThan(full * 0.25);
   }, GAME_TEST_TIMEOUT);
 
