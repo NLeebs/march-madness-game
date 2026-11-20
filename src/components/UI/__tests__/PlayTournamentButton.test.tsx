@@ -14,7 +14,7 @@ import { createFastStore } from "@/tests/game/helpers/fastStore";
 import { buildRecords, pickChalk } from "@/tests/game/helpers/runGame";
 import { renderWithStore } from "@/tests/game/helpers/renderWithStore";
 import { GAME_TEST_TIMEOUT } from "@/tests/game/helpers/timeout";
-import type { TournamentPlayResult } from "@/src/functions/tournament/simulateTournament";
+import type { TournamentPlayResult } from "@/src/functions/tournament";
 
 vi.mock("@/src/utils/crashReporting", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/src/utils/crashReporting")>();
@@ -203,6 +203,56 @@ describe("PlayTournamentButton", () => {
       await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
       const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
       expect(JSON.parse(init.body as string).anonUserId).toBe(ANON_ID);
+    },
+    GAME_TEST_TIMEOUT
+  );
+
+  it(
+    "a logged-in player whose browser blocks storage still plays, with no anon id",
+    async () => {
+      const store = chalkStore();
+      fetchMock.mockResolvedValue(jsonResponse(201, RESULT));
+      const blocked = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+        throw new DOMException("The operation is insecure.", "SecurityError");
+      });
+      try {
+        renderButton(store, { user: { id: "44444444-4444-4444-8444-444444444444" } });
+
+        fireEvent.click(submitButton());
+
+        await waitFor(() =>
+          expect(store.getState().appState.tournamentPlayPlayinGames).toBe(true)
+        );
+        const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+        expect(JSON.parse(init.body as string).anonUserId).toBeNull();
+        expect(reportCrash).not.toHaveBeenCalled();
+      } finally {
+        blocked.mockRestore();
+      }
+    },
+    GAME_TEST_TIMEOUT
+  );
+
+  it(
+    "a logged-out player whose browser blocks storage gets the crash screen",
+    async () => {
+      const store = chalkStore();
+      const blocked = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+        throw new DOMException("The operation is insecure.", "SecurityError");
+      });
+      const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
+      try {
+        renderButton(store);
+        fireEvent.click(submitButton());
+
+        expect(
+          await screen.findByRole("heading", { name: "Something went wrong" })
+        ).toBeInTheDocument();
+        expect(fetchMock).not.toHaveBeenCalled();
+      } finally {
+        quiet.mockRestore();
+        blocked.mockRestore();
+      }
     },
     GAME_TEST_TIMEOUT
   );

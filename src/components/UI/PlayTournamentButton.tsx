@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, appStateActions, tournamentActions } from "@/store";
-import { usePlayTournament } from "@/src/hooks";
+import { useAuth, usePlayTournament } from "@/src/hooks";
 import { getAnonUserId } from "@/src/utils/getAnonUserId";
 import { BasketballSVG } from "@/src/components/Graphics";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@/src/constants";
@@ -20,6 +20,7 @@ export const PlayTournamentButton = () => {
   const playinTeams = useSelector(
     (state: RootState) => state.tournament.playinTeams
   );
+  const { user } = useAuth();
   const { mutate, isPending } = usePlayTournament();
   // isPending updates a tick after mutate; the ref blocks a second click before that.
   const submittedRef = useRef(false);
@@ -29,14 +30,19 @@ export const PlayTournamentButton = () => {
 
   const activateTournamentPlay = () => {
     if (submittedRef.current) return;
-    let anonUserId: string;
+    let anonUserId: string | null;
     try {
       // Sent even when logged in: the server ignores it when the session
       // has a user, and falls back to it when the session can't be read.
       anonUserId = getAnonUserId();
     } catch (error) {
-      setSubmitError(error);
-      return;
+      // Storage can be blocked. A logged-in player doesn't need the anon id;
+      // the server takes them from the session.
+      if (!user) {
+        setSubmitError(error);
+        return;
+      }
+      anonUserId = null;
     }
     submittedRef.current = true;
     mutate(
