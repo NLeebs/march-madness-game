@@ -70,7 +70,7 @@ test("signed-in full game saves under the user id", async ({ page, game, backend
     const picks = await game.makePicks(seed);
     await game.playTournament();
     await game.openRecap();
-    await checkPersistPayload(backend, picks, FAKE_USER.id, page);
+    await checkPersistPayload(backend, picks, true, page);
     backend.persistRequests.length = 0;
     if (seed === 1) await game.restart();
   }

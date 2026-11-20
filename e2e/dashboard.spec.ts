@@ -13,8 +13,8 @@ import {
   type DashboardYearId,
 } from "./fixtures/dashboard";
 
-const LATEST: DashboardYearId = "e2e-year-latest";
-const OLDER: DashboardYearId = "e2e-year-older";
+const LATEST: DashboardYearId = "e2e00000-0000-4000-8000-000000002025";
+const OLDER: DashboardYearId = "e2e00000-0000-4000-8000-000000002024";
 
 test.use({ backendOptions: { dashboard: true } });
 
@@ -99,9 +99,9 @@ test("signed-in dashboard shows both tabs and follows the year select @mobile-to
   await enforceLayout(page, "dashboard", "horizontal-scroll", () => assertNoHorizontalScroll(page));
 
   const requested = (path: string) => expect(backend.requestedPaths).toContain(path);
-  requested(`/api/user-statistics/${FAKE_USER.id}/e2e-year-older`);
-  requested(`/api/brackets/${FAKE_USER.id}/e2e-year-older`);
-  requested(`/api/pick-count/${FAKE_USER.id}/e2e-year-older`);
-  requested("/api/teams/top-performers/e2e-year-older");
-  requested("/api/seeds/first-round/upset-percentage/e2e-year-older");
+  requested(`/api/user-statistics/${FAKE_USER.id}/e2e00000-0000-4000-8000-000000002024`);
+  requested(`/api/brackets/${FAKE_USER.id}/e2e00000-0000-4000-8000-000000002024`);
+  requested(`/api/pick-count/${FAKE_USER.id}/e2e00000-0000-4000-8000-000000002024`);
+  requested("/api/teams/top-performers/e2e00000-0000-4000-8000-000000002024");
+  requested("/api/seeds/first-round/upset-percentage/e2e00000-0000-4000-8000-000000002024");
 });

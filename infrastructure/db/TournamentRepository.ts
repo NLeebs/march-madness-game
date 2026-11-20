@@ -1,31 +1,33 @@
 import { createSupabaseServiceRoleClient } from "@/infrastructure/db/supabaseServiceRole";
-import { createSupabaseServerClient } from "@/infrastructure/db/supabaseServer";
 import {
   BracketSupabase,
-  BracketInsertSupabase,
   BracketScoringRuleSupabase,
-  GameInsertSupabase,
+  PersistBracketPayload,
   YearSupabase,
   TeamSupabase,
   RoundSupabase,
   UserTotalStatsSupabase,
 } from "@/models/appStatsData";
-import { MappedRowsResult } from "@/application/mappers/mapTournamentToRows";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database, TablesInsert } from "@/types/database";
+import type { Database } from "@/types/database";
+import type { RoundPoints } from "@/src/functions/tournament";
+import type { ScoredRound } from "@/types";
 
-interface PersistTournamentData {
-  bracket: BracketInsertSupabase;
-  gamesAndPicks: MappedRowsResult;
-}
+/** rounds.round_name -> the scored round it holds. "champion" is not scored. */
+const SCORED_ROUND_BY_NAME: Readonly<Record<string, ScoredRound>> = {
+  "1": 1,
+  "2": 2,
+  "sweet sixteen": "sweet sixteen",
+  "elite eight": "elite eight",
+  "final four": "final four",
+  finals: "finals",
+};
 
 export class TournamentRepository {
   private supabase: SupabaseClient<Database>;
-  private authClient: SupabaseClient<Database>;
 
   constructor() {
     this.supabase = createSupabaseServiceRoleClient();
-    this.authClient = createSupabaseServerClient();
   }
 
   async getYears(): Promise<Pick<YearSupabase, "id" | "year">[]> {
@@ -79,6 +81,23 @@ export class TournamentRepository {
     }
 
     return bracketScoringRulesData;
+  }
+
+  /** The year's scoring rules, or null when the year has none (e.g. an unknown year id). */
+  async findBracketScoringRulesByYearId(
+    yearId: string,
+  ): Promise<BracketScoringRuleSupabase | null> {
+    const { data, error } = await this.supabase
+      .from("tournament_scoring_rules")
+      .select("*")
+      .eq("year_id", yearId)
+      .maybeSingle();
+
+    if (error) {
+      throw new Error(`Failed to fetch bracket scoring rules: ${error.message}`);
+    }
+
+    return data;
   }
 
   async getRounds(): Promise<Pick<RoundSupabase, "id" | "round_name">[]> {
@@ -149,100 +168,51 @@ export class TournamentRepository {
     return userTotalStatsData;
   }
 
-  async persistBracket(bracket: BracketInsertSupabase): Promise<string> {
-    if (bracket.user_id) {
-      const {
-        data: { user },
-        error: authError,
-      } = await this.authClient.auth.getUser();
+  /**
+   * Points per correct pick, keyed by scored round. Scoring is global (not per
+   * year); a round with several rows uses its latest. Throws if a scored round
+   * has no points.
+   */
+  async getRoundPoints(): Promise<RoundPoints> {
+    const { data, error } = await this.supabase
+      .from("tournament_round_scoring")
+      .select("score, created_at, rounds(round_name)")
+      .order("created_at", { ascending: false });
 
-      if (authError || !user || user.id !== bracket.user_id) {
-        throw new Error(
-          `Authentication failed: ${
-            authError?.message || "User not authenticated"
-          }`,
-        );
-      }
+    if (error) {
+      throw new Error(`Failed to fetch round points: ${error.message}`);
     }
 
-    const { data: bracketData, error: bracketError } = await this.supabase
-      .from("user_brackets")
-      .insert(bracket)
-      .select("id")
-      .single();
-
-    if (bracketError || !bracketData) {
-      if (
-        bracketError?.code === "42501" ||
-        bracketError?.message?.includes("row-level security")
-      ) {
-        throw new Error(
-          `RLS Policy Violation: Failed to create bracket. ` +
-            `Policy requires: user_id IS NULL AND anon_user_id IS NOT NULL. ` +
-            `Received: user_id=${bracket.user_id}, anon_user_id=${bracket.anon_user_id}. ` +
-            `Error: ${bracketError?.message}`,
-        );
+    const points: Partial<Record<ScoredRound, number>> = {};
+    data.forEach((row) => {
+      const round = row.rounds
+        ? SCORED_ROUND_BY_NAME[row.rounds.round_name]
+        : undefined;
+      if (round !== undefined && points[round] === undefined && row.score !== null) {
+        points[round] = row.score;
       }
-      throw new Error(`Failed to create bracket: ${bracketError?.message}`);
+    });
+
+    const missing = Object.values(SCORED_ROUND_BY_NAME).filter(
+      (round) => points[round] === undefined
+    );
+    if (missing.length > 0) {
+      throw new Error(`No round points for rounds: ${missing.join(", ")}`);
     }
 
-    return bracketData.id;
+    return points as RoundPoints; // cast: every scored round checked above
   }
 
-  async persistTournament({
-    bracket,
-    gamesAndPicks,
-  }: PersistTournamentData): Promise<void> {
-    if (!bracket.id) {
-      throw new Error(
-        "Bracket must have an ID before persisting games and picks",
-      );
+  /** Saves a bracket, its 67 games and 63 picks in one transaction; returns the bracket id. */
+  async persistBracket(payload: PersistBracketPayload): Promise<string> {
+    const { data, error } = await this.supabase.rpc("persist_bracket", {
+      payload,
+    });
+
+    if (error) {
+      throw new Error("Failed to persist bracket: " + error.message);
     }
 
-    if (bracket.user_id) {
-      const {
-        data: { user },
-        error: authError,
-      } = await this.authClient.auth.getUser();
-
-      if (authError) {
-        throw new Error(`Authentication failed: ${authError?.message}`);
-      }
-    }
-
-    const persistGame = async (game: GameInsertSupabase) => {
-      const { data: gameData, error: gameError } = await this.supabase
-        .from("tournament_games")
-        .insert(game)
-        .select("id")
-        .single();
-
-      if (gameError) {
-        throw new Error(`Failed to insert game: ${gameError.message}`);
-      }
-
-      return gameData.id;
-    };
-
-    const persistPick = async (pick: TablesInsert<"user_picks">) => {
-      const { error: pickError } = await this.supabase
-        .from("user_picks")
-        .insert(pick);
-
-      if (pickError) {
-        throw new Error(`Failed to insert pick: ${pickError.message}`);
-      }
-    };
-
-    await Promise.all(
-      gamesAndPicks.map(async (gameAndPick) => {
-        const { game, pick } = gameAndPick;
-        const gameId = await persistGame(game);
-
-        if (pick) {
-          await persistPick({ ...pick, game_id: gameId });
-        }
-      }),
-    );
+    return data;
   }
 }

@@ -2,6 +2,7 @@ export * from "./BracketScoringRuleSupabase";
 export * from "./BracketSupabase";
 export * from "./ConferencePerformanceSupabase";
 export * from "./ConferenceSupabase";
+export * from "./PersistBracketPayload";
 export * from "./PickSupabase";
 export * from "./ProfileSupabase";
 export * from "./RoundSupabase";

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { persistTournament } from "@/application/useCases";
+import { playTournament } from "@/application/useCases";
+import type { TournamentField } from "@/src/functions/tournament";
 import { handleApiError } from "@/utils/errorHandling/errorHandler";
 import {
   validateRequest,
@@ -11,61 +11,39 @@ import {
   combineMiddleware,
 } from "@/utils/errorHandling";
 import { getAllowedOrigins } from "@/utils/api/allowedOrigins";
-import { TournamentState } from "@/store/tournamentSlice";
-import { TournamentPlayerPicks } from "@/types";
-
-export interface SimulationRequestBody {
-  tournamentState: TournamentState;
-  picksState: TournamentPlayerPicks;
-  userId?: string | null;
-  anonUserId?: string | null;
-}
-
-const SimulationRequestBodySchema = z.object({
-  userId: z.string().uuid().nullable().optional(),
-  anonUserId: z.string().uuid().nullable().optional(),
-  tournamentState: z.object({
-    yearId: z.string().min(1, "Year ID is required"),
-    tournamentScoringRulesId: z
-      .string()
-      .min(1, "Tournament scoring rules ID is required"),
-    tournamentTeams: z.array(z.string()),
-    tournamentSeeds: z.record(z.string(), z.array(z.string())).optional(),
-    playinTeams: z.object({
-      elevenSeeds: z.array(z.string()),
-      sixteenSeeds: z.array(z.string()),
-    }),
-    roundOneMatchups: z.any(),
-    roundTwoMatchups: z.any(),
-    roundSweetSixteenMatchups: z.any(),
-    roundEliteEightMatchups: z.any(),
-    roundFinalFourMatchups: z.any(),
-    roundFinalsMatchups: z.any(),
-    champion: z.any(),
-    playerScore: z.number(),
-  }),
-  picksState: z.object({
-    picks: z.any(),
-  }),
-});
+import { getSessionUserId } from "@/utils/api/getSessionUserId";
+import type { TournamentPicks } from "@/types";
+import { SimulationRequestSchema } from "./schema";
 
 const securityMiddleware = combineMiddleware(
   validateMethod(["POST"]),
   validateContentType(["application/json"]),
   validateOrigin(getAllowedOrigins(), true),
-  rateLimit(20, 60000),
+  // Per IP, per server instance. A player sends one request per game, and an
+  // over-limit request ends their game, so leave room for shared networks.
+  rateLimit(60, 60000),
 );
 
 export async function POST(req: NextRequest) {
   try {
     await securityMiddleware(req);
 
-    const validatedBody = await validateRequest(SimulationRequestBodySchema)(
-      req,
-    );
-    const body: SimulationRequestBody = validatedBody as SimulationRequestBody;
+    const body = await validateRequest(SimulationRequestSchema)(req);
 
-    const result = await persistTournament(body);
+    // The session decides who owns the bracket; the body's anonUserId only
+    // counts for logged-out players.
+    const userId = await getSessionUserId();
+    const anonUserId = userId ? null : (body.anonUserId ?? null);
+
+    const result = await playTournament({
+      yearId: body.yearId,
+      // cast: the schema guarantees these shapes; zod's inference with
+      // strict: false marks every key optional, so assert them.
+      field: body.field as TournamentField,
+      picks: body.picks as TournamentPicks,
+      userId,
+      anonUserId,
+    });
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {

@@ -17,8 +17,11 @@ describe("CrashScreen", () => {
     render(<CrashScreen buttonText="Back to home" />);
     expect(screen.getByRole("heading", { name: "Something went wrong" })).toBeInTheDocument();
     expect(
-      screen.getByText("Sorry about that. We've been notified and will look into it.")
+      screen.getByText("Turnover! A crash report is already on the coach's desk.")
     ).toBeInTheDocument();
+    expect(
+      screen.queryByText("Sorry about that. We've been notified and will look into it.")
+    ).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Back to home" })).toBeInTheDocument();
   });
 

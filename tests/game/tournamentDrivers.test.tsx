@@ -1,5 +1,5 @@
 import React from "react";
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect, afterEach, vi } from "vitest";
 import { cleanup } from "@testing-library/react";
 import type { AnyAction } from "@reduxjs/toolkit";
 import { SelectionSunday } from "@/src/components/RegularSeason/SelectionSunday";
@@ -7,10 +7,14 @@ import { createFastStore } from "./helpers/fastStore";
 import { recordActions, renderWithStore } from "./helpers/renderWithStore";
 import { buildRecords, pickChalk, playTournament } from "./helpers/runGame";
 import { seedMathRandom } from "./helpers/rng";
-import { tournamentActions } from "@/store";
+import { appStateActions, tournamentActions } from "@/store";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
 import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
+import type { ScoredRound } from "@/types";
 import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
+import { PlayTournamentGames } from "@/src/components/Tournament/PlayTournamentGames";
+import { PlayPlayinGames } from "@/src/components/Tournament/PlayPlayinGames";
+import { GameDataError } from "@/src/functions/generic/GameDataError";
 
 afterEach(() => cleanup());
 
@@ -210,5 +214,113 @@ describe("getNextRoundInfo", () => {
         expect(getNextRoundInfo(round, region, 3)).toEqual({ nextRoundRegion: region, teamIndex: 3 });
       }
     }
+  });
+});
+
+describe("drivers replay the stored simulation", () => {
+  it("drivers dispatch exactly the stored simulation's results", async () => {
+    const { store, actions } = fieldStore(3);
+    const seeded = seedMathRandom(3);
+    try {
+      const before = actions.length;
+      await playTournament(store);
+      const mine = actions.slice(before);
+      const simulation = store.getState().tournament.simulation;
+      expect(simulation).not.toBeNull();
+      const playin = mine
+        .filter((a) => a.type === "tournament/setPlayinGameResults")
+        .map((a) => a.payload);
+      expect(playin).toEqual(simulation!.playin);
+      const replaced = mine
+        .filter((a) => a.type === "tournamentPlayersPicks/replacePlayinPicksWithWinner")
+        .map((a) => a.payload);
+      expect(replaced).toEqual(
+        simulation!.playin.map(({ gameIndex, winningTeam, seedType }) => ({
+          gameIndex,
+          winningTeam,
+          seedType,
+        })),
+      );
+      ROUNDS.forEach((round) => {
+        const results = mine
+          .filter(
+            (a) => a.type === "tournament/setTournamentGameResults" && a.payload.round === round,
+          )
+          .map((a) => a.payload.results);
+        expect(results).toEqual(simulation!.rounds[round as ScoredRound]);
+        const scores = mine.filter(
+          (a) => a.type === "tournament/recordRoundScore" && a.payload.round === round,
+        );
+        expect(scores).toHaveLength(1);
+        expect(scores[0].payload.points).toBe(
+          simulation!.roundPoints[round as ScoredRound],
+        );
+        expect(scores[0].payload.winningTeams).toEqual(results.map((r) => r.winningTeam));
+      });
+    } finally {
+      seeded.restore();
+    }
+  }, GAME_TEST_TIMEOUT);
+
+  it("playerScore equals simulation.score", async () => {
+    const { store } = fieldStore(4);
+    const seeded = seedMathRandom(4);
+    try {
+      await playTournament(store);
+      const { playerScore, simulation } = store.getState().tournament;
+      expect(simulation).not.toBeNull();
+      expect(playerScore).toBe(simulation!.score);
+    } finally {
+      seeded.restore();
+    }
+  }, GAME_TEST_TIMEOUT);
+});
+
+class CatchError extends React.Component<
+  { onError: (error: unknown) => void; children: React.ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch(error: unknown) {
+    this.props.onError(error);
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
+describe("drivers without a simulation", () => {
+  const renderDriverWithoutSimulation = (driver: React.ReactElement, roundOne: boolean) => {
+    const { store } = fieldStore(1);
+    store.dispatch(appStateActions.activateTournament());
+    store.dispatch(tournamentActions.setRoundOneMatchups());
+    store.dispatch(appStateActions.activateTournamentPlayinGamesState());
+    if (roundOne) store.dispatch(appStateActions.activateTournamentStandardGames());
+    const errors: unknown[] = [];
+    const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      renderWithStore(<CatchError onError={(e) => errors.push(e)}>{driver}</CatchError>, store);
+    } finally {
+      quiet.mockRestore();
+    }
+    return { errors, store };
+  };
+
+  it("PlayTournamentGames with no simulation crashes with GameDataError", () => {
+    const { errors, store } = renderDriverWithoutSimulation(<PlayTournamentGames />, true);
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toBeInstanceOf(GameDataError);
+    expect((errors[0] as Error).message).toBe("no tournament results");
+    expect(store.getState().appState.tournamentPlayRoundTwo).toBe(false);
+  });
+
+  it("PlayPlayinGames with no simulation crashes with GameDataError", () => {
+    const { errors, store } = renderDriverWithoutSimulation(<PlayPlayinGames />, false);
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toBeInstanceOf(GameDataError);
+    expect(store.getState().appState.tournamentPlayGames).toBe(false);
   });
 });

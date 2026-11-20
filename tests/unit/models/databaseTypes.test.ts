@@ -22,7 +22,6 @@ describe("models match the generated database types", () => {
   it("insert models are the generated Insert types", () => {
     expectTypeOf<M.BracketInsertSupabase>().toEqualTypeOf<TablesInsert<"user_brackets">>();
     expectTypeOf<M.GameInsertSupabase>().toEqualTypeOf<TablesInsert<"tournament_games">>();
-    expectTypeOf<M.PickInsertSupabase>().toEqualTypeOf<Omit<TablesInsert<"user_picks">, "game_id">>();
   });
   it("every RPC row fits the model its repository returns", () => {
     // TeamRepository -> TeamPerformanceSupabase
@@ -46,6 +45,11 @@ describe("models match the generated database types", () => {
     expectTypeOf<M.RpcRow<"get_top_picked_teams_for_user_and_year">>().toMatchTypeOf<M.TeamPickCountSupabase>();
     // SeedRepository -> SeedPerformanceSupabase
     expectTypeOf<M.RpcRow<"get_seed_matchup_upset_percentages_by_year_and_round">>().toMatchTypeOf<M.SeedPerformanceSupabase>();
+  });
+  it("persist_bracket takes the PersistBracketPayload model and returns the bracket id", () => {
+    type PersistBracket = Database["public"]["Functions"]["persist_bracket"];
+    expectTypeOf<{ payload: M.PersistBracketPayload }>().toMatchTypeOf<PersistBracket["Args"]>();
+    expectTypeOf<PersistBracket["Returns"]>().toEqualTypeOf<string>();
   });
   it("Supabase clients are typed with Database", () => {
     expectTypeOf<ReturnType<typeof createSupabaseServiceRoleClient>>().toEqualTypeOf<SupabaseClient<Database>>();

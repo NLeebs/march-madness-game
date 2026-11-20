@@ -127,38 +127,39 @@ export async function checkRecap(dialog: Locator, page: Page): Promise<void> {
 }
 
 /**
- * The one save request carries the right user and every pick the player made. `page` is needed
- * to read the anonymous id the app stored in localStorage.
+ * The one tournament request carries the right owner, the 68-team field and every pick the
+ * player made. The server sees who is signed in from the session, so the body has no userId.
+ * anonUserId is always the id the app stored in localStorage (`page` is needed to read it),
+ * signed in or not: the server ignores it when the session has a user and falls back to it
+ * when the session can't be read. Picks go out as made, with play-in placeholders not yet
+ * replaced.
  */
 export async function checkPersistPayload(
   backend: FakeBackend,
   picks: RecordedPick[],
-  expectUserId: string | null,
+  signedIn: boolean,
   page: Page,
 ): Promise<void> {
   await expect
-    .poll(() => backend.persistRequests.length, { message: "bracket save request sent" })
+    .poll(() => backend.persistRequests.length, { message: "tournament request sent" })
     .toBeGreaterThanOrEqual(1);
-  expect(backend.persistRequests, "exactly one save request").toHaveLength(1);
+  expect(backend.persistRequests, "exactly one tournament request").toHaveLength(1);
   const body = backend.persistRequests[0];
 
-  expect(body.userId ?? null, "userId in payload").toBe(expectUserId);
-  if (expectUserId === null) {
-    const stored = await page.evaluate((key) => localStorage.getItem(key), ANON_USER_ID_STORAGE_KEY);
-    expect(stored, "anonymous id stored in localStorage").toBeTruthy();
-    expect(body.anonUserId, "anonUserId in payload").toBe(stored);
-  }
+  expect(Object.keys(body), "no userId key in payload").not.toContain("userId");
+  const stored = await page.evaluate((key) => localStorage.getItem(key), ANON_USER_ID_STORAGE_KEY);
+  expect(stored, "anonymous id stored in localStorage").toBeTruthy();
+  expect(body.anonUserId, `anonUserId in payload (${signedIn ? "signed in" : "anonymous"})`).toBe(stored);
 
-  expect(body.picksState, "picksState in payload").toBeDefined();
-  const winners = playinWinners(body.tournamentState.roundOneMatchups.playin as PlayinMatchups);
-  const tree = body.picksState.picks as unknown as Record<string, Record<string, { team: string }[][]>>;
+  expect(body.field?.tournamentTeams, "60 tournament teams in the field").toHaveLength(60);
+  expect(body.field?.playinTeams?.elevenSeeds, "4 eleven-seed play-in teams").toHaveLength(4);
+  expect(body.field?.playinTeams?.sixteenSeeds, "4 sixteen-seed play-in teams").toHaveLength(4);
+
+  const tree = body.picks as unknown as Record<string, Record<string, { team: string }[][]>>;
   picks.forEach((pick) => {
     const slot: Slot = nextSlot(pick.round, pick.region as Slot["region"], pick.slot);
     const key = PICKS_KEY[slot.round];
-    const saved = key ? tree[key]?.[slot.region]?.[slot.matchup]?.[slot.side]?.team : undefined;
-    expect(
-      saved,
-      `saved pick for ${String(pick.round)} ${pick.region} #${pick.slot} (${pick.team})`,
-    ).toBe(resolve(winners, pick.team));
+    const sent = key ? tree[key]?.[slot.region]?.[slot.matchup]?.[slot.side]?.team : undefined;
+    expect(sent, `sent pick for ${String(pick.round)} ${pick.region} #${pick.slot} (${pick.team})`).toBe(pick.team);
   });
 }

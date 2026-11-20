@@ -6,97 +6,56 @@ import {
   uiStateActions,
   tournamentActions,
 } from "@/store";
-import {
-  getTournamentGameResultObj,
-  findTeamConference,
-  playGame,
-} from "@/src/functions";
-import {
-  TournamentMatchup,
-  TournamentRegion,
-  ScoredRound,
-  TournamentRoundMatchups,
-} from "@/types";
+import { GameDataError } from "@/src/functions/generic";
+import type { ScoredRound } from "@/types";
 
+/** Replays the server's results (state.tournament.simulation) round by round. */
 export const PlayTournamentGames = () => {
   const dispatch = useDispatch();
 
   const appState = useSelector((state: RootState) => state.appState);
-  const teamStats = useSelector(
-    (state: RootState) => state.teamStats.teamStats
-  );
-  const confArrs = useSelector(
-    (state: RootState) => state.teamStats.conferenceArrays
-  );
   const playersPicks = useSelector(
     (state: RootState) => state.tournamentPlayersPicks.picks
   );
-  const {
-    roundOneMatchups,
-    roundTwoMatchups,
-    roundSweetSixteenMatchups,
-    roundEliteEightMatchups,
-    roundFinalFourMatchups,
-    roundFinalsMatchups,
-  } = useSelector((state: RootState) => state.tournament);
+  const simulation = useSelector(
+    (state: RootState) => state.tournament.simulation
+  );
 
+  /** Dispatches the round's results; returns the round's points and winners in play order. */
   const playTournamentRound = useCallback(
-    (round: ScoredRound, roundMatchups: TournamentRoundMatchups) => {
-      const winningTeamsArr = [];
-
-      Object.keys(roundMatchups).forEach((region: TournamentRegion) => {
-        if (region === "playin") return;
-
-        roundMatchups[region].forEach(
-          (matchup: TournamentMatchup, i: number) => {
-            const gameResults = playGame(
-              teamStats[findTeamConference(matchup[0].team, confArrs)][
-                matchup[0].team
-              ],
-              teamStats[findTeamConference(matchup[1].team, confArrs)][
-                matchup[1].team
-              ]
-            );
-            const gameDispatchObj = getTournamentGameResultObj(
-              gameResults,
-              i,
-              region
-            );
-            gameDispatchObj.seed =
-              gameDispatchObj.winningTeam === matchup[0].team
-                ? matchup[0].seed
-                : matchup[1].seed;
-
-            winningTeamsArr.push(gameDispatchObj.winningTeam);
-            dispatch(
-              tournamentActions.setTournamentGameResults({
-                results: gameDispatchObj,
-                round,
-              })
-            );
-          }
+    (round: ScoredRound) => {
+      if (!simulation) {
+        throw new GameDataError("no tournament results", { round });
+      }
+      const results = simulation.rounds[round];
+      results.forEach((result) => {
+        dispatch(
+          tournamentActions.setTournamentGameResults({ results: result, round })
         );
       });
-
-      return winningTeamsArr;
+      return {
+        winningTeams: results.map((result) => result.winningTeam),
+        points: simulation.roundPoints[round],
+      };
     },
-    [dispatch, teamStats, confArrs]
+    [dispatch, simulation]
   );
 
   // Play round 1
   useEffect(() => {
     if (!appState.tournamentPlayRoundOne || appState.tournamentPlayRoundTwo)
       return;
-    const winningTeamsArr = playTournamentRound(1, roundOneMatchups);
+    const { winningTeams, points } = playTournamentRound(1);
     dispatch(
       tournamentActions.recordRoundScore({
         round: 1,
-        winningTeams: winningTeamsArr,
+        winningTeams,
+        points,
         picks: playersPicks.roundTwoPicks,
       })
     );
     dispatch(appStateActions.activateTournamentRoundTwo());
-  }, [dispatch, playTournamentRound, appState, roundOneMatchups, playersPicks]);
+  }, [dispatch, playTournamentRound, appState, playersPicks]);
 
   // Play round 2
   useEffect(() => {
@@ -104,18 +63,19 @@ export const PlayTournamentGames = () => {
     if (!appState.tournamentPlayRoundTwo || appState.tournamentPlaySweetSixteen)
       return;
     // Play Round and send winners
-    const winningTeamsArr = playTournamentRound(2, roundTwoMatchups);
+    const { winningTeams, points } = playTournamentRound(2);
     // Compare to picks
     dispatch(
       tournamentActions.recordRoundScore({
         round: 2,
-        winningTeams: winningTeamsArr,
+        winningTeams,
+        points,
         picks: playersPicks.roundSweetSixteenPicks,
       })
     );
     // Switch app to round Sweet Sixteen
     dispatch(appStateActions.activateTournamentSweetSixteen());
-  }, [dispatch, playTournamentRound, appState, roundTwoMatchups, playersPicks]);
+  }, [dispatch, playTournamentRound, appState, playersPicks]);
 
   // Play round Sweet Sixteen
   useEffect(() => {
@@ -126,27 +86,19 @@ export const PlayTournamentGames = () => {
     )
       return;
     // Play Round and send winners
-    const winningTeamsArr = playTournamentRound(
-      "sweet sixteen",
-      roundSweetSixteenMatchups
-    );
+    const { winningTeams, points } = playTournamentRound("sweet sixteen");
     // Compare to picks
     dispatch(
       tournamentActions.recordRoundScore({
         round: "sweet sixteen",
-        winningTeams: winningTeamsArr,
+        winningTeams,
+        points,
         picks: playersPicks.roundEliteEightPicks,
       })
     );
     // Switch app to round Elite Eight
     dispatch(appStateActions.activateTournamentEliteEight());
-  }, [
-    dispatch,
-    playTournamentRound,
-    appState,
-    roundSweetSixteenMatchups,
-    playersPicks,
-  ]);
+  }, [dispatch, playTournamentRound, appState, playersPicks]);
 
   // Play round Elite Eight
   useEffect(() => {
@@ -154,27 +106,19 @@ export const PlayTournamentGames = () => {
     if (!appState.tournamentPlayEliteEight || appState.tournamentPlayFinalFour)
       return;
     // Play Round and send winners
-    const winningTeamsArr = playTournamentRound(
-      "elite eight",
-      roundEliteEightMatchups
-    );
+    const { winningTeams, points } = playTournamentRound("elite eight");
     // Compare to picks
     dispatch(
       tournamentActions.recordRoundScore({
         round: "elite eight",
-        winningTeams: winningTeamsArr,
+        winningTeams,
+        points,
         picks: playersPicks.roundFinalFourPicks,
       })
     );
     // Switch app to round Final Four
     dispatch(appStateActions.activateTournamentFinalFour());
-  }, [
-    dispatch,
-    playTournamentRound,
-    appState,
-    roundEliteEightMatchups,
-    playersPicks,
-  ]);
+  }, [dispatch, playTournamentRound, appState, playersPicks]);
 
   // Play round Final Four
   useEffect(() => {
@@ -182,52 +126,39 @@ export const PlayTournamentGames = () => {
     if (!appState.tournamentPlayFinalFour || appState.tournamentPlayFinals)
       return;
     // Play Round and send winners
-    const winningTeamsArr = playTournamentRound(
-      "final four",
-      roundFinalFourMatchups
-    );
+    const { winningTeams, points } = playTournamentRound("final four");
     // Compare to picks
     dispatch(
       tournamentActions.recordRoundScore({
         round: "final four",
-        winningTeams: winningTeamsArr,
+        winningTeams,
+        points,
         picks: playersPicks.roundFinalsPicks,
       })
     );
     // Switch app to round Finals
     dispatch(appStateActions.activateTournamentFinals());
-  }, [
-    dispatch,
-    playTournamentRound,
-    appState,
-    roundFinalFourMatchups,
-    playersPicks,
-  ]);
+  }, [dispatch, playTournamentRound, appState, playersPicks]);
 
   // Play round Finals
   useEffect(() => {
     // Check if Round Finals
     if (!appState.tournamentPlayFinals || appState.tournamentRecap) return;
     // Play Round and send winners
-    const winningTeamsArr = playTournamentRound("finals", roundFinalsMatchups);
+    const { winningTeams, points } = playTournamentRound("finals");
     // Compare to picks
     dispatch(
       tournamentActions.recordRoundScore({
         round: "finals",
-        winningTeams: winningTeamsArr,
+        winningTeams,
+        points,
         picks: playersPicks.champion,
       })
     );
     // Switch app to round Finals
     dispatch(appStateActions.activateTournamentRecap());
     dispatch(uiStateActions.toggleRecapDialog());
-  }, [
-    dispatch,
-    playTournamentRound,
-    appState,
-    roundFinalsMatchups,
-    playersPicks,
-  ]);
+  }, [dispatch, playTournamentRound, appState, playersPicks]);
 
   return null;
 };

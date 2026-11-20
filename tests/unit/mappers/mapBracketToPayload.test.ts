@@ -1,8 +1,6 @@
 import { describe, it, expect } from "vitest";
-import {
-  mapTournamentToRows,
-  MappedRowsResult,
-} from "@/application/mappers/mapTournamentToRows";
+import { mapBracketToPayloadGames } from "@/application/mappers/mapBracketToPayload";
+import { GameDataError } from "@/src/functions/generic/GameDataError";
 import { TournamentRound, TournamentRoundMatchups } from "@/types";
 import {
   buildTournamentTeam as makeTeam,
@@ -15,11 +13,9 @@ import {
   buildPicksState as makeEmptyPicksState,
 } from "@/tests/factories";
 
-const YEAR_ID = "year-uuid-1";
-const BRACKET_ID = "bracket-uuid-1";
 const ROUND_IDS = buildRoundIdMap();
 
-describe("mapTournamentToRows", () => {
+describe("mapBracketToPayloadGames", () => {
   describe("round 1 matchups", () => {
     it("should create a game row and a pick row for a standard round 1 matchup", () => {
       const teamA = makeTeam("Duke", "1", { win: true, score: 80 });
@@ -42,18 +38,17 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["Duke", "FGCU"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
       expect(result).toHaveLength(1);
 
-      const { game, pick } = result[0];
-      expect(game.year_id).toBe(YEAR_ID);
+      const game = result[0];
+      const { pick } = game;
       expect(game.round_id).toBe("round-1-uuid");
       expect(game.is_play_in).toBe(false);
       expect(game.favored_team_id).toBe("Duke-uuid");
@@ -64,10 +59,9 @@ describe("mapTournamentToRows", () => {
       expect(game.underdog_team_score).toBe(60);
       expect(game.winning_team_id).toBe("Duke-uuid");
 
-      expect(pick).toBeDefined();
-      expect(pick!.bracket_id).toBe(BRACKET_ID);
-      expect(pick!.picked_team_id).toBe("Duke-uuid");
-      expect(pick!.picked_team_seed).toBe(1);
+      expect(pick).toEqual({ picked_team_id: "Duke-uuid", picked_team_seed: 1 });
+      expect(game).not.toHaveProperty("year_id");
+      expect(game).not.toHaveProperty("bracket_id");
     });
 
     it("should determine favored/underdog by lower seed number", () => {
@@ -91,15 +85,14 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["LowSeed", "HighSeed"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      const { game } = result[0];
+      const game = result[0];
       expect(game.favored_team_id).toBe("HighSeed-uuid");
       expect(game.favored_team_seed).toBe(5);
       expect(game.underdog_team_id).toBe("LowSeed-uuid");
@@ -107,7 +100,7 @@ describe("mapTournamentToRows", () => {
       expect(game.winning_team_id).toBe("LowSeed-uuid");
     });
 
-    it("should determine the winner by score when win flag is not set", () => {
+    it("throws a GameDataError when neither team is flagged the winner", () => {
       const teamA = makeTeam("TeamA", "3", { score: 72 });
       const teamB = makeTeam("TeamB", "14", { score: 80 });
       const matchup = makeMatchup(teamA, teamB);
@@ -128,19 +121,19 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["TeamA", "TeamB"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
-        teamIdMap,
-        roundIdMap: ROUND_IDS,
-      });
+      const map = () =>
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
+          teamIdMap,
+          roundIdMap: ROUND_IDS,
+        });
 
-      const { game } = result[0];
-      expect(game.winning_team_id).toBe("TeamB-uuid");
+      expect(map).toThrow(GameDataError);
+      expect(map).toThrow("no winner");
     });
 
-    it("should default scores to 0 when not provided", () => {
+    it("throws a GameDataError when a score is missing", () => {
       const teamA = makeTeam("TeamA", "1", { win: true });
       const teamB = makeTeam("TeamB", "16");
       const matchup = makeMatchup(teamA, teamB);
@@ -161,17 +154,16 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["TeamA", "TeamB"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
-        teamIdMap,
-        roundIdMap: ROUND_IDS,
-      });
+      const map = () =>
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
+          teamIdMap,
+          roundIdMap: ROUND_IDS,
+        });
 
-      const { game } = result[0];
-      expect(game.favored_team_score).toBe(0);
-      expect(game.underdog_team_score).toBe(0);
+      expect(map).toThrow(GameDataError);
+      expect(map).toThrow("no score");
     });
 
     it("should map multiple matchups in a region with correct pick indices", () => {
@@ -203,10 +195,9 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["Seed1", "Seed16", "Seed8", "Seed9"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
@@ -237,17 +228,54 @@ describe("mapTournamentToRows", () => {
       const picksState = makeEmptyPicksState();
       const teamIdMap = makeTeamIdMap(["PlayinA", "PlayinB"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
       expect(result).toHaveLength(1);
-      expect(result[0].game.is_play_in).toBe(true);
-      expect(result[0].pick).toBeUndefined();
+      expect(result[0].is_play_in).toBe(true);
+      expect(result[0].pick).toBeNull();
+    });
+
+    it("play-in rows carry real scores", () => {
+      const matchup = makeMatchup(
+        makeTeam("PlayinLoser", "16", { win: false, score: 58 }),
+        makeTeam("PlayinWinner", "16", { win: true, score: 71 }),
+      );
+
+      const tournamentState = makeEmptyTournamentState({
+        roundOneMatchups: {
+          ...emptyRoundMatchups(),
+          playin: {
+            elevenSeeds: [],
+            sixteenSeeds: [matchup],
+          },
+        } as TournamentRoundMatchups,
+      });
+
+      const picksState = makeEmptyPicksState();
+      const teamIdMap = makeTeamIdMap(["PlayinLoser", "PlayinWinner"]);
+
+      const [game] = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
+        teamIdMap,
+        roundIdMap: ROUND_IDS,
+      });
+
+      expect(game.round_id).toBe("round-1-uuid");
+      expect(game.is_play_in).toBe(true);
+      expect(game.winning_team_id).toBe("PlayinWinner-uuid");
+      expect([game.favored_team_score, game.underdog_team_score].sort()).toEqual([58, 71]);
+      expect(
+        game.winning_team_id === game.favored_team_id
+          ? game.favored_team_score
+          : game.underdog_team_score,
+      ).toBe(71);
+      expect(game.pick).toBeNull();
     });
 
     it("should create game rows without pick rows for sixteen seed play-ins", () => {
@@ -269,17 +297,16 @@ describe("mapTournamentToRows", () => {
       const picksState = makeEmptyPicksState();
       const teamIdMap = makeTeamIdMap(["Playin16A", "Playin16B"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
       expect(result).toHaveLength(1);
-      expect(result[0].game.is_play_in).toBe(true);
-      expect(result[0].pick).toBeUndefined();
+      expect(result[0].is_play_in).toBe(true);
+      expect(result[0].pick).toBeNull();
     });
 
     it("should handle multiple play-in games across both seed groups", () => {
@@ -316,17 +343,16 @@ describe("mapTournamentToRows", () => {
         "S16B",
       ]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      const playinRows = result.filter((r) => r.game.is_play_in);
+      const playinRows = result.filter((r) => r.is_play_in);
       expect(playinRows).toHaveLength(3);
-      playinRows.forEach((row) => expect(row.pick).toBeUndefined());
+      playinRows.forEach((row) => expect(row.pick).toBeNull());
     });
   });
 
@@ -353,19 +379,18 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["TeamR2A", "TeamR2B"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
       const round2Rows = result.filter(
-        (r) => r.game.round_id === "round-2-uuid",
+        (r) => r.round_id === "round-2-uuid",
       );
       expect(round2Rows).toHaveLength(1);
-      expect(round2Rows[0].game.favored_team_id).toBe("TeamR2A-uuid");
+      expect(round2Rows[0].favored_team_id).toBe("TeamR2A-uuid");
       expect(round2Rows[0].pick!.picked_team_id).toBe("TeamR2A-uuid");
     });
   });
@@ -393,19 +418,18 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["S16TeamA", "S16TeamB"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
       const s16Rows = result.filter(
-        (r) => r.game.round_id === "round-s16-uuid",
+        (r) => r.round_id === "round-s16-uuid",
       );
       expect(s16Rows).toHaveLength(1);
-      expect(s16Rows[0].game.round_id).toBe("round-s16-uuid");
+      expect(s16Rows[0].round_id).toBe("round-s16-uuid");
       expect(s16Rows[0].pick).toBeDefined();
     });
   });
@@ -435,15 +459,14 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["E8EastA", "E8EastB", "WestPick"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      const e8Rows = result.filter((r) => r.game.round_id === "round-e8-uuid");
+      const e8Rows = result.filter((r) => r.round_id === "round-e8-uuid");
       expect(e8Rows).toHaveLength(1);
       expect(e8Rows[0].pick!.picked_team_id).toBe("E8EastA-uuid");
     });
@@ -472,15 +495,14 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["E8WestA", "E8WestB", "EastPick"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      const e8Rows = result.filter((r) => r.game.round_id === "round-e8-uuid");
+      const e8Rows = result.filter((r) => r.round_id === "round-e8-uuid");
       expect(e8Rows).toHaveLength(1);
       expect(e8Rows[0].pick!.picked_team_id).toBe("E8WestA-uuid");
     });
@@ -509,15 +531,14 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["E8SouthA", "E8SouthB", "MidwestPick"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      const e8Rows = result.filter((r) => r.game.round_id === "round-e8-uuid");
+      const e8Rows = result.filter((r) => r.round_id === "round-e8-uuid");
       expect(e8Rows).toHaveLength(1);
       expect(e8Rows[0].pick!.picked_team_id).toBe("E8SouthA-uuid");
     });
@@ -547,15 +568,14 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["FF_EW_A", "FF_EW_B", "FF_SM_Pick"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      const f4Rows = result.filter((r) => r.game.round_id === "round-f4-uuid");
+      const f4Rows = result.filter((r) => r.round_id === "round-f4-uuid");
       expect(f4Rows).toHaveLength(1);
       expect(f4Rows[0].pick!.picked_team_id).toBe("FF_EW_A-uuid");
     });
@@ -583,15 +603,14 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["FF_SM_A", "FF_SM_B", "FF_EW_Pick"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      const f4Rows = result.filter((r) => r.game.round_id === "round-f4-uuid");
+      const f4Rows = result.filter((r) => r.round_id === "round-f4-uuid");
       expect(f4Rows).toHaveLength(1);
       expect(f4Rows[0].pick!.picked_team_id).toBe("FF_SM_A-uuid");
     });
@@ -618,16 +637,15 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["Finalist1", "Finalist2"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
       const finalsRows = result.filter(
-        (r) => r.game.round_id === "round-finals-uuid",
+        (r) => r.round_id === "round-finals-uuid",
       );
       expect(finalsRows).toHaveLength(1);
       expect(finalsRows[0].pick!.picked_team_id).toBe("Finalist1-uuid");
@@ -654,21 +672,20 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["Favored", "Underdog"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      expect(result[0].game.winning_team_id).toBe("Favored-uuid");
+      expect(result[0].winning_team_id).toBe("Favored-uuid");
     });
 
-    it("should pick underdog as winner when favored has no win flag and lower score", () => {
+    it("should pick underdog as winner when it has the win flag", () => {
       const matchup = makeMatchup(
-        makeTeam("Favored", "2", { score: 60 }),
-        makeTeam("Underdog", "15", { score: 70 }),
+        makeTeam("Favored", "2", { win: false, score: 60 }),
+        makeTeam("Underdog", "15", { win: true, score: 70 }),
       );
 
       const tournamentState = makeEmptyTournamentState({
@@ -684,20 +701,19 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["Favored", "Underdog"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      expect(result[0].game.winning_team_id).toBe("Underdog-uuid");
+      expect(result[0].winning_team_id).toBe("Underdog-uuid");
     });
 
-    it("should pick favored as winner when favored score is higher and no win flag", () => {
+    it("should pick favored as winner when it has the win flag", () => {
       const matchup = makeMatchup(
-        makeTeam("Higher", "3", { score: 90 }),
+        makeTeam("Higher", "3", { win: true, score: 90 }),
         makeTeam("Lower", "14", { score: 60 }),
       );
 
@@ -714,19 +730,21 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["Higher", "Lower"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
-      expect(result[0].game.winning_team_id).toBe("Higher-uuid");
+      expect(result[0].winning_team_id).toBe("Higher-uuid");
     });
 
-    it("should fall back to underdog when favored has no win and no score", () => {
-      const matchup = makeMatchup(makeTeam("Fav", "1"), makeTeam("Dog", "16"));
+    it("throws a GameDataError naming the game when both teams are flagged winners", () => {
+      const matchup = makeMatchup(
+        makeTeam("Fav", "1", { win: true, score: 70 }),
+        makeTeam("Dog", "16", { win: true, score: 60 }),
+      );
 
       const tournamentState = makeEmptyTournamentState({
         roundOneMatchups: { ...emptyRoundMatchups(), east: [matchup] },
@@ -741,15 +759,25 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["Fav", "Dog"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
-        teamIdMap,
-        roundIdMap: ROUND_IDS,
-      });
+      let thrown: unknown;
+      try {
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
+          teamIdMap,
+          roundIdMap: ROUND_IDS,
+        });
+      } catch (e) {
+        thrown = e;
+      }
 
-      expect(result[0].game.winning_team_id).toBe("Dog-uuid");
+      expect(thrown).toBeInstanceOf(GameDataError);
+      expect((thrown as GameDataError).details).toEqual({
+        round: 1,
+        isPlayIn: false,
+        favored: "Fav",
+        underdog: "Dog",
+      });
     });
   });
 
@@ -774,10 +802,9 @@ describe("mapTournamentToRows", () => {
       const teamIdMap = makeTeamIdMap(["OnlyOne"]);
 
       expect(() =>
-        mapTournamentToRows({
-          bracketId: BRACKET_ID,
-          tournamentState,
-          picksState,
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
           teamIdMap,
           roundIdMap: ROUND_IDS,
         }),
@@ -804,10 +831,9 @@ describe("mapTournamentToRows", () => {
       const teamIdMap = makeTeamIdMap(["Known"]); // "Unknown" missing
 
       expect(() =>
-        mapTournamentToRows({
-          bracketId: BRACKET_ID,
-          tournamentState,
-          picksState,
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
           teamIdMap,
           roundIdMap: ROUND_IDS,
         }),
@@ -835,10 +861,9 @@ describe("mapTournamentToRows", () => {
       const emptyRoundIdMap = new Map<TournamentRound, string>();
 
       expect(() =>
-        mapTournamentToRows({
-          bracketId: BRACKET_ID,
-          tournamentState,
-          picksState,
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
           teamIdMap,
           roundIdMap: emptyRoundIdMap,
         }),
@@ -865,10 +890,9 @@ describe("mapTournamentToRows", () => {
       const teamIdMap = makeTeamIdMap(["TeamB"]);
 
       expect(() =>
-        mapTournamentToRows({
-          bracketId: BRACKET_ID,
-          tournamentState,
-          picksState,
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
           teamIdMap,
           roundIdMap: ROUND_IDS,
         }),
@@ -893,10 +917,9 @@ describe("mapTournamentToRows", () => {
       const teamIdMap = makeTeamIdMap(["X", "Y"]);
 
       expect(() =>
-        mapTournamentToRows({
-          bracketId: BRACKET_ID,
-          tournamentState,
-          picksState,
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
           teamIdMap,
           roundIdMap: ROUND_IDS,
         }),
@@ -923,10 +946,9 @@ describe("mapTournamentToRows", () => {
       const teamIdMap = makeTeamIdMap(["TeamA", "TeamB"]); // "GhostTeam" missing
 
       expect(() =>
-        mapTournamentToRows({
-          bracketId: BRACKET_ID,
-          tournamentState,
-          picksState,
+        mapBracketToPayloadGames({
+          bracket: tournamentState,
+          picks: picksState.picks,
           teamIdMap,
           roundIdMap: ROUND_IDS,
         }),
@@ -963,27 +985,25 @@ describe("mapTournamentToRows", () => {
 
       const teamIdMap = makeTeamIdMap(["R1E1", "R1E16", "R2E1", "R2E8"]);
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap,
         roundIdMap: ROUND_IDS,
       });
 
       expect(result).toHaveLength(2);
-      expect(result[0].game.round_id).toBe("round-1-uuid");
-      expect(result[1].game.round_id).toBe("round-2-uuid");
+      expect(result[0].round_id).toBe("round-1-uuid");
+      expect(result[1].round_id).toBe("round-2-uuid");
     });
 
     it("should return an empty array when all rounds have empty matchups", () => {
       const tournamentState = makeEmptyTournamentState();
       const picksState = makeEmptyPicksState();
 
-      const result = mapTournamentToRows({
-        bracketId: BRACKET_ID,
-        tournamentState,
-        picksState,
+      const result = mapBracketToPayloadGames({
+        bracket: tournamentState,
+        picks: picksState.picks,
         teamIdMap: new Map(),
         roundIdMap: ROUND_IDS,
       });

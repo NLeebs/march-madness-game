@@ -28,14 +28,16 @@ Full run is ~5.8 min with 2 workers including the build (local 14-core machine);
 
 - `e2e/support/fakeBackend.ts` routes every `/api` call (plus Supabase auth via `fakeAuth.ts`). The `backend` fixture is automatic; options go through `test.use({ backendOptions })` (`persistStatus`, `teamStatsDelayMs`, `dashboard`, `teamStats` to serve a different league, e.g. `e2eOneTeamConferenceStats`).
 - Any request that has no route is recorded in `backend.unhandled`, and the test fails. When the app gains an `/api` call, route it.
-- Fixtures are typed from the use cases and route bodies (`getYears`, `PersistTournamentResult`, `SimulationRequestBody`), so response-shape drift fails `tsc`. League data is in `e2e/fixtures/league.ts`, dashboard data in `e2e/fixtures/dashboard.ts`.
+- `POST /api/bracket/simulation` records the body in `backend.persistRequests`. A `persistStatus` >= 400 answers that status with a `handleApiError`-shaped body (`apiError` in `e2e/support/simulationRequest.ts`). Otherwise `checkSimulationRequest` validates the body like the route and use case do (strict `SimulationRequestSchema`, every field team in the served league, `validateBracketPicks` against the round one rebuilt with `seedTournament` + `buildRoundOneMatchups`) and answers 400 in the same shape on failure, so the body the real UI builds must pass the real validation. A valid body is played like the route: `simulateTournament` on the posted field and picks with the league it served and `ROUND_POINTS`, returning `playin`, `rounds`, `roundPoints`, `score` and `bracketId: "e2e-bracket"` (201). Import game functions by module path (`src/functions/tournament/...`), never the `@/src/functions` barrel. Year ids in the fixtures are UUIDs because the schema requires one.
+- `checkPersistPayload` (`e2e/checks/results.ts`) checks the one request: no `userId` key (the server reads the session), `anonUserId` null when signed in and the stored id when anonymous, a 60 + 4 + 4 field, and every pick as made (play-in placeholders not replaced).
+- Fixtures are typed from the use cases and route bodies (`getYears`, `PlayTournamentResult`, `SimulationRequestBody` from `app/api/bracket/simulation/schema.ts`), so response-shape drift fails `tsc`. League data is in `e2e/fixtures/league.ts`, dashboard data in `e2e/fixtures/dashboard.ts`.
 - `NEXT_PUBLIC_BROWSER_ANON_KEY` (the localStorage key for the anonymous id) is set in the `webServer.env` of `playwright.config.ts`.
 
 ## The e2e-only store snapshot
 
 - With `NEXT_PUBLIC_E2E=1` (set only by the Playwright web server; compiled out of normal builds), `src/utils/exposeStoreForE2e.ts` puts a read-only `getState` on `window.__MADNESS_E2E__`. Read it with `readState(page)` (`e2e/support/state.ts`).
 - Rule: use it for **expected values only** (what the game says should be true: the schedule, the field, the picks tree). Assert from what is on screen. A test must never pass by reading the store back and comparing it with itself.
-- There is no mid-tournament state to observe: the whole tournament simulation runs in one React commit (finding 50).
+- There is no mid-tournament state to observe: the server plays the whole tournament in one request and the browser replays the result. The only state between picks and results is the bracket with that request pending (`appState.tournamentSelection`, button "Tipping off..."); the reload test in `game-flow.spec.ts` holds the request open there.
 
 ## Tags and projects
 
@@ -67,7 +69,7 @@ An untagged test runs on laptop only. `@every-size` (a full game, navigation) ru
 
 ## Console errors
 
-The `errors` fixture fails a test on any `console.error` or uncaught page error. Allow one with `errors.allow(pattern, reason)` in the test. Every entry needs a reason that names why it is expected **and**, where it records an app defect, a DIAGNOSIS finding (for example `save-failure.spec.ts`: "silent save failure, finding 43"; `crash.spec.ts`: "forced crash to test the error boundary", where React logs the error the boundary caught). Keep patterns narrow, and where the message is generic (a bare "Failed to load resource") assert separately that only the intended request failed.
+The `errors` fixture fails a test on any `console.error` or uncaught page error. Allow one with `errors.allow(pattern, reason)` in the test. Every entry needs a reason that names why it is expected **and**, where it records an app defect, a DIAGNOSIS finding (for example `tournament-failure.spec.ts`: "failed tournament request shows crash screen", for the 500 and for React logging the error the boundary caught; `crash.spec.ts`: "forced crash to test the error boundary"). Keep patterns narrow, and where the message is generic (a bare "Failed to load resource") assert separately that only the intended request failed.
 
 ## Layout checks and KNOWN_LAYOUT_ISSUES
 

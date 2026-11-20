@@ -63,6 +63,7 @@ export function buildTournamentState(
     roundFinalsMatchups: {},
     champion: {},
     playerScore: 0,
+    simulation: null,
     ...overrides,
   };
 }

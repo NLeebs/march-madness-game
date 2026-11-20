@@ -18,6 +18,7 @@ paths:
 - Clients have `select` only on `user_brackets` and `user_picks`: authenticated sees only its own brackets (`user_brackets_select_authenticated`), `user_picks_select_own` (no role clause) allows picks whose bracket belongs to `auth.uid()`, and anon can read neither (no matching rows); insert/update/delete/truncate and column grants are revoked and the write policies dropped (migration `20261119202903`). All writes go through the server (service role). The column-grant header comment in `20261109143058` is superseded, so a new column needs no client grant.
 - Client roles (anon, authenticated) have no TRUNCATE on any public table, including tables created later (default privileges), and can read every `tournament_games` column except `bracket_id` via column grants (migration `20261119230000`, test 22). A new `tournament_games` column is not client-readable unless added to that grant.
 - `public.persist_bracket(payload jsonb) returns uuid` (migration `20261119202448`) saves a bracket, its games and picks in one transaction; `service_role` only. The payload shape is in the migration. `tournament_games.bracket_id` (nullable FK to `user_brackets`, on delete cascade, indexed) ties each game to its bracket. `public.backfill_tournament_game_brackets()` (no client or service_role execute) fills it for legacy rows: picked games from their pick, unpicked games (play-ins) from the one bracket of the same year saved within 5s; a game near zero or several brackets stays null. It is idempotent.
+- Migration `20261119230100` re-runs `backfill_tournament_game_brackets()` for brackets the old app saved between the 9a-1 merge and the 9a-2 deploy. If a bracket still slips through, re-run `select public.backfill_tournament_game_brackets();` by hand as the migration role (postgres); it is idempotent, and only with explicit confirmation on the hosted project.
 
 ## Generated types
 
@@ -27,7 +28,7 @@ paths:
 - The three Supabase clients (`supabaseClient.ts`, `supabaseServer.ts`, `supabaseServiceRole.ts`) and every repository are typed with `Database`, so a misspelled table, column, RPC name or RPC argument fails `tsc`.
 - `models/appStatsData` types are aliases of the generated types, not hand-written shapes:
   - Row types keep the existing names: `XSupabase = Tables<"table">`.
-  - Inserts use `XInsertSupabase = TablesInsert<"table">` (`PickInsertSupabase` omits `game_id`, which is added after the game row is inserted).
+  - Inserts use `XInsertSupabase = TablesInsert<"table">`.
   - RPC result models are built from `RpcRow<"function_name">` (`models/appStatsData/rpc.ts`).
 - A new table or RPC the app reads gets an alias in `models/appStatsData` and a line in `tests/unit/models/databaseTypes.test.ts` (type-level; `tsc` checks it, not vitest).
 - Repository casts (`as XSupabase`) are only for cases the typed client can't express; each needs a `// cast: <reason>` comment.

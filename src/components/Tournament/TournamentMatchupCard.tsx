@@ -7,6 +7,7 @@ import {
   TournamentTeam,
 } from "@/types";
 import { RootState } from "@/store";
+import { useIsPlayingTournament } from "@/src/hooks";
 import { PlayerPickBar, TeamBar } from "@/src/components";
 import { motion } from "framer-motion";
 import classes from "@/src/components/Tournament/css/TournamentMatchup.module.css";
@@ -38,6 +39,10 @@ export const TournamentMatchupCard: React.FC<TournamentMatchupCardProps> = ({
   playerPicks,
 }) => {
   const appState = useSelector((state: RootState) => state.appState);
+  // Picks lock once they are sent: the server plays the picks it was sent.
+  const isSendingPicks = useIsPlayingTournament();
+  const onPick =
+    appState.tournamentSelection && !isSendingPicks ? teamClickHandler : undefined;
 
   return (
     <motion.div
@@ -49,7 +54,7 @@ export const TournamentMatchupCard: React.FC<TournamentMatchupCardProps> = ({
                     : ""
                 }
                     `}
-      onClick={appState.tournamentSelection ? teamClickHandler : undefined}
+      onClick={onPick}
       data-value={matchupIndex}
       data-team={matchupTeam.team}
       data-seed={matchupTeam.seed}
@@ -74,7 +79,7 @@ export const TournamentMatchupCard: React.FC<TournamentMatchupCardProps> = ({
         )}
 
       <button
-        onClick={appState.tournamentSelection ? teamClickHandler : undefined}
+        onClick={onPick}
         data-value={matchupIndex}
         data-team={matchupTeam.team}
         data-seed={matchupTeam.seed}

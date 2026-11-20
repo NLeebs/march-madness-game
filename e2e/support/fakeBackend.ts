@@ -1,7 +1,14 @@
 import type { Page, Route } from "@playwright/test";
-import type { getYears, PersistTournamentResult } from "@/application/useCases";
-import type { SimulationRequestBody } from "@/app/api/bracket/simulation/route";
+import type { getYears } from "@/application/useCases";
+import type { PlayTournamentResult } from "@/application/useCases/tournament/PlayTournament";
+import type { SimulationRequestBody } from "@/app/api/bracket/simulation/schema";
 import type { ConferenceMap } from "@/models";
+import { ROUND_POINTS } from "@/src/functions/tournament/scoreRound";
+import {
+  simulateTournament,
+  type TournamentField,
+} from "@/src/functions/tournament/simulateTournament";
+import type { TournamentPicks } from "@/types";
 import { E2E_YEARS, e2eTeamStats } from "../fixtures/league";
 import {
   PREP_LISTS,
@@ -17,8 +24,13 @@ import {
   isDashboardYearId,
 } from "../fixtures/dashboard";
 import { FAKE_USER, installFakeAuth } from "./fakeAuth";
+import { apiError, checkSimulationRequest } from "./simulationRequest";
 
 export type FakeBackendOptions = {
+  /**
+   * Status for POST /api/bracket/simulation (default 201, answered with the played tournament).
+   * A status >= 400 answers with a handleApiError-shaped body instead.
+   */
   persistStatus?: number;
   teamStatsDelayMs?: number;
   /** Replaces the league served by /api/team-statistics (e.g. a deliberately broken one). */
@@ -135,14 +147,27 @@ export async function installFakeBackend(
     }
 
     if (method === "POST" && pathname === "/api/bracket/simulation") {
-      backend.persistRequests.push(
-        request.postDataJSON() as SimulationRequestBody,
-      );
-      const result: PersistTournamentResult = {
-        bracketId: "e2e-bracket",
-        success: true,
-      };
-      return json(route, result, opts.persistStatus ?? 200);
+      const body = request.postDataJSON() as SimulationRequestBody;
+      backend.persistRequests.push(body);
+      const status = opts.persistStatus ?? 201;
+      if (status >= 400) {
+        const failure = apiError(status, "e2e simulated failure");
+        return json(route, failure.body, failure.status);
+      }
+      // Validates like the route (strict schema, league teams, consistent picks), so a body
+      // the real route would refuse fails here too, then plays the tournament like the route.
+      const teamStats = (opts.teamStats ?? e2eTeamStats)(body.yearId ?? "");
+      const checked = checkSimulationRequest(body, teamStats);
+      if ("error" in checked) return json(route, checked.error.body, checked.error.status);
+      // cast: the schema's inferred types are looser than the game's (see playTournamentPost.ts).
+      const { playin, rounds, roundPoints, score } = simulateTournament({
+        field: checked.request.field as TournamentField,
+        picks: checked.request.picks as TournamentPicks,
+        teamStats,
+        points: ROUND_POINTS,
+      });
+      const result: PlayTournamentResult = { playin, rounds, roundPoints, score, bracketId: "e2e-bracket" };
+      return json(route, result, status);
     }
 
     if (opts.dashboard && method === "GET") {

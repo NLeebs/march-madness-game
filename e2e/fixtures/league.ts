@@ -4,8 +4,8 @@ import { POWER_CONFERENCE_LIST } from "@/src/constants";
 import { buildLeague } from "@/tests/factories/league.factory";
 
 export const E2E_YEARS: Awaited<ReturnType<typeof getYears>> = [
-  { id: "e2e-year-older", year: 2024 },
-  { id: "e2e-year-latest", year: 2025 },
+  { id: "e2e00000-0000-4000-8000-000000002024", year: 2024 },
+  { id: "e2e00000-0000-4000-8000-000000002025", year: 2025 },
 ];
 
 const LOGO = "/team-logos/acc/DukeLogo.png";
@@ -38,7 +38,7 @@ function withPowerConferenceNames(teamStats: ConferenceMap): ConferenceMap {
 /** Latest year: the whole league. Older year: the same league without conf01. */
 export function e2eTeamStats(yearId: string): ConferenceMap {
   const league = withPowerConferenceNames(withLogos(buildLeague().teamStats));
-  if (yearId === "e2e-year-older") {
+  if (yearId === "e2e00000-0000-4000-8000-000000002024") {
     delete league.conf01;
   }
   return league;

@@ -7,59 +7,33 @@ import {
   tournamentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
-import {
-  findTeamConference,
-  playGame,
-  getTournamentGameResultObj,
-} from "@/src/functions";
-import type { PlayInGameWinner, PlayinSeedType } from "@/types";
+import { GameDataError } from "@/src/functions/generic";
 
+/** Replays the server's play-in results (state.tournament.simulation). */
 export const PlayPlayinGames = () => {
   const dispatch = useDispatch();
 
-  const teamStats = useSelector(
-    (state: RootState) => state.teamStats.teamStats
-  );
-  const confArrs = useSelector(
-    (state: RootState) => state.teamStats.conferenceArrays
-  );
-  const playinMatchups = useSelector(
-    (state: RootState) => state.tournament.roundOneMatchups.playin
+  const simulation = useSelector(
+    (state: RootState) => state.tournament.simulation
   );
 
   useEffect(() => {
-    (Object.keys(playinMatchups) as PlayinSeedType[]).forEach((seeds) => {
-      playinMatchups[seeds].forEach((matchup, i) => {
-        const gameResults = playGame(
-          teamStats[findTeamConference(matchup[0].team, confArrs)][
-            matchup[0].team
-          ],
-          teamStats[findTeamConference(matchup[1].team, confArrs)][
-            matchup[1].team
-          ]
-        );
-        const { gameIndex, winningTeam } = getTournamentGameResultObj(
-          gameResults,
-          i
-        );
-        const gameDispatchObj: PlayInGameWinner = {
+    if (!simulation) {
+      throw new GameDataError("no tournament results", { phase: "playin" });
+    }
+    simulation.playin.forEach((result) => {
+      const { gameIndex, winningTeam, seedType } = result;
+      dispatch(
+        tournamentPlayersPicksActions.replacePlayinPicksWithWinner({
           gameIndex,
           winningTeam,
-          seedType: seeds,
-        };
-
-        dispatch(
-          tournamentPlayersPicksActions.replacePlayinPicksWithWinner(
-            gameDispatchObj
-          )
-        );
-        dispatch(
-          tournamentActions.setPlayinGameResults(gameDispatchObj)
-        );
-      });
+          seedType,
+        })
+      );
+      dispatch(tournamentActions.setPlayinGameResults(result));
     });
     dispatch(appStateActions.activateTournamentStandardGames());
-  }, [dispatch, playinMatchups, teamStats, confArrs]);
+  }, [dispatch, simulation]);
 
   return null;
 };

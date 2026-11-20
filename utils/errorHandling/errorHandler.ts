@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { AppError } from "./AppError";
 
-interface ErrorResponse {
+/** The JSON body handleApiError answers with. */
+export interface ErrorResponse {
   success: false;
   error: {
     message: string;

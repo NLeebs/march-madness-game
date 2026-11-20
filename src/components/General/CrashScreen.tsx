@@ -14,7 +14,7 @@ export const CrashScreen: React.FC<CrashScreenProps> = ({ buttonText }) => (
   <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gradient-to-br from-blue-300 from-50% to-blue-50 to-80% px-4 text-center">
     <h1 className="text-3xl font-bold text-neutral-900">Something went wrong</h1>
     <p className="max-w-md text-lg text-neutral-800">
-      Sorry about that. We&apos;ve been notified and will look into it.
+      Turnover! A crash report is already on the coach&apos;s desk.
     </p>
     <Button
       text={buttonText}

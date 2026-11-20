@@ -15,6 +15,8 @@ import { PlayRegularSeasonGames } from "@/src/components/RegularSeason/PlayRegul
 import type { AppStore, RootState } from "@/store";
 import type { League } from "@/tests/factories";
 import type { RegularSeasonTeam, TournamentRegion } from "@/types";
+import { ROUND_POINTS } from "@/src/functions/tournament/scoreRound";
+import { simulateTournament } from "@/src/functions/tournament/simulateTournament";
 import { renderWithStore } from "./renderWithStore";
 
 const SEASON_WEEKS = 30;
@@ -150,16 +152,34 @@ function TournamentDrivers() {
 /**
  * Plays a whole tournament on a store that already holds a field (Selection
  * Sunday has run): activates the tournament, builds round one, picks chalk,
- * starts the play-in games and renders the drivers until tournamentRecap.
+ * plays it with simulateTournament (as the server does), stores the results
+ * with setSimulation, starts the play-in games and renders the drivers, which
+ * replay the stored results, until tournamentRecap.
  *
  * Contract with the caller (same as playSeason): Math.random is seeded by the
- * caller; rendered components stay mounted, so the caller calls cleanup().
+ * caller (`rng` defaults to it); rendered components stay mounted, so the
+ * caller calls cleanup().
  */
-export async function playTournament(store: AppStore): Promise<void> {
+export async function playTournament(
+  store: AppStore,
+  rng: () => number = Math.random,
+): Promise<void> {
   store.dispatch(appStateActions.activateTournament());
   store.dispatch(appStateActions.activateTournamentSelectionStage());
   store.dispatch(tournamentActions.setRoundOneMatchups());
   pickChalk(store);
+  const state = store.getState();
+  const { playin, rounds, roundPoints, score } = simulateTournament({
+    field: {
+      tournamentTeams: state.tournament.tournamentTeams,
+      playinTeams: state.tournament.playinTeams,
+    },
+    picks: state.tournamentPlayersPicks.picks,
+    teamStats: state.teamStats.teamStats,
+    points: ROUND_POINTS,
+    rng,
+  });
+  store.dispatch(tournamentActions.setSimulation({ playin, rounds, roundPoints, score }));
   store.dispatch(appStateActions.activateTournamentPlayinGamesState());
   await act(async () => {
     renderWithStore(React.createElement(TournamentDrivers), store);

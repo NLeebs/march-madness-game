@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { emptyBracket } from "@/src/functions/tournament/emptyState";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
 import { ROUND_CONFIG, SEED_REGIONS } from "@/src/functions/tournament/roundConfig";
@@ -8,6 +9,7 @@ import {
   applyPlayinResult,
   type PlayinGameResult,
 } from "@/src/functions/tournament/applyGameResult";
+import type { TournamentPlayResult } from "@/src/functions/tournament/simulateTournament";
 import type {
   BracketMatchups,
   RegionPicks,
@@ -32,6 +34,8 @@ export interface TournamentState extends BracketMatchups {
     sixteenSeeds: string[];
   };
   playerScore: number;
+  /** The server's results for this tournament; the drivers replay them. */
+  simulation: TournamentPlayResult | null;
 }
 
 const initalState: TournamentState = {
@@ -48,45 +52,9 @@ const initalState: TournamentState = {
     elevenSeeds: [],
     sixteenSeeds: [],
   },
-  roundOneMatchups: {
-    west: [],
-    east: [],
-    south: [],
-    midwest: [],
-    playin: {
-      elevenSeeds: [],
-      sixteenSeeds: [],
-    },
-  } as TournamentRoundMatchups,
-  roundTwoMatchups: {
-    west: [[], [], [], []],
-    east: [[], [], [], []],
-    south: [[], [], [], []],
-    midwest: [[], [], [], []],
-  },
-  roundSweetSixteenMatchups: {
-    west: [[], []],
-    east: [[], []],
-    south: [[], []],
-    midwest: [[], []],
-  },
-  roundEliteEightMatchups: {
-    west: [[]],
-    east: [[]],
-    south: [[]],
-    midwest: [[]],
-  },
-  roundFinalFourMatchups: {
-    eastWest: [[]],
-    southMidwest: [[]],
-  },
-  roundFinalsMatchups: {
-    championship: [[]],
-  },
-  champion: {
-    champion: [[]],
-  },
+  ...emptyBracket(),
   playerScore: 0,
+  simulation: null,
 };
 
 const tournamentSlice = createSlice({
@@ -128,6 +96,9 @@ const tournamentSlice = createSlice({
       });
       state.roundOneMatchups.playin = matchups.playin;
     },
+    setSimulation(state, action: PayloadAction<TournamentPlayResult>) {
+      state.simulation = action.payload;
+    },
     setPlayinGameResults(state, action: PayloadAction<PlayinGameResult>) {
       state.roundOneMatchups = applyPlayinResult(
         state.roundOneMatchups,
@@ -156,6 +127,11 @@ const tournamentSlice = createSlice({
         round: ScoredRound;
         winningTeams: string[];
         picks: RegionPicks;
+        /**
+         * Points the server scored for this round. The drivers always pass it;
+         * when absent, the round is scored here with ROUND_POINTS.
+         */
+        points?: number;
       }>
     ) {
       const { round, winningTeams, picks } = action.payload;
@@ -175,7 +151,7 @@ const tournamentSlice = createSlice({
           });
         });
       });
-      state.playerScore += points;
+      state.playerScore += action.payload.points ?? points;
     },
   },
 });
