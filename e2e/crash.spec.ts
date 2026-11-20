@@ -12,6 +12,12 @@ test("a crash at Selection Sunday shows the crash screen and Start a new game go
 }) => {
   test.setTimeout(GAME_BUDGET_MS);
   // React logs the error the boundary caught. Nothing else may be logged.
+  // The browser logs the failed request without its URL, so the allowance is narrowed by
+  // checking below that the only failed response is the season.
+  const failedResponses: string[] = [];
+  page.on("response", (r) => {
+    if (r.status() >= 400) failedResponses.push(new URL(r.url()).pathname);
+  });
   errors.allow(/Failed to load resource.*500/, "forced crash to test the error boundary (step 8b)");
   errors.allow(/Conference "conf01" has 1 team/, "forced crash to test the error boundary (step 8b)");
 
@@ -23,6 +29,9 @@ test("a crash at Selection Sunday shows the crash screen and Start a new game go
   await expect(crashHeading).toBeVisible({
     timeout: PHASE_TIMEOUTS.toSeason + PHASE_TIMEOUTS.season,
   });
+  await expect
+    .poll(() => failedResponses, { message: "the only failed response is the season request" })
+    .toEqual(["/api/season"]);
   const restart = page.getByRole("button", { name: "Start a new game" });
   await expect(restart).toBeVisible();
 

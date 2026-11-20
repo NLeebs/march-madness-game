@@ -2,6 +2,7 @@ import type { Page, Route } from "@playwright/test";
 import type { getYears } from "@/application/useCases";
 import type { PlayTournamentResult } from "@/application/useCases/tournament/PlayTournament";
 import type { SimulationRequestBody } from "@/app/api/bracket/simulation/schema";
+import { SeasonRequestSchema } from "@/app/api/season/schema";
 import type { PlaySeasonResult } from "@/application/useCases/season/PlaySeason";
 import type { ConferenceMap } from "@/models";
 import { compactSeason } from "@/src/functions/regularSeason/seasonWire";
@@ -158,7 +159,22 @@ export async function installFakeBackend(
     }
 
     if (method === "POST" && pathname === "/api/season") {
-      const body = request.postDataJSON() as { yearId: string };
+      const parsed = SeasonRequestSchema.safeParse(request.postDataJSON());
+      if (!parsed.success) {
+        const failure = apiError(
+          400,
+          "Request validation failed",
+          "VALIDATION_ERROR",
+          parsed.error.errors.map((err) => ({
+            field: err.path.join("."),
+            message: err.message,
+            code: err.code,
+          })),
+          "/api/season",
+        );
+        return json(route, failure.body, failure.status);
+      }
+      const body = { yearId: parsed.data.yearId as string };
       backend.seasonRequests.push(body);
       const status = opts.seasonStatus ?? 200;
       if (status >= 400) {
