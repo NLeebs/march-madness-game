@@ -4,6 +4,7 @@ import {
   type PlayTournamentDto,
 } from "@/application/useCases";
 import { ValidationError } from "@/utils/errorHandling";
+import { signFieldToken, FIELD_TOKEN_INVALID } from "@/utils/api/fieldToken";
 import type { TournamentField } from "@/src/functions/tournament/simulateTournament";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
@@ -37,7 +38,7 @@ vi.mock("@/application/useCases/team/GetTeamStatisticsByYearId", () => ({
   getTeamStatisticsByYearId: mocks.getTeamStatisticsByYearId,
 }));
 
-const YEAR_ID = "year-uuid";
+const YEAR_ID = "123e4567-e89b-42d3-a456-426614174000";
 const RULES_ID = "rules-uuid";
 
 const league = buildLeague();
@@ -83,8 +84,7 @@ const rules = {
 
 function buildDto(overrides: Partial<PlayTournamentDto> = {}): PlayTournamentDto {
   return {
-    yearId: YEAR_ID,
-    field,
+    fieldToken: signFieldToken({ yearId: YEAR_ID, field }),
     picks: chalkPicks(roundOne),
     userId: null,
     anonUserId: "anon-uuid",
@@ -201,10 +201,33 @@ describe("playTournament", () => {
       tournamentTeams: [field.tournamentTeams[0], ...field.tournamentTeams.slice(0, 59)],
     };
 
-    const pending = playTournament(buildDto({ field: duplicated }));
+    const pending = playTournament(buildDto({ fieldToken: signFieldToken({ yearId: YEAR_ID, field: duplicated }) }));
     await expect(pending).rejects.toBeInstanceOf(ValidationError);
     await expect(pending).rejects.toThrow(field.tournamentTeams[0]);
     expect(mocks.persistBracket).not.toHaveBeenCalled();
+  });
+
+  it("bad token is rejected before any load", async () => {
+    const pending = playTournament(buildDto({ fieldToken: "garbage" }));
+    await expect(pending).rejects.toBeInstanceOf(ValidationError);
+    await expect(pending).rejects.toThrow(FIELD_TOKEN_INVALID);
+    expect(mocks.getTeamStatisticsByYearId).not.toHaveBeenCalled();
+    expect(mocks.getTeamsByYearId).not.toHaveBeenCalled();
+    expect(mocks.getRounds).not.toHaveBeenCalled();
+    expect(mocks.getRoundPoints).not.toHaveBeenCalled();
+    expect(mocks.findBracketScoringRulesByYearId).not.toHaveBeenCalled();
+    expect(mocks.persistBracket).not.toHaveBeenCalled();
+  });
+
+  it("year and field come from the token", async () => {
+    const otherYear = "223e4567-e89b-42d3-a456-426614174001";
+    await playTournament(
+      buildDto({ fieldToken: signFieldToken({ yearId: otherYear, field }) })
+    );
+
+    expect(mocks.getTeamsByYearId).toHaveBeenCalledWith(otherYear);
+    expect(mocks.findBracketScoringRulesByYearId).toHaveBeenCalledWith(otherYear);
+    expect(savedPayload().bracket.year_id).toBe(otherYear);
   });
 
   it("rejects a field without 68 teams", async () => {
@@ -213,7 +236,7 @@ describe("playTournament", () => {
       tournamentTeams: field.tournamentTeams.slice(0, 59),
     };
 
-    await expect(playTournament(buildDto({ field: short }))).rejects.toBeInstanceOf(
+    await expect(playTournament(buildDto({ fieldToken: signFieldToken({ yearId: YEAR_ID, field: short }) }))).rejects.toBeInstanceOf(
       ValidationError
     );
     expect(mocks.persistBracket).not.toHaveBeenCalled();

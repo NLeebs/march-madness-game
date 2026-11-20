@@ -6,17 +6,16 @@ import {
   seedTournament,
   simulateTournament,
   validateBracketPicks,
-  type TournamentField,
   type TournamentPlayResult,
 } from "@/src/functions/tournament";
 import { ValidationError } from "@/utils/errorHandling";
+import { verifyFieldToken } from "@/utils/api/fieldToken";
 import type { ConferenceMap } from "@/models";
 import type { PersistBracketPayload } from "@/models/appStatsData";
 import type { TournamentPicks, TournamentRound } from "@/types";
 
 export interface PlayTournamentDto {
-  yearId: string;
-  field: TournamentField;
+  fieldToken: string;
   picks: TournamentPicks;
   userId: string | null;
   anonUserId: string | null;
@@ -45,12 +44,14 @@ const ROUND_BY_NAME: Readonly<Record<string, TournamentRound>> = {
  * error.
  */
 export async function playTournament({
-  yearId,
-  field,
+  fieldToken,
   picks,
   userId,
   anonUserId,
 }: PlayTournamentDto): Promise<PlayTournamentResult> {
+  // Before any load: the year and field come only from the signed token.
+  const { yearId, field } = verifyFieldToken(fieldToken);
+
   if (!userId && !anonUserId) {
     throw new ValidationError("A bracket needs a userId or an anonUserId");
   }

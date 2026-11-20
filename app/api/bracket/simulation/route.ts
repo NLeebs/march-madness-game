@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { playTournament } from "@/application/useCases";
-import type { TournamentField } from "@/src/functions/tournament";
 import { handleApiError } from "@/utils/errorHandling/errorHandler";
 import {
   validateRequest,
@@ -36,10 +35,9 @@ export async function POST(req: NextRequest) {
     const anonUserId = userId ? null : (body.anonUserId ?? null);
 
     const result = await playTournament({
-      yearId: body.yearId,
-      // cast: the schema guarantees these shapes; zod's inference with
-      // strict: false marks every key optional, so assert them.
-      field: body.field as TournamentField,
+      fieldToken: body.fieldToken,
+      // cast: the schema guarantees this shape; zod's inference with
+      // strict: false marks every key optional, so assert it.
       picks: body.picks as TournamentPicks,
       userId,
       anonUserId,

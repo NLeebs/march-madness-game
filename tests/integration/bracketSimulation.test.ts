@@ -21,7 +21,7 @@ vi.mock("@/utils/api/allowedOrigins", () => ({
   getAllowedOrigins: () => ["http://localhost:3000"],
 }));
 
-const YEAR_ID = "123e4567-e89b-42d3-a456-426614174000";
+const FIELD_TOKEN = "signed.field-token";
 const ANON_ID = "223e4567-e89b-42d3-a456-426614174001";
 const SESSION_ID = "323e4567-e89b-42d3-a456-426614174002";
 
@@ -43,8 +43,7 @@ function buildValidBody(overrides: Record<string, unknown> = {}) {
     field.playinTeams
   );
   return {
-    yearId: YEAR_ID,
-    field,
+    fieldToken: FIELD_TOKEN,
     picks: chalkPicks(roundOne),
     anonUserId: ANON_ID,
     ...overrides,
@@ -104,6 +103,16 @@ describe("POST /api/bracket/simulation", () => {
     });
   });
 
+  it("passes fieldToken to the use case", async () => {
+    const body = buildValidBody({ fieldToken: "another.token" });
+
+    await POST(createRequest(body));
+
+    expect(mockPlayTournament).toHaveBeenCalledWith(
+      expect.objectContaining({ fieldToken: "another.token" })
+    );
+  });
+
   it("session user wins: userId from session, anonUserId null even if sent", async () => {
     mockGetSessionUserId.mockResolvedValue(SESSION_ID);
     const body = buildValidBody();
@@ -112,8 +121,7 @@ describe("POST /api/bracket/simulation", () => {
 
     expect(mockPlayTournament).toHaveBeenCalledTimes(1);
     expect(mockPlayTournament).toHaveBeenCalledWith({
-      yearId: YEAR_ID,
-      field: body.field,
+      fieldToken: FIELD_TOKEN,
       picks: body.picks,
       userId: SESSION_ID,
       anonUserId: null,
@@ -179,12 +187,21 @@ describe("POST /api/bracket/simulation", () => {
       expect(mockPlayTournament).not.toHaveBeenCalled();
     });
 
-    it("returns 400 when yearId is not a uuid", async () => {
+    it("returns 400 when the body has yearId or field", async () => {
+      for (const extra of [{ yearId: "x" }, { field: {} }]) {
+        const response = await POST(createRequest(buildValidBody(extra)));
+        expect(response.status).toBe(400);
+      }
+      expect(mockPlayTournament).not.toHaveBeenCalled();
+    });
+
+    it("returns 400 when fieldToken is missing", async () => {
       const response = await POST(
-        createRequest(buildValidBody({ yearId: "2024" }))
+        createRequest(buildValidBody({ fieldToken: undefined }))
       );
 
       expect(response.status).toBe(400);
+      expect(mockPlayTournament).not.toHaveBeenCalled();
     });
 
     it("returns 400 when anonUserId is not a uuid", async () => {

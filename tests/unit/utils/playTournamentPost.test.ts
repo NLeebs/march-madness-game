@@ -3,7 +3,7 @@ import { playTournamentPost, type PlayTournamentRequest } from "@/src/utils/play
 import { AppError } from "@/utils/errorHandling";
 
 // Only the error path reads the body, so a minimal request is enough.
-const BODY = { yearId: "y" } as unknown as PlayTournamentRequest;
+const BODY = { fieldToken: "t" } as unknown as PlayTournamentRequest;
 
 let fetchMock: ReturnType<typeof vi.fn>;
 

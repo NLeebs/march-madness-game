@@ -51,6 +51,7 @@ export function buildTournamentState(
 ): TournamentState {
   return {
     yearId: "year-uuid-1",
+    fieldToken: "",
     tournamentScoringRulesId: "scoring-uuid",
     tournamentTeams: [],
     tournamentSeeds: {},

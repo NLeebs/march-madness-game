@@ -24,8 +24,7 @@ const buildBody = () => {
     field.playinTeams
   );
   return {
-    yearId: YEAR_ID,
-    field,
+    fieldToken: "signed.token",
     picks: chalkPicks(roundOne),
     anonUserId: ANON_ID,
   };
@@ -79,16 +78,42 @@ describe("SimulationRequestSchema", () => {
     }, ["picks", "roundTwoPicks", "west", 0, 0]);
   });
 
-  it("rejects 59 teams", () => {
-    rejects((b) => {
-      b.field.tournamentTeams = b.field.tournamentTeams.slice(0, 59);
-    }, ["field", "tournamentTeams"]);
+  it("accepts fieldToken + picks", () => {
+    const { anonUserId: _omit, ...rest } = buildBody();
+    expect(SimulationRequestSchema.safeParse(rest).success).toBe(true);
   });
 
-  it("rejects a team duplicated across tournamentTeams and playinTeams", () => {
+  it("rejects a body with field", () => {
+    const result = SimulationRequestSchema.safeParse({
+      ...buildBody(),
+      field: { tournamentTeams: [], playinTeams: {} },
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) expect(result.error.issues[0].code).toBe("unrecognized_keys");
+  });
+
+  it("rejects a body with yearId", () => {
+    const result = SimulationRequestSchema.safeParse({
+      ...buildBody(),
+      yearId: YEAR_ID,
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) expect(result.error.issues[0].code).toBe("unrecognized_keys");
+  });
+
+  it("rejects a missing fieldToken", () => {
+    const { fieldToken: _omit, ...rest } = buildBody();
+    const result = SimulationRequestSchema.safeParse(rest);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues.map((i) => i.path)).toContainEqual(["fieldToken"]);
+    }
+  });
+
+  it("rejects an empty fieldToken", () => {
     rejects((b) => {
-      b.field.playinTeams.elevenSeeds[0] = b.field.tournamentTeams[0];
-    }, ["field"]);
+      b.fieldToken = "";
+    }, ["fieldToken"]);
   });
 
   it("rejects a missing region", () => {
@@ -113,12 +138,6 @@ describe("SimulationRequestSchema", () => {
     rejects((b) => {
       b.picks.roundTwoPicks.west![0][0].seed = "17";
     }, ["picks", "roundTwoPicks", "west", 0, 0, "seed"]);
-  });
-
-  it("rejects a non-uuid yearId", () => {
-    rejects((b) => {
-      b.yearId = "2024";
-    }, ["yearId"]);
   });
 
   it("rejects a non-uuid anonUserId", () => {
