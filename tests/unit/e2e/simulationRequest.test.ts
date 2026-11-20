@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import { checkSimulationRequest, apiError } from "../../../e2e/support/simulationRequest";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
+import { FIELD_TOKEN_INVALID, signFieldToken } from "@/utils/api/fieldToken";
+import { E2E_SIGNING_SECRET } from "../../../e2e/support/env";
 import { buildLeague, chalkPicks } from "@/tests/factories";
 import type { TournamentPicks } from "@/types";
 
@@ -19,16 +21,24 @@ const picks = chalkPicks(
   buildRoundOneMatchups(seedTournament(field.tournamentTeams), field.playinTeams)
 );
 
+const token = (f: typeof field = field) =>
+  signFieldToken({ yearId: YEAR_ID, field: f }, { secret: E2E_SIGNING_SECRET });
+const served = () => league.teamStats;
+
 /** A body like the one the browser posts, as parsed JSON. */
-function body(overrides: { picks?: TournamentPicks } = {}) {
+function body(overrides: { picks?: TournamentPicks; fieldToken?: string } = {}) {
   return JSON.parse(
-    JSON.stringify({ yearId: YEAR_ID, field, picks: overrides.picks ?? picks, anonUserId: null })
+    JSON.stringify({
+      fieldToken: overrides.fieldToken ?? token(),
+      picks: overrides.picks ?? picks,
+      anonUserId: null,
+    })
   ) as Record<string, unknown>;
 }
 
 describe("checkSimulationRequest (e2e fake backend)", () => {
   it("accepts a consistent bracket for the served league", () => {
-    const result = checkSimulationRequest(body(), league.teamStats);
+    const result = checkSimulationRequest(body(), served);
     expect("error" in result).toBe(false);
   });
 
@@ -37,7 +47,7 @@ describe("checkSimulationRequest (e2e fake backend)", () => {
     const firstGame = (bad.picks as TournamentPicks).roundTwoPicks.east[0];
     (firstGame[0] as unknown as Record<string, unknown>).extra = 1;
 
-    const result = checkSimulationRequest(bad, league.teamStats);
+    const result = checkSimulationRequest(bad, served);
 
     expect("error" in result && result.error.status).toBe(400);
     if (!("error" in result)) return;
@@ -60,7 +70,7 @@ describe("checkSimulationRequest (e2e fake backend)", () => {
     const slot = (bad.picks as TournamentPicks).roundTwoPicks.east[0][0] as unknown as Record<string, unknown>;
     slot.seed = Number(slot.seed);
 
-    const result = checkSimulationRequest(bad, league.teamStats);
+    const result = checkSimulationRequest(bad, served);
 
     expect("error" in result && result.error.status).toBe(400);
   });
@@ -74,18 +84,36 @@ describe("checkSimulationRequest (e2e fake backend)", () => {
     slot.team = notPicked.team;
     slot.seed = notPicked.seed;
 
-    const result = checkSimulationRequest(bad, league.teamStats);
+    const result = checkSimulationRequest(bad, served);
 
     if (!("error" in result)) throw new Error("expected an error");
     expect(result.error.status).toBe(400);
     expect(result.error.body.error.message).toMatch(/^Inconsistent picks: /);
   });
 
-  it("rejects a field team the served league does not have", () => {
-    const bad = body();
-    (bad.field as typeof field).tournamentTeams[0] = "Nowhere State";
+  it("rejects an unsigned field", () => {
+    const unsigned = body();
+    delete unsigned.fieldToken;
+    const forged = body({ fieldToken: `${token().split(".")[0]}.${"A".repeat(43)}` });
 
-    const result = checkSimulationRequest(bad, league.teamStats);
+    for (const bad of [unsigned, forged, body({ fieldToken: "garbage" })]) {
+      const result = checkSimulationRequest(bad, served);
+      if (!("error" in result)) throw new Error("expected an error");
+      expect(result.error.status).toBe(400);
+    }
+    const forgedResult = checkSimulationRequest(forged, served);
+    expect("error" in forgedResult && forgedResult.error.body.error.message).toBe(FIELD_TOKEN_INVALID);
+  });
+
+  it("rejects a field team the served league does not have", () => {
+    const bad = body({
+      fieldToken: token({
+        ...field,
+        tournamentTeams: ["Nowhere State", ...field.tournamentTeams.slice(1)],
+      }),
+    });
+
+    const result = checkSimulationRequest(bad, served);
 
     if (!("error" in result)) throw new Error("expected an error");
     expect(result.error.status).toBe(400);

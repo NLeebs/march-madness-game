@@ -379,6 +379,15 @@ describe("simulation", () => {
   });
 });
 
+describe("fieldToken", () => {
+  it("starts empty, is stored by setFieldToken and cleared by restartGame", () => {
+    expect(initial().fieldToken).toBe("");
+    const s = reduce(initial(), tournamentActions.setFieldToken("tok"));
+    expect(s.fieldToken).toBe("tok");
+    expect(reduce(s, tournamentActions.restartGame()).fieldToken).toBe("");
+  });
+});
+
 describe("recordRoundScore with points", () => {
   it("recordRoundScore uses the given points over its own", () => {
     const base = initial();

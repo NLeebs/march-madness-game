@@ -10,8 +10,10 @@ import {
 import { PlayPlayinGames } from "@/src/components/Tournament/PlayPlayinGames";
 import { PlayTournamentGames } from "@/src/components/Tournament/PlayTournamentGames";
 import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
-import { SeasonSchedule } from "@/src/components/RegularSeason/SeasonSchedule";
 import { PlayRegularSeasonGames } from "@/src/components/RegularSeason/PlayRegularSeasonGames";
+import { simulateSeason } from "@/src/functions/regularSeason/simulateSeason";
+import { compactSeason } from "@/src/functions/regularSeason/seasonWire";
+import { storeSeason } from "@/src/utils/storeSeason";
 import type { AppStore, RootState } from "@/store";
 import type { League } from "@/tests/factories";
 import type { RegularSeasonTeam, TournamentRegion } from "@/types";
@@ -25,9 +27,11 @@ const MAX_STEPS = 10;
 
 /**
  * Plays a whole regular season on a store already configured for the league
- * (see configureStoreForLeague): renders SeasonSchedule (builds the schedule),
- * then PlayRegularSeasonGames, and advances fake timers until weeksPlayed === 30
- * and appState.selectionSunday is true.
+ * (see configureStoreForLeague) the way the game does now: simulateSeason plays
+ * it (as POST /api/season does), the compact wire form is stored with
+ * storeSeason (as StartButton does), then PlayRegularSeasonGames replays it,
+ * advancing fake timers until weeksPlayed === 30 and appState.selectionSunday
+ * is true.
  *
  * Contract with the caller:
  * - Fake timers: playSeason switches them on if they are not already on
@@ -39,17 +43,13 @@ const MAX_STEPS = 10;
  */
 export async function playSeason(store: AppStore, league: League): Promise<void> {
   if (!vi.isFakeTimers()) vi.useFakeTimers();
-  renderWithStore(
-    React.createElement(SeasonSchedule, {
-      teamStats: league.teamStats,
-      teamArray: store.getState().teamSchedule.teamArray,
-    }),
-    store,
+  const wire = compactSeason(simulateSeason(league.teamStats));
+  storeSeason(
+    store.dispatch,
+    { ...wire, yearId: "test-year", fieldToken: "test-token" },
+    league.teamStats,
   );
-  renderWithStore(
-    React.createElement(PlayRegularSeasonGames, { teamStats: league.teamStats }),
-    store,
-  );
+  renderWithStore(React.createElement(PlayRegularSeasonGames), store);
   for (let i = 0; i < MAX_STEPS; i++) {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(STEP_MS);

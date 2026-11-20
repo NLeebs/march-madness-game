@@ -3,26 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { appStateActions, RootState } from "@/store";
 import { regularSeasonRecordActions } from "@/store/regularSeasonRecordSlice";
 import { tournamentActions } from "@/store/tournamentSlice";
-import { selectTournamentField } from "@/src/functions";
+import { GameDataError } from "@/src/functions/generic";
 
-export const SelectionSunday = (props) => {
+/** Dispatches the server's tournament selection (regularSeasonRecords.season.selection). */
+export const SelectionSunday = () => {
   const dispatch = useDispatch();
 
   const appState = useSelector((state: RootState) => state.appState);
-  const seasonResults = useSelector(
-    (state: RootState) => state.regularSeasonRecords.records
-  );
-  const conferenceArrs = useSelector(
-    (state: RootState) => state.teamStats.conferenceArrays
+  const season = useSelector(
+    (state: RootState) => state.regularSeasonRecords.season
   );
   const tournamentTeams = useSelector(
     (state: RootState) => state.tournament.tournamentTeams
   );
 
-  // Select and dispatch
+  const selection = season?.selection;
+
   useEffect(() => {
+    if (!selection) return;
     if (appState.selectionSunday === true && tournamentTeams.length === 0) {
-      const selection = selectTournamentField(seasonResults, conferenceArrs);
       selection.conferenceChampions.forEach((confChampion) =>
         dispatch(regularSeasonRecordActions.addConferenceChampion({ confChampion }))
       );
@@ -35,7 +34,10 @@ export const SelectionSunday = (props) => {
       dispatch(tournamentActions.addTournamentTeams(selection.field));
       dispatch(tournamentActions.setTournamentSeeds());
     }
-  }, [dispatch, appState, seasonResults, conferenceArrs, tournamentTeams]);
+  }, [dispatch, appState, selection, tournamentTeams]);
+
+  // The season is replayed before Selection Sunday, so it is always stored by now.
+  if (!season) throw new GameDataError("no season results", {});
 
   return null;
 };

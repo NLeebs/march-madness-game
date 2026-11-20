@@ -3,6 +3,8 @@ import { expect } from "@playwright/test";
 import type { TournamentRound } from "@/types";
 import { BRACKET_ROUNDS, PLAYIN_PLACEHOLDERS, nextSlot, type Slot } from "../support/bracketMap";
 import type { FakeBackend } from "../support/fakeBackend";
+import { verifyFieldToken } from "@/utils/api/fieldToken";
+import { E2E_SIGNING_SECRET } from "../support/env";
 import { ANON_USER_ID_STORAGE_KEY } from "../support/fakeAuth";
 import type { RecordedPick } from "../support/game";
 import { expectedScore } from "../support/scoring";
@@ -127,7 +129,7 @@ export async function checkRecap(dialog: Locator, page: Page): Promise<void> {
 }
 
 /**
- * The one tournament request carries the right owner, the 68-team field and every pick the
+ * The one tournament request carries the right owner, a token for the 68-team field and every pick the
  * player made. The server sees who is signed in from the session, so the body has no userId.
  * anonUserId is always the id the app stored in localStorage (`page` is needed to read it),
  * signed in or not: the server ignores it when the session has a user and falls back to it
@@ -151,9 +153,14 @@ export async function checkPersistPayload(
   expect(stored, "anonymous id stored in localStorage").toBeTruthy();
   expect(body.anonUserId, `anonUserId in payload (${signedIn ? "signed in" : "anonymous"})`).toBe(stored);
 
-  expect(body.field?.tournamentTeams, "60 tournament teams in the field").toHaveLength(60);
-  expect(body.field?.playinTeams?.elevenSeeds, "4 eleven-seed play-in teams").toHaveLength(4);
-  expect(body.field?.playinTeams?.sixteenSeeds, "4 sixteen-seed play-in teams").toHaveLength(4);
+  // The body is exactly { fieldToken, picks, anonUserId }: year and field live in the signed token.
+  expect(Object.keys(body).sort(), "body keys").toEqual(["anonUserId", "fieldToken", "picks"]);
+  expect(Object.keys(body), "no field key in payload").not.toContain("field");
+  expect(Object.keys(body), "no yearId key in payload").not.toContain("yearId");
+  const { field } = verifyFieldToken(body.fieldToken, { secret: E2E_SIGNING_SECRET });
+  expect(field.tournamentTeams, "60 tournament teams in the field").toHaveLength(60);
+  expect(field.playinTeams.elevenSeeds, "4 eleven-seed play-in teams").toHaveLength(4);
+  expect(field.playinTeams.sixteenSeeds, "4 sixteen-seed play-in teams").toHaveLength(4);
 
   const tree = body.picks as unknown as Record<string, Record<string, { team: string }[][]>>;
   picks.forEach((pick) => {

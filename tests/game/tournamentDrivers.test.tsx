@@ -9,6 +9,7 @@ import { buildRecords, pickChalk, playTournament } from "./helpers/runGame";
 import { seedMathRandom } from "./helpers/rng";
 import { appStateActions, tournamentActions } from "@/store";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
+import { selectTournamentField } from "@/src/functions/regularSeason/selectTournamentField";
 import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 import type { ScoredRound } from "@/types";
 import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
@@ -42,7 +43,7 @@ const PLACEHOLDERS = [
   "playinGameSeed11Game2",
 ];
 
-/** Builds a field from hand-built records (no season), by running Selection Sunday. */
+/** Builds a field from hand-built records (no played season), by running Selection Sunday on their selection. */
 function fieldStore(variant: number) {
   const records = buildRecords(league, (team, i) => ({
     wins: champions.includes(team) ? 20 : 10,
@@ -57,7 +58,11 @@ function fieldStore(variant: number) {
     extraMiddleware: [middleware],
     preloadedState: {
       ...base,
-      regularSeasonRecords: { weeksPlayed: 30, records },
+      regularSeasonRecords: {
+        weeksPlayed: 30,
+        records,
+        season: { weeks: [], selection: selectTournamentField(records, league.conferenceArrays) },
+      },
       appState: { ...base.appState, selectionSunday: true },
     },
   });
