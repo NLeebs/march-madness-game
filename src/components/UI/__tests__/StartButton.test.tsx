@@ -6,6 +6,15 @@ import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthContext } from "@/src/components/Context/AuthProvider";
 import { GameErrorBoundary } from "@/src/components/General/GameErrorBoundary";
+import {
+  appStateActions,
+  regularSeasonRecordActions,
+  teamScheduleActions,
+  teamStatsActions,
+  tournamentActions,
+  tournamentPlayersPicksActions,
+  uiStateActions,
+} from "@/store";
 import type { AppStore } from "@/store";
 import { compactSeason, expandSeason } from "@/src/functions/regularSeason/seasonWire";
 import { simulateSeason } from "@/src/functions/regularSeason/simulateSeason";
@@ -57,7 +66,11 @@ function renderButton(store: AppStore) {
     </Provider>
   );
   const view = render(ui(true));
-  return { ...view, hideButton: () => view.rerender(ui(false)) };
+  return {
+    ...view,
+    hideButton: () => view.rerender(ui(false)),
+    showButton: () => view.rerender(ui(true)),
+  };
 }
 
 const jsonResponse = (status: number, body: unknown): Response =>
@@ -207,6 +220,51 @@ describe("StartButton", () => {
       } finally {
         quiet.mockRestore();
       }
+    },
+    GAME_TEST_TIMEOUT
+  );
+
+  it(
+    "Play Again: after a restart the next Start requests and stores a fresh season",
+    async () => {
+      const store = leagueStore();
+      const wireB = compactSeason(simulateSeason(league.teamStats, mulberry32(4)));
+      const resultB: PlaySeasonResult = { ...wireB, yearId: YEAR_ID, fieldToken: "token-b" };
+      fetchMock
+        .mockResolvedValueOnce(jsonResponse(200, RESULT))
+        .mockResolvedValueOnce(jsonResponse(200, resultB));
+      const { hideButton, showButton } = renderButton(store);
+
+      fireEvent.click(startButton());
+      await waitFor(() => expect(store.getState().tournament.fieldToken).toBe("test-token"));
+
+      // The restart (useRestartTheGame's resets), then the start screen loads the league again.
+      hideButton();
+      store.dispatch(appStateActions.restartGame());
+      store.dispatch(uiStateActions.restartGame());
+      store.dispatch(teamScheduleActions.restartGame());
+      store.dispatch(regularSeasonRecordActions.restartGame());
+      store.dispatch(tournamentPlayersPicksActions.restartGame());
+      store.dispatch(tournamentActions.restartGame());
+      store.dispatch(teamStatsActions.restartGame());
+      expect(store.getState().regularSeasonRecords.season).toBeNull();
+      expect(store.getState().tournament.fieldToken).toBe("");
+      configureStoreForLeague(store, league);
+      showButton();
+
+      fireEvent.click(startButton());
+      await waitFor(() => expect(store.getState().tournament.fieldToken).toBe("token-b"));
+
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls[1][0]).toBe("/api/season");
+      expect(store.getState().regularSeasonRecords.season?.weeks).toEqual(
+        expandSeason(wireB, league.teamStats).weeks
+      );
+      // one season's schedule, not two stacked
+      const scheduled = Object.values(store.getState().teamSchedule.teamSchedules).flat().length;
+      expect(scheduled).toBe(expandSeason(wireB, league.teamStats).schedule.length);
+      expect(screen.queryByRole("heading", { name: "Something went wrong" })).toBeNull();
+      expect(reportCrash).not.toHaveBeenCalled();
     },
     GAME_TEST_TIMEOUT
   );

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, appStateActions, tournamentActions } from "@/store";
 import { delay } from "@/src/functions";
 import { usePlaySeason } from "@/src/hooks";
-import { storeSeason } from "@/src/utils/storeSeason";
+import { storeSeason } from "@/src/utils";
 import type { ConferenceMap } from "@/models";
 import { BasketballSVG } from "@/src/components/Graphics";
 import {
