@@ -2,14 +2,11 @@ import React from "react";
 import { describe, it, expect, afterEach, vi } from "vitest";
 import { act, cleanup } from "@testing-library/react";
 import type { AnyAction } from "@reduxjs/toolkit";
-import { SelectionSunday } from "@/src/components/RegularSeason/SelectionSunday";
-import { createFastStore } from "./helpers/fastStore";
-import { recordActions, renderWithStore } from "./helpers/renderWithStore";
-import { buildRecords, pickChalk, playTournament } from "./helpers/runGame";
+import { fieldStore } from "./helpers/fieldStore";
+import { renderWithStore } from "./helpers/renderWithStore";
+import { pickChalk, playTournament } from "./helpers/runGame";
 import { seedMathRandom } from "./helpers/rng";
 import { appStateActions, tournamentActions } from "@/store";
-import { buildLeague, configureStoreForLeague } from "@/tests/factories";
-import { selectTournamentField } from "@/src/functions/regularSeason/selectTournamentField";
 import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
 import type { ScoredRound } from "@/types";
 import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
@@ -19,10 +16,6 @@ import { TournamentReplay } from "@/src/components/Tournament/TournamentReplay";
 import { GameDataError } from "@/src/functions/generic/GameDataError";
 
 afterEach(() => cleanup());
-
-const league = buildLeague();
-const confs = Object.keys(league.conferenceArrays);
-const champions = confs.map((c) => league.conferenceArrays[c][0]);
 
 type Slot = { team: string; seed: number | string; win?: boolean };
 type ByRegion = Record<string, Slot[][]>;
@@ -43,34 +36,6 @@ const PLACEHOLDERS = [
   "playinGameSeed11Game1",
   "playinGameSeed11Game2",
 ];
-
-/** Builds a field from hand-built records (no played season), by running Selection Sunday on their selection. */
-function fieldStore(variant: number) {
-  const records = buildRecords(league, (team, i) => ({
-    wins: champions.includes(team) ? 20 : 10,
-    // distinct scores (37 is coprime to 360), shuffled per variant
-    score: 1000 - ((i * 37 + variant * 11) % 360),
-  }));
-  const seedStore = createFastStore();
-  configureStoreForLeague(seedStore, league);
-  const base = seedStore.getState();
-  const { middleware, actions } = recordActions();
-  const store = createFastStore({
-    extraMiddleware: [middleware],
-    preloadedState: {
-      ...base,
-      regularSeasonRecords: {
-        weeksPlayed: 30,
-        records,
-        season: { weeks: [], selection: selectTournamentField(records, league.conferenceArrays) },
-      },
-      appState: { ...base.appState, selectionSunday: true },
-    },
-  });
-  const view = renderWithStore(<SelectionSunday />, store);
-  view.unmount();
-  return { store, actions };
-}
 
 const flat = (m: ByRegion): Slot[] =>
   Object.keys(m)
