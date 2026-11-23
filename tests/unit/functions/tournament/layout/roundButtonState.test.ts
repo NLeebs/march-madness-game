@@ -37,6 +37,10 @@ describe("getRoundButtonState", () => {
     const states = BUTTONS.map((round) => getRoundButtonState(round, sel, w));
     expect(states).toEqual(row.split("").map((c) => CODE[c]));
   });
+
+  it.each([390, 1024, 2040])("leaves a round with no button unchanged (w=%i)", (w) => {
+    expect(getRoundButtonState("champion", "finals", w)).toBe("unchanged");
+  });
 });
 
 describe("areRoundPicksComplete", () => {

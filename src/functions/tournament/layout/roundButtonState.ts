@@ -25,7 +25,8 @@ const VISIBLE_COLUMNS: readonly [number, number][] = [
  * How a round button animates. Above XXXL every button keeps its default width. Below it,
  * the bracket shows a window of columns starting at the selected round (pulled left so
  * the window ends at the finals): buttons before the window shrink away, the window's
- * first button takes the default width, and the rest are left as they are.
+ * first button takes the default width, and the rest (and any round without a button)
+ * are left as they are.
  */
 export function getRoundButtonState(
   round: TournamentRound,
@@ -38,6 +39,7 @@ export function getRoundButtonState(
   const visible = VISIBLE_COLUMNS.find(([minWidth]) => screenWidth > minWidth)?.[1] ?? 1;
   const first = Math.min(selected, BUTTON_ROUNDS.length - visible);
   const index = BUTTON_ROUNDS.indexOf(round);
+  if (index === -1) return "unchanged";
   if (index < first) return "shrink";
   return index === first ? "default" : "unchanged";
 }
