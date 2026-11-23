@@ -211,3 +211,22 @@ describe("RoundSelectBanner render pin", () => {
     expect(describeTree(container)).toMatchSnapshot();
   });
 });
+
+describe("Tournament at the break point", () => {
+  // At exactly TOURNAMENT_BREAK_POINT the bracket is narrow, so it needs the narrow
+  // view's round-select banner and play-in column, like one pixel narrower.
+  it.each(ROUNDS)("w=2350 renders like w=2349 (sel=%s)", async (sel) => {
+    const render = async (w: number) => {
+      const store = storeFrom(base.selection);
+      setView(store, w, sel);
+      let container!: HTMLElement;
+      await act(async () => {
+        ({ container } = renderWithStore(<Tournament />, store));
+      });
+      const tree = describeTree(container, ["round-select-banner"]);
+      cleanup();
+      return tree;
+    };
+    expect(await render(2350)).toBe(await render(2349));
+  });
+});

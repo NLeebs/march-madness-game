@@ -10548,6 +10548,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2350 sel=1 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10606,12 +10607,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > recap w=2350 sel=2 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10670,12 +10676,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > recap w=2350 sel=champion 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10734,12 +10745,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > recap w=2350 sel=elite eight 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10798,12 +10814,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > recap w=2350 sel=final four 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10862,12 +10883,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > recap w=2350 sel=finals 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10926,12 +10952,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > recap w=2350 sel=sweet sixteen 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10990,6 +11021,10 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
@@ -17093,6 +17128,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2350 sel=1 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
@@ -17149,12 +17185,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > selection w=2350 sel=2 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
@@ -17211,12 +17252,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > selection w=2350 sel=champion 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
@@ -17273,12 +17319,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > selection w=2350 sel=elite eight 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
@@ -17335,12 +17386,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > selection w=2350 sel=final four 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
@@ -17397,12 +17453,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > selection w=2350 sel=finals 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
@@ -17459,12 +17520,17 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 
 exports[`Tournament render pin > selection w=2350 sel=sweet sixteen 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
+  div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div class="relative grid _tournamentGrid_634cfe w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12"
     div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
@@ -17521,6 +17587,10 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         matchups[1:south:0 x8]
       div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
         matchups[1:midwest:0 x8]
+    div testid=bracket-column-playin class="overflow-hidden h-max _gridRound64_634cfe flex flex-col" animate={"width":"max-content","height":"max-content"}
+      div class="_regionTitle_634cfe m-4" text="Playin Games"
+      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+        matchups[playin:playin:0 x4]
 "
 `;
 

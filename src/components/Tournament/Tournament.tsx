@@ -53,7 +53,7 @@ export const Tournament = () => {
       animate={{ opacity: 1 }}
       className="mx-auto max-w-tourny grid grid-flow-row"
     >
-      {screenWidth < TOURNAMENT_BREAK_POINT && <RoundSelectBanner />}
+      {!wide && <RoundSelectBanner />}
 
       <div
         className={`relative grid ${
@@ -123,7 +123,7 @@ export const Tournament = () => {
         ))}
 
         {/* Playin Games Smaller Screens  */}
-        {screenWidth < TOURNAMENT_BREAK_POINT && (
+        {!wide && (
           <motion.div
             data-testid="bracket-column-playin"
             initial={false}
