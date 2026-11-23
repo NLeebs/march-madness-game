@@ -21,7 +21,7 @@ import { renderWithStore } from "./renderWithStore";
 
 const SEASON_WEEKS = 30;
 const STEP_MS = 500;
-const MAX_STEPS = 10;
+const MAX_STEPS = 20;
 
 /**
  * Plays a whole regular season on a store already configured for the league
