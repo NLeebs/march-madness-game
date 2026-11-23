@@ -6,13 +6,12 @@ import {
   seedTournament,
   simulateTournament,
   validateBracketPicks,
-  type TournamentPlayResult,
 } from "@/src/functions/tournament";
 import { ValidationError } from "@/utils/errorHandling";
 import { verifyFieldToken } from "@/utils/api/fieldToken";
 import type { ConferenceMap } from "@/models";
 import type { PersistBracketPayload } from "@/models/appStatsData";
-import type { TournamentPicks, TournamentRound } from "@/types";
+import type { PlayTournamentResult, TournamentPicks, TournamentRound } from "@/types";
 
 export interface PlayTournamentDto {
   fieldToken: string;
@@ -21,8 +20,6 @@ export interface PlayTournamentDto {
   anonUserId: string | null;
 }
 
-/** bracketId is null when nothing was saved (a preview deployment). */
-export type PlayTournamentResult = TournamentPlayResult & { bracketId: string | null };
 
 const FIELD_SIZE = 68;
 
