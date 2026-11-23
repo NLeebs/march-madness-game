@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { playTournamentPost, type PlayTournamentRequest } from "@/src/utils/playTournamentPost";
+import { playTournamentPost } from "@/src/utils/playTournamentPost";
+import type { PlayTournamentRequest } from "@/types";
 import { AppError } from "@/utils/errorHandling";
 
 // Only the error path reads the body, so a minimal request is enough.

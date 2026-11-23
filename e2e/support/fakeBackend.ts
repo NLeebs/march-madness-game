@@ -1,6 +1,6 @@
 import type { Page, Route } from "@playwright/test";
 import type { getYears } from "@/application/useCases";
-import type { PlayTournamentResult } from "@/application/useCases/tournament/PlayTournament";
+import type { PlayTournamentResult } from "@/types";
 import type { SimulationRequestBody } from "@/app/api/bracket/simulation/schema";
 import { SeasonRequestSchema } from "@/app/api/season/schema";
 import type { PlaySeasonResult } from "@/application/useCases/season/PlaySeason";

@@ -8,9 +8,8 @@ afterEach(() => {
 
 describe("tournamentPlayersPicksSlice initial state", () => {
   // The server refuses picks that do not follow from the field (validateBracketPicks), so a
-  // hard-coded pre-fill would crash Play Tournament: dev mode starts with empty picks too.
-  it("starts with empty picks in dev mode", async () => {
-    vi.stubEnv("NEXT_PUBLIC_APP_MODE", "dev");
+  // hard-coded pre-fill would crash Play Tournament.
+  it("starts with empty picks", async () => {
     vi.resetModules();
     const { default: slice } = await import("@/store/tournamentPlayersPicksSlice");
 

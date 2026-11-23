@@ -1,4 +1,5 @@
 import { TournamentRepository } from "@/infrastructure/db/TournamentRepository";
+import { ROUND_BY_NAME } from "@/infrastructure/db/roundNames";
 import { getTeamStatisticsByYearId } from "@/application/useCases/team/GetTeamStatisticsByYearId";
 import { mapBracketToPayloadGames } from "@/application/mappers/mapBracketToPayload";
 import {
@@ -6,13 +7,12 @@ import {
   seedTournament,
   simulateTournament,
   validateBracketPicks,
-  type TournamentPlayResult,
 } from "@/src/functions/tournament";
 import { ValidationError } from "@/utils/errorHandling";
 import { verifyFieldToken } from "@/utils/api/fieldToken";
 import type { ConferenceMap } from "@/models";
 import type { PersistBracketPayload } from "@/models/appStatsData";
-import type { TournamentPicks, TournamentRound } from "@/types";
+import type { PlayTournamentResult, TournamentPicks, TournamentRound } from "@/types";
 
 export interface PlayTournamentDto {
   fieldToken: string;
@@ -21,27 +21,16 @@ export interface PlayTournamentDto {
   anonUserId: string | null;
 }
 
-export type PlayTournamentResult = TournamentPlayResult & { bracketId: string };
-
 const FIELD_SIZE = 68;
-
-/** rounds.round_name -> round identifier. */
-const ROUND_BY_NAME: Readonly<Record<string, TournamentRound>> = {
-  "1": 1,
-  "2": 2,
-  "sweet sixteen": "sweet sixteen",
-  "elite eight": "elite eight",
-  "final four": "final four",
-  finals: "finals",
-  champion: "champion",
-};
 
 /**
  * Plays the tournament on the server for a player's picks, scores it with the
  * stored round points, and saves the bracket, its games and picks in one RPC.
  * Bad input (no owner, a field team unknown for the year, inconsistent picks)
  * throws ValidationError; anything else (load or save failures) is a server
- * error.
+ * error. On a Vercel preview deployment (VERCEL_ENV=preview, which shares the
+ * production database) it validates, plays and scores but does not save, so
+ * play-tests stay out of the stats.
  */
 export async function playTournament({
   fieldToken,
@@ -149,6 +138,11 @@ export async function playTournament({
       roundIdMap,
     }),
   };
+
+  // Build the payload even on a preview, so a play-test catches mapping errors; only the save is skipped.
+  if (process.env.VERCEL_ENV === "preview") {
+    return { bracketId: null, ...result };
+  }
 
   const bracketId = await repository.persistBracket(payload);
 

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { PlayTournamentRequest } from "@/types";
 
 const teamName = z.string().min(1);
 
@@ -46,3 +47,13 @@ export const SimulationRequestSchema = z
   .strict();
 
 export type SimulationRequestBody = z.infer<typeof SimulationRequestSchema>;
+
+// The browser builds its request from PlayTournamentRequest (@/types); fail
+// the type-check if the schema and that type ever disagree on the keys.
+type SameKeys<A, B> = [keyof A] extends [keyof B]
+  ? [keyof B] extends [keyof A]
+    ? true
+    : false
+  : false;
+const requestKeysMatch: SameKeys<SimulationRequestBody, PlayTournamentRequest> = true;
+void requestKeysMatch;

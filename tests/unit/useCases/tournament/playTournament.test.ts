@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
   playTournament,
   type PlayTournamentDto,
@@ -322,5 +322,54 @@ describe("playTournament", () => {
     const pending = playTournament(buildDto());
     await expect(pending).rejects.toThrow("Failed to persist bracket: boom");
     await expect(pending).rejects.not.toBeInstanceOf(ValidationError);
+  });
+
+  describe("deployment environment", () => {
+    afterEach(() => {
+      delete process.env.VERCEL_ENV;
+    });
+
+    it("on a preview deployment, plays and scores but does not save", async () => {
+      vi.stubEnv("VERCEL_ENV", "preview");
+
+      const result = await playTournament(buildDto());
+
+      expect(mocks.persistBracket).not.toHaveBeenCalled();
+      expect(result.bracketId).toBeNull();
+      expect(typeof result.score).toBe("number");
+      expect(Object.keys(result.rounds)).toHaveLength(6);
+      expect(result.playin).toHaveLength(4);
+    });
+
+    it("on a preview deployment, still rejects inconsistent picks", async () => {
+      vi.stubEnv("VERCEL_ENV", "preview");
+      const picks: TournamentPicks = chalkPicks(roundOne);
+      picks.roundTwoPicks.east![0][0] = { team: teamNames[100], seed: "1" };
+
+      await expect(playTournament(buildDto({ picks }))).rejects.toBeInstanceOf(ValidationError);
+    });
+
+    it("on a preview deployment, still rejects a bad token", async () => {
+      vi.stubEnv("VERCEL_ENV", "preview");
+
+      await expect(playTournament(buildDto({ fieldToken: "not.a-token" }))).rejects.toBeInstanceOf(ValidationError);
+    });
+
+    it("on a preview deployment, still fails when the save payload can't be built", async () => {
+      vi.stubEnv("VERCEL_ENV", "preview");
+      mocks.getRounds.mockResolvedValue(rounds.filter((r) => r.round_name !== "finals"));
+
+      await expect(playTournament(buildDto())).rejects.toThrow("Round ID not found for round: finals");
+      expect(mocks.persistBracket).not.toHaveBeenCalled();
+    });
+
+    it("in production, saves", async () => {
+      vi.stubEnv("VERCEL_ENV", "production");
+
+      const result = await playTournament(buildDto());
+
+      expect(mocks.persistBracket).toHaveBeenCalledTimes(1);
+      expect(result.bracketId).toBe("bracket-uuid");
+    });
   });
 });

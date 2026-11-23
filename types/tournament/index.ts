@@ -7,3 +7,4 @@ export * from "./TournamentRounds";
 export * from "./TournamentTeam";
 export * from "./TournamentGameResult";
 export * from "./BracketMatchups";
+export * from "./PlayTournamentApi";
