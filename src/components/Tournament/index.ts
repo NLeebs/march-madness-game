@@ -8,4 +8,5 @@ export * from "./Tournament";
 export * from "./TournamentMatchup";
 export * from "./TournamentMatchupCard";
 export * from "./TournamentRecapDialog";
+export * from "./TournamentReplay";
 export * from "./TournamentRound";

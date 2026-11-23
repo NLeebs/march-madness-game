@@ -80,6 +80,7 @@ export const NUMBER_ROUND_ONE_TEAMS = 64;
 export const HIGHEST_SEED = 16;
 
 // Timeouts (in seconds)
-export const TIMER_PER_REGULAR_SEASON_GAME = 0.5;
+// The season replay plays one week every 0.15 s (about 4.5 s for 30 weeks).
+export const SECONDS_PER_REGULAR_SEASON_WEEK = 0.15;
 export const TIMER_TRIGGER_FADE = 0.1;
 export const TIMER_BETWEEN_APP_STATES = 1;

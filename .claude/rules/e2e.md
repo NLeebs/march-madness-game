@@ -89,7 +89,7 @@ Never add an entry to silence a new failure without logging a DIAGNOSIS finding 
 
 Laptop only. It sweeps widths in every phase and compares the layout against `EXPECTED_SIGNATURES`, the layout a fresh load shows at that width (there is no seam to load a state into a second page), and compares the full game state across the sweep.
 
-- **`page.clock`**: the regular season resolves all its week timers at once and blocks the page for ~5 s (finding 45), so the test installs `page.clock`, pauses it, and advances with `runFor` to hold the season frozen while resizing, then resumes.
+- **`page.clock`**: the regular season plays a week every 0.15 s, and the full-state comparison needs a season that doesn't move, so the test installs `page.clock`, pauses it, and advances with `runFor` to hold the season frozen while resizing, then resumes.
 - Width 2350 exactly is skipped (finding 44).
 - **Regenerating `EXPECTED_SIGNATURES`** (new breakpoint, layout change): run `E2E_MEASURE_SIGNATURES=1 npx playwright test e2e/resize.spec.ts` (laptop project). It opens a fresh page at each width, never resized, plays a game, and prints the table entry for each width (signature on Selection Sunday and with each round selected). Paste the output over the table and review the diff by eye: a changed row is a layout change someone must have intended.
 

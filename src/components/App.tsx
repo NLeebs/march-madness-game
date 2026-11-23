@@ -4,10 +4,9 @@ import { MotionConfig, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { uiStateActions, RootState } from "@/store";
 import {
-  PlayPlayinGames,
   StartScreen,
   Tournament,
-  PlayTournamentGames,
+  TournamentReplay,
   RegularSeason,
   TournamentRecapDialog,
 } from "@/src/components";
@@ -52,12 +51,7 @@ function App() {
         )}
         {appState.tournament && <Tournament />}
       </AnimatePresence>
-      {appState.tournament && appState.tournamentPlayPlayinGames && (
-        <PlayPlayinGames />
-      )}
-      {appState.tournament &&
-        appState.tournamentPlayGames &&
-        !appState.tournamentRecap && <PlayTournamentGames />}
+      <TournamentReplay />
       {appState.tournamentRecap && <TournamentRecapDialog />}
     </MotionConfig>
   );

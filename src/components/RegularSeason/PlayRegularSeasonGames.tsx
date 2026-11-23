@@ -1,23 +1,26 @@
-import { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { appStateActions, regularSeasonRecordActions } from "@/store";
-import { delay } from "@/src/functions";
 import {
   AMOUNT_SEASON_GAMES,
-  TIMER_PER_REGULAR_SEASON_GAME,
+  SECONDS_PER_REGULAR_SEASON_WEEK,
 } from "@/src/constants";
-import { RootState } from "@/store";
-import { GameResult } from "@/types";
+import type { RootState } from "@/store";
+
+const WEEK_MS = SECONDS_PER_REGULAR_SEASON_WEEK * 1000;
 
 /**
- * Replays the server's season (regularSeasonRecords.season) with the old
- * driver's timing: every week's timer starts together, then each week's
- * results are dispatched in schedule order followed by that week's increment.
+ * Replays the server's season (regularSeasonRecords.season) week by week:
+ * week n of the replay is due n x SECONDS_PER_REGULAR_SEASON_WEEK after it
+ * starts, and never before the previous week has been applied. Each week
+ * dispatches its results (in schedule order) as one action, then
+ * addWeekPlayedToTotal.
+ * Starts from weeksPlayed, so a remount resumes; stops on unmount.
  * Waits (teams at 0-0) until the season arrives.
  */
 export const PlayRegularSeasonGames: React.FC = () => {
   const dispatch = useDispatch();
-  const [seasonPlayed, setSeasonPlayed] = useState<boolean>(false);
+  const store = useStore<RootState>();
 
   const season = useSelector(
     (state: RootState) => state.regularSeasonRecords.season
@@ -26,33 +29,40 @@ export const PlayRegularSeasonGames: React.FC = () => {
     (state: RootState) => state.regularSeasonRecords.weeksPlayed
   );
 
-  const playRegularSeasonGames = useCallback(
-    (weeks: GameResult[][]) => {
-      if (seasonPlayed) return;
-
-      weeks.forEach(async (results: GameResult[]) => {
-        await Promise.all([delay(TIMER_PER_REGULAR_SEASON_GAME)])
-          .then(() => {
-            results.forEach((gameResult: GameResult) => {
-              dispatch(
-                regularSeasonRecordActions.addRegularSeasonGameResult(gameResult)
-              );
-            });
-          })
-          .catch((e: Error) => console.error(e));
-        dispatch(regularSeasonRecordActions.addWeekPlayedToTotal());
-        setSeasonPlayed(true);
-      });
-    },
-    [seasonPlayed, dispatch]
-  );
-
   useEffect(() => {
     if (!season) return;
-    if (weeksPlayed === 0) playRegularSeasonGames(season.weeks);
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    // performance.now() only moves forward; Date.now() jumps with wall-clock changes.
+    const start = performance.now();
+    const firstWeek = store.getState().regularSeasonRecords.weeksPlayed;
+
+    const scheduleWeek = (week: number) => {
+      if (week >= season.weeks.length) return;
+      const due = start + (week - firstWeek + 1) * WEEK_MS;
+      timer = setTimeout(() => {
+        if (cancelled) return;
+        dispatch(
+          regularSeasonRecordActions.addRegularSeasonWeekResults(
+            season.weeks[week]
+          )
+        );
+        dispatch(regularSeasonRecordActions.addWeekPlayedToTotal());
+        scheduleWeek(week + 1);
+      }, Math.max(0, due - performance.now()));
+    };
+    scheduleWeek(firstWeek);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [dispatch, store, season]);
+
+  useEffect(() => {
     if (weeksPlayed === AMOUNT_SEASON_GAMES)
       dispatch(appStateActions.activateSelectionSunday());
-  }, [dispatch, weeksPlayed, playRegularSeasonGames, season]);
+  }, [dispatch, weeksPlayed]);
 
   return null;
 };

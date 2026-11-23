@@ -17,7 +17,7 @@ Steps 1-3 and 6 of the game loop run on the server and the browser replays them;
 5. picks (`applyPick`, stored by `tournamentPlayersPicksSlice`);
 6. the tournament: `simulateTournament` (`src/functions/tournament/`) plays and scores it on the server (`POST /api/bracket/simulation`); the drivers (`PlayPlayinGames`, `PlayTournamentGames`) only replay `tournament.simulation` and dispatch the stored results. They pass the server's `roundPoints` to `recordRoundScore`'s optional `points` argument; without it the reducer uses `scoreRound`'s points.
 
-Every part of it is under characterization tests in `tests/game/`. Preserve gameplay unless a change is a deliberate gameplay change. Results (`applyGameResult`) and picks (`getNextRoundInfo`) place a winner in the same next-round slot: `ROUND_CONFIG[round].advance[region].teamIndex` when the region changes, else `gameIndex % 2`. Slots don't depend on dispatch order, but RNG draw order does, so collapsing `PlayTournamentGames`' effects (step 10) is a draw-order change if it reorders games. Play-in placeholder regions (seeding, `applyPlayinResult`) all come from `PLAYIN_ROUND_ONE_SLOTS`. The pure tournament functions are also unit-tested in `tests/unit/functions/tournament/` with deep-frozen inputs.
+Every part of it is under characterization tests in `tests/game/`. Preserve gameplay unless a change is a deliberate gameplay change. Results (`applyGameResult`) and picks (`getNextRoundInfo`) place a winner in the same next-round slot: `ROUND_CONFIG[round].advance[region].teamIndex` when the region changes, else `gameIndex % 2`. Slots don't depend on dispatch order. The drivers draw no random numbers (since step 9a-2 they only replay `tournament.simulation`); `PlayTournamentGames` replays one round per run of a single effect, choosing it with `getReplayRound`, and `tests/game/tournamentDrivers.test.tsx` pins the whole replay's action sequence. Play-in placeholder regions (seeding, `applyPlayinResult`) all come from `PLAYIN_ROUND_ONE_SLOTS`. The pure tournament functions are also unit-tested in `tests/unit/functions/tournament/` with deep-frozen inputs.
 
 ## Randomness
 
@@ -50,13 +50,13 @@ Changing the order or number of random draws without changing the game (e.g. mov
   - `buildLeague()` builds a deterministic 360-team league with 31 conferences (hard-coded, matching real data; don't derive it from the legacy scraping config), rank-string RPI 1..360 and quality-skewed stats;
   - `configureStoreForLeague(store, league)` dispatches the same setup as `StartScreen`.
 - `store/store.ts` `createAppStore({ preloadedState, extraMiddleware, devChecks })` gives a fresh store per test.
-  - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which still make season play (one `addRegularSeasonGameResult` per game) slow.
+  - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which walk the whole state on every dispatch and make full-game tests slow. The season replays one `addRegularSeasonWeekResults` per week.
   - `recordActions()` (in `renderWithStore.tsx`) captures dispatched actions. Use it instead of `vi.spyOn` on barrel exports, which doesn't intercept component imports.
 - `tests/game/helpers/runGame.ts`:
-  - `playSeason` runs `simulateSeason`, stores it with `storeSeason`, then replays it under fake timers for `delay`;
+  - `playSeason` runs `simulateSeason`, stores it with `storeSeason`, then replays it under fake timers (one week every 0.15 s);
   - `buildRecords`;
   - `pickChalk` uses `getNextRoundInfo`, exported from `TournamentMatchup.tsx`;
-  - `playTournament` calls `simulateTournament` (as the server does), stores the result in `tournament.simulation`, then mounts the drivers under a hand-copy of `App.tsx`'s conditions (finding 41: keep the two in sync until they share a component).
+  - `playTournament` calls `simulateTournament` (as the server does), stores the result in `tournament.simulation`, then mounts `TournamentReplay`, the same component `App.tsx` uses to mount the drivers.
 - `tests/game/helpers/fullRun.ts` `playFullGame(seed)` runs one seeded stream from schedule to champion (`simulateSeason` + `storeSeason`, then the tournament).
 - Heavy tests (360-team schedules, seasons, tournaments) pass `GAME_TEST_TIMEOUT` (`tests/game/helpers/timeout.ts`). Vitest's 5 s default fails under load. `npx vitest run tests/game` should stay under about 40 s.
 

@@ -399,12 +399,11 @@ if (process.env.E2E_MEASURE_SIGNATURES) {
       timings.push(`${label}=${Date.now() - started}ms`);
     };
 
-    // 1. Regular season in progress. The app has no week-by-week playback to resize in: the 30
-    // week timers all fall due together about 0.6 s after the screen appears and then run back
-    // to back, holding the main thread for seconds. The only stable "season in progress" state
-    // is the regular season screen with those timers pending, so the page clock is faked (it
-    // runs normally except while paused): pause it before Start, step it until the screen is up
-    // and its weeks are pending, and sweep there with the season frozen (full state compared).
+    // 1. Regular season in progress. The weeks play one every 0.15 s (about 4.5 s), too fast to
+    // sweep every width while the state stays put, and the full-state comparison needs a season
+    // that doesn't move. So the page clock is faked (it runs normally except while paused): pause
+    // it before Start, step it until the screen is up and its first week is pending, and sweep
+    // there with the season frozen (full state compared).
     // Then the clock resumes and one more resize goes in straight away as an extra probe: it
     // may land during playback or after it; nothing asserts which.
     await page.clock.install();

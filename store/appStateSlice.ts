@@ -1,7 +1,7 @@
 // Redux
 import { createSlice } from "@reduxjs/toolkit";
 
-interface AppState {
+export interface AppState {
   startScreen: boolean;
   loading: boolean;
   transition: boolean;

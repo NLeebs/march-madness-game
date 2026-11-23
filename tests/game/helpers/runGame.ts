@@ -1,20 +1,18 @@
 import React from "react";
 import { act } from "@testing-library/react";
 import { vi } from "vitest";
-import { useSelector } from "react-redux";
 import {
   appStateActions,
   tournamentPlayersPicksActions,
   tournamentActions,
 } from "@/store";
-import { PlayPlayinGames } from "@/src/components/Tournament/PlayPlayinGames";
-import { PlayTournamentGames } from "@/src/components/Tournament/PlayTournamentGames";
+import { TournamentReplay } from "@/src/components/Tournament/TournamentReplay";
 import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
 import { PlayRegularSeasonGames } from "@/src/components/RegularSeason/PlayRegularSeasonGames";
 import { simulateSeason } from "@/src/functions/regularSeason/simulateSeason";
 import { compactSeason } from "@/src/functions/regularSeason/seasonWire";
 import { storeSeason } from "@/src/utils/storeSeason";
-import type { AppStore, RootState } from "@/store";
+import type { AppStore } from "@/store";
 import type { League } from "@/tests/factories";
 import type { RegularSeasonTeam, TournamentRegion } from "@/types";
 import { ROUND_POINTS } from "@/src/functions/tournament/scoreRound";
@@ -23,7 +21,7 @@ import { renderWithStore } from "./renderWithStore";
 
 const SEASON_WEEKS = 30;
 const STEP_MS = 500;
-const MAX_STEPS = 10;
+const MAX_STEPS = 20;
 
 /**
  * Plays a whole regular season on a store already configured for the league
@@ -134,21 +132,6 @@ export function pickChalk(store: AppStore): void {
   }
 }
 
-/** Renders the two drivers under the same conditions App.tsx mounts them. */
-function TournamentDrivers() {
-  const appState = useSelector((state: RootState) => state.appState);
-  return React.createElement(
-    React.Fragment,
-    null,
-    appState.tournament && appState.tournamentPlayPlayinGames
-      ? React.createElement(PlayPlayinGames)
-      : null,
-    appState.tournament && appState.tournamentPlayGames && !appState.tournamentRecap
-      ? React.createElement(PlayTournamentGames)
-      : null,
-  );
-}
-
 /**
  * Plays a whole tournament on a store that already holds a field (Selection
  * Sunday has run): activates the tournament, builds round one, picks chalk,
@@ -182,7 +165,7 @@ export async function playTournament(
   store.dispatch(tournamentActions.setSimulation({ playin, rounds, roundPoints, score }));
   store.dispatch(appStateActions.activateTournamentPlayinGamesState());
   await act(async () => {
-    renderWithStore(React.createElement(TournamentDrivers), store);
+    renderWithStore(React.createElement(TournamentReplay), store);
   });
   if (!store.getState().appState.tournamentRecap)
     throw new Error("playTournament: tournament did not finish");
