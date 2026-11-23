@@ -31,6 +31,7 @@ const season = (() => {
 
 const GAME = regularSeasonRecordActions.addRegularSeasonGameResult.type;
 const WEEK = regularSeasonRecordActions.addWeekPlayedToTotal.type;
+const WEEK_RESULTS = "regularSeasonRecords/addRegularSeasonWeekResults";
 const SELECTION_SUNDAY = "appState/activateSelectionSunday";
 
 function setup({ withSeason, extra = [] }: { withSeason: boolean; extra?: Middleware[] }) {
@@ -43,18 +44,18 @@ function setup({ withSeason, extra = [] }: { withSeason: boolean; extra?: Middle
 }
 
 const replayActions = (actions: AnyAction[]) =>
-  actions.filter((a) => [GAME, WEEK, SELECTION_SUNDAY].includes(a.type));
+  actions.filter((a) => [GAME, WEEK_RESULTS, WEEK, SELECTION_SUNDAY].includes(a.type));
 
-/** Today's order: each week's games in schedule order, then that week's increment. */
+/** Each week's results in one addRegularSeasonWeekResults, then that week's increment. */
 function expectFullReplay(actions: AnyAction[]) {
   const replay = replayActions(actions);
-  const expectedTypes = season.weeks.flatMap((games) => [...games.map(() => GAME), WEEK]);
+  const expectedTypes = season.weeks.flatMap(() => [WEEK_RESULTS, WEEK]);
   const firstSunday = replay.findIndex((a) => a.type === SELECTION_SUNDAY);
   expect(firstSunday).toBe(expectedTypes.length);
   expect(replay.slice(0, firstSunday).map((a) => a.type)).toEqual(expectedTypes);
   expect(replay.slice(firstSunday).every((a) => a.type === SELECTION_SUNDAY)).toBe(true);
-  const played = replay.filter((a) => a.type === GAME).map((a) => a.payload as GameResult);
-  expect(played).toEqual(season.weeks.flat());
+  const played = replay.filter((a) => a.type === WEEK_RESULTS).map((a) => a.payload as GameResult[]);
+  expect(played).toEqual(season.weeks);
 }
 
 const WEEK_MS = 150;
@@ -83,14 +84,12 @@ describe("PlayRegularSeasonGames", () => {
       const { store, actions } = setup({ withSeason: true });
 
       renderWithStore(<PlayRegularSeasonGames />, store);
-      let gamesSoFar = 0;
       for (let week = 0; week < WEEKS; week++) {
         await advance(WEEK_MS - 1);
         expect(weeksIn(actions), `week ${week + 1} early`).toBe(week);
         await advance(1);
-        gamesSoFar += season.weeks[week].length;
         expect(weeksIn(actions), `week ${week + 1} on time`).toBe(week + 1);
-        expect(actions.filter((a) => a.type === GAME)).toHaveLength(gamesSoFar);
+        expect(actions.filter((a) => a.type === WEEK_RESULTS)).toHaveLength(week + 1);
       }
 
       expectFullReplay(actions);

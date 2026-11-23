@@ -3,7 +3,8 @@ import { act, cleanup } from "@testing-library/react";
 import { regularSeasonRecordActions } from "@/store";
 import { createFastStore } from "./helpers/fastStore";
 import { recordActions } from "./helpers/renderWithStore";
-import { seedMathRandom } from "./helpers/rng";
+import { mulberry32, seedMathRandom } from "./helpers/rng";
+import { simulateSeason } from "@/src/functions/regularSeason/simulateSeason";
 import { playSeason } from "./helpers/runGame";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
 import type { GameResult } from "@/types";
@@ -57,6 +58,31 @@ describe("regularSeasonRecords reducers", () => {
     expect(store.getState().regularSeasonRecords.weeksPlayed).toBe(2);
   });
 
+  it(
+    "week action leaves the same records as per-game actions",
+    () => {
+      const league = buildLeague();
+      const weeks = simulateSeason(league.teamStats, mulberry32(11)).weeks;
+      const perGame = createFastStore();
+      const perWeek = createFastStore();
+      configureStoreForLeague(perGame, league);
+      configureStoreForLeague(perWeek, league);
+      weeks.forEach((games: GameResult[]) => {
+        games.forEach((g) =>
+          perGame.dispatch(regularSeasonRecordActions.addRegularSeasonGameResult(g)),
+        );
+        perWeek.dispatch(regularSeasonRecordActions.addRegularSeasonWeekResults(games));
+      });
+      expect(perWeek.getState().regularSeasonRecords.records).toEqual(
+        perGame.getState().regularSeasonRecords.records,
+      );
+      expect(Object.keys(perWeek.getState().regularSeasonRecords.records)).toEqual(
+        Object.keys(perGame.getState().regularSeasonRecords.records),
+      );
+    },
+    GAME_TEST_TIMEOUT,
+  );
+
   it("addConferenceChampion sets confChampion: true on that team only", () => {
     const store = storeWithTwoTeams();
     store.dispatch(regularSeasonRecordActions.addConferenceChampion({ confChampion: "dog" }));
@@ -85,21 +111,19 @@ describe("PlayRegularSeasonGames season invariants", () => {
       seeded.restore();
     }
     const countOf = (type: string) => actions.filter((a) => a.type === type).length;
-    const gamesType = regularSeasonRecordActions.addRegularSeasonGameResult.type;
+    const gamesType = regularSeasonRecordActions.addRegularSeasonWeekResults.type;
     const weeksType = regularSeasonRecordActions.addWeekPlayedToTotal.type;
     const gamesDispatched = countOf(gamesType);
     const weeksDispatched = countOf(weeksType);
 
-    // current behaviour: setSeasonPlayed(true) sits inside the per-week loop (it runs
-    // after the first week resolves), all 30 week timers are started together on mount,
-    // and the effect only starts a season while weeksPlayed === 0. Once the season is
-    // done, letting more time pass and the effect re-run replays nothing.
+    // Once the season is done, letting more time pass replays nothing.
     await act(async () => {
       await vi.advanceTimersByTimeAsync(5000);
     });
     expect(countOf(gamesType)).toBe(gamesDispatched);
     expect(countOf(weeksType)).toBe(weeksDispatched);
     expect(weeksDispatched).toBe(30);
+    expect(gamesDispatched).toBe(30);
 
     const state = store.getState();
     expect(state.regularSeasonRecords.weeksPlayed).toBe(30);
@@ -117,7 +141,7 @@ describe("PlayRegularSeasonGames season invariants", () => {
 
     const results = actions
       .filter((a) => a.type === gamesType)
-      .map((a) => a.payload as GameResult);
+      .flatMap((a) => a.payload as GameResult[]);
     expect(results).toHaveLength(totalGames);
 
     const expectedScore: Record<string, number> = {};

@@ -55,6 +55,15 @@ const regularSeasonRecordSlice = createSlice({
     addRegularSeasonGameResult: (state, action: PayloadAction<GameResult>) => {
       applySeasonGameResult(state.records, action.payload);
     },
+    /** A whole replayed week, games applied in schedule order (one notification instead of ~180). */
+    addRegularSeasonWeekResults: (
+      state,
+      action: PayloadAction<GameResult[]>
+    ) => {
+      action.payload.forEach((result) =>
+        applySeasonGameResult(state.records, result)
+      );
+    },
     addWeekPlayedToTotal: (state) => {
       state.weeksPlayed++;
     },

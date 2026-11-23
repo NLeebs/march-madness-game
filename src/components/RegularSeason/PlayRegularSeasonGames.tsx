@@ -13,7 +13,8 @@ const WEEK_MS = SECONDS_PER_REGULAR_SEASON_WEEK * 1000;
  * Replays the server's season (regularSeasonRecords.season) week by week:
  * week n of the replay is due n x SECONDS_PER_REGULAR_SEASON_WEEK after it
  * starts, and never before the previous week has been applied. Each week
- * dispatches its results in schedule order, then addWeekPlayedToTotal.
+ * dispatches its results (in schedule order) as one action, then
+ * addWeekPlayedToTotal.
  * Starts from weeksPlayed, so a remount resumes; stops on unmount.
  * Waits (teams at 0-0) until the season arrives.
  */
@@ -40,11 +41,11 @@ export const PlayRegularSeasonGames: React.FC = () => {
       const due = start + (week - firstWeek + 1) * WEEK_MS;
       timer = setTimeout(() => {
         if (cancelled) return;
-        season.weeks[week].forEach((gameResult) => {
-          dispatch(
-            regularSeasonRecordActions.addRegularSeasonGameResult(gameResult)
-          );
-        });
+        dispatch(
+          regularSeasonRecordActions.addRegularSeasonWeekResults(
+            season.weeks[week]
+          )
+        );
         dispatch(regularSeasonRecordActions.addWeekPlayedToTotal());
         scheduleWeek(week + 1);
       }, Math.max(0, due - Date.now()));

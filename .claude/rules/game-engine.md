@@ -50,10 +50,10 @@ Changing the order or number of random draws without changing the game (e.g. mov
   - `buildLeague()` builds a deterministic 360-team league with 31 conferences (hard-coded, matching real data; don't derive it from the legacy scraping config), rank-string RPI 1..360 and quality-skewed stats;
   - `configureStoreForLeague(store, league)` dispatches the same setup as `StartScreen`.
 - `store/store.ts` `createAppStore({ preloadedState, extraMiddleware, devChecks })` gives a fresh store per test.
-  - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which still make season play (one `addRegularSeasonGameResult` per game) slow.
+  - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which walk the whole state on every dispatch and make full-game tests slow. The season replays one `addRegularSeasonWeekResults` per week.
   - `recordActions()` (in `renderWithStore.tsx`) captures dispatched actions. Use it instead of `vi.spyOn` on barrel exports, which doesn't intercept component imports.
 - `tests/game/helpers/runGame.ts`:
-  - `playSeason` runs `simulateSeason`, stores it with `storeSeason`, then replays it under fake timers for `delay`;
+  - `playSeason` runs `simulateSeason`, stores it with `storeSeason`, then replays it under fake timers (one week every 0.15 s);
   - `buildRecords`;
   - `pickChalk` uses `getNextRoundInfo`, exported from `TournamentMatchup.tsx`;
   - `playTournament` calls `simulateTournament` (as the server does), stores the result in `tournament.simulation`, then mounts `TournamentReplay`, the same component `App.tsx` uses to mount the drivers.
