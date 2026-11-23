@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { ValidationError } from "./AppError";
+import { toOrigin } from "@/utils/api/toOrigin";
 
 export function validateOrigin(
   allowedOrigins: string[],
@@ -18,29 +19,15 @@ export function validateOrigin(
       }
     }
 
-    if (origin) {
-      const isAllowed = allowedOrigins.some((allowed) => {
-        return origin === allowed || origin.startsWith(allowed);
-      });
-      if (isAllowed) {
-        return;
-      }
-    }
-
-    if (referer) {
-      try {
-        const refererUrl = new URL(referer);
-        const isAllowed = allowedOrigins.some((allowed) => {
-          const allowedUrl = new URL(allowed);
-          return (
-            refererUrl.origin === allowedUrl.origin ||
-            refererUrl.hostname === allowedUrl.hostname
-          );
-        });
-        if (isAllowed) {
-          return;
-        }
-      } catch {}
+    // Exact origin match (scheme, host and port), never a prefix: a prefix
+    // match would let https://madnessgame.app.evil.com through.
+    const allowed = new Set(
+      allowedOrigins.map(toOrigin).filter((o): o is string => o !== null)
+    );
+    // The Origin header decides when present; Referer only stands in when it is missing.
+    const source = origin ?? referer;
+    if (source && allowed.has(toOrigin(source) ?? "")) {
+      return;
     }
 
     throw new ValidationError("Request origin not allowed", "INVALID_ORIGIN");
