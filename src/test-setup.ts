@@ -3,6 +3,8 @@ import { beforeAll, vi } from "vitest";
 // Mock Supabase environment variables before any imports
 vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
 vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "test-anon-key");
+// Fixed fake 48-character value for the field token tests (not a real secret)
+vi.stubEnv("GAME_SIGNING_SECRET", "test-signing-secret-".padEnd(48, "0"));
 
 // Mock the Supabase client module to prevent actual API calls
 vi.mock("@/infrastructure/db/supabaseClient", () => ({

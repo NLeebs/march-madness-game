@@ -1,9 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, appStateActions, tournamentActions } from "@/store";
 import { delay } from "@/src/functions";
+import { usePlaySeason } from "@/src/hooks";
+import { storeSeason } from "@/src/utils";
+import type { ConferenceMap } from "@/models";
 import { BasketballSVG } from "@/src/components/Graphics";
 import {
   SMALL_BREAK_POINT,
@@ -36,6 +39,20 @@ export const StartButton = ({
     (state) => state.appState.transition
   );
 
+  const teamStats = useSelector<RootState, ConferenceMap>(
+    (state) => state.teamStats.teamStats
+  );
+  // Stored from the mutation's own onSuccess: the start screen is gone a
+  // second after Start, before a slow response arrives.
+  const { mutate } = usePlaySeason({
+    onSuccess: (result) => storeSeason(dispatch, result, teamStats),
+  });
+  // The season request goes once per game; a second click does nothing.
+  const startedRef = useRef(false);
+  // Errors thrown in a click handler skip the error boundary; rethrow during render.
+  const [submitError, setSubmitError] = useState<unknown>(null);
+  if (submitError) throw submitError;
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       const centerX = window.innerWidth / 2;
@@ -59,14 +76,22 @@ export const StartButton = ({
   }, [screenWidth, isTranstion]);
 
   const activateRegularSeason = async () => {
-    dispatch(appStateActions.activateTransition());
-    await Promise.all([delay(TIMER_BETWEEN_APP_STATES)]).then(() => {
-      dispatch(tournamentActions.setYearId(yearId));
-      dispatch(
-        tournamentActions.setTournamentScoringRulesId(tournamentScoringRuleId)
-      );
-      dispatch(appStateActions.activateRegularSeason());
-    });
+    if (startedRef.current) return;
+    startedRef.current = true;
+    try {
+      // The server plays the season while the transition runs.
+      mutate({ yearId });
+      dispatch(appStateActions.activateTransition());
+      await Promise.all([delay(TIMER_BETWEEN_APP_STATES)]).then(() => {
+        dispatch(tournamentActions.setYearId(yearId));
+        dispatch(
+          tournamentActions.setTournamentScoringRulesId(tournamentScoringRuleId)
+        );
+        dispatch(appStateActions.activateRegularSeason());
+      });
+    } catch (error) {
+      setSubmitError(error);
+    }
   };
 
   return (

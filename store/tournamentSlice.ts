@@ -24,6 +24,8 @@ export { ROUND_POINTS } from "@/src/functions/tournament/scoreRound";
 
 export interface TournamentState extends BracketMatchups {
   yearId: string;
+  /** Signed by the server with the season results; the tournament request sends it. */
+  fieldToken: string;
   tournamentScoringRulesId: string;
   tournamentTeams: string[];
   tournamentSeeds: {
@@ -40,6 +42,7 @@ export interface TournamentState extends BracketMatchups {
 
 const initalState: TournamentState = {
   yearId: "",
+  fieldToken: "",
   tournamentScoringRulesId: "",
   tournamentTeams: [],
   tournamentSeeds: {
@@ -64,6 +67,9 @@ const tournamentSlice = createSlice({
     restartGame: () => initalState,
     setYearId(state, action: PayloadAction<string>) {
       state.yearId = action.payload;
+    },
+    setFieldToken(state, action: PayloadAction<string>) {
+      state.fieldToken = action.payload;
     },
     setTournamentScoringRulesId(state, action: PayloadAction<string>) {
       state.tournamentScoringRulesId = action.payload;

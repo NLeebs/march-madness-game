@@ -36,31 +36,10 @@ const picks = z
   })
   .strict();
 
-const field = z
-  .object({
-    tournamentTeams: z.array(teamName).length(60),
-    playinTeams: z
-      .object({
-        elevenSeeds: z.array(teamName).length(4),
-        sixteenSeeds: z.array(teamName).length(4),
-      })
-      .strict(),
-  })
-  .strict()
-  .refine(
-    (f) =>
-      new Set([
-        ...f.tournamentTeams,
-        ...f.playinTeams.elevenSeeds,
-        ...f.playinTeams.sixteenSeeds,
-      ]).size === 68,
-    { message: "All 68 team names must be distinct" }
-  );
-
 export const SimulationRequestSchema = z
   .object({
-    yearId: z.string().uuid(),
-    field,
+    // Signed by POST /api/season; the year and field come only from it.
+    fieldToken: z.string().min(1),
     picks,
     anonUserId: z.string().uuid().nullable().optional(),
   })

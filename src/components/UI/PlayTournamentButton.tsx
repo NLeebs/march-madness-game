@@ -13,12 +13,8 @@ export const PlayTournamentButton = () => {
   const playerPicksObj = useSelector(
     (state: RootState) => state.tournamentPlayersPicks.picks
   );
-  const yearId = useSelector((state: RootState) => state.tournament.yearId);
-  const tournamentTeams = useSelector(
-    (state: RootState) => state.tournament.tournamentTeams
-  );
-  const playinTeams = useSelector(
-    (state: RootState) => state.tournament.playinTeams
+  const fieldToken = useSelector(
+    (state: RootState) => state.tournament.fieldToken
   );
   const { user } = useAuth();
   const { mutate, isPending } = usePlayTournament();
@@ -47,8 +43,7 @@ export const PlayTournamentButton = () => {
     submittedRef.current = true;
     mutate(
       {
-        yearId,
-        field: { tournamentTeams, playinTeams },
+        fieldToken,
         picks: playerPicksObj,
         anonUserId,
       },

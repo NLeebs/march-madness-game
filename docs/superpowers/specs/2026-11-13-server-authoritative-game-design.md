@@ -90,6 +90,8 @@ A pure `simulateTournament({ field, picks, teamStats, points, rng })` in `src/fu
 
 ## 9b: regular season and Selection Sunday on the server
 
+Built as designed in `docs/superpowers/specs/2026-11-20-step9b-server-season-design.md`, which supersedes the sketch below.
+
 ### Flow
 
 1. Starting a game posts to a new endpoint (e.g. `POST /api/season`, origin-checked, rate-limited). The server loads team stats, builds the schedule (`createSeasonSchedule`), plays every regular-season game, runs Selection Sunday (`selectTournamentField`) and seeds the field.

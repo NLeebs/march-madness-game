@@ -22,7 +22,8 @@ export interface FullRun {
 
 /**
  * One whole game on a fresh fast store with a single seeded Math.random stream:
- * configure -> activateRegularSeason -> playSeason -> render SelectionSunday ->
+ * configure -> activateRegularSeason -> playSeason (simulateSeason, stored and
+ * replayed) -> render SelectionSunday (the stored selection) ->
  * playTournament (chalk picks). Fake timers are switched on by playSeason; the
  * caller restores real timers and calls cleanup(). Math.random is restored here.
  */

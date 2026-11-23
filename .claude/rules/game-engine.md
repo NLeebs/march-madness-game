@@ -9,9 +9,9 @@ paths:
 ---
 # Game engine (simulation, selection, bracket, scoring)
 
-The game loop runs in the browser, except the tournament, which the server plays:
+Steps 1-3 and 6 of the game loop run on the server and the browser replays them; steps 4-5 run in the browser (the server re-seeds from the field token to validate picks). Steps 1-3 run in `simulateSeason` (`POST /api/season`), which also signs the field token; `PlayRegularSeasonGames` and `SelectionSunday` replay `regularSeasonRecords.season` (the `SeasonSchedule` component is gone):
 1. schedule (`createSeasonSchedule`);
-2. regular season (`PlayRegularSeasonGames` → `playGame`);
+2. regular season (`playGame`);
 3. Selection Sunday (`selectTournamentField`);
 4. seeding and bracket (`src/functions/tournament/`, stored by `tournamentSlice`);
 5. picks (`applyPick`, stored by `tournamentPlayersPicksSlice`);
@@ -53,11 +53,11 @@ Changing the order or number of random draws without changing the game (e.g. mov
   - `tests/game/helpers/fastStore.ts` `createFastStore()` turns off Redux Toolkit's dev checks, which still make season play (one `addRegularSeasonGameResult` per game) slow.
   - `recordActions()` (in `renderWithStore.tsx`) captures dispatched actions. Use it instead of `vi.spyOn` on barrel exports, which doesn't intercept component imports.
 - `tests/game/helpers/runGame.ts`:
-  - `playSeason` uses fake timers for `delay`;
+  - `playSeason` runs `simulateSeason`, stores it with `storeSeason`, then replays it under fake timers for `delay`;
   - `buildRecords`;
   - `pickChalk` uses `getNextRoundInfo`, exported from `TournamentMatchup.tsx`;
   - `playTournament` calls `simulateTournament` (as the server does), stores the result in `tournament.simulation`, then mounts the drivers under a hand-copy of `App.tsx`'s conditions (finding 41: keep the two in sync until they share a component).
-- `tests/game/helpers/fullRun.ts` `playFullGame(seed)` runs one seeded stream from schedule to champion.
+- `tests/game/helpers/fullRun.ts` `playFullGame(seed)` runs one seeded stream from schedule to champion (`simulateSeason` + `storeSeason`, then the tournament).
 - Heavy tests (360-team schedules, seasons, tournaments) pass `GAME_TEST_TIMEOUT` (`tests/game/helpers/timeout.ts`). Vitest's 5 s default fails under load. `npx vitest run tests/game` should stay under about 40 s.
 
 ## Known oddities pinned as current behaviour

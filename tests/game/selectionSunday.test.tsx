@@ -8,6 +8,7 @@ import { createFastStore } from "./helpers/fastStore";
 import { recordActions, renderWithStore } from "./helpers/renderWithStore";
 import { buildRecords } from "./helpers/runGame";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
+import { selectTournamentField } from "@/src/functions/regularSeason/selectTournamentField";
 import type { RegularSeasonTeam } from "@/types";
 
 afterEach(() => cleanup());
@@ -24,7 +25,11 @@ const champions = confs.map(firstOf);
 const idx = (t: string) => allTeams.indexOf(t);
 const nonChampions = allTeams.filter((t) => !champions.includes(t));
 
-/** Renders SelectionSunday on a store preloaded with the given records. */
+/**
+ * Renders SelectionSunday on a store preloaded with the given records and the
+ * season the server would send for them (its selection is selectTournamentField
+ * of those records).
+ */
 function run(
   records: Record<string, RegularSeasonTeam>,
   tournamentTeams: string[] = [],
@@ -37,7 +42,11 @@ function run(
     extraMiddleware: [middleware],
     preloadedState: {
       ...base,
-      regularSeasonRecords: { weeksPlayed: 30, records },
+      regularSeasonRecords: {
+        weeksPlayed: 30,
+        records,
+        season: { weeks: [], selection: selectTournamentField(records, league.conferenceArrays) },
+      },
       appState: { ...base.appState, selectionSunday: true },
       tournament: { ...base.tournament, tournamentTeams },
     },
