@@ -1,4 +1,5 @@
 export * from "./getTournamentGameResultObj";
+export * from "./getReplayRound";
 export * from "./roundConfig";
 export * from "./seedTournament";
 export * from "./buildRoundOneMatchups";
