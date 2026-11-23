@@ -267,6 +267,67 @@ describe("drivers replay the stored simulation", () => {
     }
   }, GAME_TEST_TIMEOUT);
 
+  it("drivers dispatch the whole replay in today's order", async () => {
+    const { store, actions } = fieldStore(3);
+    const seeded = seedMathRandom(3);
+    try {
+      const before = actions.length;
+      await playTournament(store);
+      const after = actions.slice(before);
+      const first = after.findIndex(
+        (a) => a.type === "tournamentPlayersPicks/replacePlayinPicksWithWinner",
+      );
+      expect(first).toBeGreaterThanOrEqual(0);
+      const mine = after.slice(first).map((a) => ({ type: a.type, payload: a.payload }));
+
+      const simulation = store.getState().tournament.simulation!;
+      const picks = store.getState().tournamentPlayersPicks.picks;
+      const next: { type: string; payload?: unknown }[][] = [
+        [{ type: "appState/activateTournamentRoundTwo", payload: undefined }],
+        [{ type: "appState/activateTournamentSweetSixteen", payload: undefined }],
+        [{ type: "appState/activateTournamentEliteEight", payload: undefined }],
+        [{ type: "appState/activateTournamentFinalFour", payload: undefined }],
+        [{ type: "appState/activateTournamentFinals", payload: undefined }],
+        [
+          { type: "appState/activateTournamentRecap", payload: undefined },
+          { type: "uiState/toggleRecapDialog", payload: undefined },
+        ],
+      ];
+      const expected = [
+        ...simulation.playin.flatMap((r) => [
+          {
+            type: "tournamentPlayersPicks/replacePlayinPicksWithWinner",
+            payload: { gameIndex: r.gameIndex, winningTeam: r.winningTeam, seedType: r.seedType },
+          },
+          { type: "tournament/setPlayinGameResults", payload: r },
+        ]),
+        { type: "appState/activateTournamentStandardGames", payload: undefined },
+        ...ROUNDS.flatMap((r, i) => {
+          const round = r as ScoredRound;
+          return [
+            ...simulation.rounds[round].map((results) => ({
+              type: "tournament/setTournamentGameResults",
+              payload: { results, round },
+            })),
+            {
+              type: "tournament/recordRoundScore",
+              payload: {
+                round,
+                winningTeams: simulation.rounds[round].map((g) => g.winningTeam),
+                points: simulation.roundPoints[round],
+                picks: picks[PICK_KEYS[i]],
+              },
+            },
+            ...next[i],
+          ];
+        }),
+      ];
+      expect(mine).toEqual(expected);
+    } finally {
+      seeded.restore();
+    }
+  }, GAME_TEST_TIMEOUT);
+
   it("playerScore equals simulation.score", async () => {
     const { store } = fieldStore(4);
     const seeded = seedMathRandom(4);
