@@ -21,7 +21,8 @@ export interface PlayTournamentDto {
   anonUserId: string | null;
 }
 
-export type PlayTournamentResult = TournamentPlayResult & { bracketId: string };
+/** bracketId is null when nothing was saved (a preview deployment). */
+export type PlayTournamentResult = TournamentPlayResult & { bracketId: string | null };
 
 const FIELD_SIZE = 68;
 
@@ -41,7 +42,9 @@ const ROUND_BY_NAME: Readonly<Record<string, TournamentRound>> = {
  * stored round points, and saves the bracket, its games and picks in one RPC.
  * Bad input (no owner, a field team unknown for the year, inconsistent picks)
  * throws ValidationError; anything else (load or save failures) is a server
- * error.
+ * error. On a Vercel preview deployment (VERCEL_ENV=preview, which shares the
+ * production database) it validates, plays and scores but does not save, so
+ * play-tests stay out of the stats.
  */
 export async function playTournament({
   fieldToken,
@@ -127,6 +130,10 @@ export async function playTournament({
     points,
     rng: Math.random,
   });
+
+  if (process.env.VERCEL_ENV === "preview") {
+    return { bracketId: null, ...result };
+  }
 
   const roundIdMap = new Map<TournamentRound, string>();
   rounds.forEach((round) => {
