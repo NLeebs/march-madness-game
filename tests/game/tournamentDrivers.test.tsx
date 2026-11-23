@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, it, expect, afterEach, vi } from "vitest";
-import { cleanup } from "@testing-library/react";
+import { act, cleanup } from "@testing-library/react";
 import type { AnyAction } from "@reduxjs/toolkit";
 import { SelectionSunday } from "@/src/components/RegularSeason/SelectionSunday";
 import { createFastStore } from "./helpers/fastStore";
@@ -15,6 +15,7 @@ import type { ScoredRound } from "@/types";
 import { getNextRoundInfo } from "@/src/components/Tournament/TournamentMatchup";
 import { PlayTournamentGames } from "@/src/components/Tournament/PlayTournamentGames";
 import { PlayPlayinGames } from "@/src/components/Tournament/PlayPlayinGames";
+import { TournamentReplay } from "@/src/components/Tournament/TournamentReplay";
 import { GameDataError } from "@/src/functions/generic/GameDataError";
 
 afterEach(() => cleanup());
@@ -389,4 +390,26 @@ describe("drivers without a simulation", () => {
     expect(errors[0]).toBeInstanceOf(GameDataError);
     expect(store.getState().appState.tournamentPlayGames).toBe(false);
   });
+});
+
+describe("TournamentReplay", () => {
+  it("TournamentReplay replays nothing once the tournament is over", async () => {
+    const { store, actions } = fieldStore(5);
+    const seeded = seedMathRandom(5);
+    try {
+      await playTournament(store);
+      cleanup();
+      const before = actions.length;
+      await act(async () => {
+        renderWithStore(<TournamentReplay />, store);
+      });
+      const replayed = actions
+        .slice(before)
+        .filter((a) => a.type.startsWith("tournament") || a.type.startsWith("appState/activate"));
+      expect(replayed).toEqual([]);
+      expect(store.getState().appState.tournamentRecap).toBe(true);
+    } finally {
+      seeded.restore();
+    }
+  }, GAME_TEST_TIMEOUT);
 });

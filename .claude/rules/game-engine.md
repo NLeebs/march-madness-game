@@ -56,7 +56,7 @@ Changing the order or number of random draws without changing the game (e.g. mov
   - `playSeason` runs `simulateSeason`, stores it with `storeSeason`, then replays it under fake timers for `delay`;
   - `buildRecords`;
   - `pickChalk` uses `getNextRoundInfo`, exported from `TournamentMatchup.tsx`;
-  - `playTournament` calls `simulateTournament` (as the server does), stores the result in `tournament.simulation`, then mounts the drivers under a hand-copy of `App.tsx`'s conditions (finding 41: keep the two in sync until they share a component).
+  - `playTournament` calls `simulateTournament` (as the server does), stores the result in `tournament.simulation`, then mounts `TournamentReplay`, the same component `App.tsx` uses to mount the drivers.
 - `tests/game/helpers/fullRun.ts` `playFullGame(seed)` runs one seeded stream from schedule to champion (`simulateSeason` + `storeSeason`, then the tournament).
 - Heavy tests (360-team schedules, seasons, tournaments) pass `GAME_TEST_TIMEOUT` (`tests/game/helpers/timeout.ts`). Vitest's 5 s default fails under load. `npx vitest run tests/game` should stay under about 40 s.
 
