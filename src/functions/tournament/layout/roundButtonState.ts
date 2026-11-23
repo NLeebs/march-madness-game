@@ -5,6 +5,7 @@ import {
   XXL_LARGE_BREAK_POINT,
   XXXL_LARGE_BREAK_POINT,
 } from "@/src/constants";
+import { ROUND_STATE_KEYS } from "./roundStateKeys";
 import type { TournamentPicks, TournamentPlayerPickRound, TournamentRound } from "@/types";
 
 /** "unchanged" = framer-motion leaves the button as it is. */
@@ -44,14 +45,18 @@ export function getRoundButtonState(
   return index === first ? "default" : "unchanged";
 }
 
-/** The pick rounds a round's button checks off once complete. */
-const BUTTON_PICKS: Partial<Record<TournamentRound, TournamentPlayerPickRound[]>> = {
-  2: ["roundTwoPicks"],
-  "sweet sixteen": ["roundSweetSixteenPicks"],
-  "elite eight": ["roundEliteEightPicks"],
-  "final four": ["roundFinalFourPicks"],
-  finals: ["roundFinalsPicks", "champion"],
-};
+/**
+ * The pick rounds a round's button checks off once complete: the picks its column shows,
+ * and the finals button also the champion. Round 1 has no picks of its own.
+ */
+const BUTTON_PICKS: Partial<Record<TournamentRound, TournamentPlayerPickRound[]>> = Object.fromEntries(
+  BUTTON_ROUNDS.filter((round) => round !== 1).map((round) => [
+    round,
+    round === "finals"
+      ? [ROUND_STATE_KEYS.finals.picksKey, ROUND_STATE_KEYS.champion.picksKey]
+      : [ROUND_STATE_KEYS[round].picksKey],
+  ]),
+);
 
 /** Whether every pick shown in a round's column is made. Round 1 has no picks of its own. */
 export function areRoundPicksComplete(round: TournamentRound, picks: TournamentPicks): boolean {
