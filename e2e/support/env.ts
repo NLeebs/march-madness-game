@@ -19,5 +19,4 @@ export const E2E_ENV: Record<string, string> = {
   NEXT_PUBLIC_APP_URL: `http://127.0.0.1:${E2E_PORT}`,
   NEXT_PUBLIC_E2E: "1",
   NEXT_PUBLIC_BROWSER_ANON_KEY: ANON_USER_ID_STORAGE_KEY,
-  NEXT_PUBLIC_APP_MODE: "",
 };

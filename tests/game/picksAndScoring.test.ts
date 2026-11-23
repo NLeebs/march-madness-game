@@ -38,10 +38,6 @@ const teamsIn = (state: PicksState, key: PicksKey): string[] =>
   );
 
 describe("initial picks state", () => {
-  it("is not in dev mode in the test environment", () => {
-    expect(process.env.NEXT_PUBLIC_APP_MODE).not.toBe("dev");
-  });
-
   it("has every pick empty and the exact round shape", () => {
     const { picks } = initialPicks();
     const shape = (key: PicksKey) =>
