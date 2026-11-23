@@ -132,8 +132,6 @@ export function pickChalk(store: AppStore): void {
   }
 }
 
-/** Renders the two drivers under the same conditions App.tsx mounts them. */
-
 /**
  * Plays a whole tournament on a store that already holds a field (Selection
  * Sunday has run): activates the tournament, builds round one, picks chalk,

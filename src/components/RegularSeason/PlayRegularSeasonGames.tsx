@@ -33,7 +33,8 @@ export const PlayRegularSeasonGames: React.FC = () => {
     if (!season) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
-    const start = Date.now();
+    // performance.now() only moves forward; Date.now() jumps with wall-clock changes.
+    const start = performance.now();
     const firstWeek = store.getState().regularSeasonRecords.weeksPlayed;
 
     const scheduleWeek = (week: number) => {
@@ -48,7 +49,7 @@ export const PlayRegularSeasonGames: React.FC = () => {
         );
         dispatch(regularSeasonRecordActions.addWeekPlayedToTotal());
         scheduleWeek(week + 1);
-      }, Math.max(0, due - Date.now()));
+      }, Math.max(0, due - performance.now()));
     };
     scheduleWeek(firstWeek);
 

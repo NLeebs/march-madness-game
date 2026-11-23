@@ -152,13 +152,16 @@ describe("PlayRegularSeasonGames", () => {
     "a slow week delays the next one without skipping or doubling",
     async () => {
       vi.useFakeTimers();
+      // The replay paces itself with performance.now(), so a slow week is
+      // modelled as that clock jumping 400 ms while week 1 is applied.
       let slowed = false;
+      const fakeNow = performance.now.bind(performance);
+      const nowSpy = vi
+        .spyOn(performance, "now")
+        .mockImplementation(() => fakeNow() + (slowed ? 400 : 0));
       const slowFirstWeek: Middleware = () => (next) => (action) => {
         const result = next(action);
-        if (!slowed && (action as AnyAction).type === WEEK) {
-          slowed = true;
-          vi.setSystemTime(Date.now() + 400);
-        }
+        if ((action as AnyAction).type === WEEK) slowed = true;
         return result;
       };
       const { store, actions } = setup({ withSeason: true, extra: [slowFirstWeek] });
@@ -174,6 +177,7 @@ describe("PlayRegularSeasonGames", () => {
 
       expectFullReplay(actions);
       expect(store.getState().regularSeasonRecords.weeksPlayed).toBe(30);
+      nowSpy.mockRestore();
     },
     GAME_TEST_TIMEOUT
   );

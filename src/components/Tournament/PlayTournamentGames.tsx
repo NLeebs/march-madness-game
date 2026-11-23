@@ -8,8 +8,7 @@ import {
   tournamentActions,
 } from "@/store";
 import { GameDataError } from "@/src/functions/generic";
-import { getReplayRound } from "@/src/functions/tournament/getReplayRound";
-import { ROUND_CONFIG } from "@/src/functions/tournament/roundConfig";
+import { getReplayRound, ROUND_CONFIG } from "@/src/functions/tournament";
 import type { ScoredRound } from "@/types";
 
 /** What to dispatch after a round has been replayed and scored. */

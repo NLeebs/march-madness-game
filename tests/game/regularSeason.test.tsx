@@ -1,3 +1,4 @@
+import React from "react";
 import { describe, it, expect, afterEach, vi } from "vitest";
 import { act, cleanup } from "@testing-library/react";
 import { regularSeasonRecordActions } from "@/store";
@@ -9,6 +10,10 @@ import { playSeason } from "./helpers/runGame";
 import { buildLeague, configureStoreForLeague } from "@/tests/factories";
 import type { GameResult } from "@/types";
 import { GAME_TEST_TIMEOUT } from "./helpers/timeout";
+import { renderWithStore } from "./helpers/renderWithStore";
+import { PlayRegularSeasonGames } from "@/src/components/RegularSeason/PlayRegularSeasonGames";
+import { compactSeason } from "@/src/functions/regularSeason/seasonWire";
+import { storeSeason } from "@/src/utils/storeSeason";
 
 const result = (over: Partial<GameResult>): GameResult => ({
   favoredTeam: "fav",
@@ -164,5 +169,40 @@ describe("PlayRegularSeasonGames season invariants", () => {
     }
     expect(wins).toBe(totalGames);
     expect(losses).toBe(totalGames);
+  }, GAME_TEST_TIMEOUT);
+});
+
+describe("PlayRegularSeasonGames pacing", () => {
+  afterEach(() => {
+    cleanup();
+    vi.useRealTimers();
+  });
+
+  it("keeps replaying weeks when the wall clock is set back mid-season", async () => {
+    vi.useFakeTimers();
+    const league = buildLeague();
+    const store = createFastStore();
+    configureStoreForLeague(store, league);
+    const seeded = seedMathRandom(1);
+    try {
+      const wire = compactSeason(simulateSeason(league.teamStats));
+      storeSeason(store.dispatch, { ...wire, yearId: "test-year", fieldToken: "test-token" }, league.teamStats);
+    } finally {
+      seeded.restore();
+    }
+    renderWithStore(React.createElement(PlayRegularSeasonGames), store);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+    const weeksBefore = store.getState().regularSeasonRecords.weeksPlayed;
+    expect(weeksBefore).toBeGreaterThan(0);
+
+    // An NTP correction or manual change moves Date.now() back an hour.
+    vi.setSystemTime(Date.now() - 60 * 60 * 1000);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(10_000);
+    });
+    expect(store.getState().regularSeasonRecords.weeksPlayed).toBe(30);
+    expect(store.getState().appState.selectionSunday).toBe(true);
   }, GAME_TEST_TIMEOUT);
 });
