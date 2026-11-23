@@ -355,6 +355,14 @@ describe("playTournament", () => {
       await expect(playTournament(buildDto({ fieldToken: "not.a-token" }))).rejects.toBeInstanceOf(ValidationError);
     });
 
+    it("on a preview deployment, still fails when the save payload can't be built", async () => {
+      vi.stubEnv("VERCEL_ENV", "preview");
+      mocks.getRounds.mockResolvedValue(rounds.filter((r) => r.round_name !== "finals"));
+
+      await expect(playTournament(buildDto())).rejects.toThrow("Round ID not found for round: finals");
+      expect(mocks.persistBracket).not.toHaveBeenCalled();
+    });
+
     it("in production, saves", async () => {
       vi.stubEnv("VERCEL_ENV", "production");
 

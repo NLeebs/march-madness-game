@@ -117,10 +117,6 @@ export async function playTournament({
     rng: Math.random,
   });
 
-  if (process.env.VERCEL_ENV === "preview") {
-    return { bracketId: null, ...result };
-  }
-
   const roundIdMap = new Map<TournamentRound, string>();
   rounds.forEach((round) => {
     const key = ROUND_BY_NAME[round.round_name];
@@ -142,6 +138,11 @@ export async function playTournament({
       roundIdMap,
     }),
   };
+
+  // Build the payload even on a preview, so a play-test catches mapping errors; only the save is skipped.
+  if (process.env.VERCEL_ENV === "preview") {
+    return { bracketId: null, ...result };
+  }
 
   const bracketId = await repository.persistBracket(payload);
 
