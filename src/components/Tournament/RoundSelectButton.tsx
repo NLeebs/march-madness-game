@@ -20,8 +20,8 @@ import {
 import type { TournamentRound } from "@/types";
 
 /**
- * The animate target per state. Only "shrink" sets the color and font size, so a button
- * that shrank and comes back keeps them.
+ * The animate target per state. Only "shrink" sets the color and font size; when a button
+ * leaves "shrink", framer-motion animates them back to their `initial` values.
  */
 const BUTTON_ANIMATE: Record<
   RoundButtonState,
