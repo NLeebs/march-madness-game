@@ -1,4 +1,5 @@
 import { TournamentRepository } from "@/infrastructure/db/TournamentRepository";
+import { ROUND_BY_NAME } from "@/infrastructure/db/roundNames";
 import { getTeamStatisticsByYearId } from "@/application/useCases/team/GetTeamStatisticsByYearId";
 import { mapBracketToPayloadGames } from "@/application/mappers/mapBracketToPayload";
 import {
@@ -20,19 +21,7 @@ export interface PlayTournamentDto {
   anonUserId: string | null;
 }
 
-
 const FIELD_SIZE = 68;
-
-/** rounds.round_name -> round identifier. */
-const ROUND_BY_NAME: Readonly<Record<string, TournamentRound>> = {
-  "1": 1,
-  "2": 2,
-  "sweet sixteen": "sweet sixteen",
-  "elite eight": "elite eight",
-  "final four": "final four",
-  finals: "finals",
-  champion: "champion",
-};
 
 /**
  * Plays the tournament on the server for a player's picks, scores it with the

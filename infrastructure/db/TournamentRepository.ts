@@ -11,17 +11,9 @@ import {
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database";
 import type { RoundPoints } from "@/src/functions/tournament";
+import { SCORED_ROUNDS } from "@/src/functions/tournament/roundConfig";
 import type { ScoredRound } from "@/types";
-
-/** rounds.round_name -> the scored round it holds. "champion" is not scored. */
-const SCORED_ROUND_BY_NAME: Readonly<Record<string, ScoredRound>> = {
-  "1": 1,
-  "2": 2,
-  "sweet sixteen": "sweet sixteen",
-  "elite eight": "elite eight",
-  "final four": "final four",
-  finals: "finals",
-};
+import { scoredRoundByName } from "@/infrastructure/db/roundNames";
 
 export class TournamentRepository {
   private supabase: SupabaseClient<Database>;
@@ -186,14 +178,14 @@ export class TournamentRepository {
     const points: Partial<Record<ScoredRound, number>> = {};
     data.forEach((row) => {
       const round = row.rounds
-        ? SCORED_ROUND_BY_NAME[row.rounds.round_name]
+        ? scoredRoundByName(row.rounds.round_name)
         : undefined;
       if (round !== undefined && points[round] === undefined && row.score !== null) {
         points[round] = row.score;
       }
     });
 
-    const missing = Object.values(SCORED_ROUND_BY_NAME).filter(
+    const missing = SCORED_ROUNDS.filter(
       (round) => points[round] === undefined
     );
     if (missing.length > 0) {
