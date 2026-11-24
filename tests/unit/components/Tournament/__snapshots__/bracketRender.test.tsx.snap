@@ -9191,7 +9191,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
         matchups[elite eight:east:0 x1]
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourTop_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:eastWest:0 x1]
     div class="h-max _gridFinal_634cfe"
       div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
@@ -9205,7 +9205,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
         i stub=RestartGameButton
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:southMidwest:0 x1]
     div testid=bracket-column-elite-eight class="overflow-x-clip h-max _gridEliteEightBottom_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
@@ -9260,7 +9260,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
         matchups[elite eight:east:0 x1]
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourTop_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:eastWest:0 x1]
     div class="h-max _gridFinal_634cfe"
       div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
@@ -9274,7 +9274,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
         i stub=RestartGameButton
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:southMidwest:0 x1]
     div testid=bracket-column-elite-eight class="overflow-x-clip h-max _gridEliteEightBottom_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
@@ -9329,7 +9329,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
         matchups[elite eight:east:0 x1]
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourTop_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:eastWest:0 x1]
     div class="h-max _gridFinal_634cfe"
       div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
@@ -9343,7 +9343,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
         i stub=RestartGameButton
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:southMidwest:0 x1]
     div testid=bracket-column-elite-eight class="overflow-x-clip h-max _gridEliteEightBottom_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
@@ -9398,7 +9398,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
         matchups[elite eight:east:0 x1]
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourTop_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:eastWest:0 x1]
     div class="h-max _gridFinal_634cfe"
       div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
@@ -9412,7 +9412,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
         i stub=RestartGameButton
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:southMidwest:0 x1]
     div testid=bracket-column-elite-eight class="overflow-x-clip h-max _gridEliteEightBottom_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
@@ -9467,7 +9467,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
         matchups[elite eight:east:0 x1]
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourTop_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:eastWest:0 x1]
     div class="h-max _gridFinal_634cfe"
       div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
@@ -9481,7 +9481,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
         i stub=RestartGameButton
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:southMidwest:0 x1]
     div testid=bracket-column-elite-eight class="overflow-x-clip h-max _gridEliteEightBottom_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
@@ -9536,7 +9536,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
         matchups[elite eight:east:0 x1]
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourTop_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:eastWest:0 x1]
     div class="h-max _gridFinal_634cfe"
       div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
@@ -9550,7 +9550,7 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
         button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
         i stub=RestartGameButton
     div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+      div class="flex m-4 flex-col" animate={"rowGap":"15.5rem","paddingTop":"44.5rem","paddingBottom":"36.75rem"}
         matchups[final four:southMidwest:0 x1]
     div testid=bracket-column-elite-eight class="overflow-x-clip h-max _gridEliteEightBottom_634cfe" animate={"width":"max-content","height":"max-content"}
       div class="flex m-4 flex-col" animate={"rowGap":"18rem","paddingTop":"19rem","paddingBottom":"22.5rem"}
