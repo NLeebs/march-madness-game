@@ -4,16 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, tournamentActions, uiStateActions } from "@/store";
 import {
   BracketColumn,
-  Button,
-  PlayerScore,
   PlayTournamentButton,
-  RestartGameButton,
   RoundSelectBanner,
+  TournamentActions,
   TournamentRound,
 } from "@/src/components";
 import { motion } from "framer-motion";
 import styles from "@/src/components/Tournament/css/Tournament.module.css";
-import { PRIMARY_COLOR, TOURNAMENT_BREAK_POINT } from "@/src/constants";
+import { TOURNAMENT_BREAK_POINT } from "@/src/constants";
 import { BRACKET_ROUNDS, getRoundLayout } from "@/src/functions/tournament";
 
 /** The top half's columns run outside-in; the bottom half mirrors them. */
@@ -39,13 +37,83 @@ export const Tournament = () => {
       dispatch(uiStateActions.selectRound({ newRound: 1 }));
   }, [dispatch, screenWidth]);
 
-  const showTournamentRecapButtonHandler = () => {
-    dispatch(uiStateActions.toggleRecapDialog());
-  };
-
   const layout = getRoundLayout(selectedRound, screenWidth);
   const wide = screenWidth > TOURNAMENT_BREAK_POINT;
   const roundOneSize = layout[1].expanded ? "max-content" : 0;
+  const tournamentOver = appState.tournamentPlayGames || appState.tournamentRecap;
+
+  const grid = (
+    <div
+      className={`relative grid ${wide ? "grid-flow-col" : `${styles.tournamentGrid} overflow-x-clip`}`}
+    >
+      {BRACKET_ROUNDS.map((round) => (
+        <BracketColumn
+          key={`top-${round}`}
+          round={round}
+          half="top"
+          layout={layout[round]}
+          wide={wide}
+        />
+      ))}
+
+      {/* Finals  */}
+      <div
+        className={
+          wide ? "col-span-1 flex flex-col gap-y-4" : `h-max ${styles.gridFinal}`
+        }
+      >
+        <div
+          data-testid="bracket-column-finals"
+          className="flex flex-col gap-y-16 min-w-300"
+        >
+          <TournamentRound
+            region="championship"
+            round="finals"
+            roundUIPosition="finals"
+          />
+        </div>
+        <div
+          data-testid="bracket-column-champion"
+          className="flex flex-col gap-y-16 min-w-300"
+        >
+          <TournamentRound
+            region="champion"
+            round="champion"
+            roundUIPosition={0}
+          />
+        </div>
+        {appState.tournamentSelection && <PlayTournamentButton />}
+        {wide && <TournamentActions />}
+      </div>
+
+      {BOTTOM_ROUNDS.map((round) => (
+        <BracketColumn
+          key={`bottom-${round}`}
+          round={round}
+          half="bottom"
+          layout={layout[round]}
+          wide={wide}
+        />
+      ))}
+
+      {/* Playin Games Smaller Screens  */}
+      {!wide && (
+        <motion.div
+          data-testid="bracket-column-playin"
+          initial={false}
+          animate={{ width: roundOneSize, height: roundOneSize }}
+          className={`overflow-hidden h-max ${styles.gridRound64} flex flex-col`}
+        >
+          <div className={`${styles.regionTitle} m-4`}>Playin Games</div>
+          <TournamentRound
+            region="playin"
+            round="playin"
+            roundUIPosition={layout[1].position}
+          />
+        </motion.div>
+      )}
+    </div>
+  );
 
   return (
     <motion.div
@@ -55,90 +123,21 @@ export const Tournament = () => {
     >
       {!wide && <RoundSelectBanner />}
 
-      <div
-        className={`relative grid ${
-          wide
-            ? "grid-flow-col"
-            : `${styles.tournamentGrid} w-screen h-[calc(100vh-9rem)] overflow-x-hidden overflow-y-scroll scrollable-container pb-12`
-        }`}
-      >
-        {BRACKET_ROUNDS.map((round) => (
-          <BracketColumn
-            key={`top-${round}`}
-            round={round}
-            half="top"
-            layout={layout[round]}
-            wide={wide}
-          />
-        ))}
-
-        {/* Finals  */}
+      {wide ? (
+        grid
+      ) : (
+        // The narrow bracket scrolls vertically. The grid clips its off-screen rounds with
+        // overflow-x: clip, not hidden: a clip box is not a scroll container, so focus or
+        // scrollIntoView can't shift it sideways. The post-tournament actions sit above the grid,
+        // under the banner, so they are reachable whichever round is selected (finding 47).
         <div
-          className={
-            wide ? "col-span-1 flex flex-col gap-y-4" : `h-max ${styles.gridFinal}`
-          }
+          data-testid="bracket-scroll"
+          className="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
         >
-          <div
-            data-testid="bracket-column-finals"
-            className="flex flex-col gap-y-16 min-w-300"
-          >
-            <TournamentRound
-              region="championship"
-              round="finals"
-              roundUIPosition="finals"
-            />
-          </div>
-          <div
-            data-testid="bracket-column-champion"
-            className="flex flex-col gap-y-16 min-w-300"
-          >
-            <TournamentRound
-              region="champion"
-              round="champion"
-              roundUIPosition={0}
-            />
-          </div>
-          {appState.tournamentSelection && <PlayTournamentButton />}
-          <div className="flex flex-col justify-start items-center gap-4 mb-4">
-            {appState.tournamentPlayGames && <PlayerScore />}
-            {appState.tournamentRecap && (
-              <Button
-                onClick={showTournamentRecapButtonHandler}
-                text="See Recap"
-                backgroundColor={PRIMARY_COLOR}
-              />
-            )}
-            {appState.tournamentRecap && <RestartGameButton />}
-          </div>
+          {tournamentOver && <TournamentActions />}
+          {grid}
         </div>
-
-        {BOTTOM_ROUNDS.map((round) => (
-          <BracketColumn
-            key={`bottom-${round}`}
-            round={round}
-            half="bottom"
-            layout={layout[round]}
-            wide={wide}
-          />
-        ))}
-
-        {/* Playin Games Smaller Screens  */}
-        {!wide && (
-          <motion.div
-            data-testid="bracket-column-playin"
-            initial={false}
-            animate={{ width: roundOneSize, height: roundOneSize }}
-            className={`overflow-hidden h-max ${styles.gridRound64} flex flex-col`}
-          >
-            <div className={`${styles.regionTitle} m-4`}>Playin Games</div>
-            <TournamentRound
-              region="playin"
-              round="playin"
-              roundUIPosition={layout[1].position}
-            />
-          </motion.div>
-        )}
-      </div>
+      )}
 
       {/* Playin Games Larger Screens  */}
       {wide && (
