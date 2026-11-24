@@ -76,6 +76,8 @@ The `errors` fixture fails a test on any `console.error` or uncaught page error.
 
 `e2e/support/layout.ts` has `assertNoHorizontalScroll`, `assertUsable`, `assertNoOverlap`, `assertRoundUnclipped` and `layoutSignature`, wrapped by `enforceLayout(page, phase, check, run)`. `assertNoHorizontalScroll` checks the page and the narrow bracket's own scroll box (`bracket-scroll`). Widths below the phone project's 390px are covered by `test.use({ viewport })` (e.g. the 360/375px signed-in nav checks in `auth.spec.ts`, which skip themselves outside the phone project so the laptop project doesn't repeat them at the same width).
 
+**Linux text is wider.** CI runs Chromium on Linux, which rounds text widths up to whole pixels (e.g. the Dashboard button is 104px on Linux, 102.11px on Windows), so a row that fits on Windows by a pixel or two scrolls sideways in CI. Leave a few pixels of room in tight layouts, and check a near-fit on Linux before pushing: `docker run -d --name pw --ipc=host -w /work mcr.microsoft.com/playwright:v1.56.1-noble sleep infinity` (version = `@playwright/test`), copy in `git archive HEAD`, then `npm ci` and `npx playwright test <file> --project=<project>` inside it. In Git Bash set `MSYS_NO_PATHCONV=1` so `/work` isn't rewritten.
+
 `KNOWN_LAYOUT_ISSUES` lists layout defects the app has today. Where an entry matches the project, phase, check and (if given) `widths`, the check **must fail**: the entry asserts the issue still occurs. When the issue is fixed the test fails with "known layout issue no longer occurs", which forces the entry's removal. Each entry has a `finding` text and a DIAGNOSIS finding number:
 
 None today (findings 46 and 48 were fixed in step 10c).

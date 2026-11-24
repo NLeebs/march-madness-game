@@ -70,7 +70,7 @@ export const NavigationBar = () => {
             onClick={handleHomeClick}
             backgroundColor="transparent"
             text={homeButtonText}
-            className="pl-0 text-2xl hover:scale-none"
+            className="pl-0 pr-2 sm:pr-6 text-2xl hover:scale-none"
             icon={homeIcon}
           />
         </div>
