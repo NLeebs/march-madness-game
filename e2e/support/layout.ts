@@ -79,12 +79,28 @@ export async function assertUsable(
   if (!options.animated) await locator.click({ trial: true, timeout });
 }
 
+/**
+ * Neither the page nor the narrow bracket's own scroll box (`bracket-scroll`, which scrolls
+ * vertically, so its horizontal overflow is `auto`) can be scrolled sideways.
+ */
 export async function assertNoHorizontalScroll(page: Page): Promise<void> {
   const width = viewportOf(page).width;
   const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(scrollWidth, `page scrolls sideways: scrollWidth ${scrollWidth} > viewport ${width}`).toBeLessThanOrEqual(
     width,
   );
+  const boxes = await page.evaluate(() =>
+    Array.from(document.querySelectorAll<HTMLElement>('[data-testid="bracket-scroll"]')).map((el) => ({
+      scrollWidth: el.scrollWidth,
+      clientWidth: el.clientWidth,
+    })),
+  );
+  for (const box of boxes) {
+    expect(
+      box.scrollWidth,
+      `bracket-scroll scrolls sideways: scrollWidth ${box.scrollWidth} > clientWidth ${box.clientWidth}`,
+    ).toBeLessThanOrEqual(box.clientWidth);
+  }
 }
 
 /** The part of an element that is really on screen, plus the data attributes used to label it. */
