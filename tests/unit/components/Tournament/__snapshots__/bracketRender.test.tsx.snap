@@ -11122,64 +11122,65 @@ div class="grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2351 sel=1 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-          matchups[champion:champion:0 x1]
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-        i stub=PlayerScore
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+            matchups[champion:champion:0 x1]
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+          i stub=PlayerScore
+          button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
+          i stub=RestartGameButton
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -11189,64 +11190,65 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2351 sel=2 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-          matchups[champion:champion:0 x1]
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-        i stub=PlayerScore
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+            matchups[champion:champion:0 x1]
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+          i stub=PlayerScore
+          button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
+          i stub=RestartGameButton
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -11256,64 +11258,65 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2351 sel=champion 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-          matchups[champion:champion:0 x1]
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-        i stub=PlayerScore
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+            matchups[champion:champion:0 x1]
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+          i stub=PlayerScore
+          button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
+          i stub=RestartGameButton
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -11323,64 +11326,65 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2351 sel=elite eight 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-          matchups[champion:champion:0 x1]
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-        i stub=PlayerScore
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+            matchups[champion:champion:0 x1]
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+          i stub=PlayerScore
+          button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
+          i stub=RestartGameButton
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -11390,64 +11394,65 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2351 sel=final four 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-          matchups[champion:champion:0 x1]
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-        i stub=PlayerScore
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+            matchups[champion:champion:0 x1]
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+          i stub=PlayerScore
+          button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
+          i stub=RestartGameButton
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -11457,64 +11462,65 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2351 sel=finals 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-          matchups[champion:champion:0 x1]
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-        i stub=PlayerScore
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+            matchups[champion:champion:0 x1]
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+          i stub=PlayerScore
+          button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
+          i stub=RestartGameButton
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -11524,64 +11530,65 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > recap w=2351 sel=sweet sixteen 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-          matchups[champion:champion:0 x1]
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-        i stub=PlayerScore
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+            matchups[champion:champion:0 x1]
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+          i stub=PlayerScore
+          button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
+          i stub=RestartGameButton
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"75rem","paddingBottom":"75rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"33.75rem","paddingBottom":"36.75rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"30.5rem","paddingTop":"14rem","paddingBottom":"17rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"10.5rem","paddingTop":"3.75rem","paddingBottom":"7.75rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -17779,62 +17786,63 @@ div class="grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2351 sel=1 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-          matchups[champion:champion:0 x1]
-      i stub=PlayTournamentButton
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+            matchups[champion:champion:0 x1]
+        i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -17844,62 +17852,63 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2351 sel=2 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-          matchups[champion:champion:0 x1]
-      i stub=PlayTournamentButton
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+            matchups[champion:champion:0 x1]
+        i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -17909,62 +17918,63 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2351 sel=champion 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-          matchups[champion:champion:0 x1]
-      i stub=PlayTournamentButton
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+            matchups[champion:champion:0 x1]
+        i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -17974,62 +17984,63 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2351 sel=elite eight 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-          matchups[champion:champion:0 x1]
-      i stub=PlayTournamentButton
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+            matchups[champion:champion:0 x1]
+        i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -18039,62 +18050,63 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2351 sel=final four 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-          matchups[champion:champion:0 x1]
-      i stub=PlayTournamentButton
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+            matchups[champion:champion:0 x1]
+        i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -18104,62 +18116,63 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2351 sel=finals 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-          matchups[champion:champion:0 x1]
-      i stub=PlayTournamentButton
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+            matchups[champion:champion:0 x1]
+        i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
@@ -18169,62 +18182,63 @@ div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
 exports[`Tournament render pin > selection w=2351 sel=sweet sixteen 1`] = `
 "
 div class="mx-auto max-w-tourny grid grid-flow-row" animate={"opacity":1}
-  div class="relative grid grid-flow-col"
-    div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:west:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:east:0 x8]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:west:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:east:0 x4]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:west:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:east:0 x2]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:west:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:east:0 x1]
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:eastWest:0 x1]
-    div class="col-span-1 flex flex-col gap-y-4"
-      div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
-        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
-          matchups[finals:championship:0 x1]
-      div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+  div
+    div class="relative grid grid-flow-col"
+      div testid=bracket-column-1 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-          matchups[champion:champion:0 x1]
-      i stub=PlayTournamentButton
-      div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-    div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
-        matchups[final four:southMidwest:0 x1]
-    div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:south:0 x1]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
-        matchups[elite eight:midwest:0 x1]
-    div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:south:0 x2]
-      div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
-        matchups[sweet sixteen:midwest:0 x2]
-    div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:south:0 x4]
-      div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
-        matchups[2:midwest:0 x4]
-    div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:south:0 x8]
-      div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
-        matchups[1:midwest:0 x8]
+          matchups[1:west:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:east:0 x8]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:west:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:east:0 x4]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:west:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:east:0 x2]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative left-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:west:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:east:0 x1]
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute left-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:eastWest:0 x1]
+      div class="col-span-1 flex flex-col gap-y-4"
+        div testid=bracket-column-finals class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"0"}
+            matchups[finals:championship:0 x1]
+        div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
+          div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+            matchups[champion:champion:0 x1]
+        i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
+      div testid=bracket-column-final-four class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-156" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
+          matchups[final four:southMidwest:0 x1]
+      div testid=bracket-column-elite-eight class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative right-20" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:south:0 x1]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
+          matchups[elite eight:midwest:0 x1]
+      div testid=bracket-column-sweet-sixteen class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 absolute right-120" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:south:0 x2]
+        div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
+          matchups[sweet sixteen:midwest:0 x2]
+      div testid=bracket-column-2 class="overflow-x-clip h-max col-span-1 flex flex-col gap-y-16 min-w-300 relative" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:south:0 x4]
+        div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
+          matchups[2:midwest:0 x4]
+      div testid=bracket-column-1 class="overflow-hidden h-max col-span-1 flex flex-col gap-y-16 min-w-300" animate={"width":"max-content","height":"max-content"}
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:south:0 x8]
+        div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
+          matchups[1:midwest:0 x8]
   div testid=bracket-column-playin
     div class="flex m-4 flex-row justify-center gap-8" animate={}
       matchups[playin:playin:0 x4]
