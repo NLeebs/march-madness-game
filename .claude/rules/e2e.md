@@ -74,7 +74,7 @@ The `errors` fixture fails a test on any `console.error` or uncaught page error.
 
 ## Layout checks and KNOWN_LAYOUT_ISSUES
 
-`e2e/support/layout.ts` has `assertNoHorizontalScroll`, `assertUsable`, `assertNoOverlap`, `assertRoundUnclipped` and `layoutSignature`, wrapped by `enforceLayout(page, phase, check, run)`.
+`e2e/support/layout.ts` has `assertNoHorizontalScroll`, `assertUsable`, `assertNoOverlap`, `assertRoundUnclipped` and `layoutSignature`, wrapped by `enforceLayout(page, phase, check, run)`. `assertNoHorizontalScroll` checks the page and the narrow bracket's own scroll box (`bracket-scroll`). Widths below the phone project's 390px are covered by `test.use({ viewport })` (e.g. the 360/375px signed-in nav checks in `auth.spec.ts`).
 
 `KNOWN_LAYOUT_ISSUES` lists layout defects the app has today. Where an entry matches the project, phase, check and (if given) `widths`, the check **must fail**: the entry asserts the issue still occurs. When the issue is fixed the test fails with "known layout issue no longer occurs", which forces the entry's removal. Each entry has a `finding` text and a DIAGNOSIS finding number:
 

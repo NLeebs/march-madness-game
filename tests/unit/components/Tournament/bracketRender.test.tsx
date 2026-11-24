@@ -4,7 +4,8 @@
  * in DOM order, across the breakpoint edges, selected rounds and tournament phases.
  *
  * Written before the step 10b decomposition. The refactor commits did not change it; only the
- * 2350px fix (finding 44) moved the w=2350 entries, on purpose. Update the snapshot only for
+ * 2350px fix (finding 44) moved the w=2350 entries, and the shared bracket wrapper (step 10c
+ * review) moved the w=2351 entries, both on purpose. Update the snapshot only for
  * an intended visual change.
  */
 import React from "react";
