@@ -262,23 +262,7 @@ export type KnownLayoutIssue = {
   finding: string;
 };
 
-/** Phases in which the bracket is on screen, as GamePage and the resize test name them. */
-const BRACKET_PHASES = ["bracket picks", "bracket complete", "tournament finished", "recap"];
-
 export const KNOWN_LAYOUT_ISSUES: KnownLayoutIssue[] = [
-  {
-    project: "laptop",
-    phases: BRACKET_PHASES,
-    widths: [2349, 2350],
-    check: "horizontal-scroll",
-    description: "bracket screens scroll sideways: observed at 2349 and 2350px; range 2326-2350 by analysis (max-w-tourny 2325px)",
-    finding:
-      "DIAGNOSIS finding 46. Resize sweep: at 2349px the page's scrollWidth is 2361, at 2350px 2363. Tournament.tsx wraps the round banner " +
-      "and the bracket grid (both w-screen / full width) in `mx-auto max-w-tourny` (2325px). Above 2325px the " +
-      "wrapper is narrower than the viewport and centred, so its full-width children start (width - 2325) / 2 px " +
-      "in and overhang the right edge by the same amount. Above 2350 the grid switches to its wide layout " +
-      "and the overhang goes away.",
-  },
   {
     project: "phone",
     phases: ["dashboard"],

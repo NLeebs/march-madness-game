@@ -42,6 +42,8 @@ const RESIZE_WIDTHS = [
   XL_LARGE_BREAK_POINT,
   XXL_LARGE_BREAK_POINT,
   XXXL_LARGE_BREAK_POINT,
+  // first width where max-w-tourny (2325px) used to overhang (finding 46)
+  2326,
   TOURNAMENT_BREAK_POINT - 1,
   TOURNAMENT_BREAK_POINT,
   TOURNAMENT_BREAK_POINT + 1,
@@ -169,6 +171,17 @@ const EXPECTED_SIGNATURES: Record<number, { season: Row; bracket: Record<string,
       "elite eight": { banner: true, columns: ["2", "champion", "elite-eight", "final-four", "finals", "sweet-sixteen"] },
       "final four": { banner: true, columns: ["2", "champion", "elite-eight", "final-four", "finals", "sweet-sixteen"] },
       finals: { banner: true, columns: ["2", "champion", "elite-eight", "final-four", "finals", "sweet-sixteen"] },
+    },
+  },
+  2326: {
+    season: { banner: false, columns: [] },
+    bracket: {
+      1: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      2: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "sweet sixteen": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "elite eight": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "final four": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      finals: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
     },
   },
   2349: {

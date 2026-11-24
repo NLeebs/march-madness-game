@@ -51,7 +51,7 @@ export const Tournament = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="mx-auto max-w-tourny grid grid-flow-row"
+      className={`${wide ? "mx-auto max-w-tourny " : ""}grid grid-flow-row`}
     >
       {!wide && <RoundSelectBanner />}
 
