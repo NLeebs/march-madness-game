@@ -30,9 +30,8 @@ import {
 /**
  * Widths the window is resized through: the phone width, then just at, under or over each
  * breakpoint (the app compares with `<=` / `>`, so a breakpoint value itself is on the narrow
- * side). TOURNAMENT_BREAK_POINT itself (2350) is skipped on purpose: at exactly 2350 neither
- * play-in column renders (`< 2350` for one, `> 2350` for the other), a known gap in the app.
- * 2349 and 2351 straddle it instead.
+ * side, including TOURNAMENT_BREAK_POINT: 2350 shows the round banner and the narrow layout,
+ * like 2349).
  */
 const RESIZE_WIDTHS = [
   390,
@@ -44,6 +43,7 @@ const RESIZE_WIDTHS = [
   XXL_LARGE_BREAK_POINT,
   XXXL_LARGE_BREAK_POINT,
   TOURNAMENT_BREAK_POINT - 1,
+  TOURNAMENT_BREAK_POINT,
   TOURNAMENT_BREAK_POINT + 1,
   2400,
 ];
@@ -172,6 +172,17 @@ const EXPECTED_SIGNATURES: Record<number, { season: Row; bracket: Record<string,
     },
   },
   2349: {
+    season: { banner: false, columns: [] },
+    bracket: {
+      1: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      2: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "sweet sixteen": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "elite eight": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "final four": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      finals: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+    },
+  },
+  2350: {
     season: { banner: false, columns: [] },
     bracket: {
       1: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
