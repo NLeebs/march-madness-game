@@ -83,7 +83,8 @@ export const Tournament = () => {
           />
         </div>
         {appState.tournamentSelection && <PlayTournamentButton />}
-        {wide && <TournamentActions />}
+        {/* Narrow: empty until the tournament starts (keeps the cell's height), then above the grid. */}
+        {(wide || !tournamentOver) && <TournamentActions />}
       </div>
 
       {BOTTOM_ROUNDS.map((round) => (

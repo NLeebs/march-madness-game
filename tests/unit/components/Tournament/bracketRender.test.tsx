@@ -197,6 +197,23 @@ describe("Tournament render pin", () => {
   });
 });
 
+describe("Tournament narrow pick stage", () => {
+  // Finding 47 moved the post-tournament actions above the grid on narrow screens. Until the
+  // tournament starts, the finals cell keeps its (empty) actions block, so its height and the
+  // rows it spans stay as they were.
+  it.each(["finals", "final four", 1] as TournamentRound[])("keeps the actions block in the finals cell (sel=%s)", async (sel) => {
+    const store = storeFrom(base.selection);
+    setView(store, 390, sel);
+    let container!: HTMLElement;
+    await act(async () => {
+      ({ container } = renderWithStore(<Tournament />, store));
+    });
+    const finalsCell = container.querySelector('[data-testid="bracket-column-finals"]')?.parentElement;
+    expect(finalsCell?.querySelector('[data-testid="tournament-actions"]')).not.toBeNull();
+    expect(container.querySelectorAll('[data-testid="tournament-actions"]')).toHaveLength(1);
+  });
+});
+
 describe("RoundSelectBanner render pin", () => {
   const cases = (["none", "chalk"] as const).flatMap((picks) =>
     BANNER_WIDTHS.flatMap((w) => ROUNDS.map((sel) => [picks, w, sel] as const)),
