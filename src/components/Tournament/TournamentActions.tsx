@@ -5,7 +5,7 @@ import { RootState, uiStateActions } from "@/store";
 import { Button, PlayerScore, RestartGameButton } from "@/src/components";
 import { PRIMARY_COLOR } from "@/src/constants";
 
-/** The post-tournament actions: the player's score, See Recap and Play Again. */
+/** The tournament actions: the player's score (shown from the replay on), then See Recap and Play Again once it ends. */
 export const TournamentActions: React.FC = () => {
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);

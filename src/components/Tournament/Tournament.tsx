@@ -40,7 +40,8 @@ export const Tournament = () => {
   const layout = getRoundLayout(selectedRound, screenWidth);
   const wide = screenWidth > TOURNAMENT_BREAK_POINT;
   const roundOneSize = layout[1].expanded ? "max-content" : 0;
-  const tournamentOver = appState.tournamentPlayGames || appState.tournamentRecap;
+  // True from the replay on (the score shows while the games play), not only once they end.
+  const tournamentStarted = appState.tournamentPlayGames || appState.tournamentRecap;
 
   const grid = (
     <div
@@ -84,7 +85,7 @@ export const Tournament = () => {
         </div>
         {appState.tournamentSelection && <PlayTournamentButton />}
         {/* Narrow: empty until the tournament starts (keeps the cell's height), then above the grid. */}
-        {(wide || !tournamentOver) && <TournamentActions />}
+        {(wide || !tournamentStarted) && <TournamentActions />}
       </div>
 
       {BOTTOM_ROUNDS.map((round) => (
@@ -124,21 +125,24 @@ export const Tournament = () => {
     >
       {!wide && <RoundSelectBanner />}
 
-      {wide ? (
-        grid
-      ) : (
-        // The narrow bracket scrolls vertically. The grid clips its off-screen rounds with
-        // overflow-x: clip, not hidden: a clip box is not a scroll container, so focus or
-        // scrollIntoView can't shift it sideways. The post-tournament actions sit above the grid,
-        // under the banner, so they are reachable whichever round is selected (finding 47).
-        <div
-          data-testid="bracket-scroll"
-          className="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-        >
-          {tournamentOver && <TournamentActions />}
-          {grid}
-        </div>
-      )}
+      {/* One wrapper in both layouts, so crossing the break point only changes its classes and
+          never remounts the bracket (PlayTournamentButton holds the pending request).
+          The narrow bracket scrolls vertically. The grid clips its off-screen rounds with
+          overflow-x: clip, not hidden: a clip box is not a scroll container, so focus or
+          scrollIntoView can't shift it sideways. Once the tournament starts, the score and the
+          post-tournament actions sit above the grid, under the banner, so they are reachable
+          whichever round is selected (finding 47). */}
+      <div
+        data-testid={wide ? undefined : "bracket-scroll"}
+        className={
+          wide
+            ? undefined
+            : "w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
+        }
+      >
+        {!wide && tournamentStarted && <TournamentActions />}
+        {grid}
+      </div>
 
       {/* Playin Games Larger Screens  */}
       {wide && (

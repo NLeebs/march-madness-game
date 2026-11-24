@@ -214,6 +214,31 @@ describe("Tournament narrow pick stage", () => {
   });
 });
 
+describe("Tournament across the break point", () => {
+  // Crossing TOURNAMENT_BREAK_POINT must not remount the bracket: PlayTournamentButton holds the
+  // pending tournament request (useMutation), and a remount drops its result and re-enables it.
+  it.each([
+    [2400, 2350],
+    [2350, 2400],
+  ])("keeps the same bracket nodes from w=%i to w=%i", async (from, to) => {
+    const store = storeFrom(base.selection);
+    setView(store, from, 1);
+    let container!: HTMLElement;
+    await act(async () => {
+      ({ container } = renderWithStore(<Tournament />, store));
+    });
+    const finals = container.querySelector('[data-testid="bracket-column-finals"]');
+    const button = container.querySelector('[data-stub="PlayTournamentButton"]');
+    expect(finals).not.toBeNull();
+    expect(button).not.toBeNull();
+    await act(async () => {
+      store.dispatch(uiStateActions.screenSize({ screenWidth: to, screenHeight: 900 }));
+    });
+    expect(container.querySelector('[data-testid="bracket-column-finals"]')).toBe(finals);
+    expect(container.querySelector('[data-stub="PlayTournamentButton"]')).toBe(button);
+  });
+});
+
 describe("RoundSelectBanner render pin", () => {
   const cases = (["none", "chalk"] as const).flatMap((picks) =>
     BANNER_WIDTHS.flatMap((w) => ROUNDS.map((sel) => [picks, w, sel] as const)),
