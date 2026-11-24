@@ -75,12 +75,12 @@ export const NavigationBar = () => {
           />
         </div>
         {user ? (
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center gap-1 sm:gap-2">
             <Button
               onClick={handleDashboard}
               backgroundColor={PRIMARY_COLOR}
               text="Dashboard"
-              className="py-3 px-4"
+              className="py-3 px-2 sm:px-4"
             />
             <Button
               onClick={handleLogout}
