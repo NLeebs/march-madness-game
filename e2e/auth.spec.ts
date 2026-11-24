@@ -37,12 +37,15 @@ test("login shows the signed-in nav", async ({ page, game }) => {
 });
 
 test.describe("small phones", () => {
-  // The phone project is 390px wide; real phones go down to 360px (finding 48).
+  // The phone project is 390px wide; real phones go down to 360px (finding 48). The tag routes
+  // these to phone (mobile, touch) as well as laptop, and the viewport below overrides both to
+  // the same width, so they run on phone only.
   for (const width of [360, 375]) {
     test.describe(`${width}px`, () => {
       test.use({ viewport: { width, height: 740 } });
 
       test(`signed-in nav fits at ${width}px @mobile-too`, async ({ page, game }) => {
+        test.skip(test.info().project.name !== "phone", "phone emulation only; laptop would repeat it");
         await game.open();
         await signInThroughUi(page, FAKE_USER.email, FAKE_PASSWORD);
         await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
