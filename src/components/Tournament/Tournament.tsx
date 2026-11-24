@@ -40,7 +40,8 @@ export const Tournament = () => {
   const layout = getRoundLayout(selectedRound, screenWidth);
   const wide = screenWidth > TOURNAMENT_BREAK_POINT;
   const roundOneSize = layout[1].expanded ? "max-content" : 0;
-  // True from the replay on (the score shows while the games play), not only once they end.
+  // True once the main-bracket replay starts (tournamentPlayGames, when the score appears) and
+  // at the recap; false through the play-in replay.
   const tournamentStarted = appState.tournamentPlayGames || appState.tournamentRecap;
 
   const grid = (
@@ -84,8 +85,9 @@ export const Tournament = () => {
           />
         </div>
         {appState.tournamentSelection && <PlayTournamentButton />}
-        {/* Narrow: empty until the tournament starts (keeps the cell's height), then above the grid. */}
-        {(wide || !tournamentStarted) && <TournamentActions />}
+        {/* Narrow: empty until the tournament starts, then the visible block moves above the grid
+            and this cell keeps an invisible copy, so its height and the rows it spans don't change. */}
+        <TournamentActions placeholder={!wide && tournamentStarted} />
       </div>
 
       {BOTTOM_ROUNDS.map((round) => (
@@ -126,7 +128,9 @@ export const Tournament = () => {
       {!wide && <RoundSelectBanner />}
 
       {/* One wrapper in both layouts, so crossing the break point only changes its classes and
-          never remounts the bracket (PlayTournamentButton holds the pending request).
+          never remounts the bracket (PlayTournamentButton holds the pending request). Once the
+          tournament has started, the visible actions block does move (finals cell when wide,
+          above the grid when narrow), so it remounts on the crossing; it holds no state that matters.
           The narrow bracket scrolls vertically. The grid clips its off-screen rounds with
           overflow-x: clip, not hidden: a clip box is not a scroll container, so focus or
           scrollIntoView can't shift it sideways. Once the tournament starts, the score and the

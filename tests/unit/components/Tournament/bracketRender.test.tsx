@@ -3,10 +3,16 @@
  * RoundSelectButton): every column's test id, classes and framer-motion animate targets,
  * in DOM order, across the breakpoint edges, selected rounds and tournament phases.
  *
- * Written before the step 10b decomposition. The refactor commits did not change it; only the
- * 2350px fix (finding 44) moved the w=2350 entries, and the shared bracket wrapper (step 10c
- * review) moved the w=2351 entries, both on purpose. Update the snapshot only for
- * an intended visual change.
+ * Written before the step 10b decomposition. The refactor commits did not change it. Intended
+ * updates so far (DIAGNOSIS has the details):
+ * - step 10b, finding 44: the w=2350 entries (2350 takes the narrow layout);
+ * - step 10c, finding 58: the w=2040 entries (final-four spacing);
+ * - step 10c, finding 46: every narrow entry (the centred wrapper became wide-only);
+ * - step 10c, finding 47: the narrow entries (actions above the grid, bracket-scroll wrapper);
+ * - step 10c review: the w=2351 entries (one wrapper in both layouts);
+ * - step 10c review: every recap entry (See Recap and Play Again in their own wrapper; on
+ *   narrow, an invisible actions copy in the finals cell).
+ * Update the snapshot only for an intended visual change.
  */
 import React from "react";
 import { describe, it, expect, afterEach, beforeAll, vi } from "vitest";
@@ -212,6 +218,61 @@ describe("Tournament narrow pick stage", () => {
     const finalsCell = container.querySelector('[data-testid="bracket-column-finals"]')?.parentElement;
     expect(finalsCell?.querySelector('[data-testid="tournament-actions"]')).not.toBeNull();
     expect(container.querySelectorAll('[data-testid="tournament-actions"]')).toHaveLength(1);
+  });
+});
+
+describe("Tournament narrow after the start", () => {
+  // Mid-replay: the results are stored and replaying, the recap not reached yet.
+  const replayState = (): BaseState => ({
+    ...base.recap,
+    appState: { ...base.recap.appState, tournamentRecap: false },
+  });
+  const phases: [string, () => BaseState][] = [
+    ["replay", replayState],
+    ["recap", () => base.recap],
+  ];
+  const cases = phases.flatMap(([name, state]) =>
+    (["finals", "final four", 1] as TournamentRound[]).map((sel) => [name, sel, state] as const),
+  );
+
+  // The visible actions block sits above the grid; the finals cell keeps an invisible copy, so
+  // its height and the rows it spans don't change when the block moves out (step 10c review).
+  it.each(cases)("%s sel=%s: one visible actions block above the grid, a hidden copy in the finals cell", async (_name, sel, state) => {
+    const store = storeFrom(state());
+    setView(store, 390, sel);
+    let container!: HTMLElement;
+    await act(async () => {
+      ({ container } = renderWithStore(<Tournament />, store));
+    });
+    const actions = container.querySelectorAll('[data-testid="tournament-actions"]');
+    expect(actions).toHaveLength(1);
+    expect(actions[0].parentElement?.getAttribute("data-testid")).toBe("bracket-scroll");
+
+    const finalsCell = container.querySelector('[data-testid="bracket-column-finals"]')?.parentElement;
+    const placeholder = finalsCell?.querySelector('[data-actions-placeholder]');
+    expect(placeholder).not.toBeNull();
+    expect(placeholder?.getAttribute("aria-hidden")).toBe("true");
+    expect(placeholder?.classList.contains("invisible")).toBe(true);
+    expect(placeholder?.querySelector('[data-stub="PlayerScore"]')).not.toBeNull();
+    expect(placeholder?.querySelector('[data-stub="RestartGameButton"]')).not.toBeNull();
+  });
+
+  // See Recap and Play Again take their space from the start of the replay, hidden until the
+  // recap, so the block doesn't grow (and push the bracket down) when the tournament ends.
+  it.each(phases)("%s: the recap buttons are laid out, hidden until the recap", async (name, state) => {
+    const store = storeFrom(state());
+    setView(store, 390, "finals");
+    let container!: HTMLElement;
+    await act(async () => {
+      ({ container } = renderWithStore(<Tournament />, store));
+    });
+    const actions = container.querySelector('[data-testid="tournament-actions"]');
+    const restart = actions?.querySelector('[data-stub="RestartGameButton"]');
+    expect(restart).not.toBeNull();
+    const buttons = restart!.parentElement!;
+    const hidden = name === "replay";
+    expect(buttons.classList.contains("invisible")).toBe(hidden);
+    expect(buttons.getAttribute("aria-hidden")).toBe(hidden ? "true" : null);
   });
 });
 
