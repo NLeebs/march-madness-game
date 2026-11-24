@@ -4,6 +4,7 @@ import { DASHBOARD_USERNAME } from "./fixtures/dashboard";
 import { FAKE_PASSWORD, FAKE_USER, signInThroughUi } from "./support/fakeAuth";
 import { GAME_BUDGET_MS } from "./support/timeouts";
 import { checkPersistPayload } from "./checks/results";
+import { assertNoHorizontalScroll, assertUsable } from "./support/layout";
 
 const loginButton = (page: Page) =>
   page.getByRole("navigation").getByRole("button", { name: "Login", exact: true });
@@ -33,6 +34,24 @@ test("login shows the signed-in nav", async ({ page, game }) => {
   await expect(page.getByRole("button", { name: "Dashboard" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
   await expect(loginButton(page)).toHaveCount(0);
+});
+
+test.describe("small phones", () => {
+  // The phone project is 390px wide; real phones go down to 360px (finding 48).
+  for (const width of [360, 375]) {
+    test.describe(`${width}px`, () => {
+      test.use({ viewport: { width, height: 740 } });
+
+      test(`signed-in nav fits at ${width}px @mobile-too`, async ({ page, game }) => {
+        await game.open();
+        await signInThroughUi(page, FAKE_USER.email, FAKE_PASSWORD);
+        await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
+        await assertNoHorizontalScroll(page);
+        await assertUsable(page.getByRole("button", { name: "Dashboard" }));
+        await assertUsable(page.getByRole("button", { name: "Logout" }));
+      });
+    });
+  }
 });
 
 test.describe("with dashboard data", () => {
