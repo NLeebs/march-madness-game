@@ -11625,6 +11625,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -11692,6 +11693,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -11759,6 +11761,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={}
           matchups[final four:southMidwest:0 x1]
@@ -11826,6 +11829,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -11893,6 +11897,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -11960,6 +11965,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12027,6 +12033,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12094,6 +12101,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12161,6 +12169,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12228,6 +12237,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={}
           matchups[final four:southMidwest:0 x1]
@@ -12295,6 +12305,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12362,6 +12373,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12429,6 +12441,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12496,6 +12509,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12563,6 +12577,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12630,6 +12645,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12697,6 +12713,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12764,6 +12781,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12831,6 +12849,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12898,6 +12917,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -12965,6 +12985,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13032,6 +13053,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13099,6 +13121,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13166,6 +13189,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13233,6 +13257,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13300,6 +13325,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13367,6 +13393,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13434,6 +13461,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13501,6 +13529,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13568,6 +13597,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13635,6 +13665,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13702,6 +13733,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13769,6 +13801,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13836,6 +13869,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13903,6 +13937,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -13970,6 +14005,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14037,6 +14073,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14104,6 +14141,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"4rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14171,6 +14209,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14238,6 +14277,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14305,6 +14345,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"9rem","paddingTop":"6rem","paddingBottom":"7rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14372,6 +14413,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14439,6 +14481,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14506,6 +14549,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14573,6 +14617,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14640,6 +14685,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14707,6 +14753,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14774,6 +14821,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14841,6 +14889,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14908,6 +14957,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -14975,6 +15025,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15042,6 +15093,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15109,6 +15161,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15176,6 +15229,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15243,6 +15297,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15310,6 +15365,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"12rem","paddingBottom":"15rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15377,6 +15433,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15444,6 +15501,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15511,6 +15569,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15578,6 +15637,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15645,6 +15705,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15712,6 +15773,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15779,6 +15841,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15846,6 +15909,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15913,6 +15977,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -15980,6 +16045,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16047,6 +16113,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16114,6 +16181,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16181,6 +16249,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16248,6 +16317,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"25rem","paddingTop":"28rem","paddingBottom":"31rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16315,6 +16385,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16382,6 +16453,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16449,6 +16521,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16516,6 +16589,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16583,6 +16657,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16650,6 +16725,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16717,6 +16793,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16784,6 +16861,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16851,6 +16929,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16918,6 +16997,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -16985,6 +17065,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17052,6 +17133,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17119,6 +17201,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17186,6 +17269,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17253,6 +17337,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17320,6 +17405,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17387,6 +17473,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17454,6 +17541,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17521,6 +17609,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17588,6 +17677,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
@@ -17655,6 +17745,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
           div class="flex m-4 flex-col" animate={"rowGap":"1rem","paddingTop":"0","paddingBottom":"3rem"}
             matchups[champion:champion:0 x1]
         i stub=PlayTournamentButton
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
       div testid=bracket-column-final-four class="overflow-x-clip h-max _gridFinalFourBottom_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"0","paddingTop":"62rem","paddingBottom":"62rem"}
           matchups[final four:southMidwest:0 x1]
