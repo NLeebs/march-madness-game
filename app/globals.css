@@ -85,8 +85,8 @@ button {
   }
 }
 
-/* Tournament Break Point and Up */
-@media only screen and (min-width: 2350px) {
+/* Above the tournament break point (matches `screenWidth > TOURNAMENT_BREAK_POINT`; 2350 itself is narrow) */
+@media only screen and (min-width: 2351px) {
   body {
     overflow: auto;
   }

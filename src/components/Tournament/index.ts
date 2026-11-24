@@ -1,3 +1,4 @@
+export * from "./BracketColumn";
 export * from "./PlayerScore";
 export * from "./PlayPlayinGames";
 export * from "./PlayTournamentGames";

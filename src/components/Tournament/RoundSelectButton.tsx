@@ -8,16 +8,29 @@ import {
   PRIMARY_COLOR,
   PRIMARY_TEXT_COLOR,
   DEFAULT_FONT_SIZE,
-  XXXL_LARGE_BREAK_POINT,
-  XXL_LARGE_BREAK_POINT,
-  XL_LARGE_BREAK_POINT,
-  LARGE_BREAK_POINT,
-  MEDIUM_BREAK_POINT,
   TOURNAMENT_ROUND_COLUMN_WIDTH,
   TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH,
   NON_CTA_BUTTON_COLOR,
 } from "@/src/constants";
-import { TournamentRound } from "@/types";
+import {
+  areRoundPicksComplete,
+  getRoundButtonState,
+  type RoundButtonState,
+} from "@/src/functions/tournament";
+import type { TournamentRound } from "@/types";
+
+/**
+ * The animate target per state. Only "shrink" sets the color and font size; when a button
+ * leaves "shrink", framer-motion animates them back to their `initial` values.
+ */
+const BUTTON_ANIMATE: Record<
+  RoundButtonState,
+  { width?: number | string; color?: string; fontSize?: number }
+> = {
+  shrink: { width: 0, color: NON_CTA_BUTTON_COLOR, fontSize: 0 },
+  default: { width: TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH },
+  unchanged: {},
+};
 
 interface RoundSelectButtonProps {
   round: TournamentRound;
@@ -64,184 +77,9 @@ export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
     accentLineBackgroundColor = NON_CTA_BUTTON_COLOR;
   }
 
-  let roundSelectButtonWidth: number | string,
-    roundSelectButtonTextColor: string,
-    roundSelectButtonFontSize: number;
-  const setButtonShrinkStyles = () => {
-    roundSelectButtonWidth = 0;
-    roundSelectButtonTextColor = NON_CTA_BUTTON_COLOR;
-    roundSelectButtonFontSize = 0;
-  };
-  const setButtonDefaultStyles = () => {
-    roundSelectButtonWidth = TOURNAMENT_ROUND_BUTTON_WITH_BACK_BUTTON_WIDTH;
-  };
-
-  if (
-    screenWidth <= XXXL_LARGE_BREAK_POINT &&
-    screenWidth > XXL_LARGE_BREAK_POINT
-  ) {
-    if (
-      (selectedRound === 2 ||
-        selectedRound === "sweet sixteen" ||
-        selectedRound === "elite eight" ||
-        selectedRound === "final four" ||
-        selectedRound === "finals") &&
-      round === 1
-    ) {
-      setButtonShrinkStyles();
-    } else if (
-      (selectedRound === 2 ||
-        selectedRound === "sweet sixteen" ||
-        selectedRound === "elite eight" ||
-        selectedRound === "final four" ||
-        selectedRound === "finals") &&
-      round === 2
-    ) {
-      setButtonDefaultStyles();
-    }
-  } else if (
-    screenWidth <= XXL_LARGE_BREAK_POINT &&
-    screenWidth > XL_LARGE_BREAK_POINT
-  ) {
-    if (
-      ((selectedRound === 2 && round !== 2) ||
-        selectedRound === "sweet sixteen" ||
-        selectedRound === "elite eight" ||
-        selectedRound === "final four" ||
-        selectedRound === "finals") &&
-      (round === 1 || round === 2)
-    ) {
-      setButtonShrinkStyles();
-    } else if (
-      (selectedRound === 2 && round === 2) ||
-      ((selectedRound === "sweet sixteen" ||
-        selectedRound === "elite eight" ||
-        selectedRound === "final four" ||
-        selectedRound === "finals") &&
-        round === "sweet sixteen")
-    ) {
-      setButtonDefaultStyles();
-    }
-  } else if (
-    screenWidth <= XL_LARGE_BREAK_POINT &&
-    screenWidth > LARGE_BREAK_POINT
-  ) {
-    if (
-      ((selectedRound === 2 && round !== 2 && round !== "sweet sixteen") ||
-        (selectedRound === "sweet sixteen" && round !== "sweet sixteen") ||
-        selectedRound === "elite eight" ||
-        selectedRound === "final four" ||
-        selectedRound === "finals") &&
-      (round === 1 || round === 2 || round === "sweet sixteen")
-    ) {
-      setButtonShrinkStyles();
-    } else if (
-      (selectedRound === 2 && round === 2) ||
-      (selectedRound === "sweet sixteen" && round === "sweet sixteen") ||
-      ((selectedRound === "elite eight" ||
-        selectedRound === "final four" ||
-        selectedRound === "finals") &&
-        round === "elite eight")
-    ) {
-      setButtonDefaultStyles();
-    }
-  } else if (
-    screenWidth <= LARGE_BREAK_POINT &&
-    screenWidth > MEDIUM_BREAK_POINT
-  ) {
-    if (
-      ((selectedRound === 2 &&
-        round !== 2 &&
-        round !== "sweet sixteen" &&
-        round !== "elite eight") ||
-        (selectedRound === "sweet sixteen" &&
-          round !== "sweet sixteen" &&
-          round !== "elite eight") ||
-        (selectedRound === "elite eight" && round !== "elite eight") ||
-        selectedRound === "final four" ||
-        selectedRound === "finals") &&
-      (round === 1 ||
-        round === 2 ||
-        round === "sweet sixteen" ||
-        round === "elite eight")
-    ) {
-      setButtonShrinkStyles();
-    } else if (
-      (selectedRound === 2 && round === 2) ||
-      (selectedRound === "sweet sixteen" && round === "sweet sixteen") ||
-      (selectedRound === "elite eight" && round === "elite eight") ||
-      ((selectedRound === "final four" || selectedRound === "finals") &&
-        round === "final four")
-    ) {
-      setButtonDefaultStyles();
-    }
-  } else if (screenWidth <= MEDIUM_BREAK_POINT) {
-    if (
-      ((selectedRound === 2 &&
-        round !== 2 &&
-        round !== "sweet sixteen" &&
-        round !== "elite eight" &&
-        round !== "final four") ||
-        (selectedRound === "sweet sixteen" &&
-          round !== "sweet sixteen" &&
-          round !== "elite eight" &&
-          round !== "final four") ||
-        (selectedRound === "elite eight" &&
-          round !== "elite eight" &&
-          round !== "final four") ||
-        (selectedRound === "final four" && round !== "final four") ||
-        selectedRound === "finals") &&
-      (round === 1 ||
-        round === 2 ||
-        round === "sweet sixteen" ||
-        round === "elite eight" ||
-        round === "final four")
-    ) {
-      setButtonShrinkStyles();
-    } else if (
-      (selectedRound === 2 && round === 2) ||
-      (selectedRound === "sweet sixteen" && round === "sweet sixteen") ||
-      (selectedRound === "elite eight" && round === "elite eight") ||
-      (selectedRound === "final four" && round === "final four") ||
-      (selectedRound === "finals" && round === "finals")
-    ) {
-      setButtonDefaultStyles();
-    }
-  } else {
-    setButtonDefaultStyles();
-  }
-
-  let isAllRoundPicksSelected;
-  const checkIfPicksWereMade = (roundPicksIndex) => {
-    return Object.keys(playerPicksObj[roundPicksIndex]).every((region) => {
-      return playerPicksObj[roundPicksIndex][region].every((matchup) => {
-        return matchup.every((team) => {
-          return team.team !== "";
-        });
-      });
-    });
-  };
-
-  let playerPicksRoundIndex;
-  if (round === 2) playerPicksRoundIndex = "roundTwoPicks";
-  else if (round === "sweet sixteen")
-    playerPicksRoundIndex = "roundSweetSixteenPicks";
-  else if (round === "elite eight")
-    playerPicksRoundIndex = "roundEliteEightPicks";
-  else if (round === "final four")
-    playerPicksRoundIndex = "roundFinalFourPicks";
-  else if (round === "finals")
-    playerPicksRoundIndex = ["roundFinalsPicks", "champion"];
-
-  if (round === "finals") {
-    isAllRoundPicksSelected = playerPicksRoundIndex.every((round) => {
-      return checkIfPicksWereMade(round);
-    });
-  } else if (round !== 1) {
-    isAllRoundPicksSelected = checkIfPicksWereMade(playerPicksRoundIndex);
-  } else {
-    isAllRoundPicksSelected = false;
-  }
+  const buttonAnimate =
+    BUTTON_ANIMATE[getRoundButtonState(round, selectedRound, screenWidth)];
+  const isAllRoundPicksSelected = areRoundPicksComplete(round, playerPicksObj);
 
   return (
     <motion.button
@@ -252,11 +90,7 @@ export const RoundSelectButton: React.FC<RoundSelectButtonProps> = ({
         color: PRIMARY_TEXT_COLOR,
         fontSize: DEFAULT_FONT_SIZE,
       }}
-      animate={{
-        width: roundSelectButtonWidth,
-        color: roundSelectButtonTextColor,
-        fontSize: roundSelectButtonFontSize,
-      }}
+      animate={buttonAnimate}
       className="relative h-16 flex justify-center items-center"
       style={{ backgroundColor: NON_CTA_BUTTON_COLOR }}
     >
