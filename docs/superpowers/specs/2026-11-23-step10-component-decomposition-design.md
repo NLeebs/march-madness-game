@@ -81,7 +81,7 @@ All behavior-preserving. Pure functions live in `src/functions/tournament/` (or 
 
 Target sizes, a guide not a rule: `Tournament.tsx` under ~200 lines; `TournamentRound.tsx` and `RoundSelectButton.tsx` under ~120 each.
 
-### PR 10c: layout fixes (findings 44, 46, 47, 48)
+### PR 10c: layout fixes (findings 46, 47, 48, 58; 44 was fixed in 10b)
 
 Each fix is its own commit with a failing test first (e2e or unit, whichever reproduces it), and removes its `KNOWN_LAYOUT_ISSUES` entry or e2e workaround.
 
@@ -89,8 +89,9 @@ Each fix is its own commit with a failing test first (e2e or unit, whichever rep
 - **46: bracket screens scroll sideways at 2326-2349px.** The `mx-auto max-w-tourny` wrapper should constrain only the wide layout; in the narrow layout its full-width children (banner, grid with `w-screen`) must not overhang. Builder picks the CSS; acceptance is the resize sweep passing at 2326-2350 with the entry removed.
 - **47: after the tournament, with round 1 selected, "See Recap" and "Play Again" are unreachable in the narrow layout.** They sit in the finals grid area to the right of the overflow-hidden grid. My call (the user can correct it in review): in the narrow layout, render the post-tournament actions (player score, See Recap, Play Again) outside the horizontally clipped grid, centred under the round banner, so they are reachable whichever round is selected. The wide layout keeps them where they are. Remove the resize test's workaround and assert both buttons are clickable with round 1 selected.
 - **48: signed-in nav group overflows a 390px phone by 15px.** My call: tighten the signed-in group below the `sm` breakpoint (smaller horizontal padding / gap on Dashboard and Logout) so it fits, without changing the look at `sm` and up. Remove the entry.
+- **58: at exactly 2040px the final-four column keeps the unscrolled spacing** (added 2026-11-24, found in the 10b review). In `getRoundSpacing` position 4 checks `screenWidth < XXXL_LARGE_BREAK_POINT` while positions 2 and 3 use `<=`. Switch it to `<=` so with round 2 selected at 2040px final four gets `playGap 15.5rem` / `paddingTop 44.5rem` and lines up with the elite-eight games feeding it. A visible change: update the `pos 4 at 2040` unit pin and the render snapshot on purpose. User confirmed 2026-11-24, along with the finding 47 call above.
 
-Mark the four findings fixed in `DIAGNOSIS.md`, and the step 10 roadmap row done after 10c.
+Mark findings 46, 47, 48 and 58 fixed in `DIAGNOSIS.md`, and the step 10 roadmap row done after 10c.
 
 ## Left to the builder
 

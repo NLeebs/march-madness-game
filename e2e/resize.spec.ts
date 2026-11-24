@@ -42,6 +42,8 @@ const RESIZE_WIDTHS = [
   XL_LARGE_BREAK_POINT,
   XXL_LARGE_BREAK_POINT,
   XXXL_LARGE_BREAK_POINT,
+  // first width where max-w-tourny (2325px) used to overhang (finding 46)
+  2326,
   TOURNAMENT_BREAK_POINT - 1,
   TOURNAMENT_BREAK_POINT,
   TOURNAMENT_BREAK_POINT + 1,
@@ -169,6 +171,17 @@ const EXPECTED_SIGNATURES: Record<number, { season: Row; bracket: Record<string,
       "elite eight": { banner: true, columns: ["2", "champion", "elite-eight", "final-four", "finals", "sweet-sixteen"] },
       "final four": { banner: true, columns: ["2", "champion", "elite-eight", "final-four", "finals", "sweet-sixteen"] },
       finals: { banner: true, columns: ["2", "champion", "elite-eight", "final-four", "finals", "sweet-sixteen"] },
+    },
+  },
+  2326: {
+    season: { banner: false, columns: [] },
+    bracket: {
+      1: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      2: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "sweet sixteen": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "elite eight": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      "final four": { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
+      finals: { banner: true, columns: ["1", "2", "champion", "elite-eight", "final-four", "finals", "playin", "sweet-sixteen"] },
     },
   },
   2349: {
@@ -470,10 +483,14 @@ if (process.env.E2E_MEASURE_SIGNATURES) {
     expect((await readState(page)).uiState.selectedRound).toBe("elite eight");
     await timedSweep("played");
 
-    // 5. Recap dialog open. The sweep above went past TOURNAMENT_BREAK_POINT, which selected
-    // round 1; with round 1 selected the See Recap button sits off to the right of the bracket
-    // grid (which does not scroll sideways), so go to the Finals round first, as a player would.
-    await showRound(page, "finals");
+    // 4b. Finding 47: the sweep went past TOURNAMENT_BREAK_POINT, which selected round 1. With
+    // round 1 selected the post-tournament actions must still be reachable.
+    expect((await readState(page)).uiState.selectedRound, "sweep past 2350 selects round 1").toBe(1);
+    const actions = page.getByTestId("tournament-actions");
+    await assertUsable(actions.getByRole("button", { name: "See Recap" }));
+    await assertUsable(actions.getByRole("button", { name: "Play Again" }));
+
+    // 5. Recap dialog open (round 1 still selected).
     await game.openRecap();
     await timedSweep("recap");
 

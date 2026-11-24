@@ -28,9 +28,9 @@ const cases: [string, number | "finals" | undefined, TournamentRound, number, Ro
   ["pos 3 at 2041", 3, 2, 2041, spacing(["25rem", "12rem", "15rem", "30.5rem", "14rem", "17rem"])],
   ["pos 3 sweet sixteen at 1700", 3, "sweet sixteen", 1700, spacing(["25rem", "12rem", "15rem", "18rem", "20rem", "22.5rem"])],
   ["pos 3 sweet sixteen at 1701", 3, "sweet sixteen", 1701, spacing(["25rem", "12rem", "15rem", "18rem", "19rem", "22.5rem"])],
-  // position 4: strict < 2040
+  // position 4: <= 2040, like positions 2 and 3 (finding 58)
   ["pos 4 at 2039", 4, 2, 2039, spacing(["25rem", "28rem", "31rem", "15.5rem", "44.5rem", "36.75rem"])],
-  ["pos 4 at 2040", 4, 2, 2040, spacing(["25rem", "28rem", "31rem", "0", "33.75rem", "36.75rem"])],
+  ["pos 4 at 2040", 4, 2, 2040, spacing(["25rem", "28rem", "31rem", "15.5rem", "44.5rem", "36.75rem"])],
   ["pos 4 at 2041", 4, 2, 2041, spacing(["25rem", "28rem", "31rem", "0", "33.75rem", "36.75rem"])],
   // position 5
   ["pos 5", 5, 2, 2040, spacing(["0", "62rem", "62rem", "0", "75rem", "75rem"])],

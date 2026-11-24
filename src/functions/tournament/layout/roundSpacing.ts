@@ -75,8 +75,7 @@ export function getRoundSpacing(
     }
     case 4: {
       const s = spacing(["25rem", "28rem", "31rem", "0", "33.75rem", "36.75rem"]);
-      // strictly below, unlike positions 2 and 3
-      if (scrolled && screenWidth < XXXL_LARGE_BREAK_POINT) {
+      if (scrolled && screenWidth <= XXXL_LARGE_BREAK_POINT) {
         Object.assign(s, { playGap: "15.5rem", playPaddingTop: "44.5rem" });
       }
       return s;

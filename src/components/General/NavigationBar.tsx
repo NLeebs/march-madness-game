@@ -64,29 +64,29 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <nav className="w-full h-20 flex flex-row justify-between items-center px-4 bg-gradient-to-r from-blue-500 from-70% to-blue-400 to-100% py-1">
+      <nav className="w-full h-20 flex flex-row justify-between items-center px-2 sm:px-4 bg-gradient-to-r from-blue-500 from-70% to-blue-400 to-100% py-1">
         <div className="flex flex-row items-center gap-2">
           <Button
             onClick={handleHomeClick}
             backgroundColor="transparent"
             text={homeButtonText}
-            className="pl-0 text-2xl hover:scale-none"
+            className="pl-0 pr-2 sm:pr-6 text-2xl hover:scale-none"
             icon={homeIcon}
           />
         </div>
         {user ? (
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center gap-1 sm:gap-2">
             <Button
               onClick={handleDashboard}
               backgroundColor={PRIMARY_COLOR}
               text="Dashboard"
-              className="py-3 px-4"
+              className="py-3 px-2 sm:px-4 text-base sm:text-lg"
             />
             <Button
               onClick={handleLogout}
               backgroundColor="transparent"
               text="Logout"
-              className="p-2 sm:p-4 shadow-none"
+              className="p-2 sm:p-4 text-base sm:text-lg shadow-none"
             />
           </div>
         ) : (

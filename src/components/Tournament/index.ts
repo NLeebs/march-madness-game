@@ -6,6 +6,7 @@ export * from "./RoundSelectBackButton";
 export * from "./RoundSelectBanner";
 export * from "./RoundSelectButton";
 export * from "./Tournament";
+export * from "./TournamentActions";
 export * from "./TournamentMatchup";
 export * from "./TournamentMatchupCard";
 export * from "./TournamentRecapDialog";

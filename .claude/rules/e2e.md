@@ -74,14 +74,13 @@ The `errors` fixture fails a test on any `console.error` or uncaught page error.
 
 ## Layout checks and KNOWN_LAYOUT_ISSUES
 
-`e2e/support/layout.ts` has `assertNoHorizontalScroll`, `assertUsable`, `assertNoOverlap`, `assertRoundUnclipped` and `layoutSignature`, wrapped by `enforceLayout(page, phase, check, run)`.
+`e2e/support/layout.ts` has `assertNoHorizontalScroll`, `assertUsable`, `assertNoOverlap`, `assertRoundUnclipped` and `layoutSignature`, wrapped by `enforceLayout(page, phase, check, run)`. `assertNoHorizontalScroll` checks the page and the narrow bracket's own scroll box (`bracket-scroll`). Widths below the phone project's 390px are covered by `test.use({ viewport })` (e.g. the 360/375px signed-in nav checks in `auth.spec.ts`, which skip themselves outside the phone project so the laptop project doesn't repeat them at the same width).
+
+**Linux text is wider.** CI runs Chromium on Linux, which rounds text widths up to whole pixels (e.g. the Dashboard button is 104px on Linux, 102.11px on Windows), so a row that fits on Windows by a pixel or two scrolls sideways in CI. Leave a few pixels of room in tight layouts, and check a near-fit on Linux before pushing: `docker run -d --name pw --ipc=host -w /work mcr.microsoft.com/playwright:v1.56.1-noble sleep infinity` (version = `@playwright/test`), copy in `git archive HEAD`, then `npm ci` and `npx playwright test <file> --project=<project>` inside it. In Git Bash set `MSYS_NO_PATHCONV=1` so `/work` isn't rewritten.
 
 `KNOWN_LAYOUT_ISSUES` lists layout defects the app has today. Where an entry matches the project, phase, check and (if given) `widths`, the check **must fail**: the entry asserts the issue still occurs. When the issue is fixed the test fails with "known layout issue no longer occurs", which forces the entry's removal. Each entry has a `finding` text and a DIAGNOSIS finding number:
 
-| Entry | Finding |
-|---|---|
-| laptop, bracket phases, 2349 and 2350px: sideways scroll | 46 |
-| phone, dashboard: sideways scroll (signed-in nav) | 48 |
+None today (findings 46 and 48 were fixed in step 10c).
 
 Never add an entry to silence a new failure without logging a DIAGNOSIS finding for it.
 
@@ -91,6 +90,8 @@ Laptop only. It sweeps widths in every phase and compares the layout against `EX
 
 - **`page.clock`**: the regular season plays a week every 0.15 s, and the full-state comparison needs a season that doesn't move, so the test installs `page.clock`, pauses it, and advances with `runFor` to hold the season frozen while resizing, then resumes.
 - Width 2350 (`TOURNAMENT_BREAK_POINT`) is swept: since step 10b it takes the narrow layout, like 2349 (finding 44).
+- Width 2326 is swept: the first width where the old centred `max-w-tourny` wrapper overhung (finding 46).
+- After the "played" sweep (which leaves round 1 selected) the test checks See Recap and Play Again are usable with round 1 selected (finding 47).
 - **Regenerating `EXPECTED_SIGNATURES`** (new breakpoint, layout change): run `E2E_MEASURE_SIGNATURES=1 npx playwright test e2e/resize.spec.ts` (laptop project). It opens a fresh page at each width, never resized, plays a game, and prints the table entry for each width (signature on Selection Sunday and with each round selected). Paste the output over the table and review the diff by eye: a changed row is a layout change someone must have intended.
 
 ## New checks: the sabotage rule

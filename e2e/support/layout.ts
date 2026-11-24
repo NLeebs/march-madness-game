@@ -79,12 +79,28 @@ export async function assertUsable(
   if (!options.animated) await locator.click({ trial: true, timeout });
 }
 
+/**
+ * Neither the page nor the narrow bracket's own scroll box (`bracket-scroll`, which scrolls
+ * vertically, so its horizontal overflow is `auto`) can be scrolled sideways.
+ */
 export async function assertNoHorizontalScroll(page: Page): Promise<void> {
   const width = viewportOf(page).width;
   const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(scrollWidth, `page scrolls sideways: scrollWidth ${scrollWidth} > viewport ${width}`).toBeLessThanOrEqual(
     width,
   );
+  const boxes = await page.evaluate(() =>
+    Array.from(document.querySelectorAll<HTMLElement>('[data-testid="bracket-scroll"]')).map((el) => ({
+      scrollWidth: el.scrollWidth,
+      clientWidth: el.clientWidth,
+    })),
+  );
+  for (const box of boxes) {
+    expect(
+      box.scrollWidth,
+      `bracket-scroll scrolls sideways: scrollWidth ${box.scrollWidth} > clientWidth ${box.clientWidth}`,
+    ).toBeLessThanOrEqual(box.clientWidth);
+  }
 }
 
 /** The part of an element that is really on screen, plus the data attributes used to label it. */
@@ -262,35 +278,7 @@ export type KnownLayoutIssue = {
   finding: string;
 };
 
-/** Phases in which the bracket is on screen, as GamePage and the resize test name them. */
-const BRACKET_PHASES = ["bracket picks", "bracket complete", "tournament finished", "recap"];
-
-export const KNOWN_LAYOUT_ISSUES: KnownLayoutIssue[] = [
-  {
-    project: "laptop",
-    phases: BRACKET_PHASES,
-    widths: [2349, 2350],
-    check: "horizontal-scroll",
-    description: "bracket screens scroll sideways: observed at 2349 and 2350px; range 2326-2350 by analysis (max-w-tourny 2325px)",
-    finding:
-      "DIAGNOSIS finding 46. Resize sweep: at 2349px the page's scrollWidth is 2361, at 2350px 2363. Tournament.tsx wraps the round banner " +
-      "and the bracket grid (both w-screen / full width) in `mx-auto max-w-tourny` (2325px). Above 2325px the " +
-      "wrapper is narrower than the viewport and centred, so its full-width children start (width - 2325) / 2 px " +
-      "in and overhang the right edge by the same amount. Above 2350 the grid switches to its wide layout " +
-      "and the overhang goes away.",
-  },
-  {
-    project: "phone",
-    phases: ["dashboard"],
-    check: "horizontal-scroll",
-    description: "signed-in pages scroll sideways on a 390px phone: scrollWidth 405",
-    finding:
-      "DIAGNOSIS finding 48. NavigationBar's signed-in button group (Dashboard + Logout, 215px wide) ends at x=405 on a " +
-      "390px viewport, 15px past the right edge, so every signed-in page scrolls sideways on a phone. The " +
-      "logged-out group (Login + Signup) is narrower and fits. Dashboard content itself fits (its widest " +
-      "element ends at 392, inside the page padding).",
-  },
-];
+export const KNOWN_LAYOUT_ISSUES: KnownLayoutIssue[] = [];
 
 /**
  * Runs a layout check. Where a KNOWN_LAYOUT_ISSUES entry matches the current project, phase,
