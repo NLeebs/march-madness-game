@@ -3,8 +3,9 @@
  * RoundSelectButton): every column's test id, classes and framer-motion animate targets,
  * in DOM order, across the breakpoint edges, selected rounds and tournament phases.
  *
- * Written before the step 10b decomposition and not updated by it. Update the snapshot
- * only for an intended visual change.
+ * Written before the step 10b decomposition. The refactor commits did not change it; only the
+ * 2350px fix (finding 44) moved the w=2350 entries, on purpose. Update the snapshot only for
+ * an intended visual change.
  */
 import React from "react";
 import { describe, it, expect, afterEach, beforeAll, vi } from "vitest";
