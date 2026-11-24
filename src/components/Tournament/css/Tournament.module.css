@@ -6,6 +6,15 @@
         "round64Bottom round32Bottom sweetSixteenBottom eliteEightBottom finalFourBottom final";
 }
 
+/* The narrow grid clips its off-screen rounds with overflow-x: clip (Tailwind overflow-x-clip),
+   which is not a scroll container. Safari before 16 ignores clip; there, fall back to hidden so
+   the rounds stay clipped instead of becoming scrollable inside bracket-scroll. */
+@supports not (overflow: clip) {
+    .tournamentGrid {
+        overflow-x: hidden;
+    }
+}
+
 .gridRound64Top {
     grid-area: round64Top;
 }
