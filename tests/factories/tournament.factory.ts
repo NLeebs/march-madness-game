@@ -54,7 +54,7 @@ export function buildTournamentState(
     fieldToken: "",
     tournamentScoringRulesId: "scoring-uuid",
     tournamentTeams: [],
-    tournamentSeeds: {},
+    tournamentSeeds: { west: [], east: [], south: [], midwest: [] },
     playinTeams: { elevenSeeds: [], sixteenSeeds: [] },
     roundOneMatchups: buildEmptyRoundMatchups(),
     roundTwoMatchups: buildEmptyRoundMatchups(),

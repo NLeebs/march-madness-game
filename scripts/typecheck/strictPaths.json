@@ -14,8 +14,10 @@
   "src/firebase/",
   "src/formSchemas/",
   "src/functions/",
+  "src/hooks/",
   "src/mockData/",
   "src/utils/",
+  "store/",
   "types/",
   "utils/"
 ]

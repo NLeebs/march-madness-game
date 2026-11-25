@@ -4,4 +4,6 @@ export type TournamentTeam = {
   seed: string | number;
   win?: boolean;
   score?: number;
+  /** Set by `recordRoundScore`: whether the player picked this team for this slot. */
+  selected?: boolean;
 };
