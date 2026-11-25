@@ -1,16 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { AppError } from "@/utils/errorHandling";
+import type { getUserProfile } from "@/application/useCases";
+import { useApiQuery, type ResultOf } from "./useApiQuery";
 
 export function useProfile(userId: string | undefined) {
-  return useQuery({
-    queryKey: ["profile", userId],
-    queryFn: async () => {
-      const response = await fetch(`/api/profile/${userId}`);
-      if (!response.ok) {
-        throw new AppError("Failed to fetch user profile", response.status);
-      }
-      return response.json();
-    },
-    enabled: !!userId,
-  });
+  return useApiQuery<ResultOf<typeof getUserProfile>>(
+    ["profile", userId],
+    `/api/profile/${userId}`,
+    "fetch user profile",
+    { enabled: !!userId },
+  );
 }
