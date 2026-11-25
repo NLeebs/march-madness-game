@@ -63,6 +63,9 @@ test.describe("with dashboard data", () => {
   test("logout returns to logged out", async ({ page, game }) => {
     await game.open();
     await signInThroughUi(page, FAKE_USER.email, FAKE_PASSWORD);
+    // Wait for the sign-in to land: navigating while it is in flight cancels the request
+    // ("Failed to fetch") and /dashboard then loads signed out.
+    await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
 
     // Positive control: signed in, /dashboard is reachable and stays put.
     await page.goto("/dashboard");
