@@ -483,14 +483,14 @@ if (process.env.E2E_MEASURE_SIGNATURES) {
     expect((await readState(page)).uiState.selectedRound).toBe("elite eight");
     await timedSweep("played");
 
-    // 4b. Finding 47: the sweep went past TOURNAMENT_BREAK_POINT, which selected round 1. With
-    // round 1 selected the post-tournament actions must still be reachable.
+    // 5. Recap dialog open. The sweep above went past TOURNAMENT_BREAK_POINT, which selected
+    // round 1; the post-tournament actions sit under the champion in the finals cell, off screen
+    // with round 1 selected (intended), so go to the Finals round first, as a player would.
     expect((await readState(page)).uiState.selectedRound, "sweep past 2350 selects round 1").toBe(1);
+    await showRound(page, "finals");
     const actions = page.getByTestId("tournament-actions");
     await assertUsable(actions.getByRole("button", { name: "See Recap" }));
     await assertUsable(actions.getByRole("button", { name: "Play Again" }));
-
-    // 5. Recap dialog open (round 1 still selected).
     await game.openRecap();
     await timedSweep("recap");
 

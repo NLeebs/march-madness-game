@@ -91,7 +91,7 @@ Laptop only. It sweeps widths in every phase and compares the layout against `EX
 - **`page.clock`**: the regular season plays a week every 0.15 s, and the full-state comparison needs a season that doesn't move, so the test installs `page.clock`, pauses it, and advances with `runFor` to hold the season frozen while resizing, then resumes.
 - Width 2350 (`TOURNAMENT_BREAK_POINT`) is swept: since step 10b it takes the narrow layout, like 2349 (finding 44).
 - Width 2326 is swept: the first width where the old centred `max-w-tourny` wrapper overhung (finding 46).
-- After the "played" sweep (which leaves round 1 selected) the test checks See Recap and Play Again are usable with round 1 selected (finding 47).
+- After the "played" sweep (which leaves round 1 selected) the test goes to the Finals round and checks See Recap and Play Again are usable there: they sit under the champion, off screen with an early round selected (finding 47, reversed by choice).
 - **Regenerating `EXPECTED_SIGNATURES`** (new breakpoint, layout change): run `E2E_MEASURE_SIGNATURES=1 npx playwright test e2e/resize.spec.ts` (laptop project). It opens a fresh page at each width, never resized, plays a game, and prints the table entry for each width (signature on Selection Sunday and with each round selected). Paste the output over the table and review the diff by eye: a changed row is a layout change someone must have intended.
 
 ## New checks: the sabotage rule

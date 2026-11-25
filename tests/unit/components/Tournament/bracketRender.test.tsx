@@ -11,7 +11,9 @@
  * - step 10c, finding 47: the narrow entries (actions above the grid, bracket-scroll wrapper);
  * - step 10c review: the w=2351 entries (one wrapper in both layouts);
  * - step 10c review: every recap entry (See Recap and Play Again in their own wrapper; on
- *   narrow, an invisible actions copy in the finals cell).
+ *   narrow, an invisible actions copy in the finals cell);
+ * - the narrow post-tournament entries again: the actions moved back under the champion in
+ *   the finals cell (finding 47 reversed; no copy above the grid).
  * Update the snapshot only for an intended visual change.
  */
 import React from "react";
@@ -204,30 +206,14 @@ describe("Tournament render pin", () => {
   });
 });
 
-describe("Tournament narrow pick stage", () => {
-  // Finding 47 moved the post-tournament actions above the grid on narrow screens. Until the
-  // tournament starts, the finals cell keeps its (empty) actions block, so its height and the
-  // rows it spans stay as they were.
-  it.each(["finals", "final four", 1] as TournamentRound[])("keeps the actions block in the finals cell (sel=%s)", async (sel) => {
-    const store = storeFrom(base.selection);
-    setView(store, 390, sel);
-    let container!: HTMLElement;
-    await act(async () => {
-      ({ container } = renderWithStore(<Tournament />, store));
-    });
-    const finalsCell = container.querySelector('[data-testid="bracket-column-finals"]')?.parentElement;
-    expect(finalsCell?.querySelector('[data-testid="tournament-actions"]')).not.toBeNull();
-    expect(container.querySelectorAll('[data-testid="tournament-actions"]')).toHaveLength(1);
-  });
-});
-
-describe("Tournament narrow after the start", () => {
+describe("Tournament narrow actions", () => {
   // Mid-replay: the results are stored and replaying, the recap not reached yet.
   const replayState = (): BaseState => ({
     ...base.recap,
     appState: { ...base.recap.appState, tournamentRecap: false },
   });
   const phases: [string, () => BaseState][] = [
+    ["selection", () => base.selection],
     ["replay", replayState],
     ["recap", () => base.recap],
   ];
@@ -235,9 +221,9 @@ describe("Tournament narrow after the start", () => {
     (["finals", "final four", 1] as TournamentRound[]).map((sel) => [name, sel, state] as const),
   );
 
-  // The visible actions block sits above the grid; the finals cell keeps an invisible copy, so
-  // its height and the rows it spans don't change when the block moves out (step 10c review).
-  it.each(cases)("%s sel=%s: one visible actions block above the grid, a hidden copy in the finals cell", async (_name, sel, state) => {
+  // The score, See Recap and Play Again sit under the champion in the finals cell, whichever
+  // round is selected (they can be off screen with an early round selected; that's intended).
+  it.each(cases)("%s sel=%s: one actions block, in the finals cell", async (_name, sel, state) => {
     const store = storeFrom(state());
     setView(store, 390, sel);
     let container!: HTMLElement;
@@ -246,20 +232,14 @@ describe("Tournament narrow after the start", () => {
     });
     const actions = container.querySelectorAll('[data-testid="tournament-actions"]');
     expect(actions).toHaveLength(1);
-    expect(actions[0].parentElement?.getAttribute("data-testid")).toBe("bracket-scroll");
-
     const finalsCell = container.querySelector('[data-testid="bracket-column-finals"]')?.parentElement;
-    const placeholder = finalsCell?.querySelector('[data-actions-placeholder]');
-    expect(placeholder).not.toBeNull();
-    expect(placeholder?.getAttribute("aria-hidden")).toBe("true");
-    expect(placeholder?.classList.contains("invisible")).toBe(true);
-    expect(placeholder?.querySelector('[data-stub="PlayerScore"]')).not.toBeNull();
-    expect(placeholder?.querySelector('[data-stub="RestartGameButton"]')).not.toBeNull();
+    expect(finalsCell?.contains(actions[0])).toBe(true);
+    expect(container.querySelector("[data-actions-placeholder]")).toBeNull();
   });
 
   // See Recap and Play Again take their space from the start of the replay, hidden until the
   // recap, so the block doesn't grow (and push the bracket down) when the tournament ends.
-  it.each(phases)("%s: the recap buttons are laid out, hidden until the recap", async (name, state) => {
+  it.each(phases.slice(1))("%s: the recap buttons are laid out, hidden until the recap", async (name, state) => {
     const store = storeFrom(state());
     setView(store, 390, "finals");
     let container!: HTMLElement;
