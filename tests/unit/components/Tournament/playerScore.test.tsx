@@ -12,12 +12,4 @@ describe("PlayerScore", () => {
     const { container } = renderWithStore(<PlayerScore />, createAppStore());
     expect(container.querySelectorAll('[data-testid="player-score-value"]')).toHaveLength(1);
   });
-
-  // The narrow finals cell keeps an invisible copy of the actions block; it must not add a
-  // second player-score-value for tests (and tools) to find.
-  it("leaves the test id off a placeholder copy", () => {
-    const { container } = renderWithStore(<PlayerScore placeholder />, createAppStore());
-    expect(container.querySelector("[data-testid]")).toBeNull();
-    expect(container.textContent).toContain("Score");
-  });
 });

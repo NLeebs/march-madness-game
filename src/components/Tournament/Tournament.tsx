@@ -40,9 +40,6 @@ export const Tournament = () => {
   const layout = getRoundLayout(selectedRound, screenWidth);
   const wide = screenWidth > TOURNAMENT_BREAK_POINT;
   const roundOneSize = layout[1].expanded ? "max-content" : 0;
-  // True once the main-bracket replay starts (tournamentPlayGames, when the score appears) and
-  // at the recap; false through the play-in replay.
-  const tournamentStarted = appState.tournamentPlayGames || appState.tournamentRecap;
 
   const grid = (
     <div
@@ -85,9 +82,9 @@ export const Tournament = () => {
           />
         </div>
         {appState.tournamentSelection && <PlayTournamentButton />}
-        {/* Narrow: empty until the tournament starts, then the visible block moves above the grid
-            and this cell keeps an invisible copy, so its height and the rows it spans don't change. */}
-        <TournamentActions placeholder={!wide && tournamentStarted} />
+        {/* Score, See Recap and Play Again sit under the champion in both layouts. On narrow
+            screens they are off screen while an early round is selected; that's intended. */}
+        <TournamentActions />
       </div>
 
       {BOTTOM_ROUNDS.map((round) => (
@@ -128,14 +125,10 @@ export const Tournament = () => {
       {!wide && <RoundSelectBanner />}
 
       {/* One wrapper in both layouts, so crossing the break point only changes its classes and
-          never remounts the bracket (PlayTournamentButton holds the pending request). Once the
-          tournament has started, the visible actions block does move (finals cell when wide,
-          above the grid when narrow), so it remounts on the crossing; it holds no state that matters.
+          never remounts the bracket (PlayTournamentButton holds the pending request).
           The narrow bracket scrolls vertically. The grid clips its off-screen rounds with
           overflow-x: clip, not hidden: a clip box is not a scroll container, so focus or
-          scrollIntoView can't shift it sideways. Once the tournament starts, the score and the
-          post-tournament actions sit above the grid, under the banner, so they are reachable
-          whichever round is selected (finding 47). */}
+          scrollIntoView can't shift it sideways. */}
       <div
         data-testid={wide ? undefined : "bracket-scroll"}
         className={
@@ -144,7 +137,6 @@ export const Tournament = () => {
             : "w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
         }
       >
-        {!wide && tournamentStarted && <TournamentActions />}
         {grid}
       </div>
 

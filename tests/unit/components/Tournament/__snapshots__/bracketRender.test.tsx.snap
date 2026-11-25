@@ -4754,11 +4754,6 @@ exports[`Tournament render pin > recap w=390 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -4790,7 +4785,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -4830,11 +4825,6 @@ exports[`Tournament render pin > recap w=390 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -4866,7 +4856,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -4906,11 +4896,6 @@ exports[`Tournament render pin > recap w=390 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={}
@@ -4942,7 +4927,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -4982,11 +4967,6 @@ exports[`Tournament render pin > recap w=390 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5018,7 +4998,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5058,11 +5038,6 @@ exports[`Tournament render pin > recap w=390 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5094,7 +5069,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5134,11 +5109,6 @@ exports[`Tournament render pin > recap w=390 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5170,7 +5140,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5210,11 +5180,6 @@ exports[`Tournament render pin > recap w=390 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5246,7 +5211,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5286,11 +5251,6 @@ exports[`Tournament render pin > recap w=768 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5322,7 +5282,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5362,11 +5322,6 @@ exports[`Tournament render pin > recap w=768 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5398,7 +5353,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5438,11 +5393,6 @@ exports[`Tournament render pin > recap w=768 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={}
@@ -5474,7 +5424,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5514,11 +5464,6 @@ exports[`Tournament render pin > recap w=768 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5550,7 +5495,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5590,11 +5535,6 @@ exports[`Tournament render pin > recap w=768 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5626,7 +5566,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5666,11 +5606,6 @@ exports[`Tournament render pin > recap w=768 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5702,7 +5637,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5742,11 +5677,6 @@ exports[`Tournament render pin > recap w=768 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5778,7 +5708,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5818,11 +5748,6 @@ exports[`Tournament render pin > recap w=769 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5854,7 +5779,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5894,11 +5819,6 @@ exports[`Tournament render pin > recap w=769 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -5930,7 +5850,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -5970,11 +5890,6 @@ exports[`Tournament render pin > recap w=769 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6006,7 +5921,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6046,11 +5961,6 @@ exports[`Tournament render pin > recap w=769 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6082,7 +5992,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6122,11 +6032,6 @@ exports[`Tournament render pin > recap w=769 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6158,7 +6063,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6198,11 +6103,6 @@ exports[`Tournament render pin > recap w=769 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6234,7 +6134,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6274,11 +6174,6 @@ exports[`Tournament render pin > recap w=769 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6310,7 +6205,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6350,11 +6245,6 @@ exports[`Tournament render pin > recap w=1024 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6386,7 +6276,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6426,11 +6316,6 @@ exports[`Tournament render pin > recap w=1024 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6462,7 +6347,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6502,11 +6387,6 @@ exports[`Tournament render pin > recap w=1024 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6538,7 +6418,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6578,11 +6458,6 @@ exports[`Tournament render pin > recap w=1024 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6614,7 +6489,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6654,11 +6529,6 @@ exports[`Tournament render pin > recap w=1024 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6690,7 +6560,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6730,11 +6600,6 @@ exports[`Tournament render pin > recap w=1024 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6766,7 +6631,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6806,11 +6671,6 @@ exports[`Tournament render pin > recap w=1024 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6842,7 +6702,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6882,11 +6742,6 @@ exports[`Tournament render pin > recap w=1025 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6918,7 +6773,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -6958,11 +6813,6 @@ exports[`Tournament render pin > recap w=1025 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -6994,7 +6844,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7034,11 +6884,6 @@ exports[`Tournament render pin > recap w=1025 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7070,7 +6915,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7110,11 +6955,6 @@ exports[`Tournament render pin > recap w=1025 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7146,7 +6986,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7186,11 +7026,6 @@ exports[`Tournament render pin > recap w=1025 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7222,7 +7057,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7262,11 +7097,6 @@ exports[`Tournament render pin > recap w=1025 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7298,7 +7128,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7338,11 +7168,6 @@ exports[`Tournament render pin > recap w=1025 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7374,7 +7199,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7414,11 +7239,6 @@ exports[`Tournament render pin > recap w=1400 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7450,7 +7270,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7490,11 +7310,6 @@ exports[`Tournament render pin > recap w=1400 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7526,7 +7341,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7566,11 +7381,6 @@ exports[`Tournament render pin > recap w=1400 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7602,7 +7412,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7642,11 +7452,6 @@ exports[`Tournament render pin > recap w=1400 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7678,7 +7483,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7718,11 +7523,6 @@ exports[`Tournament render pin > recap w=1400 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7754,7 +7554,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7794,11 +7594,6 @@ exports[`Tournament render pin > recap w=1400 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7830,7 +7625,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7870,11 +7665,6 @@ exports[`Tournament render pin > recap w=1400 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7906,7 +7696,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -7946,11 +7736,6 @@ exports[`Tournament render pin > recap w=1401 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -7982,7 +7767,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8022,11 +7807,6 @@ exports[`Tournament render pin > recap w=1401 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8058,7 +7838,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8098,11 +7878,6 @@ exports[`Tournament render pin > recap w=1401 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8134,7 +7909,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8174,11 +7949,6 @@ exports[`Tournament render pin > recap w=1401 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8210,7 +7980,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8250,11 +8020,6 @@ exports[`Tournament render pin > recap w=1401 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8286,7 +8051,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8326,11 +8091,6 @@ exports[`Tournament render pin > recap w=1401 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8362,7 +8122,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8402,11 +8162,6 @@ exports[`Tournament render pin > recap w=1401 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8438,7 +8193,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8478,11 +8233,6 @@ exports[`Tournament render pin > recap w=1700 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8514,7 +8264,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8554,11 +8304,6 @@ exports[`Tournament render pin > recap w=1700 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8590,7 +8335,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8630,11 +8375,6 @@ exports[`Tournament render pin > recap w=1700 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8666,7 +8406,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8706,11 +8446,6 @@ exports[`Tournament render pin > recap w=1700 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8742,7 +8477,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8782,11 +8517,6 @@ exports[`Tournament render pin > recap w=1700 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8818,7 +8548,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8858,11 +8588,6 @@ exports[`Tournament render pin > recap w=1700 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8894,7 +8619,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -8934,11 +8659,6 @@ exports[`Tournament render pin > recap w=1700 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -8970,7 +8690,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9010,11 +8730,6 @@ exports[`Tournament render pin > recap w=1701 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9046,7 +8761,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9086,11 +8801,6 @@ exports[`Tournament render pin > recap w=1701 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9122,7 +8832,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9162,11 +8872,6 @@ exports[`Tournament render pin > recap w=1701 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9198,7 +8903,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9238,11 +8943,6 @@ exports[`Tournament render pin > recap w=1701 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9274,7 +8974,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9314,11 +9014,6 @@ exports[`Tournament render pin > recap w=1701 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9350,7 +9045,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9390,11 +9085,6 @@ exports[`Tournament render pin > recap w=1701 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9426,7 +9116,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9466,11 +9156,6 @@ exports[`Tournament render pin > recap w=1701 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9502,7 +9187,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9542,11 +9227,6 @@ exports[`Tournament render pin > recap w=2040 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9578,7 +9258,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9618,11 +9298,6 @@ exports[`Tournament render pin > recap w=2040 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9654,7 +9329,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9694,11 +9369,6 @@ exports[`Tournament render pin > recap w=2040 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9730,7 +9400,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9770,11 +9440,6 @@ exports[`Tournament render pin > recap w=2040 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9806,7 +9471,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9846,11 +9511,6 @@ exports[`Tournament render pin > recap w=2040 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9882,7 +9542,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9922,11 +9582,6 @@ exports[`Tournament render pin > recap w=2040 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -9958,7 +9613,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -9998,11 +9653,6 @@ exports[`Tournament render pin > recap w=2040 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":0,"height":0}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10034,7 +9684,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10074,11 +9724,6 @@ exports[`Tournament render pin > recap w=2041 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10110,7 +9755,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10150,11 +9795,6 @@ exports[`Tournament render pin > recap w=2041 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10186,7 +9826,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10226,11 +9866,6 @@ exports[`Tournament render pin > recap w=2041 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10262,7 +9897,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10302,11 +9937,6 @@ exports[`Tournament render pin > recap w=2041 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10338,7 +9968,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10378,11 +10008,6 @@ exports[`Tournament render pin > recap w=2041 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10414,7 +10039,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10454,11 +10079,6 @@ exports[`Tournament render pin > recap w=2041 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10490,7 +10110,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10530,11 +10150,6 @@ exports[`Tournament render pin > recap w=2041 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10566,7 +10181,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10606,11 +10221,6 @@ exports[`Tournament render pin > recap w=2349 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10642,7 +10252,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10682,11 +10292,6 @@ exports[`Tournament render pin > recap w=2349 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10718,7 +10323,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10758,11 +10363,6 @@ exports[`Tournament render pin > recap w=2349 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10794,7 +10394,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10834,11 +10434,6 @@ exports[`Tournament render pin > recap w=2349 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10870,7 +10465,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10910,11 +10505,6 @@ exports[`Tournament render pin > recap w=2349 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -10946,7 +10536,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -10986,11 +10576,6 @@ exports[`Tournament render pin > recap w=2349 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11022,7 +10607,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11062,11 +10647,6 @@ exports[`Tournament render pin > recap w=2349 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11098,7 +10678,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11138,11 +10718,6 @@ exports[`Tournament render pin > recap w=2350 sel=1 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11174,7 +10749,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11214,11 +10789,6 @@ exports[`Tournament render pin > recap w=2350 sel=2 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11250,7 +10820,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11290,11 +10860,6 @@ exports[`Tournament render pin > recap w=2350 sel=champion 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11326,7 +10891,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11366,11 +10931,6 @@ exports[`Tournament render pin > recap w=2350 sel=elite eight 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11402,7 +10962,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11442,11 +11002,6 @@ exports[`Tournament render pin > recap w=2350 sel=final four 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11478,7 +11033,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11518,11 +11073,6 @@ exports[`Tournament render pin > recap w=2350 sel=finals 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11554,7 +11104,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
@@ -11594,11 +11144,6 @@ exports[`Tournament render pin > recap w=2350 sel=sweet sixteen 1`] = `
 div class="grid grid-flow-row" animate={"opacity":1}
   div testid=round-select-banner class="w-full flex flex-row justify-start overflow-x-auto bg-slate-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
   div testid=bracket-scroll class="w-screen h-[calc(100vh-9rem)] overflow-y-scroll scrollable-container pb-12"
-    div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
-      i stub=PlayerScore
-      div class="flex flex-col justify-start items-center gap-4"
-        button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"
-        i stub=RestartGameButton
     div class="relative grid _tournamentGrid_634cfe overflow-x-clip"
       div testid=bracket-column-1 class="overflow-x-clip h-max _gridRound64Top_634cfe" animate={"width":"max-content","height":"max-content"}
         div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
@@ -11630,7 +11175,7 @@ div class="grid grid-flow-row" animate={"opacity":1}
         div testid=bracket-column-champion class="flex flex-col gap-y-16 min-w-300"
           div class="flex m-4 flex-col" animate={"rowGap":"3rem","paddingTop":"0","paddingBottom":"4rem"}
             matchups[champion:champion:0 x1]
-        div class="flex flex-col justify-start items-center gap-4 mb-4 invisible"
+        div testid=tournament-actions class="flex flex-col justify-start items-center gap-4 mb-4"
           i stub=PlayerScore
           div class="flex flex-col justify-start items-center gap-4"
             button class="flex flex-row items-center gap-2 rounded-full px-6 py-4 text-lg font-semibold text-neutral-50 shadow-sm transition-transform ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300 hover:scale-110" text="See Recap"

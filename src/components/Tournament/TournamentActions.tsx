@@ -5,20 +5,12 @@ import { RootState, uiStateActions } from "@/store";
 import { Button, PlayerScore, RestartGameButton } from "@/src/components";
 import { PRIMARY_COLOR } from "@/src/constants";
 
-interface TournamentActionsProps {
-  /**
-   * An invisible, aria-hidden copy that only takes up the block's space. The narrow finals cell
-   * keeps one once the visible block moves above the grid, so the rows it spans keep their height.
-   */
-  placeholder?: boolean;
-}
-
 /**
  * The tournament actions: the player's score (shown from the main-bracket replay on), then See
  * Recap and Play Again. The two buttons take their space from the start of that replay but stay
  * hidden until the recap, so the block doesn't grow (pushing the bracket down) when it ends.
  */
-export const TournamentActions: React.FC<TournamentActionsProps> = ({ placeholder = false }) => {
+export const TournamentActions: React.FC = () => {
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
   const started = appState.tournamentPlayGames || appState.tournamentRecap;
@@ -30,12 +22,10 @@ export const TournamentActions: React.FC<TournamentActionsProps> = ({ placeholde
 
   return (
     <div
-      data-testid={placeholder ? undefined : "tournament-actions"}
-      data-actions-placeholder={placeholder ? "" : undefined}
-      aria-hidden={placeholder ? true : undefined}
-      className={`flex flex-col justify-start items-center gap-4 mb-4${placeholder ? " invisible" : ""}`}
+      data-testid="tournament-actions"
+      className="flex flex-col justify-start items-center gap-4 mb-4"
     >
-      {appState.tournamentPlayGames && <PlayerScore placeholder={placeholder} />}
+      {appState.tournamentPlayGames && <PlayerScore />}
       {started && (
         <div
           aria-hidden={buttonsHidden ? true : undefined}

@@ -8,12 +8,7 @@ import {
   CONFIRMATION_GREEN,
 } from "@/src/constants";
 
-interface PlayerScoreProps {
-  /** An invisible copy that only takes up space: leaves the test id off, so there's one score to find. */
-  placeholder?: boolean;
-}
-
-export const PlayerScore: React.FC<PlayerScoreProps> = ({ placeholder = false }) => {
+export const PlayerScore = () => {
   const playerScore = useSelector(
     (state: RootState) => state.tournament.playerScore
   );
@@ -28,7 +23,7 @@ export const PlayerScore: React.FC<PlayerScoreProps> = ({ placeholder = false })
       }}
     >
       <div className="text-center text-2xl">Score</div>
-      <div className="text-center text-xl" data-testid={placeholder ? undefined : "player-score-value"}>{playerScore}</div>
+      <div className="text-center text-xl" data-testid="player-score-value">{playerScore}</div>
     </div>
   );
 };
