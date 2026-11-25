@@ -6,5 +6,5 @@ export interface TournamentGameResult {
   winningTeam: string;
   winningScore: number;
   losingScore: number;
-  seed?: string;
+  seed?: string | number;
 }

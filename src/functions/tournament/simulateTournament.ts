@@ -82,15 +82,16 @@ export function simulateTournament(
   const play = (a: string, b: string) => playGame(statsOf(a), statsOf(b), rng);
 
   const seeds = seedTournament(field.tournamentTeams);
+  const roundOne = buildRoundOneMatchups(seeds, field.playinTeams);
   let bracket: BracketMatchups = {
     ...emptyBracket(),
-    roundOneMatchups: buildRoundOneMatchups(seeds, field.playinTeams),
+    roundOneMatchups: roundOne,
   };
   let picks = input.picks;
 
   // Play-in
   const playin: PlayinGameResult[] = [];
-  const playinMatchups = bracket.roundOneMatchups.playin;
+  const playinMatchups = roundOne.playin;
   (Object.keys(playinMatchups) as PlayinSeedType[]).forEach((seedType) => {
     playinMatchups[seedType].forEach((matchup, i) => {
       const { gameIndex, winningTeam, winningScore, losingScore } =
@@ -124,7 +125,7 @@ export function simulateTournament(
     (Object.keys(roundMatchups) as (TournamentRegion | "playin")[]).forEach(
       (region) => {
         if (region === "playin") return;
-        roundMatchups[region].forEach((matchup, i) => {
+        roundMatchups[region]?.forEach((matchup, i) => {
           const result = getTournamentGameResultObj(
             play(matchup[0].team, matchup[1].team),
             i,

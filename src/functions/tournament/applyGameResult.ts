@@ -52,12 +52,29 @@ export function applyPlayinResult(
     ];
   const slot = gameIndex === 0 ? slots[0] : slots[1];
 
-  const regionGames = roundOne[slot.region].map((g) => g);
+  const roundOneGames = roundOne[slot.region];
+  if (!roundOneGames) {
+    throw new GameDataError("applyPlayinResult: round one has no games for the slot's region", {
+      region: slot.region,
+      seedType,
+      gameIndex,
+    });
+  }
+  const { playin } = roundOne;
+  if (!playin) {
+    throw new GameDataError("applyPlayinResult: round one has no play-in games", {
+      region: slot.region,
+      seedType,
+      gameIndex,
+    });
+  }
+
+  const regionGames = roundOneGames.map((g) => g);
   const slotGame = regionGames[slot.game].map((t) => t);
   slotGame[1] = { ...slotGame[1], team: winningTeam };
   regionGames[slot.game] = slotGame;
 
-  const playinGames = roundOne.playin[seedType].map((g) => g);
+  const playinGames = playin[seedType].map((g) => g);
   playinGames[gameIndex] = scoreGame(
     playinGames[gameIndex],
     winningTeam,
@@ -68,11 +85,20 @@ export function applyPlayinResult(
   return {
     ...roundOne,
     [slot.region]: regionGames,
-    playin: { ...roundOne.playin, [seedType]: playinGames },
+    playin: { ...playin, [seedType]: playinGames },
   };
 }
 
-type RoundGames = Partial<Record<TournamentRegion, TournamentMatchup[]>>;
+type RoundGames = Partial<
+  Record<Exclude<TournamentRegion, "playin">, TournamentMatchup[]>
+>;
+
+/** A region's games; the "playin" key holds play-in games, not a region's, so it has none. */
+const gamesIn = (
+  round: RoundGames,
+  region: TournamentRegion
+): TournamentMatchup[] | undefined =>
+  region === "playin" ? undefined : round[region];
 
 /**
  * Applies a tournament game result: writes the winner into its next-round
@@ -102,8 +128,8 @@ export function applyGameResult(
 
   const nextRound: RoundGames = bracket[nextMatchupsKey];
   const currentRound: RoundGames = bracket[matchupsKey];
-  const nextRoundGames = nextRound[nextRegion];
-  const currentRoundGames = currentRound[region];
+  const nextRoundGames = gamesIn(nextRound, nextRegion);
+  const currentRoundGames = gamesIn(currentRound, region);
   const { seed } = result;
   if (!nextRoundGames || !currentRoundGames || seed === undefined) {
     throw new GameDataError("applyGameResult: result does not fit the bracket", {

@@ -5,6 +5,7 @@ import {
 } from "@/src/functions/tournament/applyGameResult";
 import { deepFreeze } from "./deepFreeze";
 import { GameDataError } from "@/src/functions/generic";
+import { PLAYIN_ROUND_ONE_SLOTS } from "@/src/functions/tournament/roundConfig";
 import type { BracketMatchups, TournamentRoundMatchups } from "@/types";
 
 type Slot = Record<string, unknown>;
@@ -112,6 +113,40 @@ describe("applyPlayinResult", () => {
         losingScore: 65,
       })
     ).not.toThrow();
+  });
+});
+
+describe("applyPlayinResult with missing round-one data", () => {
+  const catchError = (fn: () => unknown): unknown => {
+    try {
+      fn();
+    } catch (e) {
+      return e;
+    }
+    return undefined;
+  };
+
+  it("throws GameDataError when round one lacks the play-in slot's region", () => {
+    const { region } = PLAYIN_ROUND_ONE_SLOTS.elevenSeeds[0];
+    const partial = { ...roundOne(), [region]: undefined } as TournamentRoundMatchups;
+    const error = catchError(() =>
+      applyPlayinResult(partial, { seedType: "elevenSeeds", gameIndex: 0, winningTeam: "p11a" })
+    );
+    expect(error).toBeInstanceOf(GameDataError);
+    expect((error as GameDataError).details).toMatchObject({ region, seedType: "elevenSeeds" });
+  });
+
+  it("throws GameDataError when round one has no play-in games", () => {
+    const { playin: _playin, ...noPlayin } = roundOne();
+    const error = catchError(() =>
+      applyPlayinResult(noPlayin as TournamentRoundMatchups, {
+        seedType: "sixteenSeeds",
+        gameIndex: 1,
+        winningTeam: "p16b",
+      })
+    );
+    expect(error).toBeInstanceOf(GameDataError);
+    expect((error as GameDataError).details).toMatchObject({ seedType: "sixteenSeeds" });
   });
 });
 

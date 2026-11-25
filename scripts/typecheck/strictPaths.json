@@ -13,6 +13,7 @@
   "src/constants/",
   "src/firebase/",
   "src/formSchemas/",
+  "src/functions/",
   "src/mockData/",
   "src/utils/",
   "types/",

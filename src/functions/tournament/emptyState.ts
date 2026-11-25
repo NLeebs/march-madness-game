@@ -2,7 +2,6 @@ import type {
   BracketMatchups,
   TournamentPickMatchup,
   TournamentPicks,
-  TournamentRoundMatchups,
 } from "@/types";
 
 /** `count` games of two empty pick slots. */
@@ -28,7 +27,7 @@ export function emptyBracket(): BracketMatchups {
         elevenSeeds: [],
         sixteenSeeds: [],
       },
-    } as TournamentRoundMatchups,
+    },
     roundTwoMatchups: {
       west: emptyGames(4),
       east: emptyGames(4),
