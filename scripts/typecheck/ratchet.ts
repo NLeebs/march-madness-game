@@ -20,7 +20,7 @@ export type RatchetResult = {
   violations: StrictDiagnostic[];
   /** Listed paths that match no program file (typo, rename): a failure, so the check can't pass vacuously. */
   unmatchedPaths: string[];
-  /** Advisory: clean top-level folders, root files and `src/` sub-folders not covered by the list. */
+  /** Advisory: clean top-level folders, root files, `src/` sub-folders and files directly in `src/` not covered by the list. */
   newlyClean: string[];
 };
 
@@ -29,10 +29,11 @@ function covers(entry: string, file: string): boolean {
   return entry.endsWith("/") ? file.startsWith(entry) : file === entry;
 }
 
-/** The advisory candidate a file belongs to: "src/<name>/", "<top>/" or a root file. */
+/** The advisory candidate a file belongs to: "src/<name>/", "<top>/", or the file itself at the root or directly in src/. */
 function candidateOf(file: string): string {
   const parts = file.split("/");
   if (parts.length === 1) return file;
+  if (parts[0] === "src" && parts.length === 2) return file;
   if (parts[0] === "src" && parts.length > 2) return `src/${parts[1]}/`;
   return `${parts[0]}/`;
 }

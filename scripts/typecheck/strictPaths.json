@@ -16,6 +16,7 @@
   "src/functions/",
   "src/hooks/",
   "src/mockData/",
+  "src/test-setup.ts",
   "src/utils/",
   "store/",
   "types/",

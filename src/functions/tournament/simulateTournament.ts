@@ -125,7 +125,15 @@ export function simulateTournament(
     (Object.keys(roundMatchups) as (TournamentRegion | "playin")[]).forEach(
       (region) => {
         if (region === "playin") return;
-        roundMatchups[region]?.forEach((matchup, i) => {
+        const regionGames = roundMatchups[region];
+        if (!regionGames) {
+          // Unreachable today: applyGameResult throws a round earlier.
+          throw new GameDataError("simulateTournament: round lacks a region", {
+            round,
+            region,
+          });
+        }
+        regionGames.forEach((matchup, i) => {
           const result = getTournamentGameResultObj(
             play(matchup[0].team, matchup[1].team),
             i,

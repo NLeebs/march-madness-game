@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { tournamentActions } from "@/store";
+import { GameDataError } from "@/src/functions/generic";
 // The slice itself is the module's default export (not re-exported by the barrel).
 import tournamentSlice from "@/store/tournamentSlice";
 import type { PlayinSeedType, TournamentGameResult } from "@/types";
@@ -408,5 +409,28 @@ describe("recordRoundScore with points", () => {
     expect(next.playerScore).toBe(7);
     // selected marks still come from scoreRound
     expect((next.champion.champion[0][0] as { selected?: boolean }).selected).toBe(true);
+  });
+
+  it("throws GameDataError naming round and region when the next round lacks a scored region", () => {
+    const base = initial();
+    const state = {
+      ...base,
+      roundFinalsMatchups: { championship: undefined },
+    } as unknown as State;
+    const act = () =>
+      reduce(
+        state,
+        tournamentActions.recordRoundScore({
+          round: "final four",
+          winningTeams: ["A"],
+          picks: { championship: [[{ team: "A", seed: "1" }, { team: "B", seed: "1" }]] },
+        })
+      );
+    expect(act).toThrow(GameDataError);
+    expect(act).toThrow(
+      expect.objectContaining({
+        details: { round: "final four", region: "championship" },
+      })
+    );
   });
 });

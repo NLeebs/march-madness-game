@@ -1,8 +1,7 @@
 import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from "vitest";
 import { waitFor } from "@testing-library/react";
-import { useMadnessPrep } from "@/src/hooks";
+import { useMadnessPrep, type ResultOf } from "@/src/hooks";
 import { jsonResponse, renderQueryHook } from "./renderQueryHook";
-import type { ResultOf } from "@/src/hooks/useApiQuery";
 import type {
   getFirstRoundSeedMatchupUpsetPercentageByYearId,
   getTeamsWithMostTournamentAppearancesByYear,

@@ -86,6 +86,15 @@ describe("evaluateRatchet", () => {
     expect(result.newlyClean).toEqual(["middleware.ts", "src/hooks/", "store/"]);
   });
 
+  it("suggests a clean file directly under src/ on its own, while src/components is dirty", () => {
+    const result = evaluateRatchet({
+      diagnostics: [diag("src/components/c.tsx")],
+      programFiles: ["src/test-setup.ts", "src/components/c.tsx"],
+      strictPaths: [],
+    });
+    expect(result.newlyClean).toEqual(["src/test-setup.ts"]);
+  });
+
   it("does not suggest a candidate already covered by a broader entry", () => {
     const result = evaluateRatchet({
       diagnostics: [],
