@@ -100,7 +100,7 @@ describe("getYears", () => {
   });
 
   it("should start both repository loads before either finishes", async () => {
-    mockGetYears.mockReturnValue(new Promise(() => {}));
+    mockGetYears.mockReturnValueOnce(new Promise(() => {}));
     mockGetTeamStatsYears.mockResolvedValue([]);
 
     void getYears();
@@ -112,6 +112,19 @@ describe("getYears", () => {
   it("should propagate errors from TournamentRepository", async () => {
     mockGetYears.mockRejectedValue(
       new Error("Failed to fetch years: connection refused"),
+    );
+
+    await expect(getYears()).rejects.toThrow("Failed to fetch years");
+  });
+
+  it("should report the TournamentRepository error when both loads fail, even if team stats fails first", async () => {
+    mockGetYears.mockReturnValueOnce(
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Failed to fetch years: connection refused")), 0),
+      ),
+    );
+    mockGetTeamStatsYears.mockRejectedValue(
+      new Error("Error fetching team statistics years from Firebase"),
     );
 
     await expect(getYears()).rejects.toThrow("Failed to fetch years");

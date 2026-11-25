@@ -25,7 +25,9 @@ export class TournamentRepository {
   async getYears(): Promise<Pick<YearSupabase, "id" | "year">[]> {
     const { data: yearsData, error: yearsError } = await this.supabase
       .from("years")
-      .select("id, year");
+      .select("id, year")
+      // Oldest first: callers treat the last year as the newest.
+      .order("year", { ascending: true });
 
     if (yearsError) {
       throw new Error(`Failed to fetch years: ${yearsError.message}`);
