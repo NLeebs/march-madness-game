@@ -53,17 +53,20 @@ export function applyPlayinResult(
   const slot = gameIndex === 0 ? slots[0] : slots[1];
 
   const roundOneGames = roundOne[slot.region];
-  if (!roundOneGames) {
-    throw new GameDataError("applyPlayinResult: round one has no games for the slot's region", {
-      region: slot.region,
-      seedType,
-      gameIndex,
-    });
-  }
   const { playin } = roundOne;
-  if (!playin) {
-    throw new GameDataError("applyPlayinResult: round one has no play-in games", {
+  const missing = !roundOneGames
+    ? "round one has no games for the slot's region"
+    : !roundOneGames[slot.game]
+      ? "round one has no game in the play-in winner's slot"
+      : !playin
+        ? "round one has no play-in games"
+        : !playin[seedType]?.[gameIndex]
+          ? "the play-in game is missing"
+          : null;
+  if (missing !== null || !roundOneGames || !playin) {
+    throw new GameDataError(`applyPlayinResult: ${missing}`, {
       region: slot.region,
+      slotGame: slot.game,
       seedType,
       gameIndex,
     });

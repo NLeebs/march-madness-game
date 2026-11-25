@@ -32,6 +32,15 @@ function loadProgram(): ts.Program {
     process.exit(1);
   }
   const parsed = ts.parseJsonConfigFileContent(config, ts.sys, root, undefined, configPath);
+  // Config problems (unknown option, bad extends, empty include) are not pre-emit diagnostics,
+  // and a config that silently isn't strict would pass everything: fail on both.
+  if (parsed.errors.length > 0 || parsed.options.strict !== true) {
+    parsed.errors.forEach((e) =>
+      console.error(ts.flattenDiagnosticMessageText(e.messageText, "\n"))
+    );
+    if (parsed.options.strict !== true) console.error("tsconfig.strict.json does not set strict: true");
+    process.exit(1);
+  }
   return ts.createProgram({
     rootNames: parsed.fileNames,
     options: parsed.options,

@@ -6,6 +6,7 @@ import {
 import { deepFreeze } from "./deepFreeze";
 import { GameDataError } from "@/src/functions/generic";
 import { PLAYIN_ROUND_ONE_SLOTS } from "@/src/functions/tournament/roundConfig";
+import { emptyBracket } from "@/src/functions/tournament/emptyState";
 import type { BracketMatchups, TournamentRoundMatchups } from "@/types";
 
 type Slot = Record<string, unknown>;
@@ -134,6 +135,33 @@ describe("applyPlayinResult with missing round-one data", () => {
     );
     expect(error).toBeInstanceOf(GameDataError);
     expect((error as GameDataError).details).toMatchObject({ region, seedType: "elevenSeeds" });
+  });
+
+  it("throws GameDataError on an empty round one (results before the bracket is built)", () => {
+    const empty = emptyBracket().roundOneMatchups;
+    const { region, game: slotGame } = PLAYIN_ROUND_ONE_SLOTS.sixteenSeeds[0];
+    const error = catchError(() =>
+      applyPlayinResult(empty, { seedType: "sixteenSeeds", gameIndex: 0, winningTeam: "p16a" })
+    );
+    expect(error).toBeInstanceOf(GameDataError);
+    expect((error as GameDataError).details).toMatchObject({
+      region,
+      seedType: "sixteenSeeds",
+      gameIndex: 0,
+      slotGame,
+    });
+  });
+
+  it("throws GameDataError when the play-in game itself is missing", () => {
+    const round = roundOne();
+    const error = catchError(() =>
+      applyPlayinResult(
+        { ...round, playin: { elevenSeeds: [], sixteenSeeds: round.playin?.sixteenSeeds ?? [] } },
+        { seedType: "elevenSeeds", gameIndex: 1, winningTeam: "p11b" }
+      )
+    );
+    expect(error).toBeInstanceOf(GameDataError);
+    expect((error as GameDataError).details).toMatchObject({ seedType: "elevenSeeds", gameIndex: 1 });
   });
 
   it("throws GameDataError when round one has no play-in games", () => {
