@@ -1,251 +1,138 @@
-import { useQuery } from "@tanstack/react-query";
-import { AppError } from "@/utils/errorHandling";
 import {
   SeedPerformanceSupabase,
   TeamPerformanceSupabase,
 } from "@/models/appStatsData";
+import { useApiQuery } from "./useApiQuery";
+
+/** One Madness Prep dashboard query: cached under [name, yearId], fetched from `${path}/${yearId}`. */
+function usePrepQuery<T>(name: string, path: string, yearId: string, action: string) {
+  return useApiQuery<T>([name, yearId], `${path}/${yearId}`, action, {
+    enabled: !!yearId,
+  });
+}
 
 export function useMadnessPrep(yearId: string) {
   const { data: topPerformingTeams, isLoading: isLoadingMadnessPrep } =
-    useQuery({
-      queryKey: ["topPerformingTeams", yearId],
-      queryFn: async () => {
-        const response = await fetch(`/api/teams/top-performers/${yearId}`);
-        if (!response.ok) {
-          throw new AppError(
-            "Failed to fetch top performing teams",
-            response.status,
-          );
-        }
-        return response.json() as Promise<TeamPerformanceSupabase[]>;
-      },
-      enabled: !!yearId,
-    });
+    usePrepQuery<TeamPerformanceSupabase[]>(
+      "topPerformingTeams",
+      "/api/teams/top-performers",
+      yearId,
+      "fetch top performing teams",
+    );
 
   const {
     data: topPerformingNonPowerConferenceTeams,
     isLoading: isLoadingTopPerformingNonPowerConferenceTeams,
-  } = useQuery({
-    queryKey: ["topPerformingNonPowerConferenceTeams", yearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/teams/top-performers/non-power-conference/${yearId}`,
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch top performing non power conference teams",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
-
-  const { data: topPickedTeams, isLoading: isLoadingTopPickedTeams } = useQuery(
-    {
-      queryKey: ["topPickedTeams", yearId],
-      queryFn: async () => {
-        const response = await fetch(`/api/teams/most-picked/${yearId}`);
-        if (!response.ok) {
-          throw new AppError(
-            "Failed to fetch top picked teams",
-            response.status,
-          );
-        }
-        return response.json() as Promise<TeamPerformanceSupabase[]>;
-      },
-      enabled: !!yearId,
-    },
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "topPerformingNonPowerConferenceTeams",
+    "/api/teams/top-performers/non-power-conference",
+    yearId,
+    "fetch top performing non power conference teams",
   );
+
+  const { data: topPickedTeams, isLoading: isLoadingTopPickedTeams } =
+    usePrepQuery<TeamPerformanceSupabase[]>(
+      "topPickedTeams",
+      "/api/teams/most-picked",
+      yearId,
+      "fetch top picked teams",
+    );
 
   const {
     data: teamsThatCausedMostUpsets,
     isLoading: isLoadingTeamsThatCausedMostUpsets,
-  } = useQuery({
-    queryKey: ["teamsThatCausedMostUpsets", yearId],
-    queryFn: async () => {
-      const response = await fetch(`/api/teams/upsets/caused/${yearId}`);
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch teams that caused most upsets",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "teamsThatCausedMostUpsets",
+    "/api/teams/upsets/caused",
+    yearId,
+    "fetch teams that caused most upsets",
+  );
 
   const { data: teamsMostUpsetProne, isLoading: isLoadingTeamsMostUpsetProne } =
-    useQuery({
-      queryKey: ["teamsMostUpsetProne", yearId],
-      queryFn: async () => {
-        const response = await fetch(`/api/teams/upsets/prone/${yearId}`);
-        if (!response.ok) {
-          throw new AppError(
-            "Failed to fetch teams most upset prone",
-            response.status,
-          );
-        }
-        return response.json() as Promise<TeamPerformanceSupabase[]>;
-      },
-      enabled: !!yearId,
-    });
+    usePrepQuery<TeamPerformanceSupabase[]>(
+      "teamsMostUpsetProne",
+      "/api/teams/upsets/prone",
+      yearId,
+      "fetch teams most upset prone",
+    );
 
   const {
     data: firstRoundSeedMatchupUpsetPercentages,
     isLoading: isLoadingFirstRoundSeedMatchupUpsetPercentages,
-  } = useQuery({
-    queryKey: ["firstRoundSeedMatchupUpsetPercentages", yearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/seeds/first-round/upset-percentage/${yearId}`,
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch first round seed matchup upset percentages",
-          response.status,
-        );
-      }
-      return response.json() as Promise<SeedPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<SeedPerformanceSupabase[]>(
+    "firstRoundSeedMatchupUpsetPercentages",
+    "/api/seeds/first-round/upset-percentage",
+    yearId,
+    "fetch first round seed matchup upset percentages",
+  );
 
   const {
     data: teamsWithMostChampionships,
     isLoading: isLoadingTeamsWithMostChampionships,
-  } = useQuery({
-    queryKey: ["teamsWithMostChampionships", yearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/teams/appearances/championships/${yearId}`,
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch teams with most championships",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "teamsWithMostChampionships",
+    "/api/teams/appearances/championships",
+    yearId,
+    "fetch teams with most championships",
+  );
 
   const { data: teamsInMostFinals, isLoading: isLoadingTeamsInMostFinals } =
-    useQuery({
-      queryKey: ["teamsInMostFinals", yearId],
-      queryFn: async () => {
-        const response = await fetch(`/api/teams/appearances/finals/${yearId}`);
-        if (!response.ok) {
-          throw new AppError(
-            "Failed to fetch teams in most finals",
-            response.status,
-          );
-        }
-        return response.json() as Promise<TeamPerformanceSupabase[]>;
-      },
-      enabled: !!yearId,
-    });
+    usePrepQuery<TeamPerformanceSupabase[]>(
+      "teamsInMostFinals",
+      "/api/teams/appearances/finals",
+      yearId,
+      "fetch teams in most finals",
+    );
 
   const {
     data: teamsInMostFinalFours,
     isLoading: isLoadingTeamsInMostFinalFours,
-  } = useQuery({
-    queryKey: ["teamsInMostFinalFours", yearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/teams/appearances/final-fours/${yearId}`,
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch teams in most final fours",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "teamsInMostFinalFours",
+    "/api/teams/appearances/final-fours",
+    yearId,
+    "fetch teams in most final fours",
+  );
 
   const {
     data: teamsInMostEliteEights,
     isLoading: isLoadingTeamsInMostEliteEights,
-  } = useQuery({
-    queryKey: ["teamsInMostEliteEights", yearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/teams/appearances/elite-eights/${yearId}`,
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch teams in most elite eights",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "teamsInMostEliteEights",
+    "/api/teams/appearances/elite-eights",
+    yearId,
+    "fetch teams in most elite eights",
+  );
 
   const {
     data: teamsInMostSweetSixteens,
     isLoading: isLoadingTeamsInMostSweetSixteens,
-  } = useQuery({
-    queryKey: ["teamsInMostSweetSixteens", yearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/teams/appearances/sweet-sixteens/${yearId}`,
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch teams in most sweet sixteens",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "teamsInMostSweetSixteens",
+    "/api/teams/appearances/sweet-sixteens",
+    yearId,
+    "fetch teams in most sweet sixteens",
+  );
 
   const {
     data: teamsInMostSecondRounds,
     isLoading: isLoadingTeamsInMostSecondRounds,
-  } = useQuery({
-    queryKey: ["teamsInMostSecondRounds", yearId],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/teams/appearances/second-rounds/${yearId}`,
-      );
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch teams in most second rounds",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "teamsInMostSecondRounds",
+    "/api/teams/appearances/second-rounds",
+    yearId,
+    "fetch teams in most second rounds",
+  );
 
   const {
     data: teamsWithMostTournamentAppearances,
     isLoading: isLoadingTeamsWithMostTournamentAppearances,
-  } = useQuery({
-    queryKey: ["teamsWithMostTournamentAppearances", yearId],
-    queryFn: async () => {
-      const response = await fetch(`/api/teams/appearances/${yearId}`);
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch teams with most tournament appearances",
-          response.status,
-        );
-      }
-      return response.json() as Promise<TeamPerformanceSupabase[]>;
-    },
-    enabled: !!yearId,
-  });
+  } = usePrepQuery<TeamPerformanceSupabase[]>(
+    "teamsWithMostTournamentAppearances",
+    "/api/teams/appearances",
+    yearId,
+    "fetch teams with most tournament appearances",
+  );
 
   return {
     topPerformingTeams,
