@@ -1,15 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { AppError } from "@/utils/errorHandling";
+import type { getYears } from "@/application/useCases";
+import { useApiQuery, type ResultOf } from "./useApiQuery";
 
 export function useYears() {
-  return useQuery({
-    queryKey: ["years"],
-    queryFn: async () => {
-      const response = await fetch("/api/years");
-      if (!response.ok) {
-        throw new AppError("Failed to fetch years", response.status);
-      }
-      return response.json();
-    },
-  });
+  return useApiQuery<ResultOf<typeof getYears>>(
+    ["years"],
+    "/api/years",
+    "fetch years",
+  );
 }

@@ -10,7 +10,9 @@ import {
   tournamentActions,
   teamStatsActions,
 } from "@/store";
-import { AppError } from "@/utils/errorHandling";
+import type { getYears } from "@/application/useCases";
+import { apiGet } from "@/src/utils";
+import type { ResultOf } from "./useApiQuery";
 
 export const useRestartTheGame = () => {
   const dispatch = useDispatch();
@@ -27,11 +29,7 @@ export const useRestartTheGame = () => {
 
     // Set default yearId to latest year to prevent empty state issues
     try {
-      const response = await fetch("/api/years");
-      if (!response.ok) {
-        throw new AppError("Failed to fetch years", response.status);
-      }
-      const years = await response.json();
+      const years = await apiGet<ResultOf<typeof getYears>>("/api/years", "fetch years");
       if (years?.length > 0) {
         const latestYearId = years[years.length - 1].id;
         dispatch(tournamentActions.setYearId(latestYearId));

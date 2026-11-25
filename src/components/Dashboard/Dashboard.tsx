@@ -51,8 +51,8 @@ export const Dashboard = () => {
             placeholder="Select Year"
             value={selectedYearId}
             options={
-              years?.map((year: { year: string; id: string }) => ({
-                label: year.year,
+              years?.map((year) => ({
+                label: String(year.year),
                 value: year.id,
               })) || []
             }

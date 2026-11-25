@@ -1,23 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { UserTotalStatsSupabase } from "@/models/appStatsData";
-import { AppError } from "@/utils/errorHandling";
+import type { getUserTotalStatsByYearId } from "@/application/useCases";
+import { useApiQuery, type ResultOf } from "./useApiQuery";
 
 export function useUserStatisticsByYearId(userId: string, yearId: string) {
-  const { data, isLoading: isLoadingUserStatisticsByYearId } =
-    useQuery<UserTotalStatsSupabase>({
-    queryKey: ["userStatisticsByYearId", userId, yearId],
-    queryFn: async () => {
-      const response = await fetch(`/api/user-statistics/${userId}/${yearId}`);
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch user statistics by year id",
-          response.status,
-        );
-      }
-      return (await response.json()) as UserTotalStatsSupabase;
-    },
-    enabled: !!userId && !!yearId,
-  });
+  const { data, isLoading: isLoadingUserStatisticsByYearId } = useApiQuery<
+    ResultOf<typeof getUserTotalStatsByYearId>
+  >(
+    ["userStatisticsByYearId", userId, yearId],
+    `/api/user-statistics/${userId}/${yearId}`,
+    "fetch user statistics by year id",
+    { enabled: !!userId && !!yearId },
+  );
 
   const highScore = data?.high_score;
   const lowScore = data?.low_score;

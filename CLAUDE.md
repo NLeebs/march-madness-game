@@ -47,7 +47,7 @@ Import alias `@/` = repo root (e.g. `@/src/components`, `@/store`, `@/applicatio
 
 ### Two kinds of state
 - **Game state** lives in Redux (`store/`). The game is a client-side state machine driven by boolean flags in `appStateSlice` (`startScreen -> regularSeason -> selectionSunday -> tournament -> ... -> tournamentRecap`). `App.tsx` renders phases off those flags. The season and Selection Sunday are played by the server (`POST /api/season`); the browser replays `regularSeasonRecords.season` game by game.
-- **Server data** (years, stats, dashboards) goes through TanStack Query hooks in `src/hooks/` that `fetch('/api/...')`. Query keys are `[camelCaseName, ...params]`.
+- **Server data** (years, stats, dashboards) goes through TanStack Query hooks in `src/hooks/` built on `useApiQuery` (GET `/api/...` via `apiGet`). Query keys are `[camelCaseName, ...params]`.
 
 ### Crashes
 `GameErrorBoundary` (around the game in `app/page.tsx`), `app/error.tsx` and `app/global-error.tsx` render `CrashScreen` ("Something went wrong", button does a full load of `/`) and report through `src/utils/crashReporting` (`reportCrash`, never throws) to Sentry, which emails the developer. Sentry is initialized in `instrumentation-client.ts` / `instrumentation.ts` from `sentryInitOptions` (no personal or request data, no tracing). Browser reports go to `/monitoring` (excluded from `middleware.ts`), which `withSentryConfig` rewrites to `app/sentry-tunnel/route.ts`; it forwards only envelopes for our own DSN. Import `CrashScreen` and its `Button` directly, not through barrels, so the crash pages load even when the rest of the app can't. Game logic that rejects bad data throws `GameDataError(message, details)`; `details` (team, conference, counts) shows up as fields on the Sentry event. Errors in event handlers, timers and promises are not caught by the boundaries; a failed tournament request is rethrown during render (`useMutation` `throwOnError`) so the boundary catches it.
@@ -56,7 +56,7 @@ Import alias `@/` = repo root (e.g. `@/src/components`, `@/store`, `@/applicatio
 1. Repository method in `infrastructure/db/<Domain>Repository.ts` - throw `new Error("Failed to ...: " + error.message)` on Supabase error.
 2. Use case `application/useCases/<domain>/Get<Thing>.ts`, export from the domain `index.ts`.
 3. Route `app/api/<path>/[param]/route.ts`: `try { ... return NextResponse.json(data, {status: 200}) } catch (e) { return handleApiError(e, "<path>") }`. Call `authorizeUserAccess(userId)` for any user-scoped route.
-4. Hook `src/hooks/use<Thing>.ts` with `useQuery`, `enabled: !!param`, throw `AppError` on `!response.ok`.
+4. Hook `src/hooks/use<Thing>.ts`: `return useApiQuery<ResultOf<typeof getThing>>([camelCaseName, ...params], path, "fetch <thing>", { enabled: !!param })` (`import type` the use case; if the route wraps the result, type the wrapper instead). It throws `apiError` (server's reason) on `!response.ok`.
 5. Tests: unit test for the use case (mock the repository with `vi.mock`) in `tests/unit/useCases/<domain>/`, integration test for the route (mock the use case) in `tests/integration/`. Build fixtures with `tests/factories/` (`buildX(overrides)`).
 
 Note: `README-API-Error-Handling.md` documents an `apiHandler` wrapper, but no route uses it - routes use explicit try/catch + `handleApiError`. Follow the routes.

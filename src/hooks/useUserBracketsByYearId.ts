@@ -1,19 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { AppError } from "@/utils/errorHandling";
+import type { getUserBracketsByYearId } from "@/application/useCases";
+import { useApiQuery, type ResultOf } from "./useApiQuery";
 
 export function useUserBracketsByYearId(userId: string, yearId: string) {
-  return useQuery({
-    queryKey: ["userBracketsByYearId", userId, yearId],
-    queryFn: async () => {
-      const response = await fetch(`/api/brackets/${userId}/${yearId}`);
-      if (!response.ok) {
-        throw new AppError(
-          "Failed to fetch user brackets by year id",
-          response.status,
-        );
-      }
-      return response.json();
-    },
-    enabled: !!userId && !!yearId,
-  });
+  return useApiQuery<ResultOf<typeof getUserBracketsByYearId>>(
+    ["userBracketsByYearId", userId, yearId],
+    `/api/brackets/${userId}/${yearId}`,
+    "fetch user brackets by year id",
+    { enabled: !!userId && !!yearId },
+  );
 }

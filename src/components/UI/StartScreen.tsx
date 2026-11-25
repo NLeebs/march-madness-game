@@ -106,7 +106,7 @@ export const StartScreen = () => {
           placeholder="Select Year"
           value={selectedYearId}
           options={
-            years?.map((year) => ({ label: year.year, value: year.id })) || []
+            years?.map((year) => ({ label: String(year.year), value: year.id })) || []
           }
           onValueChange={handleSelectYear}
           containerClassName="pr-4 pl-4 mb-8"
