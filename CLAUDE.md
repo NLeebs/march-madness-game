@@ -56,7 +56,7 @@ Import alias `@/` = repo root (e.g. `@/src/components`, `@/store`, `@/applicatio
 1. Repository method in `infrastructure/db/<Domain>Repository.ts` - throw `new Error("Failed to ...: " + error.message)` on Supabase error.
 2. Use case `application/useCases/<domain>/Get<Thing>.ts`, export from the domain `index.ts`.
 3. Route `app/api/<path>/[param]/route.ts`: `try { ... return NextResponse.json(data, {status: 200}) } catch (e) { return handleApiError(e, "<path>") }`. Call `authorizeUserAccess(userId)` for any user-scoped route.
-4. Hook `src/hooks/use<Thing>.ts` with `useQuery`, `enabled: !!param`, throw `AppError` on `!response.ok`.
+4. Hook `src/hooks/use<Thing>.ts`: `return useApiQuery<ResultOf<typeof getThing>>([camelCaseName, ...params], path, "fetch <thing>", { enabled: !!param })` (`import type` the use case; if the route wraps the result, type the wrapper instead). It throws `apiError` (server's reason) on `!response.ok`.
 5. Tests: unit test for the use case (mock the repository with `vi.mock`) in `tests/unit/useCases/<domain>/`, integration test for the route (mock the use case) in `tests/integration/`. Build fixtures with `tests/factories/` (`buildX(overrides)`).
 
 Note: `README-API-Error-Handling.md` documents an `apiHandler` wrapper, but no route uses it - routes use explicit try/catch + `handleApiError`. Follow the routes.

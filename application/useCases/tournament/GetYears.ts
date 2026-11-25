@@ -6,8 +6,10 @@ export async function getYears(): Promise<Pick<YearSupabase, "id" | "year">[]> {
   const tournamentRepository = new TournamentRepository();
   const teamStatsRepository = new TeamStatsRepository();
 
-  const tournamentYears = await tournamentRepository.getYears();
-  const teamStatsYears = await teamStatsRepository.getYears();
+  const [tournamentYears, teamStatsYears] = await Promise.all([
+    tournamentRepository.getYears(),
+    teamStatsRepository.getYears(),
+  ]);
 
   return tournamentYears.filter((year) =>
     teamStatsYears.includes(String(year.year))

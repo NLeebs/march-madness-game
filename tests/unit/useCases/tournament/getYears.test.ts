@@ -99,6 +99,16 @@ describe("getYears", () => {
     expect(mockGetTeamStatsYears).toHaveBeenCalledTimes(1);
   });
 
+  it("should start both repository loads before either finishes", async () => {
+    mockGetYears.mockReturnValue(new Promise(() => {}));
+    mockGetTeamStatsYears.mockResolvedValue([]);
+
+    void getYears();
+    await Promise.resolve();
+
+    expect(mockGetTeamStatsYears).toHaveBeenCalledTimes(1);
+  });
+
   it("should propagate errors from TournamentRepository", async () => {
     mockGetYears.mockRejectedValue(
       new Error("Failed to fetch years: connection refused"),
