@@ -1,0 +1,20 @@
+[
+  "app/",
+  "application/",
+  "infrastructure/",
+  "instrumentation-client.ts",
+  "instrumentation.ts",
+  "lib/",
+  "middleware.ts",
+  "models/",
+  "playwright.config.ts",
+  "scripts/",
+  "src/app/",
+  "src/constants/",
+  "src/firebase/",
+  "src/formSchemas/",
+  "src/mockData/",
+  "src/utils/",
+  "types/",
+  "utils/"
+]

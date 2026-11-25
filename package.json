@@ -16,7 +16,8 @@
     "db:types:check": "node scripts/db/generate-types.mjs --check",
     "typecheck:db-types": "tsc --noEmit -p tsconfig.db-types.json",
     "scrape:team-stats": "tsx scripts/data-scraping/dataScrapeTeamStatsToFirebase.mts",
-    "migrate:teams-firebase-to-supabase": "node scripts/migrations/firebaseToSupabaseTeamMigration.mjs"
+    "migrate:teams-firebase-to-supabase": "node scripts/migrations/firebaseToSupabaseTeamMigration.mjs",
+    "typecheck:strict": "tsx scripts/typecheck/strictRatchet.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
