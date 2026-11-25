@@ -10,3 +10,9 @@ export async function getScoringRuleIdByYearId(
 
   return bracketScoringRule.id;
 }
+
+/** Body of `GET /api/tournament-scoring-rules/[yearId]`: the route wraps the use case's id. */
+export type TournamentScoringRulesResponse = {
+  tournamentScoringRuleId: Awaited<ReturnType<typeof getScoringRuleIdByYearId>>;
+  message: string;
+};
