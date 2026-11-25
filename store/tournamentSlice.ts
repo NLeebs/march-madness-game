@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { GameDataError } from "@/src/functions/generic";
 import { emptyBracket } from "@/src/functions/tournament/emptyState";
 import { seedTournament } from "@/src/functions/tournament/seedTournament";
 import { buildRoundOneMatchups } from "@/src/functions/tournament/buildRoundOneMatchups";
@@ -28,9 +29,7 @@ export interface TournamentState extends BracketMatchups {
   fieldToken: string;
   tournamentScoringRulesId: string;
   tournamentTeams: string[];
-  tournamentSeeds: {
-    [region in TournamentRegion]?: string[];
-  };
+  tournamentSeeds: Record<SeedRegion, string[]>;
   playinTeams: {
     elevenSeeds: string[];
     sixteenSeeds: string[];
@@ -94,7 +93,7 @@ const tournamentSlice = createSlice({
     },
     setRoundOneMatchups(state) {
       const matchups = buildRoundOneMatchups(
-        state.tournamentSeeds as Record<SeedRegion, string[]>,
+        state.tournamentSeeds,
         state.playinTeams
       );
       SEED_REGIONS.forEach((region) => {
@@ -143,6 +142,17 @@ const tournamentSlice = createSlice({
       const { round, winningTeams, picks } = action.payload;
       const nextKey = ROUND_CONFIG[round].nextMatchupsKey;
       const next = state[nextKey] as Omit<TournamentRoundMatchups, "playin">;
+      const regions = Object.keys(next) as (keyof typeof next)[];
+      const games = regions.map((region) => {
+        const regionGames = next[region];
+        if (!regionGames) {
+          throw new GameDataError("recordRoundScore: next round lacks a region", {
+            round,
+            region,
+          });
+        }
+        return regionGames;
+      });
       const { correct, points } = scoreRound({
         round,
         advanced: next,
@@ -150,8 +160,9 @@ const tournamentSlice = createSlice({
         winningTeams,
         points: ROUND_POINTS,
       });
-      Object.keys(correct).forEach((region) => {
-        next[region].forEach((matchup, i) => {
+      // scoreRound scored exactly next's regions (advanced: next), in this order.
+      regions.forEach((region, r) => {
+        games[r].forEach((matchup, i) => {
           matchup.forEach((teamObj, j) => {
             teamObj.selected = correct[region][i][j];
           });

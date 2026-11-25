@@ -52,7 +52,7 @@ export function mapBracketToPayloadGames({
     if (matchup.length !== 2) {
       throw new Error("Matchup must contain exactly 2 teams");
     }
-    return parseInt(matchup[0].seed) < parseInt(matchup[1].seed)
+    return parseInt(String(matchup[0].seed)) < parseInt(String(matchup[1].seed))
       ? { favored: matchup[0], underdog: matchup[1] }
       : { favored: matchup[1], underdog: matchup[0] };
   };
@@ -119,10 +119,10 @@ export function mapBracketToPayloadGames({
       round_id: roundId,
       is_play_in: isPlayIn,
       favored_team_id: favoredTeamId,
-      favored_team_seed: parseInt(favored.seed),
+      favored_team_seed: parseInt(String(favored.seed)),
       favored_team_score: favored.score,
       underdog_team_id: underdogTeamId,
-      underdog_team_seed: parseInt(underdog.seed),
+      underdog_team_seed: parseInt(String(underdog.seed)),
       underdog_team_score: underdog.score,
       winning_team_id: teamIdOf(winningTeam.team, "winning team"),
       pick: !isPlayIn && pick ? toPick(pick) : null,

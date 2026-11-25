@@ -100,7 +100,7 @@ export const TournamentRound: React.FC<TournamentRoundProps> = ({
       ...tournamentMatchupElementsElevenSeeds,
       ...tournamentMatchupElementsSixteenSeeds,
     ];
-  } else if (region in matchupElGenerationArr) {
+  } else if (region !== "playin" && region in matchupElGenerationArr) {
     tournamentMatchupElements = matchupElGenerationArr[region].map(
       (matchup: TournamentMatchupType, i: number) => (
         <TournamentMatchup

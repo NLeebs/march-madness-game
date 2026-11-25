@@ -1,8 +1,19 @@
-import {
-  SeedPerformanceSupabase,
-  TeamPerformanceSupabase,
-} from "@/models/appStatsData";
-import { useApiQuery } from "./useApiQuery";
+import type {
+  getFirstRoundSeedMatchupUpsetPercentageByYearId,
+  getTeamsInMostEliteEightsByYear,
+  getTeamsInMostFinalFoursByYear,
+  getTeamsInMostFinalsByYear,
+  getTeamsInMostSecondRoundsByYear,
+  getTeamsInMostSweetSixteensByYear,
+  getTeamsMostUpsetProneByYearId,
+  getTeamsThatCausedMostUpsetsByYearId,
+  getTeamsWithMostChampionshipsByYear,
+  getTeamsWithMostTournamentAppearancesByYear,
+  getTopPerformingNonPowerConferenceTeamsByYear,
+  getTopPerformingTeamsByYear,
+  getTopPickedTeamsByYear,
+} from "@/application/useCases";
+import { useApiQuery, type ResultOf } from "./useApiQuery";
 
 /** One Madness Prep dashboard query: cached under [name, yearId], fetched from `${path}/${yearId}`. */
 function usePrepQuery<T>(name: string, path: string, yearId: string, action: string) {
@@ -13,7 +24,7 @@ function usePrepQuery<T>(name: string, path: string, yearId: string, action: str
 
 export function useMadnessPrep(yearId: string) {
   const { data: topPerformingTeams, isLoading: isLoadingMadnessPrep } =
-    usePrepQuery<TeamPerformanceSupabase[]>(
+    usePrepQuery<ResultOf<typeof getTopPerformingTeamsByYear>>(
       "topPerformingTeams",
       "/api/teams/top-performers",
       yearId,
@@ -23,7 +34,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: topPerformingNonPowerConferenceTeams,
     isLoading: isLoadingTopPerformingNonPowerConferenceTeams,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTopPerformingNonPowerConferenceTeamsByYear>>(
     "topPerformingNonPowerConferenceTeams",
     "/api/teams/top-performers/non-power-conference",
     yearId,
@@ -31,7 +42,7 @@ export function useMadnessPrep(yearId: string) {
   );
 
   const { data: topPickedTeams, isLoading: isLoadingTopPickedTeams } =
-    usePrepQuery<TeamPerformanceSupabase[]>(
+    usePrepQuery<ResultOf<typeof getTopPickedTeamsByYear>>(
       "topPickedTeams",
       "/api/teams/most-picked",
       yearId,
@@ -41,7 +52,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: teamsThatCausedMostUpsets,
     isLoading: isLoadingTeamsThatCausedMostUpsets,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTeamsThatCausedMostUpsetsByYearId>>(
     "teamsThatCausedMostUpsets",
     "/api/teams/upsets/caused",
     yearId,
@@ -49,7 +60,7 @@ export function useMadnessPrep(yearId: string) {
   );
 
   const { data: teamsMostUpsetProne, isLoading: isLoadingTeamsMostUpsetProne } =
-    usePrepQuery<TeamPerformanceSupabase[]>(
+    usePrepQuery<ResultOf<typeof getTeamsMostUpsetProneByYearId>>(
       "teamsMostUpsetProne",
       "/api/teams/upsets/prone",
       yearId,
@@ -59,7 +70,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: firstRoundSeedMatchupUpsetPercentages,
     isLoading: isLoadingFirstRoundSeedMatchupUpsetPercentages,
-  } = usePrepQuery<SeedPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getFirstRoundSeedMatchupUpsetPercentageByYearId>>(
     "firstRoundSeedMatchupUpsetPercentages",
     "/api/seeds/first-round/upset-percentage",
     yearId,
@@ -69,7 +80,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: teamsWithMostChampionships,
     isLoading: isLoadingTeamsWithMostChampionships,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTeamsWithMostChampionshipsByYear>>(
     "teamsWithMostChampionships",
     "/api/teams/appearances/championships",
     yearId,
@@ -77,7 +88,7 @@ export function useMadnessPrep(yearId: string) {
   );
 
   const { data: teamsInMostFinals, isLoading: isLoadingTeamsInMostFinals } =
-    usePrepQuery<TeamPerformanceSupabase[]>(
+    usePrepQuery<ResultOf<typeof getTeamsInMostFinalsByYear>>(
       "teamsInMostFinals",
       "/api/teams/appearances/finals",
       yearId,
@@ -87,7 +98,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: teamsInMostFinalFours,
     isLoading: isLoadingTeamsInMostFinalFours,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTeamsInMostFinalFoursByYear>>(
     "teamsInMostFinalFours",
     "/api/teams/appearances/final-fours",
     yearId,
@@ -97,7 +108,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: teamsInMostEliteEights,
     isLoading: isLoadingTeamsInMostEliteEights,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTeamsInMostEliteEightsByYear>>(
     "teamsInMostEliteEights",
     "/api/teams/appearances/elite-eights",
     yearId,
@@ -107,7 +118,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: teamsInMostSweetSixteens,
     isLoading: isLoadingTeamsInMostSweetSixteens,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTeamsInMostSweetSixteensByYear>>(
     "teamsInMostSweetSixteens",
     "/api/teams/appearances/sweet-sixteens",
     yearId,
@@ -117,7 +128,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: teamsInMostSecondRounds,
     isLoading: isLoadingTeamsInMostSecondRounds,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTeamsInMostSecondRoundsByYear>>(
     "teamsInMostSecondRounds",
     "/api/teams/appearances/second-rounds",
     yearId,
@@ -127,7 +138,7 @@ export function useMadnessPrep(yearId: string) {
   const {
     data: teamsWithMostTournamentAppearances,
     isLoading: isLoadingTeamsWithMostTournamentAppearances,
-  } = usePrepQuery<TeamPerformanceSupabase[]>(
+  } = usePrepQuery<ResultOf<typeof getTeamsWithMostTournamentAppearancesByYear>>(
     "teamsWithMostTournamentAppearances",
     "/api/teams/appearances",
     yearId,

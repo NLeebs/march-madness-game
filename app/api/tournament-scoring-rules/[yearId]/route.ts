@@ -1,4 +1,7 @@
-import { getScoringRuleIdByYearId } from "@/application/useCases";
+import {
+  getScoringRuleIdByYearId,
+  type TournamentScoringRulesResponse,
+} from "@/application/useCases";
 import { handleApiError } from "@/utils/errorHandling";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,7 +17,7 @@ export async function GET(
       {
         tournamentScoringRuleId,
         message: "Tournament scoring rules ID received",
-      },
+      } satisfies TournamentScoringRulesResponse,
       { status: 200 },
     );
   } catch (error) {

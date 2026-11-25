@@ -7,6 +7,7 @@ import {
 // The slices are the modules' default exports (not re-exported by the barrel).
 import picksSlice from "@/store/tournamentPlayersPicksSlice";
 import tournamentSlice from "@/store/tournamentSlice";
+import type { TournamentRegion } from "@/types";
 
 type PicksState = ReturnType<typeof picksSlice.reducer>;
 type PicksKey = keyof PicksState["picks"];
@@ -20,7 +21,7 @@ const pick = (
   state: PicksState,
   p: {
     round: Round;
-    region: string;
+    region: TournamentRegion;
     roundIndex: number;
     team: string;
     seed?: string;
@@ -70,7 +71,7 @@ describe("setPick writes to the right slot", () => {
   const cases: {
     round: Round;
     key: PicksKey;
-    region: string;
+    region: TournamentRegion;
     roundIndex: number;
     row: number;
     col: number;

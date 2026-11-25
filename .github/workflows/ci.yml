@@ -46,6 +46,11 @@ jobs:
       - name: Type-check DB type drift test (strictNullChecks)
         run: npm run typecheck:db-types
 
+      # Step 12: strict mode is turned on folder by folder. Paths listed in
+      # scripts/typecheck/strictPaths.json must have no strict errors.
+      - name: Type-check strict paths (ratchet)
+        run: npm run typecheck:strict
+
       - name: Test
         run: npx vitest run
 

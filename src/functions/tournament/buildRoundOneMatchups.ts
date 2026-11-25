@@ -1,7 +1,8 @@
 import type {
   PlayinSeedType,
+  RoundOneMatchups,
   SeedRegion,
-  TournamentRoundMatchups,
+  TournamentMatchup,
 } from "@/types";
 import { createMatchupsFromSeededArr } from "@/src/functions/seeding/createMatchupsFromSeededArr";
 import { SEED_REGIONS } from "./roundConfig";
@@ -18,14 +19,16 @@ const PLAYIN_SEED_NUMBER: Record<PlayinSeedType, number> = {
 export function buildRoundOneMatchups(
   seeds: Readonly<Record<SeedRegion, readonly string[]>>,
   playinTeams: Readonly<Record<PlayinSeedType, readonly string[]>>
-): TournamentRoundMatchups {
-  const regions = {} as Record<SeedRegion, TournamentRoundMatchups[SeedRegion]>;
-  SEED_REGIONS.forEach((region) => {
+): RoundOneMatchups {
+  const inBracketOrder = (region: SeedRegion): TournamentMatchup[] => {
     const unordered = createMatchupsFromSeededArr(seeds[region]);
-    regions[region] = ROUND_ONE_ORDER.map((index) => unordered[index]);
-  });
+    return ROUND_ONE_ORDER.map((index) => unordered[index]);
+  };
   return {
-    ...regions,
+    west: inBracketOrder("west"),
+    east: inBracketOrder("east"),
+    south: inBracketOrder("south"),
+    midwest: inBracketOrder("midwest"),
     playin: {
       elevenSeeds: createMatchupsFromSeededArr(
         playinTeams.elevenSeeds,
@@ -36,5 +39,5 @@ export function buildRoundOneMatchups(
         PLAYIN_SEED_NUMBER.sixteenSeeds
       ),
     },
-  } as TournamentRoundMatchups;
+  };
 }

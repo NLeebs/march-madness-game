@@ -15,7 +15,7 @@ export type RegionPicks = {
 export interface Pick {
   /** The round being picked in; the pick fills that round's next-round slot, so "champion" can't be picked. */
   round: ScoredRound;
-  region: string;
+  region: TournamentRegion;
   roundIndex: number;
   team: string;
   seed: string;

@@ -42,11 +42,11 @@ export function seedTournament(
   for (let seed = 1; seed <= HIGHEST_SEED; seed++) {
     const regions =
       seed % 2 === 1 ? SEED_REGIONS : [...SEED_REGIONS].reverse();
-    const line: Partial<Record<SeedRegion, string>> = {};
+    // One team per region per line; each region's list is separate, so pushing in snake order
+    // gives the same lists as the old line-then-push.
     regions.forEach((region) => {
-      line[region] = placeholderFor(seed, region) ?? tournamentTeams[next++];
+      seeds[region].push(placeholderFor(seed, region) ?? tournamentTeams[next++]);
     });
-    SEED_REGIONS.forEach((region) => seeds[region].push(line[region]));
   }
   return seeds;
 }

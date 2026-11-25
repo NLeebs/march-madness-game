@@ -1,7 +1,12 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from "vitest";
 import { waitFor } from "@testing-library/react";
-import { useMadnessPrep } from "@/src/hooks";
+import { useMadnessPrep, type ResultOf } from "@/src/hooks";
 import { jsonResponse, renderQueryHook } from "./renderQueryHook";
+import type {
+  getFirstRoundSeedMatchupUpsetPercentageByYearId,
+  getTeamsWithMostTournamentAppearancesByYear,
+  getTopPerformingTeamsByYear,
+} from "@/application/useCases";
 
 // Pins each dashboard query's path, query key and returned field names.
 const ROWS = [
@@ -59,5 +64,20 @@ describe("useMadnessPrep", () => {
     renderQueryHook(() => useMadnessPrep(""));
 
     expect(fetchMock).not.toHaveBeenCalled();
+  });
+});
+
+describe("useMadnessPrep types", () => {
+  it("types each query from the use case its route returns", () => {
+    type Prep = ReturnType<typeof useMadnessPrep>;
+    expectTypeOf<Prep["topPerformingTeams"]>().toEqualTypeOf<
+      ResultOf<typeof getTopPerformingTeamsByYear> | undefined
+    >();
+    expectTypeOf<Prep["firstRoundSeedMatchupUpsetPercentages"]>().toEqualTypeOf<
+      ResultOf<typeof getFirstRoundSeedMatchupUpsetPercentageByYearId> | undefined
+    >();
+    expectTypeOf<Prep["teamsWithMostTournamentAppearances"]>().toEqualTypeOf<
+      ResultOf<typeof getTeamsWithMostTournamentAppearancesByYear> | undefined
+    >();
   });
 });

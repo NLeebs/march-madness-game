@@ -1,4 +1,4 @@
-import { TournamentTeam, TournamentRegion } from "@/types";
+import { SeedRegion, TournamentTeam, TournamentRegion } from "@/types";
 
 export type TournamentMatchup = TournamentTeam[];
 
@@ -8,7 +8,12 @@ export type PlayinMatchup = {
 };
 
 export type TournamentRoundMatchups = {
-  [region in TournamentRegion]?: TournamentMatchup[];
+  [region in Exclude<TournamentRegion, "playin">]?: TournamentMatchup[];
 } & {
   playin?: PlayinMatchup;
+};
+
+/** Round one as `buildRoundOneMatchups` builds it: all four regions and the play-in games. */
+export type RoundOneMatchups = Record<SeedRegion, TournamentMatchup[]> & {
+  playin: PlayinMatchup;
 };

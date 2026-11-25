@@ -45,7 +45,7 @@ const appStateSlice = createSlice({
   reducers: {
     restartGame: () => initalState,
     activateStartScreen(state) {
-      Object.keys(state).forEach((key) => (state[key] = false));
+      (Object.keys(state) as (keyof AppState)[]).forEach((key) => (state[key] = false));
       state.startScreen = true;
     },
     loadingStarted(state) {
@@ -68,7 +68,7 @@ const appStateSlice = createSlice({
       state.selectionSunday = true;
     },
     activateTournament(state) {
-      Object.keys(state).forEach((key) => (state[key] = false));
+      (Object.keys(state) as (keyof AppState)[]).forEach((key) => (state[key] = false));
       state.tournament = true;
     },
     activateTournamentSelectionStage(state) {

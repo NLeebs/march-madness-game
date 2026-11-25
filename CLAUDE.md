@@ -18,6 +18,7 @@ npx tsc --noEmit       # type-check (2 CSS-module errors are expected until next
 npm run db:types         # regenerate types/database.ts (local DB must be running)
 npm run db:types:check   # fail if types/database.ts is stale (runs in CI)
 npm run typecheck:db-types  # model drift test under strictNullChecks (runs in CI)
+npm run typecheck:strict    # strict ratchet: paths in scripts/typecheck/strictPaths.json must be strict-clean (runs in CI)
 ```
 
 Always use `npx vitest` / `npx tsc` *after* `npm ci` - if `node_modules` is missing, `npx tsc` silently installs an unrelated package named `tsc`.
@@ -84,7 +85,7 @@ Rules load automatically when you touch matching files. Before designing or plan
 
 ## Conventions
 
-- TypeScript, `strict: false` today. Don't add new `any`; type new code as if strict were on.
+- TypeScript, `strict: false` in `tsconfig.json` while step 12 is in progress. Paths in `scripts/typecheck/strictPaths.json` must stay strict-clean (`npm run typecheck:strict`, CI). Don't add new `any`; type new code as if strict were on. When the ratchet prints a newly clean path, add it to the list.
 - Round identifiers are the union `1 | 2 | "sweet sixteen" | "elite eight" | "final four" | "finals" | "champion"` (`types/tournament`). Regions: `west | east | south | midwest`, plus `eastWest | southMidwest | championship` for later rounds.
 - Barrel `index.ts` files everywhere - export new modules from them and import from the barrel.
 - UI: Tailwind + shadcn/ui primitives in `src/components/UI/shadComponents/`, framer-motion for animation, `sonner` toasts, react-hook-form + zod schemas in `src/formSchemas/`.

@@ -4,7 +4,7 @@ export const createMatchupsFromSeededArr = (
   seededArr: readonly string[],
   playinSeed: number | false = false
 ): TournamentMatchup[] => {
-  const matchupArr = [];
+  const matchupArr: TournamentMatchup[] = [];
   for (let i = 0; i < seededArr.length / 2; i++) {
     matchupArr.push([
       {

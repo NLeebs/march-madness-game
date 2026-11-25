@@ -23,7 +23,6 @@ export const useSignUp = (): IUseSignUp => {
 
     if (signupError) {
       throw new Error(signupError.message);
-      return { success: false, error: signupError.message };
     }
 
     const { error: profileError } = await supabase.from("profiles").insert({
@@ -33,7 +32,6 @@ export const useSignUp = (): IUseSignUp => {
 
     if (profileError) {
       throw profileError;
-      return { success: false, error: profileError.message };
     }
 
     return { success: true, error: null };
